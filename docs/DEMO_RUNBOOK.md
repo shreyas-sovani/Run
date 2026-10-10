@@ -134,7 +134,7 @@ Never paste a private key on a projected screen. `/ops` shows only addresses.
 ## 6a. Public link (Vercel)
 
 - `/` Practice (simulated in the browser, labelled), `/watch` follows the live bank, `/replay` and `/replay/:id` play recorded real runs, `/ops` is the operator page (harmless without a key).
-- No key is ever set in Vercel. Do not deploy with `vercel --prebuilt` from this laptop: a local build embeds `app/.env.local` into the JavaScript. Use `pnpm dlx vercel@latest --cwd app` (the build happens on Vercel, `.env*` is ignored via `app/.vercelignore`).
+- No key is ever set in Vercel. Do not deploy with `vercel --prebuilt` from this laptop: a local build embeds `app/.env.local` into the JavaScript. Use `pnpm dlx vercel@latest deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-parse --short HEAD)` (the build happens on Vercel, `.env*` is ignored via `app/.vercelignore`).
 
 ## 7. Rehearsal log
 

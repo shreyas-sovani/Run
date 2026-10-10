@@ -4,6 +4,10 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
 function gitShortSha(): string {
+  // CLI deploys upload files without .git, so Vercel's build can't run git: pass the sha explicitly
+  // (`vercel deploy --build-env BUILD_SHA=$(git rev-parse --short HEAD)`), or use Vercel's own git variable.
+  const fromEnv = process.env.BUILD_SHA ?? process.env.VERCEL_GIT_COMMIT_SHA;
+  if (fromEnv) return fromEnv.slice(0, 7);
   try {
     return execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
   } catch {

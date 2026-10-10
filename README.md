@@ -62,8 +62,8 @@ Static Vite build, root directory `app`, framework Vite, install `pnpm install`,
 
 ```bash
 pnpm dlx vercel@latest login
-pnpm dlx vercel@latest --cwd app          # preview
-pnpm dlx vercel@latest --cwd app --prod   # production
+pnpm dlx vercel@latest deploy --cwd app --build-env BUILD_SHA=$(git rev-parse --short HEAD)           # preview
+pnpm dlx vercel@latest deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-parse --short HEAD)    # production
 ```
 
 - **Never** put a `VITE_*PK` variable in Vercel. `vite.config.ts` fails the build if one is present on Vercel, and `app/.vercelignore` keeps `.env*` out of the upload. Don't use `--prebuilt` from a machine with `.env.local`.
