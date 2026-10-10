@@ -289,3 +289,19 @@ From `/Users/shreyas/Desktop/blitz/app`:
 
 ## 11. History (commit trail, `git log -- app/src/engine`)
 `a7be431` B-00 placeholders · `f046d48` PRNG + mirror · `6140a31` graph v1 + ledger v1 + generators · `9d8a0cb` vectors v1 · `7661f36` panic model, stepRun, barrel swap, tuner, tests, lab, vectors v2 · `96f26ba` tidy tuned values, lint, status · `3b410e1`, `d21541c` blockers log and closing status. The interrupted first agent (usage limit) had finished B-00…B-04 and written B-05; a second agent committed B-05 and did everything else above.
+
+## 15:45 — FINAL (B is finished; nothing outstanding on B's side)
+**State of the world, verified 15:40:**
+- Whole repo: `pnpm vitest run` → 32 files, **277 tests passed**, 7 skipped (others' tests included); `npx tsc -p tsconfig.app.json --noEmit` clean; `npx oxlint` clean on all B paths (the one remaining warning, in `scripts/gen-ledger.ts`, was fixed this pass; the regenerated `ledger.json` is **byte-identical**, ledgerHash `0x8f5360480d2683535f631ce27694aa413c93ba286e2c56f80bfe426ec3324036`, so A's deployed ledger is untouched).
+- Engine: 9 files / 83 tests green; `pnpm tune` → "ALL PRD §10.4 TARGETS AND STORY GUARD RAILS PASS".
+- Model: **frozen, `modelHash 0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96`** (`v1-tuned`). No change since 13:40.
+- Real-chain evidence from F's status (not B's runs): Bhau's × W failed at tick 8 (wall 4.3 s, 14 blocks, mirror 8/8, decisions 8/8); Mutual × W survived tick 25 (25/25 mirror, 25/25 decisions); C's smoke 19/19 gap-free; spectator 36/36. So the TS mirror and the open decision model agree with the contract and the chain on the tuned model.
+- Contract side: A verified all 10 golden-vector scenarios (field for field).
+
+**Handoff:** the section "HANDOFF — complete guide to B's engine" above is current and needs no edits. Nothing in it changed in this pass.
+
+**Open items (none are B's work):**
+1. Pace decision for the human (unchanged): Bhau's × W fails at tick 8 (3.2 s model, ~4.3 s sealed) vs the PRD §5.1 script's ~13 ticks. PRD §10.4 (8–16) is met. B will NOT retune unless told to; a retune changes `modelHash` and forces F to re-record replays, C to re-verify and A to rerun BankVectors (procedure: handoff §8).
+2. The two older `REQUEST → B` lines in F.md (lines ~76 and ~101, "tell me when model.json is final") are answered: the model is final and F already re-recorded on it.
+
+**Blocked by:** nothing. **REQUEST →:** none.

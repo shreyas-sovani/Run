@@ -28,7 +28,10 @@ function allocate(raw: number[], total: number, lo: number, hi: number): number[
   for (let iter = 0; iter < 200; iter++) {
     let fixedSum = 0;
     let freeRaw = 0;
-    for (let i = 0; i < raw.length; i++) (fixed[i] ? (fixedSum += out[i]) : (freeRaw += raw[i]));
+    for (let i = 0; i < raw.length; i++) {
+      if (fixed[i]) fixedSum += out[i];
+      else freeRaw += raw[i];
+    }
     const k = (total - fixedSum) / freeRaw;
     let changed = false;
     for (let i = 0; i < raw.length; i++) {
