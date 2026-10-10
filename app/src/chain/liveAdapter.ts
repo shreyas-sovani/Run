@@ -29,7 +29,7 @@ import type {
   SealResult,
   TxKind,
 } from '@/types';
-import { gasLimitFor } from './gasModel';
+import { callGas, gasLimitFor } from './gasModel';
 import { erc20Abi, runBankAbi } from './abi';
 import { createBlockFeed } from './blocks';
 import type { BlockFeed } from './blocks';
@@ -44,7 +44,9 @@ import {
   RunBankRevert,
   extractRevert,
   isAlreadyKnown,
+  isInsufficientFunds,
   isNonceTooLow,
+  isReserveBalance,
   isTimeout,
 } from './errors';
 import { runPreflight } from './preflight';
@@ -81,6 +83,8 @@ interface SendMeta {
   requestedCount?: number | null;
   /** If set (and `gasMode === 'formula'`), use this instead of estimating. */
   formulaGas?: bigint;
+  /** Used when `estimateGas` itself fails for a transport reason (not a revert): never block a send on a flaky estimate. */
+  fallbackGas?: bigint;
   ticks?: number[][];
 }
 
@@ -243,10 +247,18 @@ export function createLiveAdapter(opts: {
           gas = meta.formulaGas;
         } else {
           // Also surfaces reverts (WrongStatus, TickMismatch, …) before anything is sent or charged.
-          estimate = await estimateContractGas(client, {
-            address: c.to, abi: c.abi, functionName: c.functionName, args: c.args as never, account: account.address,
-          } as never);
-          gas = pct(estimate, 110n);
+          try {
+            estimate = await estimateContractGas(client, {
+              address: c.to, abi: c.abi, functionName: c.functionName, args: c.args as never, account: account.address,
+            } as never);
+            gas = pct(estimate, 110n);
+          } catch (e) {
+            // A revert or an empty wallet must surface; a slow or failing estimate must not stop the send.
+            const fallback = meta.fallbackGas ?? meta.formulaGas;
+            if (fallback === undefined || extractRevert(e) || isInsufficientFunds(e) || isReserveBalance(e)) throw e;
+            estimate = null;
+            gas = fallback;
+          }
         }
         const f = await fees();
         const req = await prepareTransactionRequest(client, {
@@ -308,9 +320,14 @@ export function createLiveAdapter(opts: {
 
   const bankCall = (functionName: string, args: readonly unknown[]): Call => ({ to: bank(), abi: runBankAbi as Abi, functionName, args });
 
+  const FALLBACK_GAS: Record<TxKind, bigint> = {
+    setLevel: callGas.setLevel, rumor: callGas.startRumor, reset: callGas.reset, ping: 80_000n, fund: 120_000n,
+    loadLedger: callGas.loadLedger, ticks: 0n,
+  };
+
   async function plain(kind: TxKind, c: Call): Promise<SealResult> {
     return serial(async () => {
-      const { record, receipt } = await send(c, { kind });
+      const { record, receipt } = await send(c, { kind, fallbackGas: FALLBACK_GAS[kind] });
       const d = decodeBankLogs(receipt.logs, deployment.runBank ?? bank());
       return { record, rumor: d.rumor, ticks: d.ticks, outcome: d.outcome };
     });

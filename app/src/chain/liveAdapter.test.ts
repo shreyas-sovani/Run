@@ -40,6 +40,8 @@ class FakeNode {
   confirmAfterPolls: number | null = null;
   polls = 0;
   estimateRevert: { name: string; args: unknown[] } | null = null;
+  /** Make eth_estimateGas fail with a transport-style error (not a revert). */
+  estimateBroken = false;
   runId = 1;
   bankTick = 0;
   sealedRawHashes: Hex[] = [];
@@ -49,6 +51,7 @@ class FakeNode {
     this.confirmAfterPolls = null;
     this.polls = 0;
     this.estimateRevert = null;
+    this.estimateBroken = false;
     this.calls = [];
     this.receipts.clear();
     this.mempool.clear();
@@ -130,6 +133,7 @@ class FakeNode {
       case 'eth_maxPriorityFeePerGas': return toHex(2_000_000_000n);
       case 'eth_gasPrice': return toHex(102_000_000_000n);
       case 'eth_estimateGas': {
+        if (this.estimateBroken) this.rpcError(-32000, 'upstream request timeout');
         if (this.estimateRevert) {
           const data = encodeErrorResult({ abi: runBankAbi, errorName: this.estimateRevert.name, args: this.estimateRevert.args } as never);
           this.rpcError(3, 'execution reverted', data);
@@ -226,6 +230,18 @@ describe('live adapter send path', () => {
     expect(translateError(err).detail).toBe('The bank is failed. Reset the bank first.');
     expect(sends()).toHaveLength(0);
   });
+
+  it('a failing estimateGas (transport trouble, not a revert) does not block the send: A\'s fixed limits take over', async () => {
+    node.estimateBroken = true;
+    const a = make();
+    const ping = await a.ping();
+    expect(ping.record).toMatchObject({ status: 'sealed', gasLimit: 80_000n });
+    const sealed = await a.sealTicks(1, [[1]]);
+    expect(sealed.record.status).toBe('sealed');
+    expect(sealed.record.gasLimit).toBeGreaterThan(100_000n);
+    expect(a.gasLog[0].estimate).toBeNull();
+    expect(a.gasLog[0].mode).toBe('formula');
+  }, 20_000);
 
   it('consecutive sends use consecutive nonces', async () => {
     const a = make();

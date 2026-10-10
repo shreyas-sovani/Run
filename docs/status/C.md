@@ -45,7 +45,9 @@ Other live runs (all `OK`, bank back to `ready` each time):
 - `--mini --stress` (60 synthetic ids, 3 ticks): 1.21 s, gas limit 393,486.
 - `--run --card 3` (full fixture run through the SealQueue): ticks 1 + 2–3, **BankFailed at tick 3, trapped 336 / 3,573 AUSD**, mirror 3/3. Same for cards 1 and 2. Card 0 survives at tick 8 (8/8).
 - **`--soak 20`**: 20 ticks in 11 transactions over 9.7 s, **gap-free**, 0.6–1.2 s per transaction.
-- Fork: `chain:fork --mini` passes through both `eth_sendRawTransactionSync` and the `--no-sync` fallback.
+- Fork (anvil fork of testnet, real engine from B-07): `chain:fork --run --card 3 --level 1` seals **36 ticks gap-free, mirror 36/36, Monad Mutual survives at tick 36**, through both `eth_sendRawTransactionSync` and the `--no-sync` fallback. Level 0 with cards 1 and 3 fails the bank at tick 3 (trapped 429 and 336); card 0 survives at tick 8 (nobody panics). That is still not the ~13-tick failure the PRD wants: B's tuning, not C's.
+- On the real testnet someone else's live run reached run 16 / tick 36 (survived) through this adapter while I was testing, so the 15+ tick check also holds on chain.
+- Late fix: if `estimateGas` fails for a transport reason (not a revert, not out-of-funds) the send now uses A's fixed `callGas` (or the tick formula) instead of failing. Found on the fork, where `estimateGas` for a level-1 `setLevel` takes 10+ s because anvil fetches the whole ledger cold.
 
 ### Gas: calibration data for A
 
