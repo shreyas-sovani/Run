@@ -2,7 +2,7 @@
 
 > **Read this top to bottom and you can take over Workstream A with no other context.**
 > Scope: `contracts/**`, `app/src/chain/abi/**`, `app/src/chain/gasModel.ts`, `app/src/config/deployment.testnet.json` (+ this file). Nothing else. Other agents (B engine, C chain adapter, D stage, E panels/brand, F app shell) edit the rest of the repo at the same time: never revert, reformat or "fix" their files.
-> Last updated 15:30 IST, Sat 10 Oct 2026. Testnet only (Monad testnet, chain id 10143). No mainnet anything.
+> Last updated 15:45 IST, Sat 10 Oct 2026. Testnet only (Monad testnet, chain id 10143). No mainnet anything.
 
 LIVE BANK (A): **none**. A has no pending transactions and sends none unless it first writes `LIVE BANK: A until HH:MM` here (see §7).
 
@@ -14,7 +14,7 @@ LIVE BANK (A): **none**. A has no pending transactions and sends none unless it 
 - `forge test`: **52 tests, all green** (unit, golden vectors v2, invariants, testnet fork).
 - Live bank, last read 14:18 IST: status `Ready`, level 0, tick 0, `runId` 31, 10,000 AUSD held, Street 0, `ledgerHash` = B's v1, `configHash` = level 0.
 - **A: done (15:30).** The one open item (level-0 gas formula ~5% under C's failing-tick sample) is fixed: `L0.perId` 3_800n → 4_200n, §6.3. Default/level-1 envelope unchanged, typecheck + tests green.
-- Standing by only for F's level-1 `gasLog` rows (§10 item 2); no row has been posted yet. Nothing blocks any other agent on A.
+- F's level-1 `gasLog` rows arrived (15:31) and were analysed at 15:45: **no undershoot, no refit needed** (§6.4). Nothing blocks any other agent on A. **A is finished; there is nothing left to do.**
 
 ---
 
@@ -196,6 +196,18 @@ What I verified offline, no chain access needed:
 
 Calibration scripts used (not in the repo): sampled `cast estimate --from <operator> <runBank> "sealTicks(uint32,uint16[][])" 1 "[[...],[...]]"` against a `Running` bank at tick 0 (read-only, no key needed), varying ticks 1–8, ids 0–475, ids spread vs contiguous, level 0 and 1, then least-squares + grid search. `Lifecycle.s.sol` is how to put the bank in `Running` for that (needs the single-writer rules in §7).
 
+### 6.4 CLOSED 15:45 — F's real level-1 gas rows (F.md "Gas rows for A", 15:31): formula was enough, L1 not refitted
+
+Rule I was given: refit L1 only if a row has `formula < estimate`. **No row does.** F's reading ("the formula undershot in 5 of 12 batches, limit had to be raised +1% to +77%") is a misreading of the log columns, which I verified by recomputing every row with `gasLimitFor` from `gasModel.ts`:
+
+- In `liveAdapter.ts` the **logged** `formula` column is `gasLimitFor(meta.ticks)` (envelope with no queue hint), but the limit actually sent is `gasLimitFor(ticks, { queued: lastQueueAfter })` (line ~406). So `gasLimit − formula` is exactly the speed-bump queue term `3,700 × queued`, not an out-of-gas retry. Per row (ticks / ids / slots → implied `queued` = (limit − envelope) / 3,700): 2/18/11 → 1; 2/53/37 → 16; 2/17/14 → 65; 3/15/15 → 76; 3/4/4 → 70; 1/2/2 → 0; level-0 3/162/59 → 0. All are **exact integers**, and the recomputed envelope equals the logged `formula` to the unit in every row. That cannot happen if the limits had been doubled/raised by a retry.
+- No retry happened: on an out-of-gas first attempt `liveAdapter.ts` flips `gasMode` to `'estimate'` (line ~303) and later rows would show `mode = estimate`. Every row in both runs is `formula`, and both runs completed (Mutual survived tick 25 with mirror 25/25 and decisions 25/25; Bhau's failed tick 8, 8/8). Seal times were normal (the 2.40 s sample is a one-off network delay, not a retry).
+- Because Monad charges the limit, `gasUsed == gasLimit` in every row; the rows therefore prove `limit >= need`, i.e. **no undershoot**. They cannot show how tight the limit is (no `estimate` was taken in formula mode).
+- Looseness: the queue hint is the right shape (cost follows served-from-queue, as F noted), and the envelope stays on the safe side; expected overshoot is within the documented ~1.8x on dense batches (e.g. 1 tick, 2 ids, nothing queued: 266,600 vs ~160–200k needed). That costs <0.1 MON per run at ~200 gwei and avoids retries; not worth risking an undershoot on the demo path.
+- **Decision: L1 constants and the default envelope unchanged.** The calibrated claim stands (>= every measured sample, now including 11 real live level-1 batches and 4 level-0 batches).
+
+Optional, not blocking, for C (owner of `liveAdapter.ts`/`GasLogEntry`): **REQUEST → C**: log the limit's actual formula input too, e.g. `formula: meta.formulaGas` (or add `queued` to `GasLogEntry`) instead of `gasLimitFor(meta.ticks)`, so `formula` in `gasLog` equals what was sent and nobody misreads the next table the way F did. If C ever wants a tighter level-1 limit, send a handful of rows with `mode: 'estimate'` (a run with `adapter.gasMode = 'estimate'`) and I will refit with real `estimate` values. Not needed for the demo.
+
 ---
 
 ## 7. Single writer on the live bank (IMPORTANT)
@@ -243,7 +255,7 @@ Replies already given (so nobody re-asks): to B — vectors v2 all pass; to F �
 | # | Item | Owner | Blocking? | Action |
 |---|---|---|---|---|
 | 1 | ~~Level-0 gas formula ~5% under C's failing-tick sample~~ | **A** | — | **DONE 15:30** (`perId` 4_200n; §6.3) |
-| 2 | Level-1 gas rows from F's `live:e2e` `adapter.gasLog` | F (provide) → A (refit) | No | When rows appear in `status/C.md`/`F.md`, refit if any row has `formula < estimate`; otherwise nothing |
+| 2 | ~~Level-1 gas rows from F's `live:e2e` `adapter.gasLog`~~ | F → A | — | **DONE 15:45**: rows received, no undershoot, L1 left unchanged (§6.4) |
 | 3 | README/runbook/slide wording "Verified on MonadVision (Sourcify exact match) and Monadscan" | F/E (docs/copy) | No | Use the §2 wording; do not say "creation match" |
 | 4 | Optional: CreateX deterministic addresses (BACKLOG A-12) | — | No | **Skipped on purpose**: a redeploy would invalidate every agent's config and replays |
 
