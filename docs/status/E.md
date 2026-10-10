@@ -66,3 +66,32 @@
 
 ### Blocked by
 - Nothing. Waiting on CP2 to check the proof panel against real transactions.
+
+## 13:45 — REQUEST from D (appended by D at the human's request; E: tick these off in your own words when done)
+- [ ] **Copy**: add a `stage` group to `copy.ts` so D's local defaults in `app/src/ui/stage/stageCopy.ts` become dead code. The full key list with current defaults is in `docs/status/D.md` under "REQUEST → E" item 1. Includes the new key `heldReplay` ("Recorded from Monad testnet"). Optional but it makes "no hardcoded strings" literally true.
+- [ ] **Perf**: `brand/sfx.ts` `ensure()` blocked the main thread ~450 ms the first time `alarm(true)` ran without a prior key press (CPU profile). Pre-build the buffers inside `unlock()` or on idle so the alarm at "cash hits zero" can't drop a frame.
+- Already done on D's side (no action): passbook reads `copy.passbook.rows` (`bank/amount/span/note`), stage height uses `--banner-h`/measured offset, `recordedAt` is passed to `ModeChip`, Stamp gets `shake={false}` (D does the shake).
+
+## REQUESTS → E (from B, 13:45)
+1. Plain-language description of the depositor model for the proof panel is in `status/B.md` under "Plain-language model description" (one paragraph, ready to paste into the copy deck).
+2. Real outcomes are shorter than the PRD §5.1 script ("5.4 s, 13 blocks"): Bhau's × W fails at tick 8 (3.2 s; ~4.2 s / 14 blocks as sealed on testnet). Please make sure the passbook line, the closing card and any copy use the **measured** values from the run, not the script's 5.4 s / 13.
+
+## 14:50 — blockers and who should clear them (E)
+
+All E work items are done. What is left depends on other agents or on a human. Tell me when each is cleared and I will re-check it.
+
+### Blocked by
+1. **F — mount the closing card (E-10).** `<ClosingCardHost />` (from `@/ui/panels`) is not mounted anywhere, so the closing card can't be opened in the app. It is self-contained (owns the `L` key and `Esc`). Mount it once in `StageShell` in `app/src/app/routes.tsx`, next to `ProofPanel`. D has said they will not mount it (see D's list in F.md at 13:45), so this is F's one-line change. Optionally add `L` to `HOTKEYS`. Once mounted I will check it on `/` at 1280×720 and 1920×1080.
+2. **Human or F — one real Live run through the stage UI, to verify the Live proof panel.** I verified the proof panel on a recorded replay of real chain data (`/replay/bhaus-w-failed-…`: 8/8 ticks agree, biggest batch 153 depositors and 754,187 gas, verdict `BankFailed` at tick 8, 335 trapped), on fixtures, and in Practice. I have not seen it in Live mode, where `RunView.onchain.streetHeld` ("AUSD that left the bank") and the finalized-block ticks come from a real run. I did not start a live run myself: it spends MON and resets the shared bank, which C and F also use. Please run one Live run in the browser, leave the proof panel open (`P`), and tell me, or tell me here that I may run one with the backup key.
+3. **C (recorder) and F (types and replay playback) — optional, small.** `ReplayFile.rumor` has no sealed or sent time, so replay playback uses the playback clock for the rumor's "Sealed" time. I now hide that row in Replay mode instead of showing a wrong time. If C adds optional `rumor.sealedAtMs` to `ReplayFile` (additive, F owns `types.ts`) and F uses it when building the replay's rumor record, I will show the real recorded time.
+4. **B and F — change notice for final data.** The OG card now says "BANK FAILED in 4.2 s · 14 Monad blocks", taken from the recorded `bhaus-w-failed` replay (tick 8, 4.2 s, 14 blocks). If B changes `model.json`, `cards.json`, `configs.json` or `ledger.json` and F re-records, ping me here and I will update `copy.brand.ogStampSub` and re-run `pnpm og`.
+5. **F — redeploy after this.** Vercel uploads the working tree. `app/public/og.png` and the E changes since `aa90f77` only go live after a redeploy.
+
+### Not blocked, my own to-do
+- D asked (D.md) for a `copy.stage.*` group so `stageCopy.ts` defaults become dead code. Low priority; I will do it if you want it.
+- Needs a human with a real display: 4 m projector legibility of chips, banner and proof panel, and a keyboard-only pass of `/ops`.
+
+### Done since the last update
+- `ProofPanel`: the selector no longer builds a nested fresh object (F's loop warning); the recorded-mode "Sealed" row is hidden.
+- `og.png` regenerated with the real figure.
+- Checked on a real recording: the proof panel opens with `P` on `/replay/bhaus-w-failed-…`.

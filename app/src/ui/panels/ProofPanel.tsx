@@ -15,7 +15,8 @@ export type ProofData = Pick<
 > & { practice: { tick: number; withdrawn: number; loss: bigint } | null };
 
 function useProofData(): ProofData {
-  return useRunView((v) => ({
+  // Selector returns primitives and store-owned references only (F: nested fresh objects would re-render forever).
+  const slice = useRunView((v) => ({
     mode: v.mode,
     phase: v.phase,
     seals: v.seals,
@@ -27,10 +28,16 @@ function useProofData(): ProofData {
     decisions: v.decisions,
     replay: v.replay,
     sealedTick: v.sealedTick,
-    practice: v.frame
-      ? { tick: v.frame.tick, withdrawn: v.frame.bank.withdrawnCount, loss: v.frame.bank.cumulativeLoss }
-      : null,
+    pTick: v.frame?.tick ?? -1,
+    pWithdrawn: v.frame?.bank.withdrawnCount ?? 0,
+    pLoss: v.frame?.bank.cumulativeLoss ?? 0n,
   }));
+  const { pTick, pWithdrawn, pLoss, ...rest } = slice;
+  return useMemo(
+    () => ({ ...rest, practice: pTick >= 0 ? { tick: pTick, withdrawn: pWithdrawn, loss: pLoss } : null }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...Object.values(rest), pTick, pWithdrawn, pLoss],
+  );
 }
 
 /** Slides over the vault column. `Esc` and the close button close it (PRD §13.4). */
@@ -165,7 +172,7 @@ export function ProofContent(props: { data: ProofData; onWatchRecorded(): void }
                 <span className="tnum">{fmtBlock(model.rumor.blockNumber)}</span>
               </Row>
             ) : null}
-            {model.rumor.sealedAtMs !== null ? (
+            {model.rumor.sealedAtMs !== null && !recorded ? (
               <Row label={copy.proof.rumorSealed}>
                 <span className="tnum">{fmtTimeOfDay(model.rumor.sealedAtMs)}{' '}</span>
                 <FinalBadge final={isFinalized(model.rumor, d.finalizedBlock)} />

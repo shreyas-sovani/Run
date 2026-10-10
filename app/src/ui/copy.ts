@@ -14,7 +14,7 @@ export const copy = {
     ogKicker: 'One rumor. 500 depositors.',
     ogLine: 'start a bank run on Monad',
     ogStamp: 'BANK FAILED',
-    ogStampSub: 'in 5.4 s',
+    ogStampSub: 'in 4.2 s · 14 Monad blocks',
     ogFootnote: 'Real AUSD · sealed on Monad testnet · all banks fictional',
   },
 
