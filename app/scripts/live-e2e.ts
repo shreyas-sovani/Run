@@ -31,6 +31,24 @@ const sequence: { level: BankLevel; card: RumorCard }[] = (runsArg > 0 ? process
     return { level: l as BankLevel, card: c as RumorCard };
   });
 
+// Every sealTicks gas row seen during this script, tagged with the bank level of the run that sent it.
+const gasRows: { level: BankLevel; ticks: number; ids: number; distinctSlots: number; estimate: bigint | null; formula: bigint; gasLimit: bigint; gasUsed: bigint; mode: string }[] = [];
+
+function printGasRows(): void {
+  if (gasRows.length === 0) {
+    console.log('\nGas rows: none recorded.');
+    return;
+  }
+  console.log('\nGas rows (sealTicks) — paste level-1 rows into status/C.md for A:');
+  console.log('  level ticks   ids slots   estimate    formula   gasLimit    gasUsed  mode');
+  for (const r of gasRows) {
+    console.log(
+      `  ${String(r.level).padStart(5)} ${String(r.ticks).padStart(5)} ${String(r.ids).padStart(5)} ${String(r.distinctSlots).padStart(5)} ` +
+        `${(r.estimate === null ? '-' : String(r.estimate)).padStart(10)} ${String(r.formula).padStart(10)} ${String(r.gasLimit).padStart(10)} ${String(r.gasUsed).padStart(10)}  ${r.mode}`,
+    );
+  }
+}
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 async function waitFor(pred: () => boolean, ms: number, label: string): Promise<void> {
   const t0 = Date.now();
@@ -103,10 +121,14 @@ async function main() {
     runActions.selectLevel(step.level);
     runActions.selectCard(step.card);
     const t0 = Date.now();
+    const gasBefore = controller.debug.gasLog().length;
     void runActions.start();
     await waitFor(() => ['failed', 'survived'].includes(getRunView().phase), 180_000, 'outcome');
     const v = getRunView();
     const o = v.outcome!;
+    for (const g of controller.debug.gasLog().slice(gasBefore)) {
+      gasRows.push({ level: step.level, ticks: g.ticks, ids: g.ids, distinctSlots: g.distinctSlots, estimate: g.estimate, formula: g.formula, gasLimit: g.gasLimit, gasUsed: g.gasUsed, mode: g.mode });
+    }
     console.log(
       `  ${o.kind.toUpperCase()} at tick ${o.tick} · wall ${o.wallMs !== null ? (o.wallMs / 1000).toFixed(1) : '?'} s · ` +
         `${o.blocks ?? '?'} blocks · trapped ${o.trappedCount} · script total ${((Date.now() - t0) / 1000).toFixed(1)} s`,
@@ -128,6 +150,7 @@ async function main() {
   runActions.reset();
   await waitFor(() => getRunView().phase === 'idle', 120_000, 'final reset');
   console.log('Bank is Ready. Live end-to-end passed.');
+  printGasRows();
   process.exit(0);
 }
 

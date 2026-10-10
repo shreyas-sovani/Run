@@ -6,7 +6,8 @@ import { controller } from '@/app/controller';
 import { patchUi, persistMuted, runStore, uiStore } from '@/app/state';
 import { startFakeRun as startFakeRunImpl } from '@/app/fixtures/fakeRun';
 import { sfx } from '@/ui/brand';
-import type { BankLevel, PreflightReport, ReplayFile, RumorCard, RunMode, RunView, UiState } from '@/types';
+import { fontsLoaded } from '@/ui/theme/fonts';
+import type { BankLevel, PreflightCheck, PreflightReport, ReplayFile, RumorCard, RunMode, RunView, UiState } from '@/types';
 import type { Hex } from 'viem';
 
 // Equality for selector results: Object.is, then shallow (plain objects / arrays), then one level deeper for plain
@@ -112,3 +113,37 @@ export const HOTKEYS: { key: string; label: string }[] = [
 export function startFakeRun(opts?: { level?: BankLevel; outcome?: 'failed' | 'survived' }): () => void {
   return startFakeRunImpl(opts);
 }
+
+// PRD §12.5 environment rows. Browser-only (needs fonts, audio and the window), so they are registered here, not in the
+// controller. All non-critical: they never change `report.ok`.
+export function environmentChecks(): PreflightCheck[] {
+  const fonts = fontsLoaded();
+  const unlocked = sfx.isUnlocked();
+  const w = typeof window !== 'undefined' ? window.innerWidth : 0;
+  const h = typeof window !== 'undefined' ? window.innerHeight : 0;
+  const bigEnough = w >= 1280 && h >= 720;
+  return [
+    {
+      id: 'fonts',
+      label: 'Fonts loaded',
+      status: fonts ? 'pass' : 'fail',
+      detail: fonts ? 'Self-hosted faces are ready' : 'The stage fonts have not loaded yet; reload the page',
+      critical: false,
+    },
+    {
+      id: 'audio',
+      label: 'Audio unlocked',
+      status: unlocked ? 'pass' : 'warn',
+      detail: unlocked ? 'Sound is on' : 'Press any key once so the browser allows sound',
+      critical: false,
+    },
+    {
+      id: 'window',
+      label: 'Window at least 1280×720',
+      status: bigEnough ? 'pass' : 'fail',
+      detail: `${w}×${h}${bigEnough ? '' : ': enlarge the window or press F for full screen'}`,
+      critical: false,
+    },
+  ];
+}
+controller.setEnvChecks(environmentChecks);

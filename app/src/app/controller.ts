@@ -19,7 +19,7 @@ import {
   saveOperatorKeys,
   translateError,
 } from '@/chain';
-import type { ChainAdapter, Recorder, SealQueue } from '@/chain';
+import type { ChainAdapter, GasLogEntry, Recorder, SealQueue } from '@/chain';
 import {
   MAX_LEAD,
   TICK_MS,
@@ -39,6 +39,7 @@ import type {
   Model,
   Outcome,
   OutcomeEvent,
+  PreflightCheck,
   PreflightReport,
   ReplayFile,
   RumorCard,
@@ -103,6 +104,25 @@ let snapshotBusy = false;
 let snapshotDirty = false; // a read was requested while one was in flight: re-read when it lands (the in-flight one may predate the tx)
 
 const view = () => runStore.getState();
+
+// ── Environment checks (PRD §12.5, non-critical: fonts, audio, window size) ─────────────────────────
+// They need the browser and the UI barrels, which this file must not import (tsx scripts load it and can't
+// load CSS). `store.ts` registers the provider; scripts and tests simply get no extra rows.
+type EnvChecks = () => PreflightCheck[];
+let envChecks: EnvChecks | null = null;
+const ENV_CHECK_IDS = new Set(['fonts', 'audio', 'window']);
+
+/** Appends the environment rows to a report. Never touches `ok`: these rows are informational and never critical. */
+function withEnvChecks(report: PreflightReport): PreflightReport {
+  if (!envChecks) return report;
+  let extra: PreflightCheck[] = [];
+  try {
+    extra = envChecks().map((c) => ({ ...c, critical: false }));
+  } catch {
+    extra = [];
+  }
+  return { ...report, checks: [...report.checks.filter((c) => !ENV_CHECK_IDS.has(c.id)), ...extra] };
+}
 
 // ── Decision check (F-09) ───────────────────────────────────────────────
 // Re-runs the public depositor model from the chain's recorded request lists and counts agreeing decisions.
@@ -970,7 +990,7 @@ export const controller = {
       addressOfKey(keys.primary); // validates; throws without echoing the key
       if (keys.backup) addressOfKey(keys.backup);
     } catch (e) {
-      patchRun({ preflight: failedReport('keys', 'Operator key', e), error: translateError(e) });
+      patchRun({ preflight: withEnvChecks(failedReport('keys', 'Operator key', e)), error: translateError(e) });
       return;
     }
     try {
@@ -1003,17 +1023,17 @@ export const controller = {
 
   async runPreflight(): Promise<PreflightReport> {
     if (!liveAdapter) {
-      const report = failedReport('operator', 'Operator key loaded', new Error('Load the operator key on the Ops page.'));
+      const report = withEnvChecks(failedReport('operator', 'Operator key loaded', new Error('Load the operator key on the Ops page.')));
       patchRun({ preflight: report });
       return report;
     }
     patchPending({ preflight: true });
     try {
-      const report = await liveAdapter.preflight(requireModel());
+      const report = withEnvChecks(await liveAdapter.preflight(requireModel()));
       patchRun({ preflight: report });
       return report;
     } catch (e) {
-      const report = failedReport('preflight', 'Preflight', e);
+      const report = withEnvChecks(failedReport('preflight', 'Preflight', e));
       patchRun({ preflight: report });
       return report;
     } finally {
@@ -1058,6 +1078,20 @@ export const controller = {
   saveReplay(): ReplayFile | null {
     return lastReplay ?? recorder.current();
   },
+
+  /** Additive. `store.ts` registers the browser-only checks (fonts, audio, window) that get appended to every preflight report. */
+  setEnvChecks(fn: (() => PreflightCheck[]) | null): void {
+    envChecks = fn;
+  },
+
+  /** Read-only diagnostics for scripts and the console. */
+  debug: {
+    /** The live adapter's per-send gas log (a copy; `[]` when no live adapter is connected). */
+    gasLog(): GasLogEntry[] {
+      const a = liveAdapter as (ChainAdapter & { gasLog?: readonly GasLogEntry[] }) | null;
+      return a && a.kind === 'live' && a.gasLog ? [...a.gasLog] : [];
+    },
+  },
 };
 
 // ── Live helpers (need `controller`, so they live below it) ─────────────
@@ -1085,7 +1119,7 @@ async function connectWith(keys: { primary: Hex; backup: Hex | null; rpcOverride
   try {
     liveAdapter = createLiveAdapter({ primaryPk: keys.primary, backupPk: keys.backup, rpcOverride: keys.rpcOverride });
   } catch (e) {
-    patchRun({ preflight: failedReport('adapter', 'Chain connection', e) });
+    patchRun({ preflight: withEnvChecks(failedReport('adapter', 'Chain connection', e)) });
     return;
   }
   const a = liveAdapter;
