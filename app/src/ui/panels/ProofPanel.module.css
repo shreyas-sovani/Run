@@ -322,3 +322,45 @@
   line-height: var(--lh-body);
   color: var(--ink-2);
 }
+
+/* Every transaction of the run: what it was, its block, its explorer link and finality. */
+.txs {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.tx {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'what block' 'link link';
+  gap: 2px var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.txWhat {
+  grid-area: what;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.txMeta {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.tx > .txMeta {
+  grid-area: block;
+  font-family: var(--font-data);
+}
+
+.txLink {
+  grid-area: link;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+}

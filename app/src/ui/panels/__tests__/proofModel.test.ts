@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Outcome, SealRecord } from '@/types';
-import { agreement, biggestBatch, buildProof, isFinalized, streetSplit, verdictSeal } from '../proofModel';
+import { agreement, biggestBatch, buildProof, chainTxs, isFinalized, streetSplit, verdictSeal } from '../proofModel';
 
 let id = 0;
 function rec(over: Partial<SealRecord>): SealRecord {
@@ -121,5 +121,20 @@ describe('streetSplit', () => {
   });
   it('a run with no fire sale is all payout', () => {
     expect(streetSplit({ streetHeld: 2_000_000n, cumulativeLoss: 0n })).toEqual({ total: 2_000_000n, paid: 2_000_000n, loss: 0n });
+  });
+});
+
+describe('chainTxs', () => {
+  it('lists every sealed onchain transaction in order and skips pending, simulated and hashless records', () => {
+    const seals = [
+      rec({ id: 1, kind: 'rumor', txHash: '0x01' }),
+      rec({ id: 2, kind: 'ticks', txHash: '0x02', fromTick: 1, toTick: 2 }),
+      rec({ id: 3, kind: 'ticks', txHash: null, status: 'pending' }),
+      rec({ id: 4, kind: 'ticks', txHash: null, simulated: true }),
+      rec({ id: 5, kind: 'ticks', txHash: '0x05', status: 'reverted' }),
+      rec({ id: 6, kind: 'ticks', txHash: '0x06', fromTick: 3, toTick: 3 }),
+    ];
+    expect(chainTxs(seals).map((r) => r.id)).toEqual([1, 2, 6]);
+    expect(chainTxs([])).toEqual([]);
   });
 });

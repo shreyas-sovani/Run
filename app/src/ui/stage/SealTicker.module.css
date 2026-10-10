@@ -73,8 +73,40 @@
 
 .health {
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
   margin-left: auto;
   font-family: var(--font-body);
+}
+
+/* Opens the proof panel's full transaction list: every seal stays checkable after it scrolls off the ticker. */
+.all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 36px;
+  padding: 0 var(--sp-3);
+  border: 1.5px solid var(--seal);
+  border-radius: var(--r-1);
+  background: var(--slip);
+  color: var(--seal);
+  font-family: var(--font-body);
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.all:hover {
+  background: var(--seal-wash);
+}
+
+.all kbd {
+  padding: 0.1em 0.4em;
+  border: 1.5px solid currentColor;
+  border-radius: var(--r-1);
+  font-size: 0.85em;
+  line-height: 1;
 }
 
 .empty {

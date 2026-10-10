@@ -1,5 +1,5 @@
 // The seal ticker (D-04): the latest 6 seals, newest first. Simulated seals never link anywhere.
-import { useRunView } from '@/app/store';
+import { uiActions, useRunView } from '@/app/store';
 import { HealthChip, TxLink } from '@/ui/brand';
 import { fmtBlock, fmtSealTime } from '@/ui/format';
 import type { SealRecord } from '@/types';
@@ -60,6 +60,7 @@ export function SealTicker() {
   const aheadOf = useRunView((v) => (v.phase === 'running' && v.frame && v.frame.tick > v.sealedTick ? v.sealedTick + 1 : null));
 
   const rows = seals.slice(-SHOWN).reverse();
+  const onchainCount = seals.filter((r) => r.status === 'sealed' && !r.simulated && r.txHash !== null).length;
   const hasPendingRecord = rows.some((r) => r.status === 'pending');
   const delayed = health === 'delayed' || health === 'paused';
 
@@ -82,6 +83,11 @@ export function SealTicker() {
         </ol>
       )}
       <div className={styles.health}>
+        {onchainCount > 0 ? (
+          <button type="button" className={styles.all} onClick={() => uiActions.toggleProof(true)} aria-keyshortcuts="P">
+            {S.allTx(onchainCount)} <kbd aria-hidden="true">{S.key.proof}</kbd>
+          </button>
+        ) : null}
         <HealthChip health={health} sealedTick={sealedTick} blockNumber={null} />
       </div>
     </footer>

@@ -5,7 +5,7 @@ import type { RunView } from '@/types';
 import { Address, Button, CheckIcon, CrossIcon, TxLink } from '@/ui/brand';
 import { copy } from '@/ui/copy';
 import { fmtAusd, fmtAusdWithUsd, fmtUsdScaled, fmtBlock, fmtCount, fmtGas, fmtSealTime, fmtTimeOfDay } from '@/ui/format';
-import { agreement, buildProof, isFinalized, streetSplit } from './proofModel';
+import { agreement, buildProof, chainTxs, isFinalized, streetSplit } from './proofModel';
 import s from './ProofPanel.module.css';
 
 /** What the proof panel reads from the run view (a slice, so the lab can feed fixtures). */
@@ -121,6 +121,7 @@ export function ProofContent(props: { data: ProofData; onWatchRecorded(): void }
 
   const recorded = model.source === 'recorded';
   const agree = agreement(d.mirror);
+  const txs = chainTxs(d.seals);
   const { runBank, street, ausd } = d.deployment;
   const hasRun = model.rumor !== null || model.txCount > 0;
 
@@ -253,6 +254,33 @@ export function ProofContent(props: { data: ProofData; onWatchRecorded(): void }
               </Row>
             )}
           </dl>
+        </section>
+      ) : null}
+
+      {txs.length > 0 ? (
+        <section className={s.sect} aria-labelledby="pf-all">
+          <h3 id="pf-all" className={s.h3} title={copy.proof.allTxHint}>
+            {copy.proof.allTx}
+          </h3>
+          <p className={s.line}>{copy.proof.allTxCount(txs.length)}</p>
+          <ol className={s.txs}>
+            {txs.map((r) => (
+              <li key={r.id} className={s.tx}>
+                <span className={s.txWhat}>
+                  {r.kind === 'ticks' && r.fromTick !== null && r.toTick !== null
+                    ? copy.proof.txTicks(r.fromTick, r.toTick)
+                    : copy.proof.txKinds[r.kind]}
+                  {r.kind === 'ticks' && r.requestedCount !== null ? (
+                    <span className={s.txMeta}> · {copy.proof.txRequests(r.requestedCount)}</span>
+                  ) : null}
+                </span>
+                <span className={`${s.txMeta} tnum`}>{r.blockNumber !== null ? fmtBlock(r.blockNumber) : ''}</span>
+                <span className={s.txLink}>
+                  {r.txHash ? <TxLink hash={r.txHash} /> : null} <FinalBadge final={isFinalized(r, d.finalizedBlock)} />
+                </span>
+              </li>
+            ))}
+          </ol>
         </section>
       ) : null}
 

@@ -180,6 +180,7 @@ export const S = {
   tickRange: (a: number, b: number) =>
     a === b ? fill(st('tickOne', 'tick {a}'), { a }) : fill(st('tickMany', 'tick {a}–{b}'), { a, b }),
   withdrew: (n: number) => fill(st('withdrew', '{n} withdrew'), { n }),
+  allTx: (n: number) => fill(st('allTx', 'all {n} transactions'), { n }),
   sealedIn: (t: string) => fill(st('sealedIn', 'sealed {t}'), { t }),
   finalized: () => st('finalized', '✓ finalized'),
   finalizing: () => st('finalizing', 'finalizing…'),

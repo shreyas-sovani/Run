@@ -29,6 +29,12 @@ The human asked for: finish the agents' leftovers, update the docs, and a two-pa
 
 Production https://run-bank-run.vercel.app is build `693b9fe` (this pass, plus E's last proof-panel fixes `f605f52`, which `ad6be6f` did not have). `pnpm verify:deploy https://run-bank-run.vercel.app --expect-build 693b9fe`: `/`, `/app`, `/watch`, `/replay`, `/replay/<id>`, `/ops` all 200, title correct, absolute `og:image` 200, neither key in the bundle, build id matches.
 
+### 17:30 — every transaction stays verifiable
+
+- The proof panel (`P`) now has **Every transaction in this run**: every sealed transaction (bank reset or switch, rumor, every tick batch, the verdict), oldest first, with tick range, withdrawal requests, block, explorer link and ✓ finalized. Works for both banks and in Live, Replay and Spectate. Checked on the recorded Monad Mutual run: 12 of 12 listed.
+- The ticker gets an **all N transactions · P** button that opens that list, so seals that scroll off the ticker stay one press away.
+- Files: `ui/panels/{ProofPanel.tsx,ProofPanel.module.css,proofModel.ts}`, `ui/stage/{SealTicker.tsx,SealTicker.module.css,stageCopy.ts}`, `ui/copy.ts`; test `chainTxs` in `panels/__tests__/proofModel.test.ts`.
+
 ### Still open
 
 - **Human**: five rehearsals (runbook §7), projector legibility from 4 m, demo-day checklist. The presenter now opens `http://localhost:4173/app` (or clicks **Start a bank run** on the landing).

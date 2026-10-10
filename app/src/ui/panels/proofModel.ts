@@ -90,3 +90,8 @@ export function streetSplit(o: { streetHeld: bigint; cumulativeLoss: bigint }): 
   const loss = o.cumulativeLoss < 0n ? 0n : o.cumulativeLoss > total ? total : o.cumulativeLoss;
   return { total, paid: total - loss, loss };
 }
+
+/** Every real transaction of the run, oldest first: sealed, not simulated, with a hash to open on the explorer. */
+export function chainTxs(seals: readonly SealRecord[]): SealRecord[] {
+  return seals.filter((r) => r.status === 'sealed' && !r.simulated && r.txHash !== null);
+}
