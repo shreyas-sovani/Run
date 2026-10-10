@@ -25,6 +25,10 @@ The human asked for: finish the agents' leftovers, update the docs, and a two-pa
 - New tests: `app/src/app/__tests__/paths.test.ts` (stage-route scope, nav sections), `app/src/ui/site/__tests__/landingModel.test.ts` (featured-recording choice; passbook line and frames recomputed from the committed Bhau's × W replay: 4.2 s, 14 blocks, 335 trapped).
 - Browser checks (headless Chrome, keyless dev server so no `ping` was sent): landing at 1920×1080, 1440×900, 1280×720 and 375×812; mid-print frame; `/app`, `/replay`, `/replay/:id`, `/ops` with the nav; `Shift+O` does nothing on `/` and opens `/ops` from `/app`; with the closing card open `H` and `C` do nothing, and help opens normally after `Esc`.
 
+### Deployed
+
+Production https://run-bank-run.vercel.app is build `693b9fe` (this pass, plus E's last proof-panel fixes `f605f52`, which `ad6be6f` did not have). `pnpm verify:deploy https://run-bank-run.vercel.app --expect-build 693b9fe`: `/`, `/app`, `/watch`, `/replay`, `/replay/<id>`, `/ops` all 200, title correct, absolute `og:image` 200, neither key in the bundle, build id matches.
+
 ### Still open
 
 - **Human**: five rehearsals (runbook §7), projector legibility from 4 m, demo-day checklist. The presenter now opens `http://localhost:4173/app` (or clicks **Start a bank run** on the landing).
