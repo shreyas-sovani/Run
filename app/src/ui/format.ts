@@ -148,3 +148,14 @@ export function fmtSealTime(ms: number): string {
 export function fmtGas(gas: bigint): string {
   return groupThousands(gas.toString());
 }
+
+/** Local wall-clock time `14:12:07` (or UTC with `utc: true`). Used for "sealed at" in the proof panel. */
+export function fmtTimeOfDay(ms: number, opts?: { utc?: boolean }): string {
+  const d = new Date(ms);
+  if (Number.isNaN(d.getTime())) return '—';
+  const utc = opts?.utc === true;
+  const p = (n: number) => String(n).padStart(2, '0');
+  return utc
+    ? `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}`
+    : `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}

@@ -1,0 +1,497 @@
+.page {
+  position: relative;
+  min-height: 100dvh;
+  padding: var(--sp-6) var(--sp-4) var(--sp-8);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-5);
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* ── Header and stepper ───────────────────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--fs-timer);
+  line-height: var(--lh-tight);
+  color: var(--seal);
+  letter-spacing: 0.01em;
+}
+
+.title {
+  font-size: var(--fs-ui-title);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+}
+
+.lead {
+  margin-top: var(--sp-1);
+  color: var(--ink-2);
+  font-size: var(--fs-ui-lead);
+}
+
+.back {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-2);
+  counter-reset: none;
+}
+
+.pip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--slip);
+  border: 1px solid var(--slip-edge);
+  border-radius: var(--r-1);
+  font-weight: 700;
+  font-size: var(--fs-ui-small);
+  color: var(--ink-3);
+}
+
+.pipNum {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-family: var(--font-data);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.pip.current {
+  color: var(--seal);
+  border-color: var(--seal);
+  box-shadow: inset 0 0 0 2px var(--slip), inset 0 0 0 3.5px var(--seal);
+}
+
+.pip.done {
+  color: var(--ok);
+}
+
+/* ── Step cards: paper slips ──────────────────────────────────────── */
+.card {
+  background: var(--slip);
+  border: 1px solid var(--slip-edge);
+  border-radius: var(--r-1);
+  box-shadow: var(--shadow-slip);
+}
+
+.card_current {
+  border: 2px solid var(--seal);
+  box-shadow: inset 0 0 0 3px var(--slip), inset 0 0 0 4.5px var(--seal), var(--shadow-lift);
+}
+
+.card_todo .cardTitle {
+  color: var(--ink-2);
+}
+
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5) 0;
+}
+
+.stepTag {
+  font-family: var(--font-data);
+  font-size: var(--fs-ui-small);
+  font-weight: 600;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+
+.cardTitle {
+  font-size: var(--fs-ui-lead);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+}
+
+.stateTag {
+  margin-left: auto;
+  padding: 1px 10px;
+  border-radius: var(--r-1);
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+}
+
+.tag_current {
+  color: #fff;
+  background: var(--seal);
+}
+
+.tag_done {
+  color: var(--ok);
+  background: var(--ok-wash);
+}
+
+.tag_todo {
+  color: var(--ink-3);
+  background: var(--trapped-wash);
+}
+
+.tag_bad {
+  color: var(--run-text);
+  background: var(--run-wash);
+}
+
+.cardBody {
+  display: grid;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5) var(--sp-5);
+}
+
+.body {
+  color: var(--ink-2);
+}
+
+.muted {
+  color: var(--ink-3);
+}
+
+.hint {
+  font-size: var(--fs-ui-small);
+  color: var(--ink-3);
+}
+
+.warnNote {
+  padding: var(--sp-2) var(--sp-3);
+  border-left: 4px solid var(--rumor);
+  background: var(--rumor-wash);
+  color: var(--rumor-text);
+  font-weight: 700;
+}
+
+.mono {
+  font-family: var(--font-data);
+  font-size: 0.95em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+/* ── Key form ─────────────────────────────────────────────────────── */
+.kv {
+  display: grid;
+  gap: var(--sp-2);
+  margin: 0;
+}
+
+.kv > div {
+  display: grid;
+  grid-template-columns: minmax(6em, 22%) 1fr;
+  align-items: baseline;
+  gap: var(--sp-3);
+}
+
+.kv dt {
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+.kv dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.form {
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.field {
+  display: grid;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+.field label {
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-family: var(--font-data);
+  font-size: var(--fs-ui-body);
+  background: #fff;
+  color: var(--ink);
+  border: 1.5px solid var(--ink-3);
+  border-radius: var(--r-1);
+}
+
+.input:hover {
+  border-color: var(--ink);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--run);
+  background: var(--run-wash);
+}
+
+.fieldHint {
+  font-size: var(--fs-ui-small);
+  color: var(--ink-3);
+}
+
+.fieldErr {
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+  color: var(--run-text);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: fit-content;
+  min-height: 32px;
+  font-weight: 600;
+}
+
+.check input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--seal);
+}
+
+.inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--sp-3);
+}
+
+.inline > :last-child {
+  margin-top: calc(var(--fs-ui-body) * var(--lh-body) + var(--sp-1));
+}
+
+/* ── Checklist ────────────────────────────────────────────────────── */
+.checks {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.checkRow {
+  --ck: var(--ink-3);
+  --ck-wash: var(--trapped-wash);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  background: var(--ck-wash);
+  border: 1.5px solid var(--ck);
+  border-radius: var(--r-1);
+}
+
+.ckIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ck);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.ck_pass {
+  --ck: var(--ok);
+  --ck-wash: var(--ok-wash);
+}
+
+.ck_warn {
+  --ck: var(--rumor-text);
+  --ck-wash: var(--rumor-wash);
+}
+
+.ck_fail {
+  --ck: var(--run-text);
+  --ck-wash: var(--run-wash);
+}
+
+.ck_pending {
+  --ck: var(--ink-3);
+  --ck-wash: var(--trapped-wash);
+}
+
+.ckText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  color: var(--ink);
+}
+
+.ckLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-2);
+  font-size: var(--fs-ui-lead);
+  font-weight: 700;
+}
+
+.ckWord {
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+  color: var(--ck);
+}
+
+.ckDetail {
+  font-size: var(--fs-ui-small);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* ── Errors, actions, footer ──────────────────────────────────────── */
+.errorSlip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--run-text);
+  background: var(--run-wash);
+  border: 2px solid var(--run);
+  border-radius: var(--r-1);
+}
+
+.errorSlip p {
+  color: var(--ink);
+}
+
+.actionGrid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
+}
+
+.actionItem {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-2);
+}
+
+.foot {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-ui-small);
+  color: var(--ink-2);
+}
+
+.footList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--sp-3);
+  margin: 0;
+}
+
+.footList dt {
+  font-weight: 700;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  font-size: var(--fs-ui-micro);
+}
+
+.footList dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── Phones (E-11) ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .page {
+    padding: var(--sp-4) var(--sp-3) var(--sp-7);
+  }
+
+  .head {
+    grid-template-columns: 1fr auto;
+  }
+
+  .head > div {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .stepper {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardHead {
+    padding: var(--sp-3) var(--sp-4) 0;
+  }
+
+  .cardBody {
+    padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  }
+
+  .kv > div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .inline {
+    grid-template-columns: 1fr;
+  }
+
+  .inline > :last-child {
+    margin-top: 0;
+  }
+
+  .errorSlip {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions > * {
+    flex: 1 1 100%;
+  }
+}
+
+.more {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--sp-3);
+}
+
+.more > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--seal);
+  cursor: pointer;
+}
+
+.more[open] > summary {
+  margin-bottom: var(--sp-3);
+}
