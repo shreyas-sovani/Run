@@ -11,7 +11,8 @@ export const copy = {
     tagline: 'Start a bank run on Monad',
     description:
       'Start one rumor and watch 500 depositors run an onchain bank dry in seconds. Real AUSD, sealed block by block on Monad testnet.',
-    ogLine: 'RUN! · start a bank run on Monad',
+    ogKicker: 'One rumor. 500 depositors.',
+    ogLine: 'start a bank run on Monad',
     ogStamp: 'BANK FAILED',
     ogStampSub: 'in 5.4 s',
     ogFootnote: 'Real AUSD · sealed on Monad testnet · all banks fictional',
