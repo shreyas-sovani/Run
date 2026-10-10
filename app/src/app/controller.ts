@@ -364,6 +364,7 @@ function clearRunView(keep?: Partial<ReturnType<typeof initialRunView>>): void {
     mirror: base.mirror,
     decisions: null,
     replay: null,
+    seedNode: null,
     level: v.level,
     card: v.card,
     ...keep,
@@ -492,7 +493,7 @@ function playReplay(file: ReplayFile, m: Model, onDone: (stop: () => void) => vo
   patchRun({
     mode: 'replay', phase: 'running', level: params.level, card: params.card, frame: eng.frame, startedAtMs: t0, elapsedMs: 0,
     outcome: null, error: null, sealedTick: 0, mirror: { matched: 0, total: 0, firstMismatchTick: null }, health: 'idle',
-    seals: [toRecord(1, 'rumor', { txHash: file.rumor.txHash, blockNumber: rumorBlock })],
+    seals: [toRecord(1, 'rumor', { txHash: file.rumor.txHash, blockNumber: rumorBlock, sealedAtMs: t0 + (file.rumor.sealedAtMs ?? 0) })],
     blockNumber: rumorBlock, finalizedBlock: rumorBlock,
     replay: { id: file.id, name: file.name, recordedAt: file.recordedAt },
   });
@@ -757,6 +758,14 @@ export const controller = {
     patchRun({ card });
   },
 
+  /** P2: pick which depositor starts the rumor. `null` (or an invalid id) goes back to the card's own seed node. */
+  selectSeed(node: number | null): void {
+    const v = view();
+    if (v.phase !== 'idle' || (v.mode !== 'practice' && v.mode !== 'live')) return;
+    const n = v.model?.graph.nodes.length ?? 0;
+    patchRun({ seedNode: node !== null && Number.isInteger(node) && node >= 0 && node < n ? node : null });
+  },
+
   async start(): Promise<void> {
     const v = view();
     if (v.phase !== 'idle' || busy) return; // idempotent: Enter key repeat, StrictMode, double click
@@ -767,7 +776,7 @@ export const controller = {
     const a = adapter;
     const m = model;
     const level = v.level;
-    const params = defaultParams(m, level, v.card);
+    const params = defaultParams(m, level, v.card, v.seedNode ?? undefined);
     tickResults = new Map();
     chainTicks = [];
     rumorResult = null;

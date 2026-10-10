@@ -129,6 +129,8 @@ export interface RunView {
   mirror: { matched: number; total: number; firstMismatchTick: number | null };
   decisions: { matched: number; total: number } | null;      // P1 decision check
   replay: { id: string; name: string; recordedAt: string } | null;
+  /** Additive (P2): depositor chosen to start the rumor; null/undefined = the card's own seed node. */
+  seedNode?: number | null;
   operator: { address: Address | null; balanceWei: bigint | null; backupAddress: Address | null; usingBackup: boolean };
   deployment: { runBank: Address | null; street: Address | null; ausd: Address; deployed: boolean };
 }
@@ -139,7 +141,7 @@ export interface ReplayFile {
   version: 1; id: string; name: string; recordedAt: string;
   chainId: number; runBank: Address; runId: number;
   params: { level: BankLevel; card: RumorCard; seedNode: number; modelSeed: string; modelHash: Hex };
-  rumor: { txHash: Hex; blockNumber: string };
+  rumor: { txHash: Hex; blockNumber: string; sealedAtMs?: number }; // sealedAtMs (additive): ms after the rumor receipt, 0 when omitted
   ticks: TickPayload[];
   seals: { fromTick: number; toTick: number; txHash: Hex; blockNumber: string; sentAtMs: number; sealedAtMs: number; gasUsed: string }[];
   outcome: { kind: 'failed' | 'survived'; tick: number; txHash: Hex; blockNumber: string; atMs: number; trappedCount: number; trappedAmount: string; uninsuredTrapped: string };

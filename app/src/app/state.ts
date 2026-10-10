@@ -42,6 +42,7 @@ export function initialRunView(): RunView {
     mirror: { matched: 0, total: 0, firstMismatchTick: null },
     decisions: null,
     replay: null,
+    seedNode: null,
     operator: initialOperator(),
     deployment: {
       runBank: deployment.runBank,

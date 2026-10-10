@@ -3,6 +3,10 @@
 //   pnpm live:e2e --record        → also writes app/public/replays/<id>.json and updates index.json
 //   pnpm live:e2e --runs 0:1,1:1  → custom sequence of level:card pairs (card 0=Q 1=W 2=E 3=R)
 //   pnpm live:e2e --preflight     → connect and run the preflight only (one ping transaction), then exit
+//   pnpm live:e2e --primary       → sign with the primary key (default: the BACKUP key, so this never shares a nonce with C's smoke runs)
+//   pnpm live:e2e --force         → ignore other agents' `LIVE BANK:` lines (never the lock)
+// Single writer: takes the advisory lock /tmp/run-bank.lock (scripts/chain-lock.ts) and refuses while another agent's
+// `LIVE BANK: <agent> until HH:MM` line is up in docs/status/*.md.
 // Testnet only. Keys come from app/.env.local (VITE_OPERATOR_PK / VITE_BACKUP_PK) and are never printed.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -14,6 +18,7 @@ const getRunView = () => runStore.getState();
 const runActions = controller;
 import { copy } from '@/ui/copy';
 import type { BankLevel, ReplayFile, ReplayIndexEntry, RumorCard } from '@/types';
+import { acquireLock, findLiveBankLines } from './chain-lock';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const REPLAYS = resolve(here, '../public/replays');
@@ -60,9 +65,18 @@ function saveReplay(file: ReplayFile, level: BankLevel, card: RumorCard): void {
 }
 
 async function main() {
-  const primary = process.env.VITE_OPERATOR_PK as `0x${string}` | undefined;
-  const backup = (process.env.VITE_BACKUP_PK as `0x${string}` | undefined) ?? null;
-  if (!primary) throw new Error('VITE_OPERATOR_PK is not set (run via `pnpm live:e2e`, which loads .env.local).');
+  const operatorPk = process.env.VITE_OPERATOR_PK as `0x${string}` | undefined;
+  const backupPk = (process.env.VITE_BACKUP_PK as `0x${string}` | undefined) ?? null;
+  if (!operatorPk) throw new Error('VITE_OPERATOR_PK is not set (run via `pnpm live:e2e`, which loads .env.local).');
+  // Default to the backup wallet (also an operator on the bank) so F and C never share a nonce.
+  const useBackup = !process.argv.includes('--primary') && backupPk !== null;
+  const primary = useBackup ? backupPk! : operatorPk;
+  const backup = useBackup ? null : backupPk;
+  console.log(`Signing with the ${useBackup ? 'backup' : 'primary'} wallet.`);
+
+  const busy = process.argv.includes('--force') ? [] : findLiveBankLines('F');
+  if (busy.length) throw new Error(`LIVE BANK is in use by ${busy.map((b) => `${b.agent} until ${b.until}`).join(', ')}. Wait, or pass --force.`);
+  acquireLock({ agent: 'F', purpose: 'live:e2e', maxMinutes: 15 }); // throws BankBusyError if someone else holds it; released on exit
 
   controller.init();
   console.log('Connecting and running preflight…');

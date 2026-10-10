@@ -233,3 +233,24 @@ describe('spectate mode', () => {
     expect(getRunView().mode).toBe('spectate');
   }, 60_000);
 });
+
+describe('pick who starts the rumor (P2)', () => {
+  it('selectSeed overrides the card seed node, validates ids, and resets with the bank', async () => {
+    runActions.setMode('practice');
+    await waitFor(() => getRunView().phase === 'idle', 5_000, 'idle');
+    const m = getRunView().model!;
+    runActions.selectCard(1);
+    runActions.selectSeed(7);
+    expect(getRunView().seedNode).toBe(7);
+    runActions.selectSeed(9999); // out of range: back to the card's own node
+    expect(getRunView().seedNode).toBeNull();
+    runActions.selectSeed(7);
+    void runActions.start();
+    await waitFor(() => getRunView().phase === 'running', 5_000, 'running');
+    expect(getRunView().frame!.heardAt[7]).toBeGreaterThanOrEqual(0); // the chosen depositor heard first
+    expect(m.cards[1].seedNode).not.toBe(7);
+    runActions.reset();
+    await waitFor(() => getRunView().phase === 'idle', 10_000, 'reset');
+    expect(getRunView().seedNode).toBeNull();
+  }, 30_000);
+});

@@ -19,7 +19,8 @@
     "verify:deploy": "tsx --env-file=.env.local scripts/verify-deploy.ts",
     "live:e2e": "tsx --env-file=.env.local scripts/live-e2e.ts",
     "spectate:check": "tsx scripts/spectate-check.ts",
-    "chain:fork": "tsx --env-file=.env.local scripts/chain-fork.ts"
+    "chain:fork": "tsx --env-file=.env.local scripts/chain-fork.ts",
+    "gen:model": "tsx scripts/gen-model.ts"
   },
   "dependencies": {
     "@fontsource-variable/atkinson-hyperlegible-mono": "^5.3.0",

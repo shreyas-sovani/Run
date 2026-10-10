@@ -4,7 +4,7 @@ import { Suspense, lazy, useEffect } from 'react';
 import { Link, Route, Switch } from 'wouter';
 import { runActions, uiActions, useRunView, useUi } from '@/app/store';
 import { BrandLab, PaperBackground } from '@/ui/brand';
-import { ModeBanner, OpsPage, PanelsLab, ProofPanel, ReplayPicker } from '@/ui/panels';
+import { ClosingCardHost, ModeBanner, OpsPage, PanelsLab, ProofPanel, ReplayPicker } from '@/ui/panels';
 import { StageLab, StageScreen } from '@/ui/stage';
 import type { RunMode } from '@/types';
 
@@ -25,6 +25,7 @@ function StageShell({ mode, replayId }: { mode: RunMode; replayId?: string }) {
       <ModeBanner />
       <StageScreen />
       <ProofPanel open={proofOpen} onClose={() => uiActions.toggleProof(false)} />
+      <ClosingCardHost />
     </>
   );
 }

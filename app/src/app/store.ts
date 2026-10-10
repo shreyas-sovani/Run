@@ -64,6 +64,7 @@ export function subscribeRunView(cb: (v: RunView) => void): () => void {
 export const runActions = {
   selectLevel(level: BankLevel): void { controller.selectLevel(level); },
   selectCard(card: RumorCard): void { controller.selectCard(card); },
+  selectSeed(node: number | null): void { controller.selectSeed(node); },
   start(): void { controller.start(); },
   reset(): void { controller.reset(); },
   retry(): void { controller.retry(); },
@@ -103,6 +104,7 @@ export const HOTKEYS: { key: string; label: string }[] = [
   { key: 'M', label: 'Mute' },
   { key: 'H or ?', label: 'Help' },
   { key: 'Esc', label: 'Close overlay' },
+  { key: 'L', label: 'Closing card (QR to the live link)' },
   { key: 'Shift+O', label: 'Ops page' },
   { key: 'Shift+R', label: 'Play the latest recorded run' },
 ];
