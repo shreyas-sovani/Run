@@ -1,1 +1,10 @@
-{ "chainId": 10143, "runBank": null, "street": null, "ausd": "0xa9012a055bd4e0eDfF8Ce09f960291C09D5322dC", "deployBlock": null, "tokenKind": "AUSD", "operator": null, "backupOperator": null }
+{
+  "ausd": "0xa9012a055bd4e0eDfF8Ce09f960291C09D5322dC",
+  "backupOperator": "0xFeAf5C921996FC53f4DEf35e181E766e6D74690A",
+  "chainId": 10143,
+  "deployBlock": "69764586",
+  "operator": "0x85db51Abac83F8B1DF2E674c29f8D68527Bf6b10",
+  "runBank": "0x2cD82EE2b3C19E996Fa9da80052e912A2E90F41D",
+  "street": "0x7998f16710Ab81AD2D68d7C0B7F0fd296CC7927D",
+  "tokenKind": "AUSD"
+}

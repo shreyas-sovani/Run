@@ -1,0 +1,13 @@
+.env
+cache/
+out/
+broadcast/
+# vendored deps: keep only what the build needs
+lib/openzeppelin-contracts/*
+!lib/openzeppelin-contracts/contracts
+!lib/openzeppelin-contracts/LICENSE
+!lib/openzeppelin-contracts/package.json
+lib/forge-std/.github
+lib/forge-std/test
+lib/forge-std/scripts
+lib/**/.git
