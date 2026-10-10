@@ -8,10 +8,12 @@ import {
   createMockAdapter,
   createRecorder,
   createSealQueue,
+  listReplays,
+  loadReplay,
   translateError,
 } from '@/chain';
 import type { ChainAdapter, Recorder, SealQueue } from '@/chain';
-import { MAX_LEAD, TICK_MS, createRun, defaultParams, loadModel, stepRun } from '@/engine';
+import { MAX_LEAD, TICK_MS, createRun, defaultParams, loadModel, stepRun, stepRunWithRequested } from '@/engine';
 import { initialRunView, patchPending, patchRun, runStore } from '@/app/state';
 import { stopFakeRun } from '@/app/fixtures/fakeRun';
 import type {
@@ -22,6 +24,7 @@ import type {
   ReplayFile,
   RumorCard,
   RunMode,
+  RunParams,
   RunPhase,
   RunState,
   SealRecord,
@@ -285,6 +288,150 @@ function startPracticeSession(): Session {
   };
 }
 
+
+// ── Replay (F-07) ───────────────────────────────────────────────────────
+// Plays a recorded real run at its recorded pace. The engine re-derives every frame from the recorded
+// per-tick request lists; seals and the outcome appear at their recorded times and keep their real tx hashes.
+async function newestReplayId(): Promise<string | null> {
+  let index: Awaited<ReturnType<typeof listReplays>> = [];
+  try {
+    index = await listReplays();
+  } catch {
+    index = [];
+  }
+  if (!Array.isArray(index) || index.length === 0) return null;
+  return [...index].sort((a, b) => b.recordedAt.localeCompare(a.recordedAt))[0].id;
+}
+
+function playReplay(file: ReplayFile, m: Model, onDone: (stop: () => void) => void): () => void {
+  const params: RunParams = {
+    level: file.params.level,
+    card: file.params.card,
+    seedNode: file.params.seedNode,
+    modelSeed: BigInt(file.params.modelSeed),
+  };
+  let eng = createRun(m, params);
+  const t0 = Date.now();
+  const rumorBlock = BigInt(file.rumor.blockNumber);
+  const toRecord = (id: number, kind: SealRecord['kind'], over: Partial<SealRecord>): SealRecord => ({
+    id, kind, simulated: false, fromTick: null, toTick: null, requestedCount: null, txHash: null, blockNumber: null,
+    sentAtMs: t0, sealedAtMs: t0, gasLimit: null, gasUsed: null, status: 'sealed', finalized: true, mirrorMatch: null,
+    rpc: 'recorded', ...over,
+  });
+  const counts = new Map(file.ticks.map((t) => [t.tick, t.requested.length]));
+  const lastTick = file.ticks.length ? file.ticks[file.ticks.length - 1].tick : 0;
+
+  type Ev = { at: number; order: number; run(): void };
+  const events: Ev[] = [];
+  for (const tp of file.ticks) {
+    events.push({
+      at: tp.tick * TICK_MS, order: 0,
+      run() {
+        if (eng.frame.bank.status !== 'running') return;
+        eng = stepRunWithRequested(m, eng, tp.requested).run;
+        const st = eng.frame.bank.status;
+        patchRun({
+          frame: eng.frame, elapsedMs: Date.now() - t0,
+          ...(st === 'failed' ? { phase: 'failing' as const } : st === 'survived' ? { phase: 'surviving' as const } : {}),
+        });
+      },
+    });
+  }
+  file.seals.forEach((sl, i) => {
+    events.push({
+      at: Math.max(sl.sealedAtMs, sl.toTick * TICK_MS + 1), order: 1,
+      run() {
+        let requested = 0;
+        for (let t = sl.fromTick; t <= sl.toTick; t++) requested += counts.get(t) ?? 0;
+        const rec = toRecord(i + 2, 'ticks', {
+          fromTick: sl.fromTick, toTick: sl.toTick, requestedCount: requested, txHash: sl.txHash,
+          blockNumber: BigInt(sl.blockNumber), sentAtMs: t0 + sl.sentAtMs, sealedAtMs: t0 + sl.sealedAtMs,
+          gasUsed: BigInt(sl.gasUsed),
+        });
+        const n = sl.toTick - sl.fromTick + 1;
+        patchRun((v) => ({
+          seals: [...v.seals, rec], sealedTick: sl.toTick, blockNumber: rec.blockNumber, finalizedBlock: rec.blockNumber,
+          // Recorded runs carry no per-tick chain summaries, so this counts engine ticks re-derived from recorded
+          // chain inputs (the real check is the decision check, F-09). Labelled REPLAY everywhere.
+          mirror: { matched: v.mirror.matched + n, total: v.mirror.total + n, firstMismatchTick: null },
+        }));
+      },
+    });
+  });
+  events.push({
+    at: Math.max(file.outcome.atMs, lastTick * TICK_MS + 2), order: 2,
+    run() {
+      const o = file.outcome;
+      const outcomeBlock = BigInt(o.blockNumber);
+      const bank = eng.frame.bank;
+      const outcome: Outcome = {
+        kind: o.kind, tick: o.tick, wallMs: o.atMs, blocks: Math.max(1, Number(outcomeBlock - rumorBlock)),
+        rumorBlock, outcomeBlock, trappedCount: o.trappedCount, trappedAmount: BigInt(o.trappedAmount),
+        uninsuredTrapped: BigInt(o.uninsuredTrapped), withdrawnAmount: bank.deposits0 - bank.depositsOwed, sealed: true,
+      };
+      patchRun({ phase: o.kind, outcome, health: 'idle', elapsedMs: o.atMs, blockNumber: outcomeBlock, finalizedBlock: outcomeBlock });
+      onDone(stop);
+    },
+  });
+  events.sort((a, b) => a.at - b.at || a.order - b.order);
+
+  patchRun({
+    mode: 'replay', phase: 'running', level: params.level, card: params.card, frame: eng.frame, startedAtMs: t0, elapsedMs: 0,
+    outcome: null, error: null, sealedTick: 0, mirror: { matched: 0, total: 0, firstMismatchTick: null }, health: 'idle',
+    seals: [toRecord(1, 'rumor', { txHash: file.rumor.txHash, blockNumber: rumorBlock })],
+    blockNumber: rumorBlock, finalizedBlock: rumorBlock,
+    replay: { id: file.id, name: file.name, recordedAt: file.recordedAt },
+  });
+  let next = 0;
+  const timer = setInterval(() => {
+    const el = Date.now() - t0;
+    while (next < events.length && events[next].at <= el) events[next++].run();
+  }, 40);
+  function stop() { clearInterval(timer); }
+  return stop;
+}
+
+function startReplaySession(replayId: string | null): Session {
+  let disposed = false;
+  let stop: (() => void) | null = null;
+  const s: Session = {
+    mode: 'replay',
+    replayId,
+    dispose() {
+      disposed = true;
+      stop?.();
+      resetRunState();
+    },
+  };
+  void (async () => {
+    patchRun({ phase: 'starting' });
+    patchPending({ starting: true });
+    try {
+      const m = requireModel();
+      const id = replayId ?? (await newestReplayId());
+      if (!id) throw new Error('No recorded runs are available yet.');
+      const file = await loadReplay(id);
+      if (disposed) return;
+      stop = playReplay(file, m, () => {});
+      log('replay playing', file.id);
+    } catch (e) {
+      if (disposed) return;
+      patchRun({
+        phase: 'idle',
+        error: {
+          code: 'replay-unavailable',
+          title: 'Recorded run unavailable',
+          detail: `Couldn't load a recorded run: ${e instanceof Error ? e.message.slice(0, 120) : 'unknown error'}.`,
+          action: null,
+        },
+      });
+    } finally {
+      if (!disposed) patchPending({ starting: false });
+    }
+  })();
+  return s;
+}
+
 function startPlaceholderSession(mode: RunMode, replayId: string | null): Session {
   // Replay (F-07) and Spectate (F-08) land here; for now they only label the stage.
   return { mode, replayId, dispose() { resetRunState(); } };
@@ -295,7 +442,8 @@ function switchSession(mode: RunMode, replayId: string | null): void {
   session = null;
   clearRunView();
   patchRun({ mode });
-  session = mode === 'practice' ? startPracticeSession() : startPlaceholderSession(mode, replayId);
+  session =
+    mode === 'practice' ? startPracticeSession() : mode === 'replay' ? startReplaySession(replayId) : startPlaceholderSession(mode, replayId);
 }
 
 // ── Public controller ───────────────────────────────────────────────────
@@ -387,7 +535,12 @@ export const controller = {
 
   async reset(): Promise<void> {
     const v = view();
-    if (v.mode === 'replay' || v.mode === 'spectate') return;
+    if (v.mode === 'replay') {
+      // "Reset" in replay mode plays the same recorded run again.
+      if (session) switchSession('replay', session.replayId ?? view().replay?.id ?? null);
+      return;
+    }
+    if (v.mode === 'spectate') return;
     if (v.phase === 'resetting') return;
     const needsChainReset = chainStatus !== 'ready';
     const token = ++runToken; // invalidate everything in flight
