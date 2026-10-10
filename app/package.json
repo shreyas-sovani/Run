@@ -1,0 +1,49 @@
+{
+  "name": "run-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -b",
+    "preview": "vite preview --port 4173",
+    "test": "vitest run",
+    "lint": "oxlint",
+    "gen:graph": "tsx scripts/gen-graph.ts",
+    "gen:ledger": "tsx scripts/gen-ledger.ts",
+    "gen:vectors": "tsx scripts/gen-vectors.ts",
+    "tune": "tsx scripts/tune.ts",
+    "og": "tsx scripts/og.ts",
+    "chain:smoke": "tsx --env-file=.env.local scripts/chain-smoke.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/atkinson-hyperlegible-mono": "^5.3.0",
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
+    "@fontsource-variable/big-shoulders-display": "^5.3.0",
+    "@fontsource/doto": "^5.3.0",
+    "@fontsource/tiro-devanagari-marathi": "^5.3.0",
+    "motion": "^14.1.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "viem": "^2.57.4",
+    "wouter": "^3.13.0",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/d3-force": "^3.0.10",
+    "@types/node": "^24.13.3",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "d3-force": "^3.0.0",
+    "oxlint": "^1.81.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.3"
+  }
+}
