@@ -1,3 +1,3 @@
-// Placeholder from F-00. Owner: D. Replace freely.
+// Owner: D. Public surface of the stage (PRD §16.5).
 export { StageScreen } from './StageScreen';
 export { StageLab } from './StageLab';

@@ -1,0 +1,76 @@
+/* PRD §5.2: top bar, main 62/38 split, ticker. Holds at 1280×720 and 1920×1080; stacks on phones. */
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--ink);
+  z-index: var(--z-stage);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
+  gap: var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
+  min-height: 0;
+}
+
+.network {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: 'key canvas';
+  min-height: 0;
+  min-width: 0;
+}
+
+.network > :first-child {
+  grid-area: canvas;
+  min-height: 0;
+}
+
+.network > :last-child {
+  grid-area: key;
+  align-self: end;
+}
+
+.vaultCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  min-height: 0;
+  min-width: 0;
+}
+
+@media (max-width: 760px) {
+  .stage {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+    grid-template-rows: auto auto auto;
+  }
+  .head {
+    min-width: 0;
+  }
+  .main {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--sp-3) var(--sp-3);
+    gap: var(--sp-4);
+  }
+  /* The network sits above the vault, square, with its key underneath. */
+  .network {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'canvas' 'key';
+  }
+  .network > :first-child {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+  }
+}

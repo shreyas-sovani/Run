@@ -1,0 +1,199 @@
+.book {
+  position: absolute;
+  left: var(--sp-5);
+  right: var(--sp-5);
+  bottom: 0;
+  z-index: var(--z-overlay);
+  max-height: 82%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-6) var(--sp-4);
+  background: var(--slip);
+  border: 2px solid var(--ink);
+  border-bottom: 0;
+  border-radius: var(--r-1) var(--r-1) 0 0;
+  box-shadow: var(--shadow-panel), var(--shadow-lift);
+  transform: translateY(104%);
+  visibility: hidden;
+  transition:
+    transform 420ms var(--ease-out),
+    visibility 0s linear 420ms;
+  overflow: auto;
+}
+
+.open {
+  transform: translateY(0);
+  visibility: visible;
+  transition:
+    transform 420ms var(--ease-out),
+    visibility 0s;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-vault);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+  color: var(--ink);
+}
+
+.sub {
+  font-size: var(--fs-ticker);
+  color: var(--ink-2);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.row,
+.axisRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr) minmax(0, 0.8fr) minmax(0, 2.2fr);
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+/* Ruled like a passbook page. */
+.row {
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+}
+
+.note {
+  font-size: var(--fs-ticker);
+  line-height: var(--lh-snug);
+  color: var(--ink-2);
+}
+
+.dots {
+  font-family: var(--font-dots);
+  font-size: var(--fs-dots);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  position: relative;
+  height: calc(var(--fs-ticker) * 1.1);
+  border-left: 2px solid var(--ink);
+}
+
+.bar {
+  height: 100%;
+  background: var(--ink-3);
+  border-radius: 0 var(--r-1) var(--r-1) 0;
+  transform-origin: left center;
+}
+
+.mine .name,
+.mine .dots {
+  color: var(--run-text);
+}
+
+.mine.survived .name,
+.mine.survived .dots {
+  color: var(--seal);
+}
+
+.mine .bar {
+  background: var(--run);
+}
+
+.mine.survived .bar {
+  background: var(--seal);
+}
+
+.mine {
+  background: var(--run-wash);
+  margin: 0 calc(var(--sp-3) * -1);
+  padding-left: var(--sp-3);
+  padding-right: var(--sp-3);
+  border-bottom-color: var(--run);
+}
+
+.mine.survived {
+  background: var(--seal-wash);
+  border-bottom-color: var(--seal);
+}
+
+.open .bar {
+  animation: grow 700ms var(--ease-out) 300ms both;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.axisRow {
+  padding-top: var(--sp-2);
+}
+
+.axis {
+  position: relative;
+  height: calc(var(--fs-ticker) * 1.6);
+  border-top: 2px solid var(--ink);
+  font-family: var(--font-data);
+  font-size: var(--fs-ticker);
+  color: var(--ink-2);
+}
+
+.tick {
+  position: absolute;
+  top: var(--sp-1);
+  transform: translateX(-12%);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .book {
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: var(--sp-3) var(--sp-4);
+    max-height: 90%;
+  }
+  .row,
+  .axisRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--sp-1) var(--sp-3);
+  }
+  .track {
+    grid-column: 1 / -1;
+  }
+  .axisRow > span {
+    display: none;
+  }
+  .axisRow .axis {
+    grid-column: 1 / -1;
+  }
+  .row > .dots:nth-of-type(2) {
+    display: none;
+  }
+}

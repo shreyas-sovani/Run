@@ -1,0 +1,98 @@
+.ticker {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-2) var(--sp-5);
+  border-top: 2px solid var(--ink);
+  background: var(--slip);
+  font-family: var(--font-data);
+  font-size: var(--fs-ticker);
+  line-height: var(--lh-snug);
+  min-height: calc(var(--fs-ticker) * 2.4);
+  min-width: 0;
+  transition: background var(--t-med) linear;
+}
+
+.delayed {
+  background: var(--rumor-wash);
+  border-top-color: var(--rumor);
+}
+
+.label {
+  flex: 0 0 auto;
+  font-family: var(--font-body);
+  font-size: var(--fs-ticker);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.delayed .label {
+  color: var(--rumor-text);
+}
+
+.rows {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  /* the oldest row fades out instead of being cut mid-word */
+  mask-image: linear-gradient(to right, black calc(100% - 64px), transparent);
+}
+
+.row {
+  flex: 0 0 auto;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.row:first-child {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.row + .row {
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--rule);
+}
+
+.pending {
+  color: var(--rumor-text);
+}
+
+.ok {
+  color: var(--seal);
+  font-weight: 700;
+}
+
+.health {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-family: var(--font-body);
+}
+
+.empty {
+  color: var(--ink-3);
+  font-family: var(--font-body);
+}
+
+@media (max-width: 760px) {
+  /* The ticker collapses to the latest seal on phones. */
+  .row:nth-child(n + 2) {
+    display: none;
+  }
+  .health {
+    margin-left: 0;
+  }
+  .rows {
+    white-space: normal;
+    mask-image: none;
+  }
+  .ticker {
+    flex-wrap: wrap;
+    gap: var(--sp-1) var(--sp-3);
+    padding: var(--sp-2) var(--sp-4);
+  }
+}
