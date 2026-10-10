@@ -1,16 +1,6 @@
-// Placeholder from F-00. Owner: B. Replace freely.
-// Frozen barrel (PRD §16.2). Currently backed by the fixture engine.
-export {
-  TICK_MS,
-  MAX_LEAD,
-  loadModel,
-  defaultParams,
-  initialBank,
-  applyTick,
-  createRun,
-  stepRun,
-  stepRunWithRequested,
-  replayTicks,
-  verifyDecisions,
-  hashConfig,
-} from './fixture';
+// Engine barrel (PRD §16.2). Owner: B.
+// Real: applyTick / initialBank / hashConfig (bank mirror, PRD §9).
+// Still the bootstrap fixture until B-06/B-07 land: loadModel, defaultParams, createRun, stepRun, stepRunWithRequested,
+// replayTicks, verifyDecisions.
+export { TICK_MS, MAX_LEAD, loadModel, defaultParams, createRun, stepRun, stepRunWithRequested, replayTicks, verifyDecisions } from './fixture';
+export { applyTick, initialBank, hashConfig } from './bank';
