@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import type { BankConfig, BankState, Ledger } from '../src/types';
 import { applyTick, initialBankFor } from '../src/engine/bank';
 import { hashLedgerWords } from '../src/engine/ledger';
+import { defaultParams, loadModel } from '../src/engine/model';
+import { createRun, stepRun } from '../src/engine/run';
 
 const dir = fileURLToPath(new URL('../src/engine/data/', import.meta.url));
 const readJson = (f: string) => JSON.parse(readFileSync(dir + f, 'utf8'));
@@ -63,6 +65,19 @@ const bhau = rawCfg['0'];
 const mutual = rawCfg['1'];
 const chunk = <T,>(xs: T[], n: number) => Array.from({ length: Math.ceil(xs.length / n) }, (_, i) => xs.slice(i * n, i * n + n));
 
+/** The request lists the real panic model produces for a level × card (B-06), to be replayed against the contract. */
+function realRun(level: 0 | 1, card: 0 | 1 | 2 | 3): number[][] {
+  const model = loadModel();
+  let run = createRun(model, defaultParams(model, level, card));
+  const out: number[][] = [];
+  while (run.frame.bank.status === 'running' && run.frame.tick < 80) {
+    const s = stepRun(model, run);
+    run = s.run;
+    out.push(s.payload.requested);
+  }
+  return out;
+}
+
 const scenarios = [
   // 1. whales go first, in waves, until the bank fails
   scenario('bhau-whale-waves-failure', 0, bhau, [...chunk(whalesBySize, 5).map(asc), asc(smalls.slice(0, 250))]),
@@ -86,6 +101,9 @@ const scenarios = [
   scenario('mutual-quiet-streak-resets', 1, mutual, [asc(smalls.slice(0, 5)), ...quiet(6), asc(smalls.slice(5, 9)), ...quiet(12)]),
   // 8. Monad Mutual: everybody requests at once; the speed bump spreads it over many ticks
   scenario('mutual-everyone-at-once', 1, mutual, [asc(everyone), ...quiet(60)]),
+  // 9–10. what the real model actually does on stage (Bhau's × W fails; Monad Mutual × R survives), from stepRun
+  scenario('real-model-bhau-W', 0, bhau, realRun(0, 1)),
+  scenario('real-model-mutual-R', 1, mutual, realRun(1, 3)),
 ];
 
 mkdirSync(dir + 'vectors', { recursive: true });

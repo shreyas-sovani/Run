@@ -1,6 +1,5 @@
-// Engine barrel (PRD §16.2). Owner: B.
-// Real: applyTick / initialBank / hashConfig (bank mirror, PRD §9).
-// Still the bootstrap fixture until B-06/B-07 land: loadModel, defaultParams, createRun, stepRun, stepRunWithRequested,
-// replayTicks, verifyDecisions.
-export { TICK_MS, MAX_LEAD, loadModel, defaultParams, createRun, stepRun, stepRunWithRequested, replayTicks, verifyDecisions } from './fixture';
+// Engine barrel (PRD §16.2). Owner: B. Pure TypeScript, deterministic, no React / DOM / fetch.
+export { TICK_MS, MAX_LEAD, loadModel, defaultParams } from './model';
+export { bestSeeds } from './seeds';
+export { createRun, stepRun, stepRunWithRequested, replayTicks, verifyDecisions } from './run';
 export { applyTick, initialBank, hashConfig } from './bank';

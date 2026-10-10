@@ -52,8 +52,14 @@ describe('data/graph.json and cards.json', () => {
       expect(g.neighbors[b]).toContain(a);
     }
   });
-  it('cards are Q W E R with PRD §10.2 strengths', () => {
+  it('cards are Q W E R, strictly stronger left to right (PRD §10.2 starts at 0.4/0.6/0.8/1.0; the tuner may move them)', () => {
     expect(cards.map((c: { hotkey: string }) => c.hotkey)).toEqual(['Q', 'W', 'E', 'R']);
-    expect(cards.map((c: { strength: number }) => c.strength)).toEqual([0.4, 0.6, 0.8, 1.0]);
+    const s: number[] = cards.map((c: { strength: number }) => c.strength);
+    for (let i = 0; i < 4; i++) {
+      expect(s[i]).toBeGreaterThan(0);
+      expect(s[i]).toBeLessThanOrEqual(1);
+      if (i > 0) expect(s[i]).toBeGreaterThan(s[i - 1]);
+    }
+    for (const c of cards) expect(c.seedNode).toBeGreaterThanOrEqual(0), expect(c.seedNode).toBeLessThan(500);
   });
 });

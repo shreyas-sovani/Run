@@ -1,0 +1,51 @@
+{
+ "modelVersion": "v1-tuned",
+ "weights": {
+  "tellBase": 0.025,
+  "tellStrength": 0.0125,
+  "whaleTellMult": 1.8,
+  "strengthW": 1.2,
+  "goneW": 0.55,
+  "cashW": 0.30000000000000004,
+  "queueW": 0.30000000000000004,
+  "haircutW": 0.65,
+  "insuredW": 0.4,
+  "fadeTicks": 25,
+  "cashStressAt": 0.15,
+  "haircutScale": 1000
+ },
+ "thresholds": {
+  "whaleBase": 0.07500000000000001,
+  "whaleSpan": 2,
+  "otherBase": 1.075,
+  "otherSpan": 1.7000000000000002,
+  "panickingFrac": 0.6
+ },
+ "strengths": [
+  0.35,
+  0.44999999999999996,
+  0.5499999999999999,
+  0.75
+ ],
+ "seeds": [
+  35,
+  39,
+  3,
+  22
+ ],
+ "modelSeeds": [
+  "1380008225",
+  "1380008226",
+  "1380008227",
+  "1380008228"
+ ],
+ "inputs": {
+  "ledgerHash": "0x8f5360480d2683535f631ce27694aa413c93ba286e2c56f80bfe426ec3324036",
+  "graphHash": "0x914ff51646b3d30b90002d594b45b68cad33f60ef6cb1efb31be0dfda3f66493",
+  "configHashes": [
+   "0xf05aaee8b23a628bd9744824c09d0e8c714ab51905b9b7715f9e03bb4a6ee96e",
+   "0x0083cf8994e479eb33fbc458b5892d62d91eff161403a38d8ff071200ef04248"
+  ]
+ },
+ "modelHash": "0xb673f2059af9d6f878deb83c518564998e328b698fe2fce11032914e856f9659"
+}
