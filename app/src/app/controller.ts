@@ -122,6 +122,16 @@ function scheduleDecisionCheck(m: Model, params: RunParams, ticks: TickPayload[]
   }, 0);
 }
 
+// Seals arrive as "sealed, finalizing…"; flip them to finalized once the chain's finalized height passes their block
+// (Monad finality is ~800 ms after the block). Only touches the store when something actually changes.
+function markFinalized(finalized: bigint): void {
+  const seals = view().seals;
+  if (!seals.some((r) => !r.finalized && r.blockNumber !== null && r.blockNumber <= finalized)) return;
+  patchRun({
+    seals: seals.map((r) => (!r.finalized && r.blockNumber !== null && r.blockNumber <= finalized ? { ...r, finalized: true } : r)),
+  });
+}
+
 // ── Chain snapshot and balances (live) ──────────────────────────────────
 async function refreshSnapshot(): Promise<BankSnapshotView | null> {
   const a = adapter;
@@ -543,7 +553,10 @@ function startLiveSession(): Session {
   adapter = a;
   chainLevel = 0;
   chainStatus = 'ready';
-  const stopBlocks = a.watchBlocks((b) => patchRun({ blockNumber: b.number, finalizedBlock: b.finalized }));
+  const stopBlocks = a.watchBlocks((b) => {
+    patchRun({ blockNumber: b.number, finalizedBlock: b.finalized });
+    if (b.finalized !== null) markFinalized(b.finalized);
+  });
   const snapTimer = setInterval(() => void refreshSnapshot(), 2000);
   const balTimer = setInterval(() => void refreshBalances(), 10_000);
   void refreshSnapshot();
