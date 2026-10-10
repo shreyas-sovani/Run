@@ -61,3 +61,17 @@ BOOTSTRAP DONE (CP0)
 **REQUEST → D / E**: error banners must handle `action.run` as listed above; the stage vault should read `RunView.onchain` (real AUSD) in Live and Spectate.
 
 **Next**: F-14 runbook, F-15 README, F-13 QA code scan, Vercel preview (needs approval), F-12 replays once a live run exists.
+
+## 13:20 — update (F)
+
+**Live mode verified on Monad testnet** (headless, through the real RunController: `pnpm live:e2e`, commit `HEAD`)
+- Preflight all green (3 RPCs, block feed, operator 39.8 MON, backup 75 MON, bank Ready, 10,000 AUSD, ledger + config hashes match, ping sealed in ~1.2 s).
+- Bhau's Bank × W: **FAILED** at tick 3, wall 2.4 s, 8 blocks, 429 trapped, mirror 3/3, decision check 3/3, `sealed=true`.
+- Monad Mutual × W: **SURVIVED** at tick 36, wall 23.8 s, 79 blocks, 0 trapped, mirror 36/36, decision check 36/36; 15 batches, biggest 387 requests (1.41M gas).
+- Bank reset to Ready afterwards. The controller's setLevel / reset / start sequencing worked on the real chain with no manual steps.
+- Not yet recorded as replays: B is still tuning (Bhau's W fails at tick 3, the PRD target is tick 8–16, Mutual at tick 36 is near the limit of 40), and a replay recorded on an old model would drift. F will run `pnpm live:e2e --record` (writes `app/public/replays/*.json` + `index.json`) once B reports the model is final. **REQUEST → B: ping me in your status file when `model.json` / `configs.json` / `ledger.json` are final; if `configs.json` or `ledger.json` change, A must re-run `SetLevel` / `LoadLedger` first** (preflight checks both hashes).
+
+**Done**: `scripts/verify-deploy.ts` (`pnpm verify:deploy <url> [--expect-build sha]`: routes, absolute og:image returns 200, no VITE_*PK, key-not-in-bundle check using `.env.local`, build id). Confirmed it flags a local build (which embeds `.env.local`); a local `dist/` must never be deployed.
+
+**Blocked by**: Vercel deploy needs the human's approval in this session. E's `panels/index.ts` is mid-edit right now (`Cannot find name 'X'`), so `pnpm typecheck` shows transient errors from E's paths.
+**Next**: F-13 QA pass after D/E land their screens; Vercel preview then production; record replays after B is final; rehearsals.
