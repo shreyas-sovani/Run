@@ -1,0 +1,22 @@
+{
+ "0": {
+  "cash0": "1500000000",
+  "bonds0": "8500000000",
+  "haircutBaseBps": 200,
+  "haircutSlopeBps": 6000,
+  "haircutMaxBps": 9000,
+  "quietTicks": 8,
+  "speedBumpBps": 0,
+  "insuredCap": "0"
+ },
+ "1": {
+  "cash0": "1500000000",
+  "bonds0": "8500000000",
+  "haircutBaseBps": 200,
+  "haircutSlopeBps": 6000,
+  "haircutMaxBps": 9000,
+  "quietTicks": 8,
+  "speedBumpBps": 300,
+  "insuredCap": "50000000"
+ }
+}

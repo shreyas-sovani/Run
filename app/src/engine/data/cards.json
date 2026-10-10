@@ -1,0 +1,30 @@
+[
+ {
+  "id": 0,
+  "hotkey": "Q",
+  "text": "The CEO just bought a yacht.",
+  "strength": 0.4,
+  "seedNode": 76
+ },
+ {
+  "id": 1,
+  "hotkey": "W",
+  "text": "The audit is *delayed*.",
+  "strength": 0.6,
+  "seedNode": 355
+ },
+ {
+  "id": 2,
+  "hotkey": "E",
+  "text": "Heard the founder flew to Dubai.",
+  "strength": 0.8,
+  "seedNode": 372
+ },
+ {
+  "id": 3,
+  "hotkey": "R",
+  "text": "Screenshot: the vault is empty.",
+  "strength": 1,
+  "seedNode": 355
+ }
+]
