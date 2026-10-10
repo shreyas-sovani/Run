@@ -60,6 +60,9 @@ describe('data/graph.json and cards.json', () => {
       expect(s[i]).toBeLessThanOrEqual(1);
       if (i > 0) expect(s[i]).toBeGreaterThan(s[i - 1]);
     }
-    for (const c of cards) expect(c.seedNode).toBeGreaterThanOrEqual(0), expect(c.seedNode).toBeLessThan(500);
+    for (const c of cards) {
+      expect(c.seedNode).toBeGreaterThanOrEqual(0);
+      expect(c.seedNode).toBeLessThan(500);
+    }
   });
 });

@@ -6,8 +6,8 @@
   "whaleTellMult": 1.8,
   "strengthW": 1.2,
   "goneW": 0.55,
-  "cashW": 0.30000000000000004,
-  "queueW": 0.30000000000000004,
+  "cashW": 0.3,
+  "queueW": 0.3,
   "haircutW": 0.65,
   "insuredW": 0.4,
   "fadeTicks": 25,
@@ -15,16 +15,16 @@
   "haircutScale": 1000
  },
  "thresholds": {
-  "whaleBase": 0.07500000000000001,
+  "whaleBase": 0.075,
   "whaleSpan": 2,
   "otherBase": 1.075,
-  "otherSpan": 1.7000000000000002,
+  "otherSpan": 1.7,
   "panickingFrac": 0.6
  },
  "strengths": [
   0.35,
-  0.44999999999999996,
-  0.5499999999999999,
+  0.45,
+  0.55,
   0.75
  ],
  "seeds": [
@@ -47,5 +47,5 @@
    "0x0083cf8994e479eb33fbc458b5892d62d91eff161403a38d8ff071200ef04248"
   ]
  },
- "modelHash": "0xb673f2059af9d6f878deb83c518564998e328b698fe2fce11032914e856f9659"
+ "modelHash": "0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96"
 }

@@ -10,14 +10,14 @@
   "id": 1,
   "hotkey": "W",
   "text": "The audit is *delayed*.",
-  "strength": 0.44999999999999996,
+  "strength": 0.45,
   "seedNode": 39
  },
  {
   "id": 2,
   "hotkey": "E",
   "text": "Heard the founder flew to Dubai.",
-  "strength": 0.5499999999999999,
+  "strength": 0.55,
   "seedNode": 3
  },
  {

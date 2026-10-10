@@ -142,6 +142,12 @@ for (let i = 0; i < budget && bestEval.penalty > 0; i++) {
   }
 }
 
+// Tidy the grid arithmetic (0.30000000000000004 → 0.3) before reporting and writing: what is verified is what ships.
+const tidy = (x: number): number => Math.round(x * 1e6) / 1e6;
+for (const k of Object.keys(best.tuning.weights) as (keyof typeof best.tuning.weights)[]) best.tuning.weights[k] = tidy(best.tuning.weights[k]);
+for (const k of Object.keys(best.tuning.thresholds) as (keyof typeof best.tuning.thresholds)[]) best.tuning.thresholds[k] = tidy(best.tuning.thresholds[k]);
+best.strengths = best.strengths.map(tidy);
+
 console.log('\nbest tuning:', JSON.stringify({ weights: best.tuning.weights, thresholds: best.tuning.thresholds, seeds: best.seeds, strengths: best.strengths }));
 const cards = base.cards.map((card, i) => ({ ...card, seedNode: best.seeds[i], strength: best.strengths[i] }));
 const finalModel = deriveModel(base, { tuning: best.tuning, cards });

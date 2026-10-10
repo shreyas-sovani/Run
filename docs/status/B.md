@@ -58,3 +58,57 @@ REQUEST → A: vectors v1 ready (`app/src/engine/data/vectors/bank-vectors.json`
 
 ### Next
 - B-06 panic model + `stepRun`, B-07 barrel swap, B-08 tuner, B-09 guard rails, then P1/P2.
+
+## T+1:45 update (CP1) — all P0 done, P1/P2 done
+
+### Done
+- **B-06/B-07 real engine is live behind `@/engine`.** The barrel now exports the real `loadModel`, `defaultParams`, `createRun`, `stepRun`, `stepRunWithRequested`, `replayTicks`, `verifyDecisions`, `applyTick`, `initialBank`, `hashConfig`, `TICK_MS = 400`, `MAX_LEAD = 6` (plus `bestSeeds`). The fixture is deleted. No code change needed on F's side: the full suite (246 tests incl. F's practice/replay tests) passes against the real engine and `pnpm build` is green.
+- Files: `engine/{prng,ledger,bank,panic,model,run,eval,seeds}.ts`, `engine/data/{ledger,graph,cards,configs,model}.json`, `engine/data/vectors/bank-vectors.json`, `engine/lab/EngineLab.tsx`.
+- **B-08 tuner** (`pnpm tune`, `pnpm tune --search [--write]`, env `TUNE_EVALS`, `TUNE_SEED`, `TUNE_START`, `TUNE_LEVELS`). Seeded annealing over the panic weights, thresholds, card strengths and card seed nodes; the objective also covers 2 alternative model seeds. `model.json` = `{ modelVersion "v1-tuned", weights, thresholds, strengths, seeds, modelSeeds, inputs{ledgerHash, graphHash, configHashes}, modelHash }`; `modelHash = keccak256(canonical JSON of everything but modelHash)` and it commits to the ledger, graph and both configs, so it changes if any of them do.
+  **`modelHash = 0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96`**
+- **B-09 guard rails** (`pnpm vitest run src/engine`, 83 tests): the PRD §10.4 targets as assertions, demo "story" rules, determinism (3 runs → identical frame hashes; pinned snapshot of every request history), mirror-vs-vectors, model-hash consistency, a static check that no engine file uses `Math.random/exp/log/pow/sin/…`, and a perf budget.
+- **B-05 vectors v2:** now 10 scenarios; the two new ones are produced by the real model (`real-model-bhau-W`: 8 ticks → Failed; `real-model-mutual-R`: 34 ticks → Survived). Configs did not change, so the contract's `setLevel` data is unchanged.
+- **B-10 engine lab** at `/lab/engine`: pick bank + card, Step / Auto / Reset, graph canvas by node state, cash/bonds/loss chart, the target table with pass/fail.
+- **B-11 P2:** `defaultParams(model, level, card, seedNode?)` accepts a chosen seed node; `bestSeeds(model, card, count = 8)` ranks starting depositors by how fast their rumor ruins Bhau's Bank (memoised, ~40 sims on first call).
+
+### Tuner table (shipped model, default modelSeeds) — meets every PRD §10.4 target
+| bank | card | outcome | tick | sec | heard% | asked% | whales out% | peak req/tick | peak queue | loss (AUSD) | loss/equity | trapped |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Bhau's | Q | survived (fizzles) | 19 | 7.6 | 61 | 2 | 24 | 5 | 0 | 0 | 0% | 0 |
+| Bhau's | W | **failed** | 8 | 3.2 | 60 | 33 | 96 | 137 | 0 | 967 | 193% | 335 |
+| Bhau's | E | **failed** | 9 | 3.6 | 71 | 39 | 88 | 120 | 0 | 709 | 142% | 305 |
+| Bhau's | R | **failed** | 10 | 4.0 | 50 | 35 | 100 | 150 | 0 | 1,503 | 301% | 325 |
+| Mutual | Q | survived | 17 | 6.8 | 45 | 0 | 8 | 1 | 0 | 0 | 0% | 0 |
+| Mutual | W | survived | 25 | 10.0 | 91 | 22 | 92 | 40 | 76 | 191 | 38% | 0 |
+| Mutual | E | survived | 24 | 9.6 | 89 | 25 | 80 | 54 | 89 | 161 | 32% | 0 |
+| Mutual | R | survived | 34 | 13.6 | 98 | 45 | 100 | 51 | 152 | 262 | 52% | 0 |
+
+- **Bhau's × Q (documented choice, per PRD §10.4): it fizzles.** A weak rumor reaches 61% of depositors but only 2% of them ask for money; the bank counts 8 quiet ticks and survives (tick 19, no loss).
+- PRD §10.4 "visual shape" (Bhau's × W): 60% heard at failure, 96% of whales withdrew before failure. Peak batch 137 ≤ 200 everywhere. Determinism pinned by snapshot.
+- Extra "story" guard rails beyond §10.4 (so the §5.1 script is true): whales ask earlier than small depositors; Bhau's has a batch ≥ 30 in one block; Mutual shows real panic (22–45% ask), a queue of 76–152, and the insured small depositors mostly stay calm (≤ 60% ask).
+- Robustness: with other model seeds a few cards miss a window by a tick or two (test allows ≤ 25% of alternative draws to miss). Shipped seeds always pass.
+- Speed: 0.03 ms average per `stepRun` (worst 1 ms) against the 2 ms budget.
+- **Model seeds are constants per card** (`modelSeeds` in model.json: 1380008225..28, same for both banks so the comparison is fair). Card seed nodes now: Q 35, W 39, E 3, R 22; strengths 0.35 / 0.45 / 0.55 / 0.75 (PRD start values were 0.4/0.6/0.8/1.0; the tuner moved them, they are not shown anywhere in the UI).
+
+### Interface notes
+- `RunState.internal` is opaque. Frame typed arrays (`heardAt`, `goneAt`, `nodeState`, `panic`) are never written after a step; treat them as read-only.
+- `goneAt[i]` = the tick node i asked for its money (−1 if it hasn't). `newlyRequested` = ids asking for the first time this tick (re-sent ids are skips on chain, not "new"). `newlyServed` = ids actually paid this tick (ids trapped by a mid-serve failure are NOT in it; `result.served` is the whole §9.4 serve list).
+- `panic[i] = score / threshold`, clamped to [0, 2]; Panicking display at ≥ 0.6.
+- `stepRunWithRequested` sorts and de-duplicates the given ids; ids < 0 or ≥ 500 throw `BankError('BadDepositor')` from `applyTick`. A requester who never heard the rumor is shown as heard at that tick.
+- `verifyDecisions` follows the *given* lists (the chain is the truth) and compares the model's own decision at each tick to them; `firstMismatchTick` is the first tick where the open model would have asked for a different set.
+- Bank mirror rules worth knowing: a run ends `Survived` after `quietTicks` consecutive ticks with no new requests, so Bhau's with a slow first request survives early; the tuned model always produces its first request within a few ticks.
+- Dev note: `pnpm tsx scripts/tune.ts` prints the table (no search); `TUNE_EVALS=0 TUNE_START='{…}' pnpm tsx scripts/tune.ts --search --write` re-applies a given tuning.
+
+### Plain-language model description (for E's proof panel copy)
+> Every depositor is a dot in a public network of 500. The rumor starts at one depositor and spreads to their friends, a little more likely if the rumor is juicy and more likely among the big depositors, who all know each other. Each depositor who has heard it gets a worry score: how loud the rumor is (fading over time), how much of their friends' money has already left, how thin the bank's cash looks, whether a queue has formed, and how big the last fire-sale discount was. Insured depositors worry less. Everyone has a private panic threshold, drawn from a fixed hash, and asks for their money the moment their worry crosses it. There is no randomness in the browser: given the same ledger, rumor and model seed, anyone can recompute every decision, and the chain's tick log lets you check them one by one.
+
+### REQUESTS
+- REQUEST → A: nothing new. Ledger v1 hash unchanged (`0x8f536048…4036`). Vectors v2 are in `bank-vectors.json` (adds two scenarios from the real model). Configs unchanged, so no `SetLevel` rerun is needed.
+- REQUEST → C/F: `model.modelHash` is now the real hash above (it was a fixture value). `RumorStarted.modelHash` should carry it; `RumorStarted.modelSeed` is `defaultParams(...).modelSeed`.
+- REQUEST → D: card seed nodes changed (W seed is node 39, a big whale, not the top hub); look at `defaultParams(model, level, card).seedNode`, not at hard-coded ids.
+
+### Next
+- P1: re-tune after the first live run if the chain-sealed run feels too fast or slow on stage (`TUNE_START` re-apply path above; watch Bhau's × W at ticks 8–10 vs the 13-tick copy in PRD §5.1).
+
+### Blocked by
+- Nothing.

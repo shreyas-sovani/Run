@@ -86,17 +86,16 @@ export function EngineLab() {
     const s = stepRun(model, run);
     setRun(s.run);
     setFrames((fs) => [...fs, s.run.frame]);
+    if (s.run.frame.bank.status !== 'running') setAuto(false);
   };
 
   useEffect(() => {
     if (!auto) return;
-    if (run.frame.bank.status !== 'running') {
-      setAuto(false);
-      return;
-    }
     const id = setTimeout(step, TICK_MS);
     return () => clearTimeout(id);
-  });
+    // step closes over `run`; re-arming on every run change is the point
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto, run]);
   useEffect(() => {
     const ctx = canvas.current?.getContext('2d');
     if (ctx) drawGraph(ctx, run.frame);
