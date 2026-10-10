@@ -91,6 +91,7 @@ describe('mock adapter', () => {
     const replay = rec.finish(o);
     expect(replay?.ticks.map((t) => t.tick)).toEqual(sealedTicks);
     expect(replay?.outcome.kind).toBe(o.kind);
+    expect(replay?.rumor.sealedAtMs).toBe(0);
     expect(JSON.parse(JSON.stringify(replay))).toEqual(replay); // JSON-serialisable: bigints stored as strings
   });
 

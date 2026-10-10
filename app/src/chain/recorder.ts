@@ -26,7 +26,8 @@ export function createRecorder(): Recorder {
         runBank: deployment.runBank ?? ZERO_ADDRESS,
         runId: rumor.runId,
         params: { level: params.level, card: params.card, seedNode: params.seedNode, modelSeed: params.modelSeed.toString(), modelHash },
-        rumor: { txHash: rumor.txHash, blockNumber: rumor.blockNumber.toString() },
+        // t0 is the rumor receipt, so the rumor itself sealed at 0 ms (explicit, so Replay never has to guess).
+        rumor: { txHash: rumor.txHash, blockNumber: rumor.blockNumber.toString(), sealedAtMs: 0 },
         ticks: [],
         seals: [],
       };

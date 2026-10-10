@@ -9,7 +9,7 @@
 //   Writes to the live bank take the single-writer guard first (scripts/chain-lock.ts): they refuse to start while another
 //   process holds /tmp/run-bank.lock, another agent's `LIVE BANK:` line is up in docs/status, or the bank is mid-run, and they
 //   stop loudly if the operator nonce moves without us. Local forks are exempt. --force skips the `LIVE BANK:` line check.
-//   options: --no-sync (force sendRawTransaction + receipt polling), --stress (--mini with 60 synthetic ids, for gas calibration), --level 0|1, --card 0..3, --rpc <url>
+//   options: --gas estimate|formula (sealTicks gas mode; default formula), --no-sync (force sendRawTransaction + receipt polling), --stress (--mini with 60 synthetic ids, for gas calibration), --level 0|1, --card 0..3, --rpc <url>
 //
 // Testnet only (chain 10143). Keys come from VITE_OPERATOR_PK / VITE_BACKUP_PK (app/.env.local, via --env-file),
 // falling back to the repo's gitignored .env files. Only addresses are ever printed.
@@ -123,6 +123,9 @@ async function main(): Promise<void> {
   line(`  operator  ${addressOfKey(primary)}`);
   if (backup) line(`  backup    ${addressOfKey(backup)}`);
   const adapter: LiveAdapter = createLiveAdapter({ primaryPk: primary, backupPk: backup, rpcOverride, syncSend: !flag('no-sync') });
+  const gasOpt = opt('gas');
+  if (gasOpt === 'estimate' || gasOpt === 'formula') adapter.gasMode = gasOpt;
+  line(`  gas mode  ${adapter.gasMode}`);
   const bal = await adapter.balances();
   line(`  operator balance  ${mon(bal.primary)}`);
   if (bal.backup !== null) line(`  backup balance    ${mon(bal.backup)}`);
@@ -254,7 +257,10 @@ async function playRun(adapter: LiveAdapter, model: ReturnType<typeof loadModel>
   let outcome: SealResult['outcome'] = null;
   let matched = 0;
   queue.onHealth((h) => line(`      health → ${h}`));
-  queue.onError((e) => fail(`queue paused: ${e.detail}`));
+  queue.onError((e) => {
+    fail(`queue paused: ${e.detail}`);
+    queue.stop(); // a paused queue never drains: end the script instead of hanging
+  });
   queue.onSealed((r) => {
     show(`ticks ${r.record.fromTick}-${r.record.toTick}`, r);
     for (const t of r.ticks) {
@@ -297,9 +303,14 @@ async function playSoak(adapter: LiveAdapter, model: ReturnType<typeof loadModel
   const chainTicks: number[] = [];
   let outcome: SealResult['outcome'] = null;
   let txs = 0;
-  queue.onError((e) => fail(`queue paused: ${e.detail}`));
+  const durations: number[] = [];
+  queue.onError((e) => {
+    fail(`queue paused: ${e.detail}`);
+    queue.stop(); // a paused queue never drains: end the script instead of hanging
+  });
   queue.onSealed((r) => {
     txs += 1;
+    durations.push((r.record.sealedAtMs ?? 0) - r.record.sentAtMs);
     line(`  ✓ tx ${String(txs).padStart(2)}  ticks ${r.record.fromTick}-${r.record.toTick}  ${sec((r.record.sealedAtMs ?? 0) - r.record.sentAtMs)}  gas ${r.record.gasLimit}`);
     for (const t of r.ticks) chainTicks.push(t.tick);
     if (r.outcome) outcome = r.outcome;
@@ -313,6 +324,9 @@ async function playSoak(adapter: LiveAdapter, model: ReturnType<typeof loadModel
   queue.stop();
   const gaps = chainTicks.length !== n || chainTicks.some((t, i) => t !== i + 1);
   line(`\n  sealed ${chainTicks.length}/${n} ticks in ${txs} txs over ${sec(Date.now() - t0)} · gap-free: ${gaps ? 'NO' : 'yes'}`);
+  const sorted = [...durations].sort((a, b) => a - b);
+  const mean = durations.reduce((a, b) => a + b, 0) / Math.max(1, durations.length);
+  line(`  batch time (${adapter.gasMode}): mean ${sec(mean)} · median ${sec(sorted[Math.floor(sorted.length / 2)] ?? 0)} · max ${sec(sorted[sorted.length - 1] ?? 0)} · ${(chainTicks.length / Math.max(1, txs)).toFixed(2)} ticks/tx`);
   if (gaps) fail(`ticks were not contiguous: ${chainTicks.join(',')}`);
   if (outcome) line(`  (the bank ended early: ${(outcome as NonNullable<SealResult['outcome']>).kind})`);
 }

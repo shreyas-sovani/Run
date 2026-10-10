@@ -91,7 +91,17 @@ export function extractRevert(e: unknown): { name: string; args: readonly unknow
   const reverted = walk(e, (x) => x instanceof ContractFunctionRevertedError) as ContractFunctionRevertedError | null;
   if (reverted?.data?.errorName) return { name: reverted.data.errorName, args: reverted.data.args ?? [], tick: null };
   const raw = walk(e, (x) => x instanceof RawContractError) as RawContractError | null;
-  const data = typeof raw?.data === 'string' ? raw.data : (raw?.data as { data?: string } | undefined)?.data;
+  let data = typeof raw?.data === 'string' ? raw.data : (raw?.data as { data?: string } | undefined)?.data;
+  if (!data) {
+    // A plain `eth_call` / `eth_estimateGas` revert: viem keeps the revert data on the RPC error (code 3), not on a contract error.
+    const holder = walk(e, (x) => {
+      const d = (x as { data?: unknown } | null)?.data;
+      const s = typeof d === 'string' ? d : (d as { data?: unknown } | undefined)?.data;
+      return typeof s === 'string' && /^0x[0-9a-fA-F]{8,}$/.test(s);
+    }) as { data?: string | { data?: string } } | null;
+    const d = holder?.data;
+    data = typeof d === 'string' ? d : d?.data;
+  }
   if (data && data.startsWith('0x') && data.length >= 10) {
     try {
       const d = decodeErrorResult({ abi: runBankAbi, data: data as `0x${string}` });

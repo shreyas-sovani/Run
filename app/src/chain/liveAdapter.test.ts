@@ -8,6 +8,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { nonceManager } from 'viem/accounts';
 import { runBankAbi } from './abi';
 import { deployment } from './deployment';
+import { gasLimitFor } from './gasModel';
 import { createLiveAdapter } from './liveAdapter';
 import { addressOfKey } from './keys';
 import { TICK_SUMMARY, hashN, rawLog } from './testkit';
@@ -42,6 +43,10 @@ class FakeNode {
   estimateRevert: { name: string; args: unknown[] } | null = null;
   /** Make eth_estimateGas fail with a transport-style error (not a revert). */
   estimateBroken = false;
+  /** A tx whose gas limit is below this is mined as reverted (out of gas). */
+  needGas = 0n;
+  /** If set, replaying a reverted tx via eth_call fails with this RunBank error. */
+  callReverts: { name: string; args: unknown[] } | null = null;
   runId = 1;
   bankTick = 0;
   sealedRawHashes: Hex[] = [];
@@ -52,6 +57,8 @@ class FakeNode {
     this.polls = 0;
     this.estimateRevert = null;
     this.estimateBroken = false;
+    this.needGas = 0n;
+    this.callReverts = null;
     this.calls = [];
     this.receipts.clear();
     this.mempool.clear();
@@ -115,6 +122,10 @@ class FakeNode {
       cumulativeGasUsed: toHex(tx.gas ?? 0n), gasUsed: toHex(tx.gas ?? 0n), effectiveGasPrice: toHex(102_000_000_000n), status: '0x1',
       type: '0x2', contractAddress: null, logsBloom: `0x${'0'.repeat(512)}`, logs,
     };
+    if ((tx.gas ?? 0n) < this.needGas) {
+      receipt.status = '0x0';
+      receipt.logs = [];
+    }
     this.receipts.set(hash, receipt);
     this.mempool.delete(hash);
     this.sealedRawHashes.push(hash);
@@ -172,7 +183,10 @@ class FakeNode {
         return this.receipts.get(h) ?? null;
       }
       case 'eth_call': {
-        this.rpcError(-32000, 'eth_call not scripted');
+        if (this.callReverts) {
+          this.rpcError(3, 'execution reverted', encodeErrorResult({ abi: runBankAbi, errorName: this.callReverts.name, args: this.callReverts.args } as never));
+        }
+        return '0x';
       }
       default:
         return this.rpcError(-32601, `unscripted ${method}`);
@@ -199,6 +213,7 @@ const sends = () => node.calls.filter((c) => c.method === 'eth_sendRawTransactio
 describe('live adapter send path', () => {
   it('estimate + 10%, sync send, decodes the receipt into SealResult events', async () => {
     const a = make();
+    a.gasMode = 'estimate';
     const r = await a.sealTicks(1, [[3, 9], [], [20]]);
     expect(r.record).toMatchObject({ kind: 'ticks', simulated: false, status: 'sealed', fromTick: 1, toTick: 3, requestedCount: 3, gasLimit: 110_000n });
     expect(r.record.txHash).toMatch(/^0x[0-9a-f]{64}$/);
@@ -226,7 +241,9 @@ describe('live adapter send path', () => {
 
   it('a revert at estimate time surfaces as the RunBank error, and nothing is sent or charged', async () => {
     node.estimateRevert = { name: 'WrongStatus', args: [1, 2] };
-    const err = await make().sealTicks(1, [[1]]).catch((e) => e);
+    const a = make();
+    a.gasMode = 'estimate';
+    const err = await a.sealTicks(1, [[1]]).catch((e) => e);
     expect(translateError(err).detail).toBe('The bank is failed. Reset the bank first.');
     expect(sends()).toHaveLength(0);
   });
@@ -239,9 +256,42 @@ describe('live adapter send path', () => {
     const sealed = await a.sealTicks(1, [[1]]);
     expect(sealed.record.status).toBe('sealed');
     expect(sealed.record.gasLimit).toBeGreaterThan(100_000n);
+    // the fallback is the generous envelope, not the tight level-0 fit
+    expect(sealed.record.gasLimit).toBe(gasLimitFor([[1]]));
     expect(a.gasLog[0].estimate).toBeNull();
     expect(a.gasLog[0].mode).toBe('formula');
   }, 20_000);
+
+  it('default gas mode: sealTicks uses A\'s envelope with the queue hint, and makes no estimateGas call', async () => {
+    const a = make();
+    expect(a.gasMode).toBe('formula');
+    const r = await a.sealTicks(1, [[3, 9], [20]]);
+    expect(r.record.gasLimit).toBe(gasLimitFor([[3, 9], [20]], { queued: 0 }));
+    expect(node.calls.some((c) => c.method === 'eth_estimateGas')).toBe(false);
+    expect(a.gasLog[0]).toMatchObject({ estimate: null, mode: 'formula' });
+    // fixed-cost calls still estimate (and so surface reverts before they are charged)
+    await a.ping();
+    expect(node.calls.filter((c) => c.method === 'eth_estimateGas')).toHaveLength(1);
+  });
+
+  it('an out-of-gas revert (replay succeeds) is retried once with double the limit, then estimates for the rest', async () => {
+    node.needGas = 300_000n; // the 259,800 envelope is too little for this (made-up) batch
+    const a = make();
+    const r = await a.sealTicks(1, [[1]]);
+    expect(r.record.status).toBe('sealed');
+    expect(r.record.gasLimit).toBe(519_600n); // 2 × the limit that failed
+    expect(a.gasMode).toBe('estimate');
+    expect(sends()).toHaveLength(2);
+    expect(r.ticks).toHaveLength(1);
+  });
+
+  it('a real revert (replay shows a RunBank error) is NOT retried', async () => {
+    node.needGas = 10_000_000n; // always reverts
+    node.callReverts = { name: 'TickMismatch', args: [4, 1] };
+    const err = await make().sealTicks(1, [[1]]).catch((e) => e);
+    expect(translateError(err).code).toBe('TickMismatch');
+    expect(sends()).toHaveLength(1);
+  });
 
   it('consecutive sends use consecutive nonces', async () => {
     const a = make();

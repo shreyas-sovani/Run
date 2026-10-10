@@ -1,5 +1,49 @@
 # Agent C status (Chain)
 
+## 14:25 update (C): everything open on C's side is resolved
+
+### Shipped
+1. **Single-writer guard** (`app/scripts/chain-lock.ts`, A's and F's request). `guardLiveBank({ agent, purpose, client, runBank, signer, status, isLocalRpc, force })` refuses to start when (a) `/tmp/run-bank.lock` is held by a live, unexpired process (stale locks from dead pids or past expiry are taken over), (b) another agent has `LIVE BANK: <agent> until HH:MM` (HH:MM still ahead) in the first 12 lines of any `docs/status/*.md`, or (c) the bank is `Running` and emitted an event in the last ~100 blocks. It returns `{ release, nonce }`; wrap every send in `guard.nonce.run(() => adapter.x())` and it stops with `NonceDriftError` if the wallet's nonce moved without us (no silent resync, and `chain:smoke` then skips its cleanup reset). Local forks are exempt. `chain:smoke` uses it for every write; `--force` skips only the `LIVE BANK:` line check. Verified live: a planted lock makes `chain:smoke --ping` exit 2 with no transaction sent. 15 unit tests.
+   - **F**: `import { guardLiveBank } from './chain-lock'` in `live:e2e` (it is in `app/scripts/`, `agent: 'F'`, pass your backup key's address as `signer`).
+2. **Gas default changed: `formula`** (F's throughput request). `sealTicks` now uses A's *envelope* (no `speedBump` option) with `queued` taken from the last `TickSealed.queueLengthAfter`, so no `eth_estimateGas` round trip. Fixed-cost calls still estimate. Out-of-gas is detected by replaying at the previous block (Monad's `gasUsed == gasLimit` hides it), retried **once with double the limit**, and the rest of the run uses `estimate`.
+   **Before/after on the real testnet** (`chain:smoke --soak 20`, one 1-id request per tick at 400 ms cadence, same wallet, same hour, under the lock):
+
+   | gas mode | batch time mean / median / max | ticks per tx | txs for 20 ticks | gas cost of the whole soak |
+   |---|---|---|---|---|
+   | `estimate` (before) | 1.11 s / 1.08 s / 1.36 s | 2.86 | 7 | 0.134 MON |
+   | `formula` (after) | 0.83 s / 0.84 s / 0.95 s | 2.22 | 9 | 0.307 MON |
+
+   About 0.27 s (25%) faster per batch. The price is a looser limit (260k vs ~100k for a 1-id tick): roughly +0.2 MON per full run, about 100 runs before the operator reaches the 15 MON floor from today's ~37 MON. `adapter.gasMode = 'estimate'` restores the old behaviour (and `chain:smoke --gas estimate`).
+3. **Recorder**: `ReplayFile.rumor.sealedAtMs` is now written explicitly. It is `0` by definition (t0 is the rumor receipt); if Replay needs the rumor's own send→seal time, tell me and I'll add it as a new field.
+4. **Smoke script**: a paused queue now stops the script instead of hanging forever (found when a run sat for 11 min on a revert).
+
+### Findings from re-running the real model (B's request)
+`chain:fork --run`, every card on both banks, **both** `eth_sendRawTransactionSync` and the `--no-sync` fallback; every run gap-free with the mirror matching every tick, and every outcome equal to B's tuner table:
+
+| bank | card | outcome | ticks |
+|---|---|---|---|
+| Bhau's | Q | survived | 19 (trapped 0) |
+| Bhau's | W | **failed** | 8 (335 trapped, 3,557.94 AUSD) |
+| Bhau's | E | **failed** | 9 (305 trapped, 3,884.57 AUSD) |
+| Bhau's | R | **failed** | 10 (325 trapped, 3,244.66 AUSD) |
+| Mutual | Q / W / E / R | survived | 17 / 25 / 24 / 34 |
+
+(Gas on the largest tick: 137 requests at the failing tick of W is ~714k by `estimateGas`; the 150-request peak is fine under both the estimate and the envelope.)
+
+**Bug found and fixed along the way (matters for demo day):** a merged batch containing the failing tick reverted out of gas on the fork when `estimateGas` timed out and the fallback limit was A's *level-0 tight fit*. Fixes: the fallback is now the envelope; out-of-gas is retried once at double the limit; revert data is read from plain `eth_call` errors too (`extractRevert`), so a real revert is told apart from out-of-gas.
+
+### REQUEST → A (data for `gasModel.ts`)
+- Level 0 tight fit is **below** one real sample: `{ticks: 1, ids: 137, distinctSlots: 57, estimate: 713,808}` is the tick that fails the bank (Bhau's × W, tick 8, on a fork of the testnet state). `150k + 8.5k·1 + 3.8k·137 = 679,100` < 713,808 (by 5%). The failure path (trapped computation) costs extra that does not scale with ids. C now uses the envelope, so nothing is broken, but anyone who switches to `speedBump: false` should know. Other level-0 rows I have sit under your fit.
+- Not asking for a change. If you refit, include a failing-tick sample.
+
+### Blocked by
+- Nothing.
+
+### Notes for later
+- `LIVE BANK:` convention is in force. C will write `LIVE BANK: C until HH:MM` at the top of this file before any live send and clear it afterwards (and the lock does the rest).
+- Operator MON after today's tests: ~36.7 MON (backup 75). Refuse threshold is 10.5, warn 15.
+
+
 ## 13:25 update: CP1 reached (live adapter + SealQueue seal on testnet)
 
 **All P0 and P1 items are done** (C-00 … C-13). `pnpm chain:smoke --mini` passes on Monad testnet (chain 10143), and a 20-tick soak through the SealQueue sealed gap-free.
@@ -74,7 +118,7 @@ Other live runs (all `OK`, bank back to `ready` each time):
 - **REQUEST → A**: nothing blocking. Re-run the gas fit if the contract changes; the smoke script prints the comparison table.
 - **FYI → A/F**: the shared bank is a single resource. My smoke runs reset it (they `reset()` first if it isn't `ready`). If you are mid-run on testnet, say so here before I run `--mini`.
 
-### Blocked by (14:00; nothing is stopping the code, these are about *proving* it again)
+### Blocked by (14:00, historical; all three resolved at 14:25, see above)
 1. **Shared testnet bank has several writers on one operator key.** A reported nonce collisions ("EOA nonce changed unexpectedly") and `runId` climbing 2 → 27; F's `live:e2e`, A's calibration and my smoke runs all write to the same bank. I won't send another live transaction until the writers agree on a protocol. **Owner: F + A** (agree on the `LIVE BANK: <agent> until HH:MM` line at the top of each status file; see their files). **C's part (queued, waiting for the go):** advisory lock `/tmp/run-bank.lock` and a refuse-to-start check in `chain:smoke` / `chain:fork`, and fail loudly on nonce drift, as A asked. Until then C only runs read-only smoke on testnet and uses `pnpm chain:fork` for everything else.
 2. **No final model yet.** My last real-engine smoke ran on the pre-tuning model. A live re-check of the 15+ tick path on the final model is F's `live:e2e` result (Mutual × W t25, × R t34, both mirror N/N), which is enough for me; I'd only re-run `--run` if B/A change `model.json`, `configs.json` or `ledger.json`. **Owner: B** (say when it is final).
 3. **Real rehearsal gas numbers.** `status/A.md` offers to refine the level-1 envelope from C's rehearsal data. I have the level-0 table above but none for level 1 on the tuned model. F's e2e has the batch sizes (biggest 387 requests = 1.41M gas) but not a per-batch log. **Owner: F** (run `pnpm live:e2e` and paste `adapter.gasLog`, or let me run it when the bank is free).
@@ -85,3 +129,17 @@ Other live runs (all `OK`, bank back to `ready` each time):
 ## 13:45 note from A (coordination, not a contract blocker)
 - **REQUEST → C**: the operator key is used by several processes at once (your `chain:smoke`/`chain:fork`, F's `live:e2e`, and my earlier gas calibration). We hit "EOA nonce changed unexpectedly" and `WrongStatus` from interleaved resets while `runId` climbed 2 → 27. Please (1) add a simple advisory lock to the smoke scripts (e.g. refuse to start if the bank is `Running` and the last `Ping`/`TickSealed` event is < 60 s old, or take a lock file at `/tmp/run-bank.lock`), and (2) make them fail loudly instead of retrying silently when the nonce moves. Contracts are unchanged; no A change is needed. I have stopped sending transactions to the live bank.
 - Your gas comparison table is welcome: if the formula is below any real sample, tell me the `{ticks, ids, estimate}` row and I'll refit `app/src/chain/gasModel.ts` (A's file).
+
+## REQUESTS → C (from B, 13:45): done at 14:25 (see the table above)
+1. Your note "Level 0 with cards 1 and 3 fails the bank at tick 3 … B's tuning" is out of date. The tuned model (`modelHash 0xebcb6f1f…`) fails Bhau's × W/E/R at ticks 8/9/10 and Monad Mutual survives at ticks 17–34. If you have time, rerun `chain:fork --run` / `chain:smoke --run` for cards 0–3 on both levels and report any mirror mismatch or timing surprise (peak batch is 150 requests, so check gas limits on the largest tick).
+2. `RumorStarted.modelHash` must be `model.modelHash` (now the real hash, was a fixture value) and `modelSeed` must be `defaultParams(...).modelSeed`; the controller already does this.
+
+## REQUESTS → C (from F, 14:50): 1 lock shipped, 2 gas default changed to formula (before/after above), 3 waiting on F's gas rows
+F is idle on the chain and will stay off the live bank until these are settled.
+1. **Writer lock (blocks F's further live runs).** F will not send another live transaction (re-recording replays, rehearsal runs, `live:e2e`) until your `/tmp/run-bank.lock` advisory lock and the "refuse to start when a `LIVE BANK:` line is up / bank is `Running` with a recent event" check are in `chain:smoke`, `chain:fork` and `chain-*` scripts. **Please ship it now: the human said they'd tell you "go" once agents are aligned; F's side is aligned (see F.md top line).** F will make `pnpm live:e2e` take the same lock and use the **backup key** per A's suggestion, so F and your smoke never share a nonce.
+2. **Sealing throughput vs the 400 ms clock.** In a real browser run (production build, home network) healthy Mutual runs show amber "Sealing delayed" for several seconds: batches carry 2–3 ticks and take 0.9–1.6 s, which is about the rate ticks are produced, so the engine lead keeps touching `MAX_LEAD = 6`. Your note says `estimate` mode adds one `eth_estimateGas` (100–250 ms) per send. Can you decide whether to default to `formula` gas mode now (A's formula is above every sample; OOG falls back to `estimate`), or cache the estimate per (ticks, ids) shape, to shave that round trip? Owner: C (A only if the formula needs to change). Please report the before/after batch time here.
+3. **Gas rows for A.** F will print `adapter.gasLog` in `live:e2e` after the lock lands and paste the level-1 rows into your status file (your 14:00 ask). Not blocking.
+
+## REPLY → C (from F, 14:55): sealedAtMs written (0), lock API described above
+- Using your `scripts/chain-lock.ts` in `live:e2e` (backup key by default, lock + `LIVE BANK:` check). F sent no live transactions in this pass.
+- **REQUEST → C (small, additive)**: `ReplayFile.rumor` now has optional `sealedAtMs?: number` (ms after the rumor receipt, `0` if omitted; `types.ts`, F). Please have `createRecorder().begin()` set it (the rumor's sealed time relative to the recorder's t0) so Replay can show the real time. Playback already reads it.

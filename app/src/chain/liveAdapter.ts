@@ -110,11 +110,15 @@ export function createLiveAdapter(opts: {
   const primary = privateKeyToAccount(opts.primaryPk, { nonceManager });
   const backup = opts.backupPk ? privateKeyToAccount(opts.backupPk, { nonceManager }) : null;
   let account = primary;
-  // 'estimate' (estimateGas + 10%) is the default even though A's formula is calibrated: it simulates the real queue
-  // state (the level-1 speed bump makes cost state-dependent) and a too-tight formula is paid for in a reverted tx.
-  // 'formula' stays available for `adapter.gasMode = 'formula'`, with the safe envelope or the tight level-0 fit.
-  let gasMode: GasMode = 'estimate';
-  let knownLevel: BankLevel | null = null;
+  // Gas for `sealTicks` (PRD §12.3). Default 'formula': A's calibrated envelope with the speed-bump queue length we saw in
+  // the last TickSealed event, so a send needs no `eth_estimateGas` round trip (100–250 ms of a ~1 s batch). The
+  // envelope sits above every measured sample, including the batch that contains the failing tick (the tight level-0 fit
+  // does not). If a batch still runs out of gas, it is retried once with double the limit and the rest of the run falls
+  // back to 'estimate' (estimateGas + 10%). Fixed-cost calls (setLevel, startRumor, reset, ping) always estimate: they are
+  // off the hot path, and estimating surfaces a revert before anything is charged.
+  let gasMode: GasMode = 'formula';
+  /** Speed-bump queue length after the last sealed tick: A's formula needs it (the queue drains on later ticks). */
+  let lastQueueAfter = 0;
   let syncSupported = opts.syncSend !== false;
   let nextId = 1;
   const gasLog: GasLogEntry[] = [];
@@ -206,15 +210,19 @@ export function createLiveAdapter(opts: {
     throw new ChainTimeoutError(tick);
   }
 
-  /** Replay a reverted tx at the previous block to learn which RunBank error it hit. */
-  async function revertReason(receipt: TransactionReceipt, c: Call, data: Hex): Promise<Error> {
+  /**
+   * Replay a reverted tx at the previous block to learn why. A RunBank error means a real revert. If the replay (with no gas
+   * cap) SUCCEEDS, the transaction ran out of gas: Monad receipts always say gasUsed == gasLimit, so that is the only tell.
+   */
+  async function revertReason(receipt: TransactionReceipt, c: Call, data: Hex): Promise<{ error: Error; outOfGas: boolean }> {
     try {
       await call(client, { account: account.address, to: c.to, data, blockNumber: receipt.blockNumber - 1n });
+      return { error: new Error('Transaction ran out of gas onchain'), outOfGas: true };
     } catch (e) {
       const rv = extractRevert(e);
-      if (rv) return new RunBankRevert(rv.name, rv.args, null, { cause: e });
+      if (rv) return { error: new RunBankRevert(rv.name, rv.args, null, { cause: e }), outOfGas: false };
     }
-    return new Error('Transaction reverted onchain');
+    return { error: new Error('Transaction reverted onchain'), outOfGas: false };
   }
 
   async function send(c: Call, meta: SendMeta): Promise<{ record: SealRecord; receipt: TransactionReceipt }> {
@@ -223,6 +231,10 @@ export function createLiveAdapter(opts: {
     const sentAtMs = Date.now();
     const tick = meta.fromTick ?? null;
 
+    /** 100 = as computed; 200 after an out-of-gas revert (one retry with double the limit). */
+    let boost = 100n;
+    /** After an out-of-gas retry the new limit is never below the one that just failed. */
+    let floorGas = 0n;
     for (let attempt = 0; attempt < 2; attempt++) {
       let estimate: bigint | null = null;
       let gas: bigint;
@@ -260,6 +272,8 @@ export function createLiveAdapter(opts: {
             gas = fallback;
           }
         }
+        if (floorGas > gas) gas = floorGas;
+        if (boost > 100n) gas = (gas * boost) / 100n > 30_000_000n ? 30_000_000n : (gas * boost) / 100n;
         const f = await fees();
         const req = await prepareTransactionRequest(client, {
           account, chain: monadChain, to: c.to, data, gas, type: 'eip1559',
@@ -284,12 +298,14 @@ export function createLiveAdapter(opts: {
       held.delete(heldKey);
 
       if (receipt.status === 'reverted') {
-        const outOfGas = gasMode === 'formula' && receipt.gasUsed >= pct(gas, 99n);
-        if (outOfGas && attempt === 0) {
-          gasMode = 'estimate'; // the formula was too tight: use estimates for the rest of the run
+        const why = await revertReason(receipt, c, data);
+        if (why.outOfGas && attempt === 0) {
+          gasMode = 'estimate'; // a formula that was too tight: use estimates for the rest of the run
+          boost = 200n; // and this send gets double the limit, so one bad estimate cannot stall a run
+          floorGas = gas;
           continue;
         }
-        throw await revertReason(receipt, c, data);
+        throw why.error;
       }
       return finish(receipt, gas, estimate, meta, sentAtMs);
     }
@@ -340,7 +356,7 @@ export function createLiveAdapter(opts: {
       getBlockNumber(client, { cacheTime: 0 }).catch(() => null),
     ]);
     const view = decodeSnapshot(s as unknown as RawSnapshot, n);
-    knownLevel = view.level;
+    lastQueueAfter = view.status === 'running' ? view.queueLength : 0;
     return view;
   }
 
@@ -373,7 +389,7 @@ export function createLiveAdapter(opts: {
 
     async setLevel(level: BankLevel, cfg: BankConfig) {
       const r = await plain('setLevel', bankCall('setLevel', [level, cfg]));
-      knownLevel = level;
+      lastQueueAfter = 0;
       return r;
     },
 
@@ -381,23 +397,32 @@ export function createLiveAdapter(opts: {
       // Below 10.5 MON Monad's reserve rule throttles sends to one per 3 blocks: refuse before a run, not during it.
       const bal = await getBalance(client, { address: account.address });
       if (bal < CHAIN_LIMITS.refuseMonWei) throw new LowBalanceError(bal, 'refuse');
+      lastQueueAfter = 0;
       return plain('rumor', bankCall('startRumor', [params.card, params.seedNode, params.modelSeed, modelHash]));
     },
 
     sealTicks(firstTick: number, ticks: number[][]) {
-      const formulaGas = gasLimitFor(ticks, knownLevel === 0 ? { speedBump: false } : knownLevel === 1 ? { speedBump: true } : {});
+      // No `speedBump` option: the safe envelope. Only `queued` is passed.
+      const formulaGas = gasLimitFor(ticks, { queued: lastQueueAfter });
       const requestedCount = ticks.reduce((n, t) => n + t.length, 0);
       return serial(async () => {
         const { record, receipt } = await send(bankCall('sealTicks', [firstTick, ticks]), {
           kind: 'ticks', fromTick: firstTick, toTick: firstTick + ticks.length - 1, requestedCount, formulaGas, ticks,
+          // If estimating fails, use the generous envelope: the tight level-0 fit can sit below a batch that contains the failing tick.
+          fallbackGas: gasLimitFor(ticks),
         });
         const d = decodeBankLogs(receipt.logs, bank());
         const last = d.ticks.length ? d.ticks[d.ticks.length - 1].tick : record.toTick;
+        lastQueueAfter = d.outcome ? 0 : d.ticks.length ? d.ticks[d.ticks.length - 1].queueLengthAfter : lastQueueAfter;
         return { record: { ...record, toTick: last }, rumor: null, ticks: d.ticks, outcome: d.outcome };
       });
     },
 
-    reset: () => plain('reset', bankCall('reset', [])),
+    async reset() {
+      const r = await plain('reset', bankCall('reset', []));
+      lastQueueAfter = 0;
+      return r;
+    },
     ping: () => plain('ping', bankCall('ping', [])),
 
     fundBank(amount: bigint) {
