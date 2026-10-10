@@ -23,10 +23,6 @@ function readPalette(el: Element, canvas: HTMLCanvasElement): Palette {
   return { ink: t('--ink'), seal: t('--seal'), rumor: t('--rumor'), run: t('--run'), trapped: t('--trapped'), paper: t('--paper') };
 }
 
-/** F may add `runActions.selectSeed(node | null)` (REQUEST in docs/status/D.md). Until it exists the canvas isn't clickable. */
-type SelectSeed = (node: number | null) => void;
-const seedAction = (): SelectSeed | undefined => (runActions as unknown as { selectSeed?: SelectSeed }).selectSeed;
-
 interface Props {
   /** The vault column: withdrawal particles fly to its near edge. */
   targetRef: RefObject<HTMLElement | null>;
@@ -94,7 +90,7 @@ export function NetworkCanvas({ targetRef }: Props) {
   // P2: before the run starts, click a depositor to choose who hears the rumor first.
   const pickable = () => {
     const v = getRunView();
-    return v.phase === 'idle' && (v.mode === 'practice' || v.mode === 'live') && seedAction() !== undefined;
+    return v.phase === 'idle' && (v.mode === 'practice' || v.mode === 'live');
   };
   const hit = (e: MouseEvent<HTMLCanvasElement>): number => {
     const r = canvasRef.current?.getBoundingClientRect();
@@ -114,9 +110,7 @@ export function NetworkCanvas({ targetRef }: Props) {
     if (!pickable()) return;
     const id = hit(e);
     if (id < 0) return;
-    const next = rendererRef.current?.seedNode === id ? -1 : id;
-    rendererRef.current?.setSeed(next);
-    seedAction()?.(next < 0 ? null : next);
+    runActions.selectSeed(getRunView().seedNode === id ? null : id);
   };
 
   return (

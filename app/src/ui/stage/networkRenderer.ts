@@ -238,11 +238,12 @@ export class NetworkRenderer {
       this.refreshInsured();
       this.dirty = true;
     }
-    if (view.phase !== 'idle' && (this.seed !== -1 || this.hover !== -1)) {
-      this.seed = -1;
+    // The chosen rumor starter lives in the store (`seedNode`); it only shows before the run starts.
+    if (view.phase !== 'idle' && this.hover !== -1) {
       this.hover = -1;
       this.dirty = true;
     }
+    this.setSeed(view.phase === 'idle' ? (view.seedNode ?? -1) : -1);
     const reduced = this.opts.reduced();
     const frame = view.frame;
 
@@ -487,10 +488,6 @@ export class NetworkRenderer {
     if (node === this.hover) return;
     this.hover = node;
     this.dirty = true;
-  }
-
-  get seedNode(): number {
-    return this.seed;
   }
 
   setSeed(node: number): void {

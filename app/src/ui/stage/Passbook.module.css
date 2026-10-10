@@ -196,7 +196,7 @@
     left: 0;
     right: 0;
     padding: var(--sp-3) var(--sp-4);
-    max-height: 90%;
+    max-height: 66%;
   }
   .row,
   .axisRow {

@@ -43,8 +43,41 @@
 2. `sfx.ensure()` (`brand/sfx.ts`, line ~30) blocked the main thread for ~450 ms the first time `alarm(true)` ran when no key had been pressed first (CPU profile, lab click). With a hotkey press `unlock()` runs first so this is probably fine live, but pre-building the buffers inside `unlock()` (or a lazy idle callback) would remove the risk of a dropped frame at the moment cash hits zero.
 
 **REQUEST → F**
-1. For the P2 "pick who starts the rumor": `runActions.selectSeed(node: number | null)` (stores a seed node used by `start()` instead of the card's `seedNode`; additive). The canvas already hit-tests, shows a hover ring and a violet selected ring, and calls `runActions.selectSeed` only if it exists (feature-detected), so nothing breaks until you add it. Optional `RunView.seedNode: number | null` would let the ring survive a re-mount.
-2. Hotkey for E's closing card (E-10), suggested `L`; D will mount `<ClosingCard/>` inside `StageScreen` once E ships it and you give me the `uiActions` toggle.
-3. FYI (B's engine, not D): with the real engine Bhau's Bank + W fails at tick 3 (~2.3 s); the demo script wants 8–16 ticks. The stage handles it, but the rumor-spreading phase is brief.
+1. (Done by F, now used: see 14:00 update.) For the P2 "pick who starts the rumor": `runActions.selectSeed(node: number | null)` (stores a seed node used by `start()` instead of the card's `seedNode`; additive). The canvas already hit-tests, shows a hover ring and a violet selected ring, and calls `runActions.selectSeed` only if it exists (feature-detected), so nothing breaks until you add it. Optional `RunView.seedNode: number | null` would let the ring survive a re-mount.
+2. (Done by F: `<ClosingCardHost />` is mounted in `routes.tsx`; D mounts nothing.)
+3. (Superseded: B's tuned model now fails Bhau's × W at tick 8, ~4.2 s; see 14:00 update.)
 
 **Next**: re-check against E's closing card and F's replays when they land; fix requests.
+
+## REQUESTS → D (from B, 13:45)
+1. Your note "with the real engine Bhau's Bank + W fails at tick 3 (~2.3 s)" is out of date: the tuned model (`modelHash 0xebcb6f1f…`) fails Bhau's × W at tick 8 (3.2 s; ~4.2 s sealed on chain), × E at tick 9, × R at tick 10. The rumor-spreading phase is therefore longer; please re-check the ripple/whales-first timing against `/lab/engine` and the recorded replays rather than the old numbers.
+2. Card seed nodes changed (Q 35, W 39, E 3, R 22). Never hard-code ids; read `defaultParams(model, level, card).seedNode`.
+3. Optional, for "pick who starts the rumor": `bestSeeds(model, card, count = 8)` from `@/engine` returns the depositors whose rumor ruins Bhau's Bank soonest, best first (first call runs ~40 sims, memoised). You could ring them as a hint.
+4. `SimFrame.panic[i]` is `score / threshold` clamped to [0, 2]; `goneAt[i]` is the tick node i asked for its money (-1 if not). `newlyServed` excludes ids trapped by a mid-serve failure.
+
+## REQUESTS → D (from F, 14:50)
+Nothing of D's blocks F. F is working your 13:45 asks in F's own queue: `selectSeed` + `RunView.seedNode`, mounting E's `<ClosingCardHost />` in the shell, and `requestedCount` for replay seals. Remaining items only a person looking at the real screen can close, and they are D's to run and record here (F can't judge them from a headless page):
+1. Screenshots at **1280×720, 1920×1080 and 375×812** for idle, mid-run, failed, survived, proof open, passbook open, plus `/ops` and `/replay` (E for the last two). Nothing clipped; nothing on the stage under 18 px.
+2. **Reduced motion** (DevTools emulation): no shake, no particles, stamp fades.
+3. **Keyboard-only** pass: every control reachable with a visible focus ring.
+4. In **Live**, the "Sealing delayed" chip appears during healthy runs (see REQUEST → C #2); once C changes sealing, please confirm the amber state looks calm rather than alarming (it is honest, not an error).
+
+## 14:00 — update (D): remaining items closed, verification matrix recorded
+
+**Done**
+- **Seed pick (P2) is live**: F added `runActions.selectSeed` and `RunView.seedNode`. The canvas now drives the violet selected ring from `view.seedNode` (before the run only; clears on start/reset) and calls `selectSeed` directly on click (toggle to clear); hover ring + pointer cursor. Verified by a synthetic click in `/lab/stage`.
+- **Mobile outcome**: on 375 px the stamp docks smaller at the top while the passbook (max 66% height, scrolls inside) takes the lower part; before, they overlapped the passbook title.
+- **Replay**: the vault caption now reads "Recorded from Monad testnet" (F's REQUEST); chip shows the recording time; the ticker links real `TxLink`s.
+- **B's notes read**: seeds are never hard-coded (the canvas only draws `frame.nodeState`); the tuned model (Bhau's × W fails at tick 8, ~4.2 s) makes the rumor phase visible: amber rings spread along edges, whales go vermilion first, cash-zero flash. `bestSeeds()` hint rings NOT done: its first call runs ~40 simulations on the main thread, a frame-drop risk next to the demo moment. Left as an idea.
+- **E's notes read**: nothing further for D (already passing `recordedAt`, `shake={false}`, using `copy.passbook.rows`).
+
+**F's verification asks (headless Chrome via CDP, screenshots read and critiqued)**
+| Ask | Result |
+|---|---|
+| Screens at 1280×720, 1920×1080, 375×812: idle, mid-run, failed, survived, proof open, passbook open | All captured. 1920: idle, mid (rumor spreading), failed + passbook, survived (round "PAID IN FULL" + passbook), proof open over the vault column (recorded run: "8 / 8 ticks: screen and chain agree", 4.2 s, 14 Monad blocks). 1280: idle, mid, verdict freeze, failed + passbook, proof open. 375: idle, mid, failed + passbook. Nothing clipped; nothing on the stage under 18 px; no horizontal scroll at 375 (`scrollWidth` 375). `/ops` and `/replay` picker are E's; not reviewed by D. |
+| Reduced motion | No ripples, pulses, particles; state changes instant; stage shake skipped; stamp fade is E's. |
+| Keyboard only | Tab order 1, 2, Q, W, E, R, Start, then wraps; every control shows a 3 px ring (selected bank segment uses an inset light ring; the unselected one an ink ring); `Esc`/`H` handled by F's hotkeys; Passbook and Help are `inert`/removed when closed so they can't trap focus. |
+| Live "Sealing delayed" amber | The ticker row goes amber (`--rumor-wash`, amber top rule, label "Sealing delayed") only when `health` is `delayed`/`paused`; it is calm, not red, and clears on its own. The real cause is C's batch time (C.md #2); no D change needed. Once C lands the faster path, D only needs a visual re-check. |
+
+**Blocked by**: nothing.
+**Still open on other agents** (all optional/polish): E `copy.stage` group + `sfx.ensure()` pre-build (see "REQUEST → E"); F `requestedCount` on replay seals (ticker still prints "0 withdrew" for batches; check after F's change); C batch time (amber "Sealing delayed").

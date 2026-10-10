@@ -75,4 +75,8 @@
   .stampLayer {
     position: fixed;
   }
+  /* The passbook takes the lower two thirds of a phone; the stamp shrinks into what is left above it. */
+  .docked {
+    transform: translateY(-30%) scale(0.5);
+  }
 }
