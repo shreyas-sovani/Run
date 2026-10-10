@@ -1,11 +1,17 @@
 .scrim {
   position: absolute;
   inset: 0;
-  z-index: var(--z-overlay);
+  /* Above the stamp (which is above the passbook): help must never sit underneath either. */
+  z-index: calc(var(--z-stamp) + 1);
   display: grid;
   place-items: center;
   padding: var(--sp-5);
   background: var(--scrim);
+}
+
+/* With E's proof panel open (480 px on the right) the dialog centres in what is left, so its Close stays reachable. */
+.beside {
+  right: min(480px, 100vw);
 }
 
 .card {
@@ -78,6 +84,9 @@
 }
 
 @media (max-width: 760px) {
+  .beside {
+    right: 0;
+  }
   .scrim {
     position: fixed;
   }

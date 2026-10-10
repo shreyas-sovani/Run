@@ -8,6 +8,7 @@ import styles from './Passbook.module.css';
 
 export function Passbook() {
   const open = useUi((u) => u.passbookOpen);
+  const proofOpen = useUi((u) => u.proofOpen);
   const outcome = useRunView((v) => v.outcome);
   const level = useRunView((v) => v.level);
   const mode = useRunView((v) => v.mode);
@@ -19,7 +20,7 @@ export function Passbook() {
 
   return (
     <section
-      className={`${styles.book} ${open ? styles.open : ''}`}
+      className={`${styles.book} ${open ? styles.open : ''} ${proofOpen ? styles.beside : ''}`}
       aria-label={S.passbookTitle()}
       aria-hidden={!open}
       inert={!open}

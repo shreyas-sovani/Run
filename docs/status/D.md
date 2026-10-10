@@ -10,6 +10,27 @@ D's backlog (BACKLOG.md "Workstream D": D-00 … D-11, P0 + P1 + the P2s that do
 
 ---
 
+## 1b. Follow-up pass (15:55) — D: done
+
+Scope: the short follow-up from the human (F's live UI check → judge the amber row; overlay check; checks; commit).
+
+**1. Amber "Sealing delayed" — judged calm, NOT changed.** F's live numbers (docs/status/F.md, "Live UI check"): Bhau's × W **0** amber stretches; Monad Mutual × W **2** stretches (2.6 s and 0.8 s, 3.4 s of a 13.7 s run), "calm and cleared by itself both times". Polled every 200 ms, F saw no on/off flicker, only two clean stretches; a 600 ms debounce would not remove either (the 0.8 s one would still show), and a debounce that restarts on every clear could hide a delay that is mostly-but-not-continuously present, which the human forbade. So: no debounce, no change to `SealTicker`. For the record, the code path that could flicker in theory is `controller.tickOnce` setting `health: 'delayed'` (lead ≥ `MAX_LEAD`) while `sealQueue` sets `'sealing'` at each batch boundary; F's measurement shows that does not happen in practice with C's formula-gas default. If a future run shows rapid amber/non-amber alternation, the right fix is in the stage only: keep the row amber until `health` has been non-delayed for ~600 ms (clear-delay), never a show-delay.
+
+**2. Overlay check (replay `/replay/bhaus-w-failed-202610100809`, 1280×720 and 1920×1080, after the stamp): two real problems found and fixed inside `ui/stage`; one found that belongs to others.** Method: after the stamp and auto-opened passbook, press `H`, `P`, `L`, `C` in turn and, for every visible Close/Dismiss button, test `document.elementFromPoint(centre)` is that button (script probe, plus screenshots).
+- **Fixed — passbook Close hidden under E's proof panel.** The proof panel covers the right 480 px; the passbook's Close sat at the right edge (x≈1801 at 1920, x≈1163 at 1280) so with `P` open it was unreachable. `Passbook` now reads `proofOpen` and stops short of the panel (`.beside { right: calc(min(480px, 100vw) + var(--sp-3)) }`, animated); phones are unchanged (proof is a bottom sheet there). Verified reachable at both sizes (Close moves to x≈1333 at 1920, x≈695 at 1280).
+- **Fixed — help dialog under the proof panel and under the stamp.** With `P` open the help card's Close was partly under the panel at 1280; the stamp (z 50) also painted over the help text. `HelpOverlay` now centres in the space left of the proof panel (`.beside`) and has `z-index: calc(var(--z-stamp) + 1)` so it is above the stamp and the passbook. Verified: help Close reachable at both sizes with proof + passbook also open; all three Close buttons are reachable at the same time (the lower modal is simply covered by the dim layer, which is expected).
+- **Dependency to remember:** the 480 px comes from E's `panels/ProofPanel.module.css` (`width: min(480px, 100vw)`). If E changes it, update `.beside` in `Passbook.module.css` and `HelpOverlay.module.css` (comments there say so).
+- **Not D's — REQUEST → E:** E's ModeBanner "Dismiss banner" button (top right) sits under the open proof panel (not reachable while `P` is open; fine once it closes). Optional: give the banner a right inset while the proof panel is open, or accept it.
+- **Not D's — REQUEST → F (or E):** the closing card (`L`, E's `ClosingCardHost`, fixed, opaque, full screen) is modal, but F's global hotkeys keep working under it: pressing `H`, `P` or `C` while it is up opens those overlays invisibly underneath, and after `Esc` (which closes all) or closing the card they can pop up unexpectedly. Suggested: ignore `H`/`P`/`C` (and `1 2 Q W E R Enter X`) while the closing card is open, or have `L` close other overlays first. The card's own Close (Esc badge, top right) is always reachable.
+
+**3. Checks:** `pnpm vitest run src/ui/stage` 19 passed; `pnpm typecheck` no errors under `ui/stage`; `npx oxlint src/ui/stage` clean. Screenshots read: `/tmp/v3/` (1920 and 1280, proof + passbook + help).
+
+**4. Commit:** only `app/src/ui/stage/**` and this file. No transactions sent, no key printed, Enter never pressed on `/`.
+
+**D: done** — F can deploy the stage changes in this commit.
+
+---
+
 ## 2. Open items (who does what)
 
 Nothing here blocks D. Every item has an owner; do not edit files you don't own, write the outcome in your own status file.
@@ -123,10 +144,10 @@ Items that were open earlier and are **now closed** (so you don't chase them):
 
 ### 5.7 Passbook
 - Rows from `copy.passbook.rows` (`bank/amount/span/note`: WaMu $19B 16 days, Wachovia ~$10B 8 days, SVB $42B 1 day) with fixed durations in `PASSBOOK_SECONDS` (16 d, 8 d, 1 d: data from PRD §8.1, not copy). "This bank" row: display-scale withdrawn amount (`fmtUsdScaled(outcome.withdrawnAmount)`), time (`fmtSeconds(wallMs)`), blocks ("14 Monad blocks") or "simulated" in Practice; red for failed, violet for survived. Placeholder "—"/"Run the bank to add its row" if opened before an outcome.
-- Bars on a **log** time scale (1 s … 2,000,000 s, `logPosition`, minimum visible sliver), labelled "log scale" with a 5-tick axis (1 s, 1 min, 1 h, 1 day, 1 week from `S.axisTicks()`); on narrow tracks the "1 week" label is hidden by a container query to avoid colliding with "1 day". Doto font (≥ 28 px) for entries. Rises from the bottom; closed state is `inert` + `visibility:hidden`. Toggled by F's `C` hotkey and its own Close button.
+- Bars on a **log** time scale (1 s … 2,000,000 s, `logPosition`, minimum visible sliver), labelled "log scale" with a 5-tick axis (1 s, 1 min, 1 h, 1 day, 1 week from `S.axisTicks()`); on narrow tracks the "1 week" label is hidden by a container query to avoid colliding with "1 day". Doto font (≥ 28 px) for entries. Rises from the bottom; closed state is `inert` + `visibility:hidden`. Toggled by F's `C` hotkey and its own Close button. While E's proof panel is open it stops 480 px short of the right edge (`.beside`) so its Close stays reachable.
 
 ### 5.8 Help overlay
-- `HOTKEYS` from `@/app/store`; opens on `uiActions.toggleHelp()` (`H`/`?`), closes with `Esc` (F's hotkey handler) or click outside or its Close button. `role="dialog" aria-modal`, focus moves into the card on open and returns to the previously focused element on close.
+- `HOTKEYS` from `@/app/store`; opens on `uiActions.toggleHelp()` (`H`/`?`), closes with `Esc` (F's hotkey handler) or click outside or its Close button. It sits above the stamp and the passbook (`z-index: calc(var(--z-stamp) + 1)`) and centres left of the proof panel when that is open. `role="dialog" aria-modal`, focus moves into the card on open and returns to the previously focused element on close.
 
 ### 5.9 Legend
 - DOM list under/left of the canvas explaining the node encoding; the "Fully insured" entry appears only on Monad Mutual.

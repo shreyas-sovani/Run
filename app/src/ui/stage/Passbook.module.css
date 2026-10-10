@@ -30,6 +30,23 @@
     visibility 0s;
 }
 
+/* E's proof panel slides over the right 480 px (panels/ProofPanel.module.css). Stop short of it so the passbook's
+   Close button is never hidden under the panel. On phones the proof panel is a bottom sheet: no change there. */
+.beside {
+  right: calc(min(480px, 100vw) + var(--sp-3));
+  transition:
+    transform 420ms var(--ease-out),
+    right var(--t-med) var(--ease-out),
+    visibility 0s linear 420ms;
+}
+
+.beside.open {
+  transition:
+    transform 420ms var(--ease-out),
+    right var(--t-med) var(--ease-out),
+    visibility 0s;
+}
+
 .head {
   display: flex;
   align-items: flex-start;
@@ -191,6 +208,9 @@
 }
 
 @media (max-width: 760px) {
+  .beside {
+    right: 0;
+  }
   .book {
     position: fixed;
     left: 0;

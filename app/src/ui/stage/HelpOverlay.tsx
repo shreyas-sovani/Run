@@ -7,6 +7,7 @@ import styles from './HelpOverlay.module.css';
 
 export function HelpOverlay() {
   const open = useUi((u) => u.helpOpen);
+  const proofOpen = useUi((u) => u.proofOpen);
   const dialogRef = useRef<HTMLDivElement>(null);
   const returnTo = useRef<HTMLElement | null>(null);
 
@@ -19,7 +20,7 @@ export function HelpOverlay() {
 
   if (!open) return null;
   return (
-    <div className={styles.scrim} onClick={() => uiActions.toggleHelp(false)}>
+    <div className={`${styles.scrim} ${proofOpen ? styles.beside : ''}`} onClick={() => uiActions.toggleHelp(false)}>
       <div
         ref={dialogRef}
         className={styles.card}
