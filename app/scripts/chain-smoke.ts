@@ -6,6 +6,9 @@
 //   pnpm chain:smoke --run           + a full real run through the SealQueue at 400 ms cadence, then reset
 //   pnpm chain:smoke --soak 20       + 20 ticks through the SealQueue at 400 ms cadence with a trickle of small withdrawals
 //                                      (the bank never fails), proving 15+ ticks seal without a gap, then reset
+//   Writes to the live bank take the single-writer guard first (scripts/chain-lock.ts): they refuse to start while another
+//   process holds /tmp/run-bank.lock, another agent's `LIVE BANK:` line is up in docs/status, or the bank is mid-run, and they
+//   stop loudly if the operator nonce moves without us. Local forks are exempt. --force skips the `LIVE BANK:` line check.
 //   options: --no-sync (force sendRawTransaction + receipt polling), --stress (--mini with 60 synthetic ids, for gas calibration), --level 0|1, --card 0..3, --rpc <url>
 //
 // Testnet only (chain 10143). Keys come from VITE_OPERATOR_PK / VITE_BACKUP_PK (app/.env.local, via --env-file),
@@ -18,8 +21,11 @@ import { createLiveAdapter, createSealQueue, deployment, explorerTx, loadOperato
 import type { LiveAdapter } from '@/chain';
 import { addressOfKey, normalizePk } from '@/chain/keys';
 import { endpointsFor } from '@/chain/clients';
+import { getPublicClient } from '@/chain';
 import { createRun, defaultParams, loadModel, stepRun } from '@/engine';
 import type { BankLevel, RumorCard, SealResult, TickPayload, TickResult } from '@/types';
+import { BankBusyError, NonceDriftError, guardLiveBank } from './chain-lock';
+import type { Guard } from './chain-lock';
 
 const argv = process.argv.slice(2);
 const flag = (n: string) => argv.includes(`--${n}`);
@@ -74,6 +80,10 @@ function show(label: string, r: SealResult): void {
 }
 
 let failures = 0;
+/** Set when another sender moved our nonce: stop, and don't send a cleanup reset into someone else's run. */
+let drifted = false;
+let guard: Guard | null = null;
+const isLocalRpc = (u: string | null) => !!u && /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/|$)/i.test(u);
 const fail = (msg: string) => {
   failures += 1;
   line(`  ✗ ${msg}`);
@@ -132,7 +142,24 @@ async function main(): Promise<void> {
   const need = model.configs[0].cash0 + model.configs[0].bonds0;
   if (snap.ausdHeld + snap.streetHeld < need) fail(`Bank holds ${ausd(snap.ausdHeld + snap.streetHeld)} but needs ${ausd(need)}. Fund it first.`);
 
-  if (flag('ping') || flag('mini') || flag('run') || soakTicks > 0) {
+  const writes = flag('ping') || flag('mini') || flag('run') || soakTicks > 0;
+  if (writes) {
+    guard = await guardLiveBank({
+      agent: 'C', purpose: 'chain:smoke', client: getPublicClient(rpcOverride), runBank: deployment.runBank!,
+      signer: adapter.operator!, status: snap.status, isLocalRpc: isLocalRpc(rpcOverride), force: flag('force'),
+    });
+    // Every send goes through the nonce watch: a moved nonce stops the script instead of being resynced silently.
+    for (const k of ['ping', 'reset', 'setLevel', 'startRumor', 'sealTicks'] as const) {
+      const orig = (adapter[k] as (...a: unknown[]) => Promise<SealResult>).bind(adapter);
+      (adapter as unknown as Record<string, unknown>)[k] = (...a: unknown[]) =>
+        guard!.nonce.run(() => orig(...a)).catch((e) => {
+          if (e instanceof NonceDriftError) drifted = true;
+          throw e;
+        });
+    }
+  }
+
+  if (writes) {
     head('ping');
     try {
       show('ping', await adapter.ping());
@@ -188,15 +215,20 @@ async function main(): Promise<void> {
         if (res.outcome) line(`      outcome: ${res.outcome.kind} at tick ${res.outcome.tick}`);
       }
     } catch (e) {
-      fail(translateError(e).detail);
+      fail(e instanceof NonceDriftError ? e.message : translateError(e).detail);
     } finally {
-      try {
-        head('reset');
-        show('reset', await adapter.reset());
-      } catch (e) {
-        fail(`reset: ${translateError(e).detail}`);
+      if (drifted) {
+        line('  (skipping the cleanup reset: another sender is using this wallet)');
+      } else {
+        try {
+          head('reset');
+          show('reset', await adapter.reset());
+        } catch (e) {
+          fail(`reset: ${translateError(e).detail}`);
+        }
       }
     }
+    if (drifted) return;
     snap = await adapter.readSnapshot();
     line(`  bank is ${snap.status}, holds ${ausd(snap.ausdHeld)}, street ${ausd(snap.streetHeld)}`);
     if (snap.status !== 'ready') fail(`bank is ${snap.status} after reset`);
@@ -285,11 +317,17 @@ async function playSoak(adapter: LiveAdapter, model: ReturnType<typeof loadModel
   if (outcome) line(`  (the bank ended early: ${(outcome as NonNullable<SealResult['outcome']>).kind})`);
 }
 
+let exitCode = 0;
 main()
   .catch((e) => {
-    fail(`unexpected: ${translateError(e).detail}`);
+    if (e instanceof BankBusyError || e instanceof NonceDriftError) {
+      exitCode = 2;
+      line(`\n  ⛔ ${e.message}`);
+    }
+    fail(e instanceof BankBusyError || e instanceof NonceDriftError ? 'stopped to protect the other writer' : `unexpected: ${translateError(e).detail}`);
   })
   .finally(() => {
+    guard?.release();
     line(failures ? `\nFAILED (${failures} problem${failures === 1 ? '' : 's'})` : '\nOK');
-    process.exit(failures ? 1 : 0);
+    process.exit(failures ? exitCode || 1 : 0);
   });
