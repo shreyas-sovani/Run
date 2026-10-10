@@ -68,8 +68,10 @@ interface Session {
   dispose(): void;
 }
 
+// `import.meta.env` is undefined when the controller runs under tsx (scripts/live-e2e.ts), so read it defensively.
+const viteEnv = (import.meta as unknown as { env?: Record<string, string | boolean | undefined> }).env;
 const log = (...a: unknown[]) => {
-  if (import.meta.env.DEV) console.debug('[run]', ...a);
+  if (viteEnv?.DEV) console.debug('[run]', ...a);
 };
 
 // ── Module-level singleton state ────────────────────────────────────────
@@ -1029,7 +1031,7 @@ export const controller = {
 
 // ── Live helpers (need `controller`, so they live below it) ─────────────
 function envRpc(): string | null {
-  const v = import.meta.env.VITE_RPC_URL;
+  const v = viteEnv?.VITE_RPC_URL ?? (typeof process !== 'undefined' ? process.env?.VITE_RPC_URL : undefined);
   return typeof v === 'string' && v.trim() ? v.trim() : null;
 }
 
