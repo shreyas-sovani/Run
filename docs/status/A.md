@@ -2,7 +2,7 @@
 
 > **Read this top to bottom and you can take over Workstream A with no other context.**
 > Scope: `contracts/**`, `app/src/chain/abi/**`, `app/src/chain/gasModel.ts`, `app/src/config/deployment.testnet.json` (+ this file). Nothing else. Other agents (B engine, C chain adapter, D stage, E panels/brand, F app shell) edit the rest of the repo at the same time: never revert, reformat or "fix" their files.
-> Last updated 14:20 IST, Sat 10 Oct 2026. Testnet only (Monad testnet, chain id 10143). No mainnet anything.
+> Last updated 15:30 IST, Sat 10 Oct 2026. Testnet only (Monad testnet, chain id 10143). No mainnet anything.
 
 LIVE BANK (A): **none**. A has no pending transactions and sends none unless it first writes `LIVE BANK: A until HH:MM` here (see §7).
 
@@ -13,8 +13,8 @@ LIVE BANK (A): **none**. A has no pending transactions and sends none unless it 
 - All of Workstream A (BACKLOG A-00 … A-12, P0, P1, P2) is **done, committed and live**. The bank is deployed, verified, loaded, configured and funded on Monad testnet.
 - `forge test`: **52 tests, all green** (unit, golden vectors v2, invariants, testnet fork).
 - Live bank, last read 14:18 IST: status `Ready`, level 0, tick 0, `runId` 31, 10,000 AUSD held, Street 0, `ledgerHash` = B's v1, `configHash` = level 0.
-- **One small open item** (owner: A, not blocking anyone): the level-0 gas formula in `app/src/chain/gasModel.ts` is ~5% *below* one real sample C reported (a tick that fails Bhau's). Fix is one constant, §6.3. C and F currently use the safe envelope (default options), which is **not** affected, so nothing is broken.
-- Nothing else is pending. Nothing blocks any other agent on A.
+- **A: done (15:30).** The one open item (level-0 gas formula ~5% under C's failing-tick sample) is fixed: `L0.perId` 3_800n → 4_200n, §6.3. Default/level-1 envelope unchanged, typecheck + tests green.
+- Standing by only for F's level-1 `gasLog` rows (§10 item 2); no row has been posted yet. Nothing blocks any other agent on A.
 
 ---
 
@@ -177,15 +177,22 @@ Findings: marginal cost ≈ 3.2–3.9k per id (slightly convex at high counts); 
 - Clamped to `[60k, 30M]`.
 - C and F run `gasMode = 'formula'` by default now (envelope + queue hint, one retry at 2x on out-of-gas, then `estimate`); `estimateGas + 10%` is the alternative.
 
-### 6.3 OPEN ITEM (owner: A) — level-0 fit is ~5% under one real sample
+### 6.3 CLOSED 15:30 — level-0 fit was ~5% under one real sample
 
-C reported a real sample: **a tick that fails Bhau's x W: `{ticks 1, ids 137, slots 57, estimate 713,808}` vs level-0 formula 679,100.** Failing ticks cost more (extra event/branch, and the bank is partly drained). The default envelope (936k for that shape) is above it, so nothing is broken today; only callers that pass `{ speedBump: false }` would be short. Nobody does today (C uses default options).
+**Done.** `L0.perId` is now `4_200n` in `app/src/chain/gasModel.ts` (base 150_000n, perTick 8_500n, baseEmpty 60_000n unchanged; L1 constants and the default envelope untouched). Header comment updated (108 samples; level 0 >= every sample with >= 2.8% headroom and <= 1.21x). Verified from `app/`:
+- `pnpm typecheck` exit 0; `pnpm test` 32 files, 277 passed / 7 skipped.
+- Before/after over 784 shapes (ticks 0–20, ids 0–475, 1–60 distinct ledger words, default / `speedBump:true` / `speedBump:true, queued:40` / `speedBump:false`): **default and level-1 outputs identical (0 changed)**; only `speedBump:false` changed, all 168 changed values went **up**. C's live path (default options) is unaffected.
+- C's failing-tick sample `{ticks 1, ids 137, slots 57, estimate 713,808}`: level-0 formula now 733,900 (**+2.8%, covered**), was 679,100. The default envelope gives 936,600 for the same shape.
+- All 57 level-0 samples: 0 under, min formula/sample 1.028, max `(formula − 20k)/sample` 1.21.
+- No C-owned test pins these numbers (`liveAdapter.test.ts` only exercises the adapter), so no REQUEST → C is needed.
+
+Original analysis (kept for reference): C reported a real sample: **a tick that fails Bhau's x W: `{ticks 1, ids 137, slots 57, estimate 713,808}` vs level-0 formula 679,100.** Failing ticks cost more (extra event/branch, and the bank is partly drained). The default envelope (936k for that shape) is above it, so nothing is broken today; only callers that pass `{ speedBump: false }` would be short. Nobody does today (C uses default options).
 
 What I verified offline, no chain access needed:
 - With that sample added to the 56 level-0 samples, a linear model cannot satisfy both `sample <= formula` and `formula <= 1.15·sample + 20k`.
 - **Recommended fix:** in `L0` change `perId` from `3_800n` to `4_200n` (keep `base 150_000n`, `perTick 8_500n`, `baseEmpty 60_000n`). Checked against all 57 level-0 samples: every sample is covered with >= 2.8% headroom; worst overshoot is 1.21x (`(formula − 20k) / sample`), slightly looser than the original 1.15x target but it will never under-limit. Update the "Fit quality" comment (107 → 108 samples; level 0 ≤ 1.21x), run `pnpm typecheck` and `pnpm test` in `app/`, commit only `app/src/chain/gasModel.ts` and this file.
 - Optional refinement when F pastes real level-1 `adapter.gasLog` rows (F/C asked to do this after C's lock lands; rows have `ticks, ids, slots, estimate, formula, limit`): add any row where `formula < estimate`, refit the level-1 constants so the envelope is still >= every row, then re-run the same coverage check. Include failing-tick samples.
-- I did not make this edit yet because the current instruction was documentation-only. It is a 1-line change.
+- (Edit made at 15:30, see above.)
 
 Calibration scripts used (not in the repo): sampled `cast estimate --from <operator> <runBank> "sealTicks(uint32,uint16[][])" 1 "[[...],[...]]"` against a `Running` bank at tick 0 (read-only, no key needed), varying ticks 1–8, ids 0–475, ids spread vs contiguous, level 0 and 1, then least-squares + grid search. `Lifecycle.s.sol` is how to put the bank in `Running` for that (needs the single-writer rules in §7).
 
@@ -235,7 +242,7 @@ Replies already given (so nobody re-asks): to B — vectors v2 all pass; to F �
 
 | # | Item | Owner | Blocking? | Action |
 |---|---|---|---|---|
-| 1 | Level-0 gas formula ~5% under C's failing-tick sample | **A** | No (default envelope covers it; nobody passes `speedBump:false`) | §6.3: `perId` 3_800n → 4_200n, typecheck/test, commit `gasModel.ts` + this file |
+| 1 | ~~Level-0 gas formula ~5% under C's failing-tick sample~~ | **A** | — | **DONE 15:30** (`perId` 4_200n; §6.3) |
 | 2 | Level-1 gas rows from F's `live:e2e` `adapter.gasLog` | F (provide) → A (refit) | No | When rows appear in `status/C.md`/`F.md`, refit if any row has `formula < estimate`; otherwise nothing |
 | 3 | README/runbook/slide wording "Verified on MonadVision (Sourcify exact match) and Monadscan" | F/E (docs/copy) | No | Use the §2 wording; do not say "creation match" |
 | 4 | Optional: CreateX deterministic addresses (BACKLOG A-12) | — | No | **Skipped on purpose**: a redeploy would invalidate every agent's config and replays |

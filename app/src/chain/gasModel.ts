@@ -1,8 +1,8 @@
 // Gas model for `RunBank.sealTicks` on Monad testnet. Owner: A.
 //
 // Monad charges the gas LIMIT, not gas used (receipt gasUsed === limit), so limits must be tight but never too low.
-// Constants were fitted to `eth_estimateGas` samples taken on the live testnet bank (chain 10143, 107 payloads:
-// 1-8 ticks, 0-475 ids, level 0 and level 1), see docs/status/A.md for the table.
+// Constants were fitted to `eth_estimateGas` samples taken on the live testnet bank (chain 10143, 108 payloads:
+// 1-8 ticks, 0-475 ids, level 0 and level 1, plus one failing-tick sample reported by C), see docs/status/A.md.
 //
 // Shape of the cost (level 0, no speed bump):
 //   empty batch:        BASE_EMPTY + PER_TICK * ticks                       (no payout, no AUSD transfer)
@@ -13,7 +13,8 @@
 // With the speed bump (level 1) the cost depends on queue state that `ticks` alone cannot show: ids are pushed to
 // the ring buffer and drained later, even by "empty" ticks. That path uses a looser envelope with a per-slot term.
 //
-// Fit quality: level 0 satisfies `sample <= formula <= 1.15 * sample + 20k` for every sample. The envelope used for
+// Fit quality: level 0 is >= every sample (>= 2.8% headroom, including the failing tick {1 tick, 137 ids, 713,808})
+// and <= 1.21 * sample + 20k (PER_ID 4.2k; failing ticks cost ~70k more than the linear trend). The envelope used for
 // level 1 / unknown is >= every sample but can overshoot by up to ~2x on dense batches. Prefer `estimateGas + 10%`
 // (PRD 12.3 `gasMode = 'estimate'`); this formula is the offline fallback.
 
@@ -27,7 +28,7 @@ export interface GasOptions {
 }
 
 /** Level 0 (no speed bump): tight fit. */
-const L0 = { baseEmpty: 60_000n, base: 150_000n, perTick: 8_500n, perId: 3_800n } as const;
+const L0 = { baseEmpty: 60_000n, base: 150_000n, perTick: 8_500n, perId: 4_200n } as const;
 /** Level 1 (speed bump) and the default envelope: >= every measured sample. */
 const L1 = { baseEmpty: 62_000n, base: 225_000n, perTick: 28_000n, perId: 3_700n, perSlot: 3_100n } as const;
 
