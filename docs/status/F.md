@@ -2,6 +2,8 @@
 
 **LIVE BANK: none (F is idle on the chain).** Protocol: whoever sends transactions writes `LIVE BANK: <agent> until HH:MM` here (or at the top of their own status file), uses a separate key where possible (F uses the backup key), and clears it when done.
 
+**Taking over F? Read the section "HANDOFF (F, 14:25)" at the bottom of this file first. It is self-contained; everything above it is a dated log.**
+
 app/ exists — B, C, D, E can start
 
 BOOTSTRAP DONE (CP0)
@@ -176,3 +178,129 @@ E's requests: closing card mounted (above); `rumor.sealedAtMs?: number` added to
 Still open (not mine to solve here)
 - One Live run through the stage UI with the proof panel open (E asked): needs a live bank slot. Waiting for C's lock to be adopted by everyone, then I'll run it with the backup key and write `LIVE BANK: F until HH:MM` at the top of this file first.
 - Rows 2–5 of the 14:50 blocker table (C: sealing delay; A: MonadVision partial match; E: `sfx.ensure()`; D/E/human: visual QA, rehearsals).
+
+## Reply → F (from C, 14:25)
+1. **Lock is in**: `app/scripts/chain-lock.ts` exports `guardLiveBank({ agent: 'F', purpose, client, runBank, signer, status, isLocalRpc?, force? })` → `{ release, nonce }`. Wrap every send in `guard.nonce.run(() => adapter.x())`; call `release()` in a `finally`. It refuses on lock file, other agents' `LIVE BANK:` lines, or a Running bank with a recent event.
+2. **Throughput**: default gas mode is now `formula` (A's envelope + queue hint, one retry at 2× limit on out-of-gas, then `estimate`). Real testnet, 20-tick soak: batch time mean **1.11 s → 0.83 s** (median 1.08 → 0.84), 2.86 → 2.22 ticks per tx. Costs about +0.2 MON per full run. `adapter.gasMode = 'estimate'` reverts it. Re-run your browser check; the amber "Sealing delayed" should be rarer.
+3. **Recorder** now writes `rumor.sealedAtMs: 0` explicitly (t0 is the rumor receipt).
+4. Bank is Ready, level 0 (my last reset); no `LIVE BANK` line from C is up. Full write-up in `status/C.md`.
+
+
+---
+
+# HANDOFF (F, 14:25) — self-contained; read this and you can continue F's work without any chat context
+
+## 0. What RUN! is, in 6 lines
+- "Plague Inc. for bank runs" for Monad Blitz Pune (judge-scored, solo live demo on a projector). Presenter picks a fictional bank (Bhau's Bank, no defences / Monad Mutual, speed bump + insurance) and a rumor card (`Q W E R`), presses `Enter`; 500 simulated depositors panic; the bank is a **real contract on Monad testnet (chain 10143)** holding real testnet AUSD; every tick is sealed in a real transaction; the contract decides failure/survival; a stamp slams when the chain's event arrives.
+- Spec: `docs/PRD.md` (source of truth, §16 interfaces are frozen, additive-only). Task list: `docs/BACKLOG.md` (Workstream F = my section). Demo script/fallbacks: `docs/DEMO_RUNBOOK.md`. Repo overview: `README.md`.
+- **Testnet only.** Never mainnet (chain 143). **Never print/commit/log a private key. No key in any Vercel env var.**
+- Six agents (A contracts, B engine, C chain, D stage UI, E brand/panels, F integration) own disjoint paths (PRD §17.2). F owns: `app/src/app/**`, `app/src/types.ts`, `app/src/main.tsx`, `app/src/vite-env.d.ts`, `app/index.html`, `app/vite.config.ts`, `app/vercel.json`, `app/.vercelignore`, `app/.env.example`, `app/package.json`, `app/pnpm-lock.yaml`, `app/tsconfig*.json`, `app/public/replays/**`, `app/scripts/{live-e2e,spectate-check,verify-deploy}.ts` (my own helper scripts), `.gitignore`, `app/.gitignore`, `.monskills`, `README.md`, `docs/DEMO_RUNBOOK.md`, `docs/status/F.md`. **Do not edit other owners' files** (write `REQUEST → <letter>` in your own status file; the human has also let agents append to other status files).
+- Git rules: `git add <explicit paths> && git commit -m "F: …"`. Never `git add -A`, `commit -a`, stash, reset, checkout --, restore, clean, rebase, pull. If `.git/index.lock` exists wait; never delete it.
+
+## 1. Current state (verified 14:20 on `HEAD f9777f7`)
+| Check | Result |
+|---|---|
+| `pnpm typecheck` (in `app/`) | clean |
+| `pnpm test` | 31 files, 267 passed, 7 skipped |
+| `pnpm build` | passes |
+| Production | https://run-bank-run.vercel.app, deployed build **`abfbdb9`** (verified 14:00: routes 200, absolute `og:image` 200, no keys in bundle, build id matches). **Stale by two commits**: C's `f9777f7` (formula gas default, OOG retry) and D's `6603b7a` landed after it. Needs a redeploy (§7). |
+| Testnet bank | `RunBank 0x2cD82EE2b3C19E996Fa9da80052e912A2E90F41D`, `Street 0x7998f16710Ab81AD2D68d7C0B7F0fd296CC7927D`, AUSD `0xa9012a055bd4e0eDfF8Ce09f960291C09D5322dC` (6 dp). Status **Ready**, level 0, runId 31, holds 10,000 AUSD, Street 0. |
+| Wallets | operator `0x85db51Abac83F8B1DF2E674c29f8D68527Bf6b10` ≈ 34.2 MON (guard: warn < 15, refuse < 10.5); backup `0xFeAf5C921996FC53f4DEf35e181E766e6D74690A` ≈ 75.0 MON. Both are operators on the bank. |
+| Model | `modelHash 0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96` (B froze it; `v1-tuned`). Ledger v1 hash `0x8f5360480d2683535f631ce27694aa413c93ba286e2c56f80bfe426ec3324036` (loaded onchain). Configs unchanged since deploy. |
+| Behaviour on the tuned model (live, real chain) | Bhau's × W fails tick 8 (~4.2 s, 14 blocks), × R tick 10 (~6.2 s, 20 blocks); Mutual × W survives tick 25 (~11 s), × R tick 34 (~16 s). Mirror `N/N` and decision check `N/N` every time. |
+| Replays (committed, real testnet runs, carry the final modelHash) | `app/public/replays/{bhaus-w-failed-202610100809,bhaus-r-failed-202610100809,mutual-w-survived-202610100809}.json` + `index.json`. `Shift+R` plays the **newest** by `recordedAt` (currently Bhau's × R). |
+| `LIVE BANK:` | none. No live transaction has been sent by F since ~14:00. |
+
+## 2. Secrets and where they live (never print them)
+- `app/.env.local` (gitignored): `VITE_OPERATOR_PK`, `VITE_BACKUP_PK`, `VITE_RPC_URL` (empty), `VITE_PUBLIC_URL=http://localhost:4173`, plus a `VERCEL_OIDC_TOKEN` line that `vercel link` added (harmless, not `VITE_`, don't commit). Root `.env` and `contracts/.env` also hold the two testnet keys (both gitignored). Everything `.env*` is ignored except `app/.env.example`.
+- **A local `pnpm build` embeds `VITE_*` into `dist/`** (verified: `verify:deploy` flags it). So: never deploy `dist/`, never `vercel --prebuilt`. Deploy with the source upload command in §7; `app/.vercelignore` excludes `.env*`; `vite.config.ts` fails any Vercel build that has a `VITE_*PK` env var.
+- The two keys appeared in earlier chat history; treat both wallets as disposable testnet-only.
+- Automated review in this environment blocks some commands (Vercel deploy / env, anything that prints `.env*`). The Vercel deploy worked when retried with the approval flag so the human gets the approval card. Never `cat` `.env.local`.
+
+## 3. What F built (files and behaviour)
+**Store and state** — `app/src/app/state.ts` (zustand stores, `initialRunView`, `patchRun`, `patchPending`), `app/src/app/store.ts` (public barrel `@/app/store`: `useRunView`, `useUi`, `getRunView`, `subscribeRunView`, `runActions`, `uiActions`, `HOTKEYS`, `startFakeRun`, `selectorEqual`). `useRunView/useUi` use a custom equality (`selectorEqual`: Object.is → shallow → one level into plain objects) because E's `ProofPanel` returned a fresh nested object each call and crashed React with "getSnapshot should be cached". Selectors should still return primitives or stable references; nesting deeper than one level will loop.
+**Controller** — `app/src/app/controller.ts` (~1100 lines), a **module singleton** (no React state; `init/setMode/start` are idempotent so StrictMode can't start two runners). It implements PRD §7.2:
+- Practice: engine + mock adapter in the browser. Live: `createLiveAdapter` (C). Replay: `/replay/:id` and `Shift+R`. Spectate: `/watch` via `createSpectator`.
+- 400 ms clock (`TICK_MS`), holds when the engine is `MAX_LEAD` (6) ticks ahead of the last sealed tick (health `delayed`), pushes `TickPayload`s to C's `SealQueue`, applies `SealResult`s, checks each `TickSealedEvent` against the engine mirror (`mirror.matched/total`), shows "Sealing the verdict…" then sets `outcome` **only** from the sealed outcome event.
+- `start()` in Live: low-balance guard (refuse < 10.5 MON, offers "Switch to backup key"), reads the chain snapshot, resets if the bank isn't Ready ("Resetting the bank…"), `setLevel` if onchain level or `configHash` differs ("Switching bank…"), then `startRumor`; clock starts at the receipt.
+- Snapshots: onchain snapshot poll every 2 s + after each seal; operator balance every 10 s; seals flip to "✓ finalized" when the finalized block passes them (`markFinalized`).
+- `autoConnect()` (called once from `main.tsx`): if keys exist (sessionStorage or local env) and the bank is deployed, connect and run preflight (this sends one `ping` tx, ~0.001 MON, per page load). `HomeRoute` flips Practice→Live when preflight passes; `setMode(…, {auto:true})` never tears down a run in progress (practice↔live only).
+- Errors from the queue pause the stage (`phase 'paused'`, `RunView.error` with an `action.run` of `retry|reset|replay|ops|backup`, rendered by D's TopBar). Retry resumes the same run (tested: no tick skipped or duplicated).
+- Replay: `playReplay` re-derives frames with `stepRunWithRequested` from the recorded request lists, schedules seals/outcome at recorded times, real tx hashes; sums `requestedCount` per seal; uses optional `file.rumor.sealedAtMs`.
+- Spectate: buffers `TickSealed` events, applies them in tick order, checks the mirror, outcome from chain event, `onReset` clears. Verified against the live bank.
+- Decision check: after any outcome `verifyDecisions` runs deferred on the **chain's** request lists → `RunView.decisions`.
+- P2 `selectSeed(node|null)` + `RunView.seedNode?` (additive): Practice/Live, idle only, range-checked, cleared by reset/mode switch; `start()` passes it to `defaultParams(model, level, card, seedNode)`.
+- Also: `connectOperator` (validates keys, saves to sessionStorage if available, preflight), `disconnectOperator`, `switchToBackupKey`, `runPreflight`, `fundBank` (tops up to cash0+bonds0), `ping`, `saveReplay`.
+**Routes/shell** — `routes.tsx`: `/` (Live if operator loaded **and** preflight ok, else Practice), `/watch`, `/replay`, `/replay/:id`, `/ops`, `/lab/{stage,brand,panels,chain,engine}`. `StageShell` mounts `PaperBackground`, `ModeBanner`, `StageScreen`, `ProofPanel`, `ClosingCardHost` (E's, owns `L`/`Esc`). **Hotkeys**: `hotkeys.ts` (single module-level listener; `1/2 Q W E R Enter P C X F M H ? Esc Shift+O Shift+R`; `L` is E's). `HOTKEYS` list is for D's help overlay.
+**Types** — `src/types.ts` is PRD §16.1 verbatim **plus additive**: `RunView.seedNode?`, `ReplayFile.rumor.sealedAtMs?`.
+**Platform** — `vite.config.ts` (React plugin, `@` alias, `__BUILD_ID__` = sha-time where sha = `BUILD_SHA` env → `VERCEL_GIT_COMMIT_SHA` → `git rev-parse` → `nogit`; Vercel build guard; `VITE_PUBLIC_URL` fallback to `VERCEL_PROJECT_PRODUCTION_URL`), `vercel.json` (SPA rewrite), `.vercelignore`, `index.html` (title, description, absolute `og:*`/`twitter:*` via `%VITE_PUBLIC_URL%/og.png`), `.monskills`.
+**Helper scripts (F)** (all `pnpm <name>` in `app/`; the scripts import `@/app/state` + `@/app/controller`, NOT `@/app/store`, because the store barrel pulls in CSS modules tsx can't load):
+- `pnpm live:e2e [--record] [--runs level:card,…] [--preflight] [--primary] [--force]` — headless live run through the real controller on testnet. **Writes to the shared bank.** Default sequence Bhau's×W then Mutual×W. `--record` writes `app/public/replays/<id>.json` and updates `index.json`. Signs with the **backup** key by default; takes C's lock `/tmp/run-bank.lock` (`app/scripts/chain-lock.ts`) and refuses while another agent's `LIVE BANK: <agent> until HH:MM` line is in the first lines of any `docs/status/*.md`. Cards: 0=Q 1=W 2=E 3=R. (Lock/backup-key path added at 14:50 and **not yet exercised**.)
+- `pnpm spectate:check [--seconds N]` — read-only; follows the bank in Spectate mode and exits 0 when mirror and decisions match.
+- `pnpm verify:deploy <https url> [--expect-build <sha>]` — routes 200, title, absolute og:image 200, no `VITE_*PK`, local keys not in the bundle (uses `--env-file=.env.local`), build id.
+- Others' scripts that F wired in `package.json`: `chain:smoke`, `chain:fork` (C), `gen:graph/ledger/vectors/model`, `tune` (B), `og` (E).
+**Tests (F)** — `src/app/__tests__/`: `practice` (real engine + mock adapter, doubled init/setMode/start, StrictMode shape, Bhau's fails then Mutual survives), `replay` (index missing, Shift+R path), `live` (fake "live" adapter on the mock: connect/preflight, doubled start, failed→reset→switch→survived, decision check, low-balance + backup key, pause + retry, disconnect, spectate with out-of-order chunks, selectSeed), `fakeRun`, `selectorEqual`. No testnet traffic and no real keys in tests (`createLiveAdapter` is mocked).
+**Docs** — `docs/DEMO_RUNBOOK.md` (setup, preflight, script with keys, fallbacks, failure table, Q&A, rehearsal log §7), `README.md` (modes, run locally, contracts, deploy, architecture).
+
+## 4. Everyday commands
+```bash
+cd app
+pnpm dev --port 5173 --strictPort      # F's dev port (D 5174, E 5175, C 5176, B 5177). Vite full-reloads whenever ANY agent edits a file, which wipes a run in progress: for browser tests prefer the production build below.
+pnpm build && pnpm preview --port 4173 --strictPort   # stable build for manual/browser testing; reads .env.local so it auto-connects Live
+pnpm typecheck && pnpm test            # errors in other owners' paths are theirs (expect transient ones while they edit)
+pnpm spectate:check --seconds 60       # read-only
+pnpm verify:deploy https://run-bank-run.vercel.app --expect-build $(git rev-parse --short HEAD)
+```
+Browser testing tips: dispatching keys through the browser tool works with `window.dispatchEvent(new KeyboardEvent('keydown',{key:'w',bubbles:true}))`; the preflight takes ~4–6 s after load before the chip flips to `LIVE · sealed on Monad testnet`. The browser tool's offline emulation did not cut RPC traffic, so it proves nothing about outage handling (that is unit-tested instead).
+
+## 5. Shared-bank protocol (important: one bank, one operator key, many agents)
+- Several agents sending from one wallet caused "EOA nonce changed unexpectedly" and `runId` jumping 2→27. Agreed rules (A, C, F): (1) one writer at a time; (2) before sending, check `docs/status/*.md` for a `LIVE BANK:` line and take C's lock (`app/scripts/chain-lock.ts`: `acquireLock`, `guardLiveBank`, `findLiveBankLines`); (3) write `LIVE BANK: F until HH:MM` at the very top of this file while sending, replace with `LIVE BANK: none` after; (4) F uses the **backup key**, C's smoke and A's scripts use the primary; (5) if the bank is not Ready, `chain:smoke` resets it, which would kill your run — hence the line + lock.
+- The controller itself never needs the lock (it's the app); only scripts do. The app's `start()` handles a bank left Running/Failed by resetting first.
+- Cost: a full run is ≈0.05–0.2 MON; reset/setLevel ≈0.07 MON; every page load that auto-connects sends one ping.
+
+## 6. How to do the recurring jobs
+**One Live run through the stage UI (E's open request: verify the Live proof panel with real `streetHeld` and finalized ticks)**
+1. Check no `LIVE BANK:` line and no `/tmp/run-bank.lock`; write `LIVE BANK: F until HH:MM` (≈10 min ahead) at the top of this file. Read the bank (`cast call 0x2cD8…F41D "snapshot()" --rpc-url https://testnet-rpc.monad.xyz`; status 0 = Ready).
+2. `pnpm build && pnpm preview --port 4173`; open `http://localhost:4173/`, wait for the LIVE chip, press `2`, `W`, `Enter`, then `P` and read the proof panel (rumor tx, biggest batch, outcome tx, finalized, `N / N ticks: screen and chain agree`, "AUSD that left the bank" = Street balance). Note: this browser path signs with the **primary** key from `.env.local` (the app doesn't have a "use backup" default), so tell C/A in their status files and keep their scripts off. Report findings in `status/E.md` and here.
+3. Clear the `LIVE BANK:` line.
+**Re-record replays** (only needed if B changes the model/cards/configs/ledger; B froze it, so normally not): `LIVE BANK` line, then `pnpm live:e2e --record --runs 0:1,1:1,0:3`, delete stale files in `app/public/replays/` and fix `index.json`, check each plays at `/replay/<id>`, commit `app/public/replays`, redeploy. The run you record **last** becomes the `Shift+R` default (newest `recordedAt`) — record Bhau's × W last if that's the one you want as the fallback. Tell E (OG card figures come from the recorded `bhaus-w-failed` run: 4.2 s / 14 blocks; `pnpm og` needs Chrome).
+**Redeploy** (needed after any final commit from A–E; Vercel uploads the **working tree at that moment**, not just committed files, so run typecheck/test/build first):
+`cd /Users/shreyas/Desktop/blitz && pnpm dlx vercel@latest deploy --cwd app --prod --yes --build-env BUILD_SHA=$(git rev-parse --short HEAD)` (the tool may ask for the human's approval card), then `cd app && pnpm verify:deploy https://run-bank-run.vercel.app --expect-build $(git rev-parse --short HEAD)`. Vercel project `run-bank-run` (team `shreyas-sovanis-projects`, root dir `app`, Vite, `app/.vercel/project.json` gitignored). Deployment Protection does not block the public alias. No Vercel env vars are set (`VITE_PUBLIC_URL` falls back automatically). Do **not** add env vars; do not run `vercel env ls` unless the human approves it.
+**Pull someone's change into the demo laptop**: the demo is `pnpm build && pnpm preview` from `app/` (runbook §1), not Vercel.
+
+## 7. Open items — who does what (copy of the blocker table, updated 14:25)
+| # | Item | Owner | Status / exact next step |
+|---|---|---|---|
+| 1 | **Redeploy production** so C's formula-gas default (`f9777f7`) and D's `6603b7a` are live | **F** | Run §6 Redeploy (needs the human's approval card). Then `verify:deploy`. |
+| 2 | **Live proof-panel check** in the stage UI (E asked; Live-only fields) | **F** (with the human's OK to spend ~0.2 MON) | §6 first procedure. Not started: waits for nobody else to hold a `LIVE BANK:` line. |
+| 3 | Re-check amber "Sealing delayed" in a real browser Live run after C's faster batches (C measured batch time mean 1.11 s → 0.83 s with the formula gas mode, ≈ +0.2 MON/run) | **F** to run (same live slot as #2), **D** to confirm it looks calm | Report the batch times and how often the chip appears. If still frequent, options for C: larger `maxTicksPerTx`, or tune `MAX_LEAD` (B owns the constant, PRD says 6). |
+| 4 | Expose the live adapter's `gasLog` so `live:e2e` can print level-1 gas rows into `status/C.md` (A can tighten the level-1 envelope) | **F** | The controller doesn't expose `liveAdapter`. Add a read-only `controller.debug.gasLog()` (or return it from `connectWith`) and print in `live:e2e`. Nice to have. |
+| 5 | Exercise `live:e2e`'s new backup-key + lock path once (`pnpm live:e2e --preflight`; then a normal run) | **F** | Do it inside the §6 live slot. Verify the lock file appears while it runs and is removed after. |
+| 6 | Visual QA on a real display: 4 m projector legibility (card text and timer), 5 rehearsals (runbook §7 log; once with the network cut and `Shift+R`), demo-day checklist (BACKLOG "Demo-day checklist") | **Human** (D/E already verified headless screenshots, reduced motion, keyboard pass; see D.md 14:00 and E.md 14:55) | Outside the code. |
+| 7 | PRD §5.1 script narrates "5.4 s / 13 blocks"; measured Bhau's × W is ~4.2 s / 14 blocks (fails tick 8). B froze the model unless the human asks for a retune (a retune changes `modelHash` → F re-records + redeploys, C re-verifies, E updates OG). Runbook already says "A dozen Monad blocks". | **Human decision** | If wanted, tell B in `status/B.md`; F's re-record procedure is §6. |
+| 8 | `ReplayFile.rumor.sealedAtMs` | C now writes `0` explicitly; existing replays lack it (optional, harmless) | Only matters for new recordings; E shows the row only when it's present. |
+| 9 | `app/scripts/**` is not type-checked by `pnpm typecheck` (`tsconfig.node.json` only includes `vite.config.ts`) | F (deliberate) | F's three scripts were checked once with a throwaway tsconfig (clean). Adding `scripts/**` to a tsconfig would pull other agents' scripts into F's typecheck; only do it if they are clean. |
+| 10 | Final: after the last commits from A–E, run §6 Redeploy once more, `verify:deploy`, and tell the human the commit + URL. Code freeze per PRD §17.4 is T+5:45; after that only demo-blocking fixes approved by the human. | **F** | — |
+
+## 8. Known behaviours / gotchas (so you don't "fix" them wrongly)
+- **Mid-run page reload** leaves the bank Running onchain. The next `start()` reads the snapshot and resets it first ("Resetting the bank…"). Preflight shows "Bank status" as warn in that case; `/ops` has Reset.
+- `RunView.onchain.status` can lag up to ~2 s after an outcome (poll + one extra read after each seal).
+- Amber "Sealing delayed" is honest (queue's oldest pending > 2.5 s, or the engine is 6 ticks ahead). It clears itself. It is not an error.
+- The stamp waits for the chain event (by design, "Monad decides"). If the event never arrives the stage shows "Sealing the verdict…" and the queue eventually pauses with a Retry error.
+- Replay mirror counts are engine re-derivations (recorded files carry no per-tick chain summaries); the real check there is the decision check. In Spectate and Live the mirror compares chain summaries field-for-field.
+- Replays recorded on an older model would drift visually (heard/panic), not break; hence re-record after any model change.
+- `tickOnce` is driven by `setInterval(400)`; background tabs throttle timers. The demo browser must stay foreground/full screen.
+- Don't import `@/app/store` or `@/ui/*` from `tsx` scripts (CSS modules). Use `@/app/controller`, `@/app/state`, `@/chain`, `@/engine`, `@/ui/copy`.
+- `import.meta.env` is undefined under tsx; the controller reads it defensively (`viteEnv`).
+- Dev server (5173) restarts/reloads constantly because other agents edit files; it died once. Restart with `nohup pnpm dev --port 5173 --strictPort &`.
+- Vercel CLI uploads files without `.git`; that's why the build id uses `BUILD_SHA`.
+
+## 9. Interface contract summary other agents rely on (all additive to PRD §16)
+- `runActions.setMode(mode, { replayId?, auto? })`, `runActions.selectSeed(node|null)`, `RunView.seedNode?`, `ReplayFile.rumor.sealedAtMs?`, `HOTKEYS` includes `L`.
+- Error actions are rendered by D (TopBar): `retry`→`runActions.retry()`, `reset`→`runActions.reset()`, `replay`→`setMode('replay')`, `backup`→`switchToBackupKey()`, `ops`→navigate `/ops`.
+- Stage vault reads `RunView.onchain` in Live/Spectate; Practice reads the engine frame; Replay shows "Recorded from Monad testnet".
+- F never edits others' files after bootstrap; the placeholder files F created at bootstrap now belong to their owners.
+
+## 10. Where the evidence is
+- Live runs on the tuned model (4 runs, mirror/decisions N/N): this file, 13:50 and 14:15 sections. C's `chain:smoke --run`: sealed 19 ticks in 8.41 s, 19/19, gap-free (14:40 section). Spectator on the live bank: 36/36 mirror, 36/36 decisions (13:30 section). Production verification: 14:15 and 14:55 sections.
+- Other agents' final states: `A.md` (contracts verified, full match on explorers, 52/52 forge tests), `B.md` (model frozen, targets pass), `C.md` (live adapter, queue, spectator, lock, formula gas), `D.md` (14:00 verification matrix), `E.md` (14:55 closing out).
