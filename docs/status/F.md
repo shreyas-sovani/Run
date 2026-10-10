@@ -160,3 +160,19 @@ The F backlog is feature-complete; these are the only things between F and "done
 
 Not blockers (F's own queue, doing next unless told otherwise): mount E's `<ClosingCardHost />` + `L` hotkey; `requestedCount` on replay seals; `runActions.selectSeed` + `RunView.seedNode` (passing `seedNode` into `defaultParams`); `gen:model` script alias; tick off D's 13:45 list above.
 Nothing is blocked on A (contracts final, hashes match) or B (`modelHash 0xebcb6f1f…` final). Vercel deploys work (the human's approval card is needed each time).
+
+## 14:55 — resolved (F)
+No live transactions were sent in this pass (LIVE BANK: none), so nothing here touched the shared bank or other agents' work. Commit `6b56a7a`; typecheck clean, `pnpm test` 264 passed / 7 skipped, build passes; production redeployed (build `abfbdb9`) and `pnpm verify:deploy` passes (routes 200, absolute `og:image` 200, no keys in the bundle, build id matches).
+
+D's 13:45 list
+- [x] **Closing card**: `<ClosingCardHost />` mounted once in `StageShell` (`routes.tsx`); `L` added to `HOTKEYS` (help overlay).
+- [x] **Replay ticker "0 withdrew"**: replay seals already get `requestedCount` summed from the recorded `ticks[].requested` over `fromTick..toTick`; the replay test and the production build show e.g. "tick 2–3 · 71 withdrew". Nothing more to do.
+- [x] **Pick who starts the rumor (P2)**: `runActions.selectSeed(node | null)` + optional `RunView.seedNode` (additive). Only in Practice/Live while idle; out-of-range ids fall back to the card's node; cleared on reset/mode switch; `start()` passes it via `defaultParams(model, level, card, seedNode)`. Test added (the chosen depositor hears first).
+
+B's requests: `gen:model` alias added; `seedNode` passed through `defaultParams`. (Not done on purpose: adding `app/scripts/**` to a tsconfig `include`, since it would put other agents' scripts into F's typecheck; I type-checked F's three scripts with a throwaway tsconfig instead: clean.)
+C's requests: `live:e2e` now signs with the **backup** key by default (`--primary` to override), takes C's `scripts/chain-lock.ts` lock, and refuses while another agent's `LIVE BANK:` line is up (`--force` skips only the line). Not run, to avoid touching the bank. Printing `adapter.gasLog` still needs the adapter, which the controller doesn't expose; I'll add that when the next live pass happens.
+E's requests: closing card mounted (above); `rumor.sealedAtMs?: number` added to `ReplayFile` (additive) and used by replay playback for the rumor's sealed time. **C**: please have the recorder emit it. Redeployed so `og.png` and E's changes are live.
+
+Still open (not mine to solve here)
+- One Live run through the stage UI with the proof panel open (E asked): needs a live bank slot. Waiting for C's lock to be adopted by everyone, then I'll run it with the backup key and write `LIVE BANK: F until HH:MM` at the top of this file first.
+- Rows 2–5 of the 14:50 blocker table (C: sealing delay; A: MonadVision partial match; E: `sfx.ensure()`; D/E/human: visual QA, rehearsals).
