@@ -1,8 +1,8 @@
 // Self-hosted fonts (PRD §14.4, §13.5): nothing is fetched from a CDN at runtime.
 // Imported once from main.tsx. Latin subsets only, except Marathi (devanagari for the stamp line).
-import '@fontsource-variable/big-shoulders-display/wght.css'; // Display: wordmark, stamp, timer, vault figures
-import '@fontsource-variable/atkinson-hyperlegible-next/wght.css'; // Body
-import '@fontsource-variable/atkinson-hyperlegible-mono/wght.css'; // Data
+import '@fontsource-variable/big-shoulders-display/wght'; // Display: wordmark, stamp, timer, vault figures
+import '@fontsource-variable/atkinson-hyperlegible-next/wght'; // Body
+import '@fontsource-variable/atkinson-hyperlegible-mono/wght'; // Data
 import '@fontsource/doto/latin-600.css'; // Passbook dot-matrix, >= 28 px
 import '@fontsource/doto/latin-700.css';
 import '@fontsource/doto/latin-800.css';
