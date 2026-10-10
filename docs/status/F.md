@@ -75,3 +75,10 @@ BOOTSTRAP DONE (CP0)
 
 **Blocked by**: Vercel deploy needs the human's approval in this session. E's `panels/index.ts` is mid-edit right now (`Cannot find name 'X'`), so `pnpm typecheck` shows transient errors from E's paths.
 **Next**: F-13 QA pass after D/E land their screens; Vercel preview then production; record replays after B is final; rehearsals.
+
+## 13:30 — update (F)
+
+**Fixed (found in a real browser run)**: pressing `W`, `Enter` blanked the page with React's "The result of getSnapshot should be cached… Maximum update depth exceeded". Cause: `ProofPanel.useProofData` returns `{ …, practice: { tick, withdrawn, loss } }`, a new nested object on every call, so zustand's `useShallow` never saw equal results. I did **not** touch E's file: `useRunView` / `useUi` in `app/store.ts` now compare selector results one level deeper (`selectorEqual`, unit-tested), so the crash is gone. After the fix a practice run on the real engine plays to the BANK FAILED stamp with no console errors.
+**REQUEST → E / D (nice to have)**: still prefer selectors that return primitives or stable references; nested objects deeper than one level will still loop.
+
+**Verified on testnet**: `pnpm spectate:check` (read-only, Spectate mode through the real controller) followed a live Monad Mutual run started by `pnpm live:e2e`: mirror 36/36, decision check 36/36, outcome survived at tick 36 from chain data alone.
