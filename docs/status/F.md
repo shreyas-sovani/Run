@@ -37,3 +37,27 @@ BOOTSTRAP DONE (CP0)
 
 **Next**: F-07 Replay mode + `Shift+R`; then F-08/F-09; F-06 Live when C's live adapter lands.
 **Blocked by**: nothing (the font import only blocks `pnpm build`, not dev or tests).
+
+## 13:12 — update (F resumed by a fresh agent after a limit stop)
+
+**Done** (commit `5e935ec`)
+- F-06 Live mode in the controller, written against the frozen `ChainAdapter` interface only: `autoConnect()` (called once from `main.tsx`; keys from session or local `.env.local`, then preflight), `connectOperator` / `disconnectOperator` / `switchToBackupKey` / `runPreflight` / `fundBank` / `ping`, operator balance poll every 10 s, `onchain` snapshot poll every 2 s plus one after each seal, low-balance guard (refuse < 10.5 MON with a "Switch to backup key" action), and `start()` that syncs with the chain first (Reset if the bank isn't Ready → "Resetting the bank…", `setLevel` if the onchain level or `configHash` differs → "Switching bank…", then `startRumor`). Outcome comes only from the sealed outcome event; `sealed: true` for live.
+- F-08 Spectate session: `createSpectator()` events → `createRun` from the rumor, `stepRunWithRequested` per `TickSealed` (buffered, applied in tick order), per-tick summary checked against the mirror, outcome from the chain event, reset event clears the stage.
+- F-09 Decision check: after an outcome in live / replay / spectate, `verifyDecisions` runs on the chain's request lists (deferred, never blocks the stamp) → `RunView.decisions`.
+- Tests (`src/app/__tests__/live.test.ts`): live run on a fake "live" adapter (preflight, doubled `start`, failed → reset → switch bank → survived, decision check, replay file), low-balance guard + backup key, disconnect, spectate with out-of-order chunks. No testnet traffic, no real keys. All app tests pass (`pnpm vitest run src/app`), `pnpm build` passes.
+- Vercel project linked (`run-bank-run`, root `app/`). `app/.gitignore` now keeps `.env.example` tracked.
+
+**Interface notes**
+- `runActions.setMode(mode, { replayId?, auto? })` — `auto` is additive; routes pass it so a route-driven practice↔live switch never tears down a run in progress. `setMode('live')` falls back to Practice when no operator is connected.
+- `runActions.connectOperator` validates both keys, stores them in `sessionStorage` (ignored if storage is unavailable) and runs preflight. `RunView.preflight` is set from `adapter.preflight(model)`.
+- Error actions (`retry | reset | replay | ops | backup`) are rendered by D/E. Mapping: `retry` → `runActions.retry()`, `reset` → `runActions.reset()`, `replay` → `runActions.setMode('replay')`, `backup` → `runActions.switchToBackupKey()`, `ops` → navigate `/ops`.
+- `main.tsx` calls `controller.autoConnect()`; it's a no-op when no keys are present (Vercel) or the bank isn't deployed.
+
+**Blocked by**
+- **C**: `createLiveAdapter` in `@/chain` is still the bootstrap stub that throws, and C's status file is empty. Until C-03/C-04/C-06 land, `autoConnect` records a failed preflight and the stage stays in Practice. F-06's "full live run on testnet" can't be verified before that.
+- Vercel deploys need the human's approval in this session (auto-review blocks `vercel deploy` / `vercel env add`). `VITE_PUBLIC_URL` is not needed as a Vercel variable: `vite.config.ts` falls back to `VERCEL_PROJECT_PRODUCTION_URL`.
+
+**REQUEST → C**: ship `createLiveAdapter`, the real `SealQueue` (`createSealQueue`) and `createSpectator` in `@/chain` as soon as they work; F's controller already consumes them through the §16.3 interfaces. Also keep `saveOperatorKeys` safe when `sessionStorage` is missing (the placeholder `index.ts` version throws under Node/tests; `keys.ts` is fine).
+**REQUEST → D / E**: error banners must handle `action.run` as listed above; the stage vault should read `RunView.onchain` (real AUSD) in Live and Spectate.
+
+**Next**: F-14 runbook, F-15 README, F-13 QA code scan, Vercel preview (needs approval), F-12 replays once a live run exists.
