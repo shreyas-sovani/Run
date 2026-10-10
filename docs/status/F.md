@@ -96,3 +96,23 @@ BOOTSTRAP DONE (CP0)
 **REQUEST → D**: in Replay mode the vault caption still says "Practice: simulated balance" under a heading "Vault · real AUSD on Monad". Replay shows recorded real data; the caption should say it's recorded (copy via E's deck), not "Practice".
 **REQUEST → B**: tuning targets (PRD §10.4): Bhau's × W currently fails at tick 3 (2.2 s; target ticks 8–16, 3.2–6.4 s). Please tell me when `model.json`/`configs.json`/`ledger.json` are final so I re-record replays and redeploy.
 **Blocked by**: B's final model (for the final replays + production deploy).
+
+## 14:15 — update (F): feature-complete on F's side
+
+**Production**: https://run-bank-run.vercel.app, build `aa90f77`. `pnpm verify:deploy https://run-bank-run.vercel.app --expect-build aa90f77` → all checks pass: `/`, `/watch`, `/replay`, `/replay/<id>`, `/ops` return 200; title is correct; `og:image` is absolute and returns 200; `/replays/index.json` and a replay file return JSON; build id matches the commit; neither local key appears in the deployed JavaScript. No `VITE_*PK` was ever added to the Vercel project (and the build guard would fail the build if one were).
+
+**Final replays** (recorded on B's tuned model, real testnet runs via `pnpm live:e2e --record`): `bhaus-w-failed-…` (tick 8, 4.2 s, 14 blocks), `mutual-w-survived-…` (tick 25, 11.2 s, 37 blocks), `bhaus-r-failed-…` (tick 10, 6.2 s, 20 blocks). `Shift+R` plays the newest (currently Bhau's × R). If you want a different default, run `pnpm live:e2e --record --runs <level:card>` last.
+
+**Full live check on the tuned model** (4 consecutive runs, each reset and `setLevel` handled by the controller): Bhau's × W failed t8, Bhau's × R failed t10, Mutual × W survived t25, Mutual × R survived t34; mirror matched every tick (`N/N`), decision check `N/N`, bank back to Ready.
+
+**QA (F-13) results**
+- Code scan: no `Math.random` in engine code, no `enum`, RPC URLs only in `config/network.ts`, raw hex only in labs/tests, no shared `isLoading`, title and favicon are not Vite defaults, `og:image` absolute.
+- Behaviour: StrictMode safe (module singleton; doubled init/setMode/start in tests); Practice, Replay, Live and Spectate show the right chip (checked in a browser for Practice, Live, Replay); stamp only after the outcome receipt (live); mirror `N/N`; pause + retry covered by a test; revert path surfaces the translated error.
+- Not done by me (needs eyes on the real display): 4 m projector legibility, screenshots at 1280×720 / 1920×1080 / 375×812 for every phase, reduced-motion emulation, keyboard-only pass, DevTools-offline pass (my offline emulation through the browser tool didn't actually cut the page's RPC traffic, so it proved nothing; the pause/retry logic is unit-tested instead).
+- `pnpm typecheck` clean, `pnpm test` 246 passed / 7 skipped (30 files), `pnpm build` passes.
+
+**Open items for the human**
+1. Rehearse 5× on the demo laptop (runbook §7 log), once with the network cut and `Shift+R`.
+2. Demo-day checklist (operator ≥ 15 MON, bank Ready, phone hotspot, Chrome profile, screen recording on the desktop).
+3. If anyone changes `model.json`, `cards.json`, `configs.json` or `ledger.json` after this point: re-record the replays, redeploy (`vercel deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-parse --short HEAD)`), and re-run `pnpm verify:deploy`.
+4. The Vercel upload is the working tree at deploy time (not just committed files); redeploy after the final commits from A–E.
