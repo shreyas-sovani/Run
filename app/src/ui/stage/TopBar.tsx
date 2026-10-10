@@ -33,10 +33,13 @@ function BankSelector() {
             type="button"
             className={styles.bank}
             aria-pressed={selected}
+            aria-keyshortcuts={HOTKEY_LEVEL[l]}
             disabled={locked}
             onClick={() => runActions.selectLevel(l)}
           >
-            <kbd className={styles.key}>{HOTKEY_LEVEL[l]}</kbd>
+            <kbd className={styles.key} aria-hidden>
+              {HOTKEY_LEVEL[l]}
+            </kbd>
             <span className={styles.bankText}>
               <span className={styles.bankName}>{S.bankName(l)}</span>
               <span className={styles.bankTag}>{settled && !selected ? S.bankSwitchTag(l) : S.bankTag(l)}</span>
@@ -61,10 +64,13 @@ function RumorChits() {
             type="button"
             className={styles.chit}
             aria-pressed={selected}
+            aria-keyshortcuts={S.cardKey(c)}
             disabled={locked}
             onClick={() => runActions.selectCard(c)}
           >
-            <kbd className={styles.key}>{S.cardKey(c)}</kbd>
+            <kbd className={styles.key} aria-hidden>
+              {S.cardKey(c)}
+            </kbd>
             <span className={styles.chitText}>
               {splitEmphasis(S.cardText(c)).map((seg, i) =>
                 seg.em ? (
@@ -151,7 +157,7 @@ function PrimaryAction() {
       );
     case 'paused':
       return (
-        <div className={styles.actionSlot}>
+        <div className={`${styles.actionSlot} ${styles.wideSlot}`}>
           <Button kind="primary" onClick={() => runActions.retry()}>
             {S.btn.retry()}
           </Button>
@@ -163,7 +169,7 @@ function PrimaryAction() {
           <Button kind="secondary" onClick={() => runActions.setMode('replay')}>
             {S.btn.recorded()}
           </Button>
-          <Button kind="secondary" onClick={() => runActions.reset()}>
+          <Button kind="secondary" hotkey={S.key.reset} onClick={() => runActions.reset()}>
             {S.btn.reset()}
           </Button>
         </div>
@@ -206,15 +212,17 @@ function BlockLine() {
 function Chips() {
   const mode = useRunView((v) => v.mode);
   const replayName = useRunView((v) => v.replay?.name);
+  const recordedAt = useRunView((v) => v.replay?.recordedAt);
   return (
     <div className={styles.chips}>
-      <ModeChip mode={mode} replayName={replayName} />
+      <ModeChip mode={mode} replayName={replayName} recordedAt={recordedAt} />
     </div>
   );
 }
 
 export function ErrorStrip() {
   const error = useRunView((v) => v.error);
+  const paused = useRunView((v) => v.phase === 'paused'); // the top bar already offers every remedy while paused
   const [, navigate] = useLocation();
   if (!error) return null;
   const run = () => {
@@ -238,7 +246,7 @@ export function ErrorStrip() {
         <strong>{error.title}</strong> <span>{error.detail}</span>
       </div>
       <div className={styles.errorActions}>
-        {error.action ? (
+        {error.action && !paused ? (
           <Button kind="primary" onClick={run}>
             {error.action.label || S.errorAction(error.action.run)}
           </Button>

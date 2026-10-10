@@ -8,6 +8,18 @@ import styles from './SealTicker.module.css';
 
 const SHOWN = 6;
 
+/** MICR-styled "transit" mark (P2): inline SVG, so it never depends on a font having the glyph. */
+function MicrMark() {
+  return (
+    <svg viewBox="0 0 14 18" className={styles.micr} aria-hidden focusable="false">
+      <rect x="0" y="1" width="2.4" height="16" fill="currentColor" />
+      <rect x="5" y="3" width="4" height="4" fill="currentColor" />
+      <rect x="5" y="11" width="4" height="4" fill="currentColor" />
+      <rect x="11.6" y="1" width="2.4" height="16" fill="currentColor" />
+    </svg>
+  );
+}
+
 function SealRow({ rec }: { rec: SealRecord }) {
   const parts: string[] = [];
   if (rec.status === 'pending') {
@@ -45,7 +57,6 @@ export function SealTicker() {
   const seals = useRunView((v) => v.seals);
   const health = useRunView((v) => v.health);
   const sealedTick = useRunView((v) => v.sealedTick);
-  const block = useRunView((v) => v.blockNumber);
   const aheadOf = useRunView((v) => (v.phase === 'running' && v.frame && v.frame.tick > v.sealedTick ? v.sealedTick + 1 : null));
 
   const rows = seals.slice(-SHOWN).reverse();
@@ -54,7 +65,7 @@ export function SealTicker() {
 
   return (
     <footer className={`${styles.ticker} ${delayed ? styles.delayed : ''}`} aria-label={S.tickerLabel()}>
-      <h2 className={styles.label}>{delayed ? S.sealingDelayed() : S.tickerLabel()}</h2>
+      <h2 className={styles.label}>{health === 'paused' ? S.phase('paused') : delayed ? S.sealingDelayed() : S.tickerLabel()}</h2>
       {rows.length === 0 && aheadOf === null ? (
         <p className={styles.empty}>{S.tickerEmpty()}</p>
       ) : (
@@ -62,15 +73,16 @@ export function SealTicker() {
           {aheadOf !== null && !hasPendingRecord ? (
             <li className={`${styles.row} ${styles.pending}`}>{S.sealingTick(aheadOf)}</li>
           ) : null}
-          {rows.map((rec) => (
+          {rows.map((rec, i) => (
             <li key={rec.id} className={`${styles.row} ${rec.status === 'pending' ? styles.pending : ''}`}>
+              {i > 0 || aheadOf !== null ? <MicrMark /> : null}
               <SealRow rec={rec} />
             </li>
           ))}
         </ol>
       )}
       <div className={styles.health}>
-        <HealthChip health={health} sealedTick={sealedTick} blockNumber={block} />
+        <HealthChip health={health} sealedTick={sealedTick} blockNumber={null} />
       </div>
     </footer>
   );

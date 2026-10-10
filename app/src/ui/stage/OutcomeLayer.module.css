@@ -41,6 +41,12 @@
   display: grid;
   place-items: center;
   pointer-events: none;
+  transition: transform 420ms var(--ease-out);
+}
+
+/* The passbook rises over the lower half: the stamp steps up and shrinks so neither hides the other. */
+.docked {
+  transform: translateY(-13%) scale(0.62);
 }
 
 .announce {

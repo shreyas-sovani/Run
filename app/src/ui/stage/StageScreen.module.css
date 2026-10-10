@@ -3,7 +3,7 @@
   position: relative;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  height: 100dvh;
+  height: calc(100dvh - var(--stage-top, var(--banner-h, 0px)));
   min-height: 0;
   overflow: hidden;
   color: var(--ink);
@@ -52,8 +52,9 @@
 @media (max-width: 760px) {
   .stage {
     height: auto;
-    min-height: 100dvh;
-    overflow: visible;
+    min-height: calc(100dvh - var(--stage-top, var(--banner-h, 0px)));
+    overflow-x: clip;
+    overflow-y: visible;
     grid-template-rows: auto auto auto;
   }
   .head {

@@ -53,9 +53,13 @@
   font-weight: 600;
 }
 
-.row + .row {
-  padding-left: var(--sp-5);
-  border-left: 1px solid var(--rule);
+.micr {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.9em;
+  margin-right: var(--sp-4);
+  vertical-align: -0.1em;
+  color: var(--ink-3);
 }
 
 .pending {
@@ -85,10 +89,17 @@
   }
   .health {
     margin-left: 0;
+    max-width: 100%;
+    min-width: 0;
   }
   .rows {
+    flex: 1 1 100%;
     white-space: normal;
     mask-image: none;
+  }
+  .row {
+    flex: 1 1 auto;
+    min-width: 0;
   }
   .ticker {
     flex-wrap: wrap;

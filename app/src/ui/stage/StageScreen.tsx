@@ -1,6 +1,6 @@
 // The projector screen (PRD §5.2): top bar, network + vault, seal ticker, and the overlays that sit on the stage.
 // The shell mounts ModeBanner, ProofPanel and PaperBackground around this; D owns the rest of what's on screen.
-import { useCallback, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import { useRunView } from '@/app/store';
 import { HelpOverlay } from './HelpOverlay';
 import { NetworkCanvas } from './NetworkCanvas';
@@ -29,6 +29,22 @@ export function StageScreen() {
   const vaultColRef = useRef<HTMLDivElement>(null);
   const mode = useRunView((v) => v.mode);
   const phase = useRunView((v) => v.phase);
+
+  // The shell may stack a banner above the stage. The stage takes the rest of the viewport, so the ticker never
+  // slides off-screen: measure what sits above it and subtract.
+  useLayoutEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const measure = () => el.style.setProperty('--stage-top', `${Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY))}px`);
+    measure();
+    const ro = new ResizeObserver(measure);
+    for (let s = el.previousElementSibling; s; s = s.previousElementSibling) ro.observe(s);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
 
   const shake = useCallback(() => {
     stageRef.current?.animate(SHAKE_FRAMES, { duration: SHAKE_MS, easing: 'linear' });

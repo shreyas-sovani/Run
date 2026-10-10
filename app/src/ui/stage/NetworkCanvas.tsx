@@ -1,7 +1,7 @@
 // The network canvas (D-01). React mounts it once; a requestAnimationFrame loop reads `getRunView()` and paints.
 // Nothing here re-renders per frame: the only React state is the aria-label, which changes at phase boundaries.
-import { useEffect, useRef, type RefObject } from 'react';
-import { getRunView, useRunView, useUi } from '@/app/store';
+import { useEffect, useRef, type MouseEvent, type PointerEvent, type RefObject } from 'react';
+import { getRunView, runActions, useRunView, useUi } from '@/app/store';
 import { parseHex, type Rgb } from './canvasMath';
 import { NetworkRenderer, type Palette } from './networkRenderer';
 import { S } from './stageCopy';
@@ -23,6 +23,10 @@ function readPalette(el: Element, canvas: HTMLCanvasElement): Palette {
   return { ink: t('--ink'), seal: t('--seal'), rumor: t('--rumor'), run: t('--run'), trapped: t('--trapped'), paper: t('--paper') };
 }
 
+/** F may add `runActions.selectSeed(node | null)` (REQUEST in docs/status/D.md). Until it exists the canvas isn't clickable. */
+type SelectSeed = (node: number | null) => void;
+const seedAction = (): SelectSeed | undefined => (runActions as unknown as { selectSeed?: SelectSeed }).selectSeed;
+
 interface Props {
   /** The vault column: withdrawal particles fly to its near edge. */
   targetRef: RefObject<HTMLElement | null>;
@@ -31,6 +35,7 @@ interface Props {
 export function NetworkCanvas({ targetRef }: Props) {
   const boxRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rendererRef = useRef<NetworkRenderer | null>(null);
   const reducedUi = useUi((u) => u.reducedMotion);
   const reducedRef = useRef(reducedUi);
   useEffect(() => {
@@ -62,6 +67,8 @@ export function NetworkCanvas({ targetRef }: Props) {
       reduced: () => reducedRef.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches,
     });
 
+    rendererRef.current = renderer;
+
     const size = () => {
       const r = box.getBoundingClientRect();
       renderer.resize(r.width, r.height, Math.min(window.devicePixelRatio || 1, 2));
@@ -80,12 +87,49 @@ export function NetworkCanvas({ targetRef }: Props) {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      rendererRef.current = null;
     };
   }, [targetRef]);
 
+  // P2: before the run starts, click a depositor to choose who hears the rumor first.
+  const pickable = () => {
+    const v = getRunView();
+    return v.phase === 'idle' && (v.mode === 'practice' || v.mode === 'live') && seedAction() !== undefined;
+  };
+  const hit = (e: MouseEvent<HTMLCanvasElement>): number => {
+    const r = canvasRef.current?.getBoundingClientRect();
+    return r && rendererRef.current ? rendererRef.current.hitTest(e.clientX - r.left, e.clientY - r.top) : -1;
+  };
+  const onMove = (e: PointerEvent<HTMLCanvasElement>) => {
+    const ok = pickable();
+    const id = ok ? hit(e) : -1;
+    rendererRef.current?.setHover(id);
+    e.currentTarget.dataset.pick = id >= 0 ? 'true' : 'false';
+  };
+  const onLeave = (e: PointerEvent<HTMLCanvasElement>) => {
+    rendererRef.current?.setHover(-1);
+    e.currentTarget.dataset.pick = 'false';
+  };
+  const onClick = (e: MouseEvent<HTMLCanvasElement>) => {
+    if (!pickable()) return;
+    const id = hit(e);
+    if (id < 0) return;
+    const next = rendererRef.current?.seedNode === id ? -1 : id;
+    rendererRef.current?.setSeed(next);
+    seedAction()?.(next < 0 ? null : next);
+  };
+
   return (
     <div ref={boxRef} className={styles.box}>
-      <canvas ref={canvasRef} className={styles.canvas} role="img" aria-label={label} />
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+        role="img"
+        aria-label={label}
+        onPointerMove={onMove}
+        onPointerLeave={onLeave}
+        onClick={onClick}
+      />
     </div>
   );
 }

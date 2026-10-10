@@ -94,6 +94,8 @@ export class NetworkRenderer {
   private panicking = 0;
   private transitioning = 0;
   private dirty = true;
+  private hover = -1;
+  private seed = -1;
 
   private readonly targets: Float32Array[];
 
@@ -234,6 +236,11 @@ export class NetworkRenderer {
     if (view.level !== this.level) {
       this.level = view.level;
       this.refreshInsured();
+      this.dirty = true;
+    }
+    if (view.phase !== 'idle' && (this.seed !== -1 || this.hover !== -1)) {
+      this.seed = -1;
+      this.hover = -1;
       this.dirty = true;
     }
     const reduced = this.opts.reduced();
@@ -415,6 +422,16 @@ export class NetworkRenderer {
       }
     }
 
+    // Chosen / hovered depositor (P2).
+    for (const [node, width, grow, alpha] of [[this.hover, 2, 4, 0.7], [this.seed, 3.5, 7, 1]] as const) {
+      if (node < 0) continue;
+      g.strokeStyle = rgba(node === this.seed ? pal.seal : pal.ink, alpha);
+      g.lineWidth = width;
+      g.beginPath();
+      g.arc(this.px[node], this.py[node], this.radius[node] + grow, 0, Math.PI * 2);
+      g.stroke();
+    }
+
     // Withdrawals fly to the vault column.
     if (this.particles.length > 0) {
       const tgt = this.opts.getTarget();
@@ -449,6 +466,37 @@ export class NetworkRenderer {
       if (f.nodeState[i] === NodeState.Trapped) trapped++;
     }
     return { heard, withdrawn, trapped, total };
+  }
+
+  /** Nearest depositor to a point in this canvas's CSS px, or -1 (P2: choose who starts the rumor). */
+  hitTest(x: number, y: number): number {
+    let best = -1;
+    let bestD = Infinity;
+    for (let i = 0; i < this.n; i++) {
+      const reach = this.radius[i] + 6;
+      const d = (this.px[i] - x) ** 2 + (this.py[i] - y) ** 2;
+      if (d <= reach * reach && d < bestD) {
+        best = i;
+        bestD = d;
+      }
+    }
+    return best;
+  }
+
+  setHover(node: number): void {
+    if (node === this.hover) return;
+    this.hover = node;
+    this.dirty = true;
+  }
+
+  get seedNode(): number {
+    return this.seed;
+  }
+
+  setSeed(node: number): void {
+    if (node === this.seed) return;
+    this.seed = node;
+    this.dirty = true;
   }
 
   /** Forces a repaint on the next frame (reduced-motion toggles, palette changes). */

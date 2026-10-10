@@ -176,9 +176,12 @@
     transform: translateX(0);
     opacity: 1;
   }
+  75% {
+    opacity: 1;
+  }
   100% {
-    transform: translateX(calc(var(--bar-w) + var(--gap) + 8px));
-    opacity: 0.85;
+    transform: translateX(calc(var(--bar-w) + var(--gap)));
+    opacity: 0;
   }
 }
 
@@ -238,7 +241,6 @@
   line-height: var(--lh-tight);
   font-variant-numeric: tabular-nums;
   color: var(--ink);
-  white-space: nowrap;
 }
 
 .mid {
@@ -256,6 +258,8 @@
 }
 
 .usd {
+  display: inline-block;
+  white-space: nowrap;
   font-family: var(--font-data);
   font-size: var(--fs-ticker);
   font-weight: 500;

@@ -16,6 +16,7 @@ export function OutcomeLayer({ onShake }: { onShake(): void }) {
   const outcome = useRunView((v) => v.outcome);
   const tick = useRunView((v) => v.frame?.tick ?? 0);
   const reduced = useUi((u) => u.reducedMotion);
+  const docked = useUi((u) => u.passbookOpen);
 
   const stampShown = outcome !== null && (mode === 'practice' || outcome.sealed);
   const verdict = (phase === 'failing' || phase === 'surviving') && !stampShown;
@@ -69,13 +70,15 @@ export function OutcomeLayer({ onShake }: { onShake(): void }) {
       ) : null}
 
       {stampShown && outcome ? (
-        <div className={styles.stampLayer}>
+        <div className={`${styles.stampLayer} ${docked ? styles.docked : ''}`}>
           <Stamp
             kind={outcome.kind}
             headline={outcome.kind === 'failed' ? S.headlineFailed() : S.headlineSurvived()}
             subline={sub}
             marathi={outcome.kind === 'failed' ? S.marathiFailed() : undefined}
             play
+            shake={false}
+            reducedMotion={reduced ? true : undefined}
             onImpact={onImpact}
           />
         </div>

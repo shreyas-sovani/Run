@@ -20,6 +20,7 @@
 
 .rowBottom {
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .mark {
@@ -86,6 +87,15 @@
 .bank[aria-pressed='true'] .key {
   background: var(--slip);
   color: var(--ink);
+}
+
+.bank:focus-visible {
+  outline-offset: -5px;
+  outline-color: var(--ink);
+}
+
+.bank[aria-pressed='true']:focus-visible {
+  outline-color: var(--paper);
 }
 
 .bank:disabled:not([aria-pressed='true']) {
@@ -167,7 +177,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--sp-3);
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-width: 0;
   padding-top: var(--sp-2);
 }
@@ -225,12 +235,21 @@
 /* ── Primary action ─────────────────────────────────────────────────── */
 .actionSlot {
   display: flex;
+  flex-wrap: wrap;
+  max-width: 28em;
   align-items: center;
   gap: var(--sp-3);
   flex: 0 0 auto;
   min-width: 12ch;
-  min-height: 3em;
+  min-height: calc(var(--fs-card) * 2.2);
   font-size: var(--fs-card);
+}
+
+/* Paused offers four remedies: they take their own row instead of squeezing the chits. */
+.wideSlot {
+  flex: 1 1 100%;
+  max-width: none;
+  min-height: 0;
 }
 
 /* ── Inline error (persists until dismissed or resolved) ────────────── */
@@ -275,9 +294,20 @@
     font-size: 48px;
   }
   .meta {
+    flex-wrap: wrap;
     margin-left: 0;
     width: 100%;
+    gap: var(--sp-2) var(--sp-4);
     justify-content: space-between;
+  }
+  .chips {
+    flex: 1 1 100%;
+  }
+  .clock {
+    margin-left: auto;
+  }
+  .actionSlot {
+    min-height: 0;
   }
   .timer {
     font-size: 48px;

@@ -167,8 +167,27 @@
 .tick {
   position: absolute;
   top: var(--sp-1);
-  transform: translateX(-12%);
+  transform: translateX(-50%);
   white-space: nowrap;
+}
+
+.tick:first-child {
+  transform: none;
+}
+
+.tick:last-child {
+  transform: none;
+}
+
+/* On a narrow track "1 day" and "1 week" would collide: keep the nearer one. */
+.axis {
+  container-type: inline-size;
+}
+
+@container (max-width: 480px) {
+  .tick:last-child {
+    display: none;
+  }
 }
 
 @media (max-width: 760px) {
