@@ -71,3 +71,34 @@ Fit (107 samples, levels 0 and 1):
 ### Blocked by
 - Nothing technical. One coordination risk, filed below for C and F:
   - **Operator key has several writers.** My calibration run, C's `chain:smoke` and F's `live:e2e` all send from the same operator key on one bank; nonces collide ("EOA nonce changed unexpectedly") and a reset by one run interrupts another's. Not a contract bug. It needs a convention, so I asked C and F to agree on one (see their status files).
+
+
+## Reply → A (from C, 14:05)
+
+- Acknowledged your 13:45 request. C will add (1) an advisory lock (`/tmp/run-bank.lock`, plus refusing to start when the bank is `Running` with a recent event) and (2) fail-loud-on-nonce-drift to `chain:smoke` and `chain:fork`'s live mode. It is queued, not started: I'm holding until the human says go. Until then C sends **no** live transactions.
+- Needed from A: nothing, except keeping your Foundry scripts off the live bank while someone else's `LIVE BANK:` line is up (see F.md).
+- Gas: no formula-below-sample rows from C so far (every level-0 row sits under A's formula).
+
+## REQUEST → A (from B, 13:45)
+- B regenerated `app/src/engine/data/vectors/bank-vectors.json` (**v2: 10 scenarios**, was 8). Ledger and configs are unchanged, so no `LoadLedger` / `SetLevel` rerun is needed. The two new scenarios come from the real panic model: `real-model-bhau-W` (8 ticks, ends Failed) and `real-model-mutual-R` (34 ticks, ends Survived, includes empty ticks). Please run `forge test --match-contract BankVectors` and note pass/fail here. If any field differs, PRD §9 decides who is wrong; tell B the scenario, tick and field.
+
+## REQUESTS → A (from F, 14:50)
+1. **Single writer on the operator key.** F agrees to A's convention: F uses the **backup key** for `live:e2e` / rehearsals and will put `LIVE BANK: F until HH:MM` at the top of `status/F.md` while sending. Please keep Foundry scripts and calibration runs off the bank while any `LIVE BANK:` line is up, and write your own `LIVE BANK: A until HH:MM` line at the top of `status/A.md` when you do need to send. (Blocks F's replay re-records and rehearsals only until C's lock lands.)
+2. **MonadVision shows a *partial* match** for RunBank/Street (metadata hash only). PRD §21 says "Contracts verified on MonadVision and Monadscan", and judges will open the explorer links from the proof panel. If you can get a **full** match on MonadVision (same compiler settings and `bytecode_hash`/metadata as the deployed build, or re-submit with the exact build-info), please do; otherwise note the exact wording to use in README/runbook so we don't over-claim. Owner: A. Not blocking.
+3. Nothing else from F. Ledger/config/model hashes all match (B confirms `modelHash 0xebcb6f1f…` is final).
+
+## 13:50 update (A): replies to B and F, nothing remaining
+
+**Reply → B**: `forge test --match-contract BankVectors` on vectors v2 (10 scenarios, incl. `real-model-bhau-W` 8 ticks → Failed, `real-model-mutual-R` 34 ticks → Survived): **all pass**, tick by tick and batched, every field. No PRD discrepancy. (Needed `gas_limit` raised in `foundry.toml` for the long replays; committed.)
+
+**Reply → F (1) single writer**: agreed. I send **no** transactions to the live bank; none are pending. If I ever need to, I'll put `LIVE BANK: A until HH:MM` at the top of this file first and stay off the primary key while another `LIVE BANK:` line is up. Last bank read: Ready, level 0, 10,000 AUSD, ledger/config hashes match B.
+
+**Reply → F (2) MonadVision "partial"**: investigated; the contracts are fully matched, the word "partial" came from the devnads API wording.
+- The deployed runtime bytecode equals the current build byte for byte, including the metadata hash (only the 8 immutable slots differ, as expected). So the source is exact.
+- I re-submitted both contracts to MonadVision's Sourcify backend (`sourcify-api-monad.blockvision.org`). It reports **`runtimeMatch: exact_match`** for both (RunBank match id 2047526, Street 2047527) and "already verified, no better match possible". `creationMatch` is `null` (Sourcify has no creation-tx data for these), which is why the devnads API calls it "partially verified".
+- **Wording to use in README / runbook / slide: "Verified on MonadVision (Sourcify exact match) and Monadscan."** Do not say "creation-bytecode match". Check: `curl https://sourcify-api-monad.blockvision.org/v2/contract/10143/0x2cD82EE2b3C19E996Fa9da80052e912A2E90F41D`.
+
+**Still open, not mine to act on** (waiting for data, not blocked): level-1 gas rows from F's `live:e2e` `adapter.gasLog` once C's writer lock lands. The current level-1 envelope is already ≥ every measured sample; the refit only tightens it.
+
+### Blocked by
+- Nothing.
