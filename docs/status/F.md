@@ -1,6 +1,6 @@
 # Agent F status
 
-**LIVE BANK: none (F is idle on the chain).** Protocol: whoever sends transactions writes `LIVE BANK: <agent> until HH:MM` here (or at the top of their own status file), uses a separate key where possible (F uses the backup key), and clears it when done.
+**LIVE BANK: none (F finished its live pass at 15:31; bank left Ready, level 0, 10,000 AUSD, Street 0).** Protocol: whoever sends transactions writes `LIVE BANK: <agent> until HH:MM` here (or at the top of their own status file), uses a separate key where possible (F uses the backup key), and clears it when done.
 
 **Taking over F? Read the section "HANDOFF (F, 14:25)" at the bottom of this file first. It is self-contained; everything above it is a dated log.**
 
@@ -312,3 +312,67 @@ Commit `8964192`. `pnpm typecheck` clean, `pnpm test` 273 passed / 7 skipped (32
 - **Gas log**: `controller.debug.gasLog()` returns a copy of the live adapter's `gasLog` (`[]` when not live). `scripts/live-e2e.ts` now tags each run's rows with the bank level and prints the full sealTicks table at the end (level, ticks, ids, distinctSlots, estimate, formula, gasLimit, gasUsed, mode). The level column is from the run, since C's `GasLogEntry` has no level field.
 - **Tests**: `src/app/__tests__/envChecks.test.ts` (mocked adapter, no testnet): rows appended and forced non-critical, `ok` unchanged both ways, no duplicates on re-run, present on no-operator and bad-key reports, absent with no provider, the real provider's pass/warn/fail rules incl. the 1280×720 boundaries, and `gasLog` empty/live/read-only copy.
 - **Waiting**: Part 2 (live check) starts only on the human's "F: go live". Part 3 (final deploy) starts when A, D and E post "done" or at 17:30. Production is still build `abfbdb9` until then.
+
+
+## Gas rows for A (F, 15:31) — real testnet, backup key, formula gas mode (C's default), commit `8964192`
+Printed by `pnpm live:e2e` (sealTicks only). `estimate` is `-` because formula mode skips `estimateGas`. On Monad `gasUsed` equals the limit that was charged, so used == limit in every row.
+**Level 1 (Monad Mutual × W, survived tick 25), 12 batches**
+```
+level ticks   ids slots   estimate    formula   gasLimit    gasUsed  mode
+    1     1     0     0          -      70500      70500      70500  formula
+    1     2     0     0          -      79000      79000      79000  formula
+    1     2     0     0          -      79000      79000      79000  formula
+    1     1     2     2          -     266600     266600     266600  formula
+    1     2    18    11          -     381700     385400     385400  formula
+    1     2    53    37          -     591800     651000     651000  formula
+    1     2    17    14          -     387300     627800     627800  formula
+    1     3    15    15          -     411000     692200     692200  formula
+    1     3     4     4          -     336200     595200     595200  formula
+    1     2     0     0          -      79000      79000      79000  formula
+    1     3     0     0          -      87500      87500      87500  formula
+    1     2     0     0          -      79000      79000      79000  formula
+```
+**Level 0 (Bhau's Bank × W, failed tick 8), 4 batches** (formula was enough every time)
+```
+level ticks   ids slots   estimate    formula   gasLimit    gasUsed  mode
+    0     1     0     0          -      70500      70500      70500  formula
+    0     2     0     0          -      79000      79000      79000  formula
+    0     2     3     2          -     298300     298300     298300  formula
+    0     3   162    59          -    1091300    1091300    1091300  formula
+```
+**Reading for A / C**: at level 1 the formula undershot in **5 of 12** batches (limit had to be raised above the formula: 381,700→385,400; 591,800→651,000; 387,300→627,800; 411,000→692,200; 336,200→595,200, i.e. +1% to +77%). The expensive level-1 batches are not the ones with many *requested* ids (e.g. 17 ids → 627,800 gas, 53 ids → 651,000): cost follows how many depositors the speed-bump queue *serves* in the tick (queue pops from earlier ticks), which the batch's own `ids` don't show. A refit of the level-1 queue term (A's envelope, C's "queue hint") would avoid the raise/retry. Retries cost a failed or extra send: the biggest Mutual batch showed "Seal time 2.40 s" in the proof panel (vs 0.7–1.1 s typical). **REQUEST → A / C**: refit the level-1 gas envelope from these rows (or base it on predicted served count), then re-run `pnpm live:e2e --runs 1:1` with a `LIVE BANK:` line.
+
+## Live UI check (F, 15:31)
+Setup: `pnpm build && pnpm preview --port 4173` (production build, keys from `.env.local` so the browser signs with the PRIMARY key), in-IDE browser, viewport 628×678 (so the proof panel was the bottom sheet). `live:e2e` (backup key) had exited before the browser started. The lock file `/tmp/run-bank.lock` was present while `live:e2e` ran (agent F, purpose `live:e2e`, 15-min expiry) and gone after the preflight-only run, after `--runs 1:1` and after the cleanup run.
+Pre-checks: no `LIVE BANK:` line in any status file, no lock, bank Ready (status 0, level 0, runId 31, 10,000 AUSD). `live:e2e --preflight` (backup key): all green, ping sealed in 1.6 s. `live:e2e --runs 1:1`: Mutual × W survived tick 25, wall 11.5 s, 38 blocks, mirror 25/25, decisions 25/25.
+
+**/ops, new §12.5 rows (verified in the browser)**: "All critical checks pass." with three extra rows at the end: *Fonts loaded* **Pass · Optional** ("Self-hosted faces are ready"), *Audio unlocked* **Warning · Optional** ("Press any key once so the browser allows sound"), *Window at least 1280×720* **Fail · Optional** ("628×678: enlarge the window or press F for full screen"). The failing optional row did not block "Go to stage" or `report.ok`. Screenshot: `/tmp/run-live-check/01-ops-preflight.png` (shows steps 3 and 4; the rows are listed in the Preflight card below).
+
+**Run 1 — Bhau's Bank × W (keys `1`, `W`, `Enter`, `P` during the run, `P` open after the stamp)** — the bank was at level 1 from the previous script, so `start()` did the setLevel(0) step first
+| Item | Value |
+|---|---|
+| Outcome | **BANK FAILED, tick 8**, stamp "in 4.8 s · 16 Monad blocks" (stage clock; rumor receipt → verdict receipt) |
+| Mirror / decisions | **8 / 8** ticks agree · **8 of 8** decisions match |
+| Finalized | rumor tx `0x56ea…f725` block #69,795,585 **✓ finalized**; biggest batch `0xcfd7…8d2a` block #69,795,601 **✓ finalized** (138 depositors, gas used 940,300, seal time 0.72 s); verdict `BankFailed` tick 8 on the same tx, **✓ finalized**, 334 trapped with 3,445 AUSD (all uninsured); the explorer page for `0xcfd7…8d2a` shows Success / SealTicks / Logs (3) |
+| "AUSD that left the bank" vs Street | Panel **7,080 AUSD** ($7.1B). Chain: `balanceOf(Street)` = **7,080.497326 AUSD**. ✓ match. (Vault "out the door" 6,055 + fire-sale loss 1,025 = 7,080; bank held 2,919.502674, matches the vault's "2,920 held by the contract") |
+| Amber "Sealing delayed" | **0** stretches |
+**Run 2 — Monad Mutual × W (keys `Esc`, `X`, `2`, `W`, `Enter`, `P` during the run)**
+| Item | Value |
+|---|---|
+| Outcome | **SURVIVED, tick 25**, "PAID IN FULL in 13.7 s · 43 Monad blocks", 0 trapped |
+| Mirror / decisions | **25 / 25** · **25 of 25** |
+| Finalized | rumor `0xb50b…17d4` #69,795,801 **✓**; biggest batch `0xdc7c…af90` #69,795,820 **✓** (60 depositors, gas used 664,400, **seal time 2.40 s**); verdict `BankSurvived` tick 25 `0xe29d…d72c` #69,795,844 **✓ finalized** |
+| "AUSD that left the bank" | Panel **5,554 AUSD** ($5.6B). Vault: out the door 5,363 + fire-sale loss 191 = 5,554 ✓. (Street balance not re-read separately for this run; it follows the same formula and equals the vault's paid + loss; the bank held 4,446, as the vault shows) |
+| Amber "Sealing delayed" | **2 stretches: 2.6 s and 0.8 s; 3.4 s total of a 13.7 s run (25%)**, measured by polling the page text every 200 ms. For comparison, before C's faster batches, a similar run showed amber for about 4–5 s in one stretch plus another near the end. |
+Cleanup: bank was Survived at level 1 after run 2, so `pnpm live:e2e --runs 0:1` (backup key, lock) reset it, set level 0 and ran Bhau's × W (failed tick 8, wall 4.3 s, 14 blocks, mirror 8/8, decisions 8/8), then reset. **Final bank (read by `cast`)**: status Ready (0), level 0, runId 35, bank holds 10,000 AUSD, Street 0. Wallets: operator 33.51 MON, backup 74.35 MON (this pass cost about 0.7 MON in total).
+Screenshots saved to `/tmp/run-live-check/` (`01` ops, `02`/`03` run 1 proof panel during/after, `04`/`05` run 2). Caveat: the in-IDE browser tool returned a stale or scrolled frame for some captures (`04` still shows run 1's panel; `05` shows the bottom of the panel, "How the depositors decide"), so the numbers above come from reading the panel text and the live DOM, not from the images. No console errors were observed; one unexplained side effect is described under REQUEST → E.
+Not re-recorded: replays (model frozen, committed replays still valid). Not done in this pass: production redeploy (Part 3).
+
+**REQUEST → E** (proof panel, all small)
+1. **Early "Biggest batch: 0 depositors tried to withdraw in one transaction"**: while the run is still in its quiet first ticks the panel shows a Biggest-batch block for a batch with 0 requested ids (gas 70,500, "not yet final"). Better to hide the block (or say "No withdrawals yet") until a sealed batch has at least one id.
+2. **Unexplained new tab**: during run 1 a MonadVision tab for `0xcfd7…8d2a` (the biggest-batch link) opened by itself right after I opened the proof panel with `P`, and in the app tab that link was `[active, focused]`. I only sent synthetic key events (`1`, `W`, `Enter`, `P`), which don't activate links, so I can't attribute it for sure (it may be the browser tool). Please check whether opening the panel can put focus on a `TxLink` and whether the `Enter` hotkey (start the run) could also activate a focused link: on stage, pressing `P` and then `Enter` for the next run must not open an explorer tab. If focus really lands on a link, move it to the panel's close button or the panel container.
+3. Nice to have: show "AUSD that left the bank" with the split ("6,055 paid + 1,025 fire-sale loss") since it differs from the vault's "out the door" figure (7,080 vs 6,055 in run 1) and a judge may ask.
+
+**REQUEST → D** (amber "Sealing delayed")
+- Numbers (Live, production build, formula gas mode): Bhau's × W **0** stretches; Mutual × W **2** stretches, **longest 2.6 s**, 3.4 s total of 13.7 s. The chip is calm and cleared by itself both times. Screenshots: `/tmp/run-live-check/` (see caveat above; `02`/`03` are proof-panel captures during and after run 1, `04`/`05` run 2).
+- Nothing else to change from my side; the stage text in both runs matched the proof panel (stamp wording, "in 4.8 s · 16 Monad blocks", vault "held by the contract · live from Monad").
