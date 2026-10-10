@@ -5,7 +5,7 @@ import { Link } from 'wouter';
 import { Address, Button, CheckIcon, CrossIcon } from '@/ui/brand';
 import { copy } from '@/ui/copy';
 import { fmtMon, fmtRecorded } from '@/ui/format';
-import { checkKeys, checkRpc, checksForStep, deriveSteps, STEP_ORDER } from './opsModel';
+import { checkKeys, checkRpc, checksForStep, deriveSteps, rowLook, STEP_ORDER } from './opsModel';
 import type { StepId } from './opsModel';
 import s from './OpsPage.module.css';
 
@@ -440,23 +440,26 @@ function ChecksList(props: { checks: PreflightCheck[]; empty: boolean; busy: boo
   }
   return (
     <ul className={s.checks} aria-busy={props.busy || undefined}>
-      {props.checks.map((c) => (
-        <li key={c.id} className={`${s.checkRow} ${s[`ck_${c.status}`]}`} data-status={c.status}>
-          <span className={s.ckIcon} aria-hidden="true">
-            {c.status === 'pass' ? <CheckIcon /> : c.status === 'pending' ? '…' : c.status === 'warn' ? '!' : <CrossIcon />}
-          </span>
-          <span className={s.ckText}>
-            <span className={s.ckLabel}>
-              {c.label}
-              <span className={s.ckWord}>
-                {copy.ops.preflight[c.status]}
-                {c.critical ? '' : ` · ${copy.ops.preflight.optional}`}
-              </span>
+      {props.checks.map((c) => {
+        const { look, advisory } = rowLook(c);
+        return (
+          <li key={c.id} className={`${s.checkRow} ${s[`ck_${look}`]}`} data-status={c.status} data-advisory={advisory || undefined}>
+            <span className={s.ckIcon} aria-hidden="true">
+              {look === 'pass' ? <CheckIcon /> : look === 'pending' ? '…' : look === 'warn' ? '!' : <CrossIcon />}
             </span>
-            {c.detail ? <span className={s.ckDetail}>{c.detail}</span> : null}
-          </span>
-        </li>
-      ))}
+            <span className={s.ckText}>
+              <span className={s.ckLabel}>
+                {c.label}
+                <span className={s.ckWord}>
+                  {copy.ops.preflight[c.status]}
+                  {c.critical ? '' : ` · ${copy.ops.preflight.optional}`}
+                </span>
+              </span>
+              {c.detail ? <span className={s.ckDetail}>{c.detail}</span> : null}
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 }

@@ -86,3 +86,14 @@ export function checkRpc(raw: string): { ok: true; url: string | null } | { ok: 
     return { ok: false };
   }
 }
+
+export type RowLook = 'pass' | 'warn' | 'fail' | 'pending';
+
+/**
+ * How a preflight row is drawn. Optional (non-critical) failures are advisory, so they look amber and never red:
+ * red is reserved for things that stop a run. The row's own status word still reads "Fail".
+ */
+export function rowLook(c: Pick<PreflightCheck, 'status' | 'critical'>): { look: RowLook; advisory: boolean } {
+  if (!c.critical && c.status === 'fail') return { look: 'warn', advisory: true };
+  return { look: c.status, advisory: !c.critical && c.status === 'warn' };
+}

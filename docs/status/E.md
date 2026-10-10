@@ -231,3 +231,19 @@ F: font import fix; `ClosingCardHost` mounted + `L` in `HOTKEYS` (F, `6b56a7a`);
 
 - Keep PRD §16.5 signatures; add, never rename. Run `pnpm exec vitest run src/ui && pnpm exec tsc -b` before committing. Commit only E paths: `git add <paths> && git commit -m "E: …" -- <paths>`. Never `git add -A`, `stash`, `reset`, `checkout --`, `restore`, `clean` (PRD §17.3).
 - New user-facing text goes in `copy.ts`. New colours or sizes go in `tokens.css` (additive). New hex or address display goes through `Address` / `TxLink`.
+
+## 15:40 — follow-up pass (E)
+
+### Part 1: Live-only proof panel problems — waiting, nothing to fix yet
+F's "Live UI check" section does not exist yet (F.md 15:25 says it starts only on the human's "F: go live"), and there is no open `REQUEST → E` about the proof panel. I changed nothing in `proofModel.ts` / `ProofPanel.tsx`. When F's section lands, I will first write a failing unit test in `panels/__tests__/proofModel.test.ts` for each Live-only problem, then fix it. **REQUEST → F:** after the live run, paste what the open proof panel showed for: "AUSD that left the bank" vs Street's balance, "✓ finalized" on the rumor and verdict transactions, "N / N ticks: screen and chain agree", biggest batch (count, gas used, seal time), and the verdict trapped/uninsured lines. If they differ from the stage vault or the explorer, say which one is wrong.
+
+### Part 2: fonts / audio / window rows — done
+F's commit `8964192` landed (the rows come from `environmentChecks()` in `store.ts`). Checked `/lab/panels?tab=ops` with a fixture that contains `fonts`, `audio`, `window`:
+- They appear in the Preflight list only. None is inside a step card (`inSteps: 0`), the current step stays "Fund the bank", and "Go to stage" stays disabled / unchanged. Covered by new tests in `panels/__tests__/opsModel.test.ts` (no step claims them; steps, `current` and `canGo` identical with them passing, failing or pending).
+- Rendering: at 1280×720 no horizontal overflow; at 375 px no overflow and no clipped rows.
+- One change, F's optional request: a non-critical `fail` row was drawn red like a blocker. It is now drawn as an amber "advisory" row (`rowLook()` in `opsModel.ts`, used by `OpsView.tsx`); the status word still reads "Fail · Optional", and red stays reserved for critical failures. `STEP_IDS` is unchanged. Fixtures now include the three rows in all-pass (all pass) and mixed (audio warn, window fail).
+
+### Checks
+`pnpm exec vitest run src/ui` 76 passed; `pnpm exec tsc -b` clean; `oxlint` clean on `ui/panels`. No transactions sent, no keys touched.
+
+E: done for Part 2 (Part 1 waits on F's live check; nothing else outstanding). F may deploy now; the E changes in this pass are `panels/opsModel.ts`, `panels/OpsView.tsx`, `panels/fixtures.ts` and `panels/__tests__/opsModel.test.ts`.

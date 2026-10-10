@@ -101,6 +101,10 @@ const PASS: PreflightCheck[] = [
   c('ledger', 'Ledger matches the engine', 'pass', 'Ledger hash matches'),
   c('config', 'Bank config matches the engine', 'pass', 'Level 0 config matches', false),
   c('ping', 'Test transaction', 'pass', 'Sealed in 0.71 s · block #21,483,214'),
+  // PRD §12.5 environment rows (F's `environmentChecks()`): always non-critical.
+  c('fonts', 'Fonts loaded', 'pass', 'Big Shoulders, Atkinson and Atkinson Mono are ready', false),
+  c('audio', 'Audio unlocked', 'pass', 'Sound is on', false),
+  c('window', 'Window size', 'pass', '1920 × 1080', false),
 ];
 
 export const preflightAllPass: PreflightReport = { checks: PASS, ok: true, at: T0 };
@@ -113,6 +117,8 @@ export const preflightMixed: PreflightReport = {
     if (x.id === 'ausd') return { ...x, status: 'fail' as const, detail: 'The bank holds 0 AUSD but needs 9,500 AUSD. Fund it on the Ops page.' };
     if (x.id === 'backupMon') return { ...x, status: 'warn' as const, detail: 'No backup key loaded.' };
     if (x.id === 'ping') return { ...x, status: 'pending' as const, detail: 'Waiting for the bank to be funded' };
+    if (x.id === 'audio') return { ...x, status: 'warn' as const, detail: 'Press any key to unlock sound, then run the checks again.' };
+    if (x.id === 'window') return { ...x, status: 'fail' as const, detail: 'The window is 1024 × 640. The stage needs at least 1280 × 720.' };
     return x;
   }),
 };

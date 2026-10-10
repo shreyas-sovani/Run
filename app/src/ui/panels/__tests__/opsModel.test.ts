@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { CheckStatus, PreflightCheck, PreflightReport } from '@/types';
-import { checkKey, checkKeys, checkRpc, checksForStep, deriveSteps } from '../opsModel';
+import { checkKey, checkKeys, checkRpc, checksForStep, deriveSteps, rowLook } from '../opsModel';
 
 const check = (id: string, status: CheckStatus, critical = true): PreflightCheck => ({ id, label: id, status, detail: '', critical });
 const report = (checks: PreflightCheck[]): PreflightReport => ({
@@ -100,5 +100,45 @@ describe('checkRpc', () => {
     expect(checkRpc(' https://monad-testnet.g.alchemy.com/v2/abc ')).toEqual({ ok: true, url: 'https://monad-testnet.g.alchemy.com/v2/abc' });
     expect(checkRpc('ws://x')).toEqual({ ok: false });
     expect(checkRpc('not a url')).toEqual({ ok: false });
+  });
+});
+
+describe('environment rows (fonts, audio, window; PRD §12.5)', () => {
+  const env = (fonts: CheckStatus, audio: CheckStatus, win: CheckStatus) => [
+    check('fonts', fonts, false),
+    check('audio', audio, false),
+    check('window', win, false),
+  ];
+
+  it('belong to no step', () => {
+    const r = report([...ALL, ...env('pass', 'warn', 'fail')]);
+    for (const step of ['key', 'network', 'fund'] as const) {
+      expect(checksForStep(r, step).map((c) => c.id)).not.toContain('fonts');
+      expect(checksForStep(r, step).map((c) => c.id)).not.toContain('audio');
+      expect(checksForStep(r, step).map((c) => c.id)).not.toContain('window');
+    }
+  });
+
+  it('never change the current step or "Go to stage"', () => {
+    const base = deriveSteps({ operatorAddress: '0xabc', preflight: report(ALL) });
+    for (const rows of [env('pass', 'pass', 'pass'), env('fail', 'warn', 'fail'), env('pending', 'pending', 'pending')]) {
+      const s = deriveSteps({ operatorAddress: '0xabc', preflight: report([...ALL, ...rows]) });
+      expect(s.current).toBe(base.current);
+      expect(s.canGo).toBe(base.canGo);
+      expect(s.done).toEqual(base.done);
+    }
+  });
+});
+
+describe('rowLook', () => {
+  it('draws optional failures as advisory amber, never red', () => {
+    expect(rowLook({ status: 'fail', critical: false })).toEqual({ look: 'warn', advisory: true });
+    expect(rowLook({ status: 'warn', critical: false })).toEqual({ look: 'warn', advisory: true });
+  });
+  it('leaves critical rows and passing rows alone', () => {
+    expect(rowLook({ status: 'fail', critical: true })).toEqual({ look: 'fail', advisory: false });
+    expect(rowLook({ status: 'warn', critical: true })).toEqual({ look: 'warn', advisory: false });
+    expect(rowLook({ status: 'pass', critical: false })).toEqual({ look: 'pass', advisory: false });
+    expect(rowLook({ status: 'pending', critical: false })).toEqual({ look: 'pending', advisory: false });
   });
 });
