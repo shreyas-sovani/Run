@@ -1,7 +1,7 @@
 // The top bar (D-03): wordmark, bank selector, rumor chits, the one primary action, run clock, mode + health chips.
 import { useEffect, useRef } from 'react';
-import { useLocation } from 'wouter';
-import { getRunView, runActions, useRunView } from '@/app/store';
+import { Link, useLocation } from 'wouter';
+import { PATHS, getRunView, runActions, useRunView } from '@/app/store';
 import { Button, ModeChip } from '@/ui/brand';
 import { fmtBlock, fmtClock } from '@/ui/format';
 import type { BankLevel, RumorCard, RunPhase } from '@/types';
@@ -263,7 +263,11 @@ export function TopBar() {
   return (
     <header className={styles.bar}>
       <div className={styles.rowTop}>
-        <h1 className={styles.mark}>{S.wordmark()}</h1>
+        <h1 className={styles.mark}>
+          <Link href={PATHS.home} className={styles.markLink} title={S.homeTitle()}>
+            {S.wordmark()}
+          </Link>
+        </h1>
         <BankSelector />
         <div className={styles.meta}>
           <Chips />

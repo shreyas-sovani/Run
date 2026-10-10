@@ -96,6 +96,7 @@ const KEY = { start: 'Enter', reset: 'X', proof: 'P', passbook: 'C', help: 'H' }
 export const S = {
   key: KEY,
   wordmark: () => st('wordmark', 'RUN!'),
+  homeTitle: () => st('homeTitle', 'Back to the RUN! home page'),
 
   // ── Top bar ────────────────────────────────────────────────────────
   bankGroup: () => st('bankGroup', 'Bank'),

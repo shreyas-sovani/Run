@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useLocation } from 'wouter';
 import { loadOperatorKeys } from '@/chain';
-import { runActions, useRunView } from '@/app/store';
+import { PATHS, runActions, useRunView } from '@/app/store';
 import type { ReplayFile } from '@/types';
 import { PaperBackground } from '@/ui/brand';
 import { OpsView } from './OpsView';
@@ -58,7 +58,7 @@ export function OpsPage() {
           downloadReplay(file);
           return 'saved';
         }}
-        onGoStage={() => navigate('/')}
+        onGoStage={() => navigate(PATHS.app)}
         onDismissError={() => runActions.dismissError()}
       />
     </>

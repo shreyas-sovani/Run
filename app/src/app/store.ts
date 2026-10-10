@@ -10,6 +10,9 @@ import { fontsLoaded } from '@/ui/theme/fonts';
 import type { BankLevel, PreflightCheck, PreflightReport, ReplayFile, RumorCard, RunMode, RunView, UiState } from '@/types';
 import type { Hex } from 'viem';
 
+export { PATHS, isStageRoute, navSectionOf } from '@/app/paths';
+export type { NavSection } from '@/app/paths';
+
 // Equality for selector results: Object.is, then shallow (plain objects / arrays), then one level deeper for plain
 // objects. The extra level means a selector like `({ seals: v.seals, practice: { tick, loss } })` can't loop forever
 // ("getSnapshot should be cached") just because it builds a small nested object each call.

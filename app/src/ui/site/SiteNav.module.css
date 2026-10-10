@@ -1,0 +1,191 @@
+/* ── App bar: slim, above the stage and the app pages ─────────────────── */
+.bar {
+  position: relative;
+  z-index: var(--z-banner);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  min-height: 44px;
+  padding: 0 var(--sp-5);
+  background: var(--slip);
+  border-bottom: 1px solid var(--slip-edge);
+  font-size: var(--fs-ui-small);
+}
+
+/* The projector shows only the stage: `F` puts <html> in full screen. */
+:global(html:fullscreen) .bar {
+  display: none;
+}
+
+.home {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding-right: var(--sp-5);
+  border-right: 1px solid var(--rule);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home:hover {
+  color: var(--seal);
+}
+
+.links {
+  display: flex;
+  align-items: stretch;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--sp-3);
+  color: var(--ink-2);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+/* Current section: a short bar of stamp ink under the label. */
+.link[aria-current='page'] {
+  color: var(--seal);
+}
+
+.link[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: var(--sp-3);
+  right: var(--sp-3);
+  bottom: 0;
+  height: 3px;
+  background: var(--seal);
+}
+
+.network {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
+  color: var(--ink-3);
+  font-family: var(--font-data);
+  white-space: nowrap;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--seal);
+}
+
+@media (max-width: 760px) {
+  .bar {
+    gap: var(--sp-3);
+    padding: 0 var(--sp-3);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .home {
+    padding-right: var(--sp-3);
+  }
+
+  .network {
+    display: none;
+  }
+}
+
+/* ── Landing header ───────────────────────────────────────────────────── */
+.landing {
+  position: relative;
+  z-index: var(--z-banner);
+  border-bottom: 1px solid var(--rule);
+}
+
+.landingInner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: var(--sp-4) clamp(16px, 4vw, 48px);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--seal);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.landingInner .links {
+  margin-left: auto;
+}
+
+.landingInner .link {
+  font-size: var(--fs-ui-body);
+}
+
+.start {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--sp-5);
+  color: var(--seal);
+  background: var(--slip);
+  border: 2px solid var(--seal);
+  border-radius: var(--r-1);
+  box-shadow: inset 0 0 0 3px var(--slip), inset 0 0 0 4.5px var(--seal);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out);
+}
+
+.start:hover {
+  color: #fff;
+  background: var(--seal);
+  box-shadow: inset 0 0 0 3px var(--seal), inset 0 0 0 4.5px rgb(255 255 255 / 0.7);
+}
+
+@media (max-width: 900px) {
+  .landingInner {
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+  }
+
+  .landingInner .links {
+    order: 3;
+    width: 100%;
+    margin-left: calc(-1 * var(--sp-3));
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .start {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .landingInner .link,
+  .bar .link {
+    padding: 0 var(--sp-2);
+    font-size: var(--fs-ui-small);
+  }
+}

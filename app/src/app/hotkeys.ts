@@ -1,6 +1,7 @@
 // Global hotkeys (PRD §13.4). One keydown listener, registered once (module-level guard), so
 // StrictMode double effects or HMR can't double-register.
 import { navigate } from 'wouter/use-browser-location';
+import { PATHS, isStageRoute } from '@/app/paths';
 import { runActions, uiActions } from '@/app/store';
 import { sfx } from '@/ui/brand';
 
@@ -20,6 +21,7 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
   if (typingTarget(e.target)) return;
   void sfx.unlock();
+  if (!isStageRoute(window.location.pathname)) return;
   const key = e.key;
   if (key === '?') { uiActions.toggleHelp(); e.preventDefault(); return; }
   if (key === 'Escape') {
@@ -35,7 +37,7 @@ function onKeyDown(e: KeyboardEvent): void {
   }
   const lower = key.toLowerCase();
   if (e.shiftKey) {
-    if (lower === 'o') { navigate('/ops'); e.preventDefault(); }
+    if (lower === 'o') { navigate(PATHS.ops); e.preventDefault(); }
     else if (lower === 'r') { runActions.setMode('replay'); e.preventDefault(); }
     return;
   }

@@ -1,0 +1,206 @@
+/* A passbook page lying on the desk: slip paper, ruled lines, dot-matrix entries, a stamp over the last line. */
+.book {
+  --step: 480ms;
+  --start: 250ms;
+  /* Sized to the page, not the viewport: the longest line ("Silicon Valley Bank") is about 25 characters wide. */
+  --dots: clamp(15px, calc((100cqi - 72px) / 25), 24px);
+  --cw: calc(var(--dots) * 0.62); /* one Doto character; header and entries share these column widths */
+  position: relative;
+  padding: var(--sp-5) var(--sp-6) var(--sp-5);
+  background:
+    linear-gradient(90deg, transparent 0 calc(var(--sp-6) - 14px), rgb(200 52 28 / 0.28) calc(var(--sp-6) - 14px) calc(var(--sp-6) - 13px), transparent 0),
+    var(--slip);
+  border: 1px solid var(--slip-edge);
+  border-radius: var(--r-1);
+  box-shadow: var(--shadow-lift);
+  transform: rotate(-1deg);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 2px solid var(--ink);
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--seal);
+}
+
+.title {
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.sheet {
+  position: relative;
+}
+
+.table {
+  display: grid;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: calc(var(--cw) * 4.6) minmax(0, 1fr) calc(var(--cw) * 6) calc(var(--cw) * 7.2);
+  gap: 0 var(--cw);
+  align-items: end;
+  min-height: calc(var(--dots) * 1.9);
+  padding: 0 0 4px;
+  border-bottom: 1px solid var(--guilloche);
+  font-family: var(--font-dots);
+  font-size: var(--dots);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.row > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Header labels are short words: let them run into the column gap rather than truncate. */
+.cols > span {
+  overflow: visible;
+}
+
+.cols {
+  min-height: 0;
+  padding: var(--sp-2) 0 6px;
+  border-bottom: 1px solid var(--ink-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+.num {
+  text-align: right;
+}
+
+/* The print head: each line prints left to right in mechanical steps, one line after the other. The ruled line
+   itself (the row's border) is pre-printed, so only the cells are revealed. */
+.entry > span {
+  clip-path: inset(0 100% 0 0);
+  animation: print var(--dur, 120ms) steps(6, end) forwards;
+  animation-delay: calc(var(--start) + var(--i) * var(--step) + var(--at, 0ms));
+}
+
+.entry > :nth-child(2) {
+  --at: 110ms;
+  --dur: 200ms;
+}
+
+.entry > :nth-child(3) {
+  --at: 290ms;
+}
+
+.entry > :nth-child(4) {
+  --at: 380ms;
+}
+
+@keyframes print {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.ours {
+  color: var(--run-text);
+}
+
+.blank {
+  min-height: calc(var(--dots) * 1.9);
+}
+
+/* The stamp lands on the blank lines under the last entry and runs off the page's right edge. */
+.stamp {
+  position: absolute;
+  right: 3%;
+  bottom: 4px;
+  z-index: 2;
+}
+
+.foot {
+  display: grid;
+  gap: var(--sp-1);
+  margin-top: var(--sp-4);
+  font-size: var(--fs-ui-small);
+  color: var(--ink-2);
+}
+
+.source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-2) var(--sp-4);
+  color: var(--ink-3);
+}
+
+.reprint {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--seal);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.book[data-reduced] .entry > span {
+  animation: none;
+  clip-path: none;
+}
+
+@media (max-width: 560px) {
+  .book {
+    --dots: 18px;
+    padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-5);
+    transform: none;
+  }
+
+  /* Two printed lines per entry on a phone: year and bank, then amount and time. */
+  .row {
+    grid-template-columns: calc(var(--cw) * 4.6) minmax(0, 1fr) calc(var(--cw) * 7.6);
+    grid-template-areas: 'y b b' '. o l';
+  }
+
+  .row > :nth-child(1) {
+    grid-area: y;
+  }
+
+  .row > :nth-child(2) {
+    grid-area: b;
+  }
+
+  .row > :nth-child(3) {
+    grid-area: o;
+    text-align: left;
+  }
+
+  .row > :nth-child(4) {
+    grid-area: l;
+  }
+
+  .cols {
+    grid-template-areas: 'y b b';
+  }
+
+  .cols > .num {
+    display: none;
+  }
+
+  .stamp {
+    right: -2%;
+    bottom: -2%;
+  }
+}

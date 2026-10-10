@@ -407,6 +407,7 @@ export const copy = {
   // Stage strings (D's `stageCopy.ts` reads these first). Placeholders in {braces} are filled by the stage.
   stage: {
     wordmark: "RUN!",
+    homeTitle: "Back to the RUN! home page",
     bankGroup: "Bank",
     rumorGroup: "Rumor",
     bankSwitchTag: "Reset and switch",
@@ -484,6 +485,120 @@ export const copy = {
       loadLedger: 'ledger loaded',
     },
     axisTicks: ['1 s', '1 min', '1 h', '1 day', '1 week'],
+  },
+
+  // Site navigation: the bar on every app page and the landing's header.
+  nav: {
+    aria: 'RUN! sections',
+    home: 'Home',
+    homeTitle: 'Back to the RUN! home page',
+    play: 'Play',
+    watch: 'Watch live',
+    replays: 'Recorded runs',
+    ops: 'Operator',
+    network: 'Monad testnet',
+    start: 'Start a bank run',
+  },
+
+  // The landing page at `/`. Numbers in the passbook's last line and the three frames come from a recorded run.
+  landing: {
+    headline: ['Start one rumor.', 'Watch a real bank fail in seconds.'],
+    lead:
+      "Bhau's Bank is a smart contract on Monad testnet holding real testnet AUSD. Pick a rumor and 500 simulated depositors decide, block by block, whether to pull their money. Every withdrawal is a real transaction, and the contract decides when the bank fails, not this page.",
+    start: 'Start a bank run',
+    watchSealed: 'Watch a sealed run',
+    fineprint:
+      'Without an operator key the run is simulated in your browser, and the screen says so. Recorded runs link every tick to Monad testnet. 1 AUSD is shown as $1M.',
+    passbook: {
+      label: 'Passbook',
+      title: 'How long did they last?',
+      cols: { year: 'Year', bank: 'Bank', out: 'Withdrawn', lasted: 'Lasted' },
+      rows: [
+        { year: '2008', bank: 'Washington Mutual', out: '$19B', lasted: '16 days' },
+        { year: '2008', bank: 'Wachovia', out: '~$10B', lasted: '8 days' },
+        { year: '2023', bank: 'Silicon Valley Bank', out: '$42B', lasted: '1 day' },
+      ],
+      ours: "Bhau's Bank",
+      oursPending: 'seconds',
+      note: (blocks: number) => `The last line is a real run on Monad testnet: ${fmtCount(blocks, 'block')}, every one linked.`,
+      open: 'Open the recording',
+      source: 'Bank figures: Federal Reserve, Review of SVB (Apr 2023).',
+      reprint: 'Print again',
+    },
+    ways: {
+      title: 'Four ways in',
+      lead: 'Each one says on screen whether it is onchain or simulated.',
+      app: {
+        title: 'Play',
+        tag: 'Practice or live',
+        body: "Pick Bhau's Bank or Monad Mutual, pick a rumor, press Enter. With no operator key it runs in your browser; with one, every tick is sealed on testnet.",
+        cta: 'Open the stage',
+      },
+      watch: {
+        title: 'Watch live',
+        tag: 'Rebuilt from chain data',
+        body: 'Follow the deployed bank. When someone starts a run, it plays here block by block, rebuilt from Monad testnet alone.',
+        cta: 'Follow the bank',
+      },
+      replays: {
+        title: 'Recorded runs',
+        tag: 'Every tick linked',
+        body: 'Replay real runs sealed on testnet at their recorded pace, with a transaction link for every batch.',
+        cta: 'Browse the recordings',
+      },
+      ops: {
+        title: 'Operator desk',
+        tag: 'For the presenter',
+        body: 'Load a testnet key, run the preflight checks, fund the bank and send a test transaction.',
+        cta: 'Open the desk',
+      },
+    },
+    story: {
+      title: 'How the recorded run played out',
+      lead: 'Three ticks from the run in the passbook, redrawn from the recording. Each dot is a depositor; bigger dots hold more.',
+      tick: (n: number) => `Tick ${n}`,
+      spread: {
+        title: 'The rumor spreads',
+        body: (heard: number) => `${fmtCount(heard, 'depositor')} have heard it. The big depositors know each other, so it reaches them first.`,
+      },
+      run: {
+        title: 'The whales go first',
+        body: (withdrew: number, amount: string) =>
+          `${fmtCount(withdrew, 'depositor')} took out ${amount}. Each block's withdrawals are sealed in one transaction.`,
+      },
+      fail: {
+        title: 'The contract calls it',
+        body: (trapped: number, amount: string) =>
+          `Fire-sale losses wiped out the bank's equity and the contract emitted BankFailed. ${fmtCount(trapped, 'depositor')} were left with ${amount} trapped.`,
+      },
+      aria: (tick: number, heard: number, withdrew: number) => `Depositor network at tick ${tick}: ${heard} heard the rumor, ${withdrew} withdrew.`,
+      legend: { calm: "Hasn't heard", heard: 'Heard', panicking: 'Panicking', withdrew: 'Withdrew', trapped: 'Trapped' },
+    },
+    recorded: {
+      title: 'Recorded on Monad testnet',
+      lead: 'Real runs, sealed block by block. Each one replays with its transaction links.',
+      play: 'Play',
+      loading: 'Loading recordings…',
+      empty: 'No recordings yet.',
+      error: "Couldn't load the recordings.",
+      all: 'All recordings',
+    },
+    contracts: {
+      title: 'The bank on Monad testnet',
+      lead: 'The bank, the street its money leaves by, and the stablecoin it holds. Chain ID 10143.',
+      runBank: 'RunBank, the bank',
+      street: 'Street, where withdrawals and losses go',
+      ausd: 'AUSD, Agora testnet stablecoin',
+      verified: 'Source verified on MonadVision (Sourcify exact match) and Monadscan.',
+      notDeployed: 'Not deployed yet.',
+    },
+    footer: {
+      built: 'Built for Monad Blitz Pune.',
+      honesty: 'Monad testnet only. All banks are fictional; testnet AUSD has no market value.',
+      labs: 'Builder labs',
+      lab: { stage: 'Stage', brand: 'Brand', panels: 'Panels', chain: 'Chain', engine: 'Engine' },
+      build: (id: string) => `Build ${id}`,
+    },
   },
 
   // Labs

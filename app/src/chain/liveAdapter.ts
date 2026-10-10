@@ -324,7 +324,7 @@ export function createLiveAdapter(opts: {
     if (meta.kind === 'ticks' && meta.ticks) {
       const entry: GasLogEntry = {
         at: Date.now(), ticks: meta.ticks.length, ids: meta.ticks.reduce((n, t) => n + t.length, 0),
-        distinctSlots: distinctSlots(meta.ticks), estimate, formula: gasLimitFor(meta.ticks), gasLimit: gas,
+        distinctSlots: distinctSlots(meta.ticks), estimate, formula: meta.formulaGas ?? gasLimitFor(meta.ticks), gasLimit: gas,
         gasUsed: receipt.gasUsed, mode: estimate === null ? 'formula' : 'estimate', txHash: receipt.transactionHash,
       };
       gasLog.push(entry);

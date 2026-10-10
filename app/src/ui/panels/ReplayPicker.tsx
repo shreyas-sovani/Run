@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'wouter';
+import { useLocation } from 'wouter';
+import { PATHS } from '@/app/store';
 import { listReplays } from '@/chain';
 import { Button, ModeChip, PaperBackground } from '@/ui/brand';
 import { copy } from '@/ui/copy';
@@ -20,9 +21,6 @@ export function ReplayPickerView(props: { state: ReplayListState; onPlay(id: str
           <h2 className={s.title}>{copy.replays.title}</h2>
           <p className={s.lead}>{copy.replays.lead}</p>
         </div>
-        <Link className={s.back} href="/">
-          {copy.replays.back}
-        </Link>
       </header>
 
       <div className={s.chip}>
@@ -101,13 +99,13 @@ export function ReplayPicker() {
       <PaperBackground />
       <ReplayPickerView
         state={state}
-        onPlay={(id) => navigate(`/replay/${encodeURIComponent(id)}`)}
+        onPlay={(id) => navigate(PATHS.replay(id))}
         onRetry={() => {
           setState({ status: 'loading' });
           setAttempt((n) => n + 1);
         }}
-        onPractice={() => navigate('/')}
-        onFollow={() => navigate('/watch')}
+        onPractice={() => navigate(PATHS.app)}
+        onFollow={() => navigate(PATHS.watch)}
       />
     </div>
   );

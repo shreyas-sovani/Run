@@ -90,7 +90,7 @@ export interface GasLogEntry {
   distinctSlots: number;
   /** `estimateGas` result, or null when the formula was used without estimating. */
   estimate: bigint | null;
-  /** The A formula's value for this batch (null until A's model is calibrated is irrelevant: always computed). */
+  /** A's formula for this batch, including the speed-bump queue hint: the limit formula mode sends. */
   formula: bigint;
   gasLimit: bigint;
   gasUsed: bigint;

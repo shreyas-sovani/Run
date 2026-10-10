@@ -2,7 +2,7 @@
 
 One page for the presenter. Everything here is testnet only (Monad testnet, chain ID `10143`). Nothing in this file is a secret; keys live in `app/.env.local`, which is never committed.
 
-**What you are running**: `pnpm build && pnpm preview` from `app/`, on `http://localhost:4173`. The stage does not depend on Vercel or venue WiFi. Vercel is only the public link.
+**What you are running**: `pnpm build && pnpm preview` from `app/`. The stage is `http://localhost:4173/app`; `http://localhost:4173/` is the landing page that links to everything. The stage does not depend on Vercel or venue WiFi. Vercel is only the public link.
 
 ---
 
@@ -16,7 +16,7 @@ One page for the presenter. Everything here is testnet only (Monad testnet, chai
 | ☐ | Operator wallet ≥ 15 MON, backup ≥ 10.5 MON | `/ops` shows both balances, or `cast balance <addr> --ether --rpc-url https://testnet-rpc.monad.xyz` |
 | ☐ | Bank is `Ready` and holds 10,000 AUSD; ledger and config hashes match | `/ops` preflight is all green |
 | ☐ | `app/.env.local` exists with `VITE_OPERATOR_PK`, `VITE_BACKUP_PK`, `VITE_PUBLIC_URL=http://localhost:4173` | `ls -a app` (never `cat` it on a projector) |
-| ☐ | At least two recorded runs are in `app/public/replays/` and `Shift+R` plays one | Press `Shift+R` on the stage |
+| ☐ | At least two recorded runs are in `app/public/replays/` and `Shift+R` plays one | Press `Shift+R` on the stage (`/app`) |
 | ☐ | A screen recording of a good rehearsal is on the desktop (last-resort fallback) | Open it once |
 | ☐ | Vercel URL open on your phone (for the QR and the closing line) | Practice runs on the phone |
 | ☐ | Rehearsed 5× today, once with the network cut | Tick in the rehearsal log below |
@@ -35,7 +35,7 @@ pnpm build && pnpm preview     # serves http://localhost:4173
 2. The keys are loaded from `.env.local`; if not, paste the operator and backup keys (testnet-only; they stay in this tab and are cleared when it closes).
 3. Run the preflight. **Every critical check must be green**: RPC reachable on chain 10143, block feed live, operator key, MON balance, bank code and operator role, bank status `Ready`, AUSD held ≥ 10,000, ledger hash, test transaction (`ping`) sealed within 2 s.
 4. If the bank is not `Ready`, press **Reset the bank** on `/ops`. If AUSD held is short, press **Fund the bank**. If the config hash differs it's a warning only: it is set automatically when you switch bank.
-5. Click **Go to stage** (this also unlocks audio). Press `F` for full screen.
+5. Click **Go to stage** (opens `/app` and unlocks audio). Press `F` for full screen: this also hides the nav bar at the top, so the projector shows only the stage.
 6. The mode chip must read `LIVE · sealed on Monad testnet`. If it says `PRACTICE`, the preflight is not green: go back to `/ops`.
 
 Reload the page and the app reconnects and runs preflight by itself, so a refresh on stage is safe.
@@ -55,7 +55,7 @@ Reload the page and the app reconnects and runs preflight by itself, so a refres
 | 1:00 | `P` | Proof panel: rumor tx, a big batch, the failure event, finalized, `N / N ticks: screen and chain agree ✓` | "Every withdrawal moved real AUSD. Here's the block." |
 | 1:30 | `X`, then `2`, `W`, `Enter` | Monad Mutual: speed bump + deposit insurance; a queue forms; violet halos | "Same rumor. This bank pays at most 3% of deposits per block and insures the first 50 AUSD. In 2019 the RBI capped PMC Bank withdrawals at ₹1,000." |
 | 2:05 | — | **SURVIVED** seal | "Survived." |
-| 2:15 | — | Closing card with the QR to the Vercel link | "It's a game for people and a stress test for protocols: plug in your stablecoin's redemption logic and see if it survives a block-speed run. The link's live: watch, replay, or play." |
+| 2:15 | `L` | Closing card with the QR to the Vercel link (`Esc` closes it) | "It's a game for people and a stress test for protocols: plug in your stablecoin's redemption logic and see if it survives a block-speed run. The link's live: watch, replay, or play." |
 | 2:45 | — | — | Q&A |
 
 **What the screen really shows (measured on testnet, 10 Oct):** Bhau's Bank × W fails at tick 8 in about 4.2–4.8 s over 14–16 blocks (× R: tick 10, about 6 s, 20 blocks); Monad Mutual × W survives at tick 25 in about 11–14 s over 37–43 blocks (× R: tick 34, about 16 s). Read the number off the stamp and the passbook; don't quote the old 5.4 s / 13 blocks.
@@ -78,8 +78,9 @@ PMC Bank is a real event in which real people lost access to their savings. Say 
 | `Esc` | Close overlay |
 | `Shift+O` | Ops page |
 | `Shift+R` | Switch to the latest recorded run |
+| `L` | Closing card (QR to `/watch`) |
 
-Hotkeys are ignored while the cursor is in a text field.
+Hotkeys work on the stage pages only (`/app`, `/watch`, `/replay/:id`) and are ignored while the cursor is in a text field. On the landing page they do nothing, so a stray `Enter` there can't start a run. While the closing card is up, only `L`, `Esc`, `F` and `M` act.
 
 ---
 
@@ -111,7 +112,8 @@ Hotkeys are ignored while the cursor is in a text field.
 | "Screen and chain disagree on the tick" | Press `X` to start clean. If it repeats, `Shift+R` and tell us after the demo |
 | "The operator wallet is low on MON" | **Switch to backup key**, then **Retry sealing** if offered |
 | "Sealing failed: …" | **Retry sealing** once. If it fails again, `Shift+R` |
-| The page looks frozen | Reload (`Cmd+R`). The app reconnects and re-runs preflight. The bank may need `X` |
+| The page looks frozen | Reload (`Cmd+R`) on `/app`. The app reconnects and re-runs preflight. The bank may need `X` |
+| You landed on the landing page (`/`) | Click **Start a bank run** or go to `/app`. Keys on the landing page do nothing |
 | No sound | Press any key once (browsers block audio until a key press), check `M` isn't muting |
 | Projector shows wrong size | `F` to toggle full screen; the layout holds at 1280×720 |
 | Everything is down | The screen recording on the desktop, then the Vercel link on a phone |
@@ -135,7 +137,7 @@ Never paste a private key on a projected screen. `/ops` shows only addresses.
 
 ## 6a. Public link (Vercel)
 
-- `/` Practice (simulated in the browser, labelled), `/watch` follows the live bank, `/replay` and `/replay/:id` play recorded real runs, `/ops` is the operator page (harmless without a key).
+- `/` is the landing page and links to everything. `/app` is the stage (Practice in a visitor's browser, labelled), `/watch` follows the live bank, `/replay` and `/replay/:id` play recorded real runs, `/ops` is the operator page (harmless without a key). The footer links the builder labs (`/lab/*`).
 - No key is ever set in Vercel. Do not deploy with `vercel --prebuilt` from this laptop: a local build embeds `app/.env.local` into the JavaScript. Use `pnpm dlx vercel@latest deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-parse --short HEAD)` (the build happens on Vercel, `.env*` is ignored via `app/.vercelignore`).
 
 ## 7. Rehearsal log

@@ -1,10 +1,13 @@
-// Routes and shell (PRD §13.1). Mode resolution:
-//   /watch → spectate · /replay/:id → replay · / → live if keys are loaded AND the last preflight passed, else practice.
+// Routes and shell (PRD §13.1). `/` is the landing page and links to every route below. Mode resolution:
+//   /watch → spectate · /replay/:id → replay · /app → live if keys are loaded AND the last preflight passed, else practice.
 import { Suspense, lazy, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { Link, Route, Switch } from 'wouter';
+import { PATHS } from '@/app/paths';
 import { runActions, uiActions, useRunView, useUi } from '@/app/store';
 import { BrandLab, PaperBackground } from '@/ui/brand';
-import { ClosingCardHost, ModeBanner, OpsPage, PanelsLab, ProofPanel, ReplayPicker } from '@/ui/panels';
+import { ClosingCardHost, OpsPage, PanelsLab, ProofPanel, ReplayPicker } from '@/ui/panels';
+import { LandingPage, SiteNav } from '@/ui/site';
 import { StageLab, StageScreen } from '@/ui/stage';
 import type { RunMode } from '@/types';
 
@@ -19,10 +22,11 @@ function StageShell({ mode, replayId }: { mode: RunMode; replayId?: string }) {
     runActions.setMode(mode, { ...(replayId ? { replayId } : {}), auto: true });
   }, [mode, replayId]);
   const proofOpen = useUi((u) => u.proofOpen);
+  // The mode chip in the stage's top bar says what each mode is (PRD §4); the nav replaces the old mode banner.
   return (
     <>
       <PaperBackground />
-      <ModeBanner />
+      <SiteNav />
       <StageScreen />
       <ProofPanel open={proofOpen} onClose={() => uiActions.toggleProof(false)} />
       <ClosingCardHost />
@@ -30,17 +34,28 @@ function StageShell({ mode, replayId }: { mode: RunMode; replayId?: string }) {
   );
 }
 
-function HomeRoute() {
+function AppRoute() {
   const live = useRunView((v) => v.operator.address !== null && v.preflight?.ok === true);
   return <StageShell mode={live ? 'live' : 'practice'} />;
 }
 
+function WithNav({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <SiteNav />
+      {children}
+    </>
+  );
+}
+
 function NotFound() {
   return (
-    <main style={{ padding: 24 }}>
-      <h1>Page not found</h1>
-      <Link href="/">Back to the stage</Link>
-    </main>
+    <WithNav>
+      <main style={{ padding: 24 }}>
+        <h1>Page not found</h1>
+        <Link href={PATHS.home}>Back to the home page</Link>
+      </main>
+    </WithNav>
   );
 }
 
@@ -48,16 +63,17 @@ export function Routes() {
   return (
     <Suspense fallback={null}>
       <Switch>
-        <Route path="/" component={HomeRoute} />
-        <Route path="/watch">{() => <StageShell mode="spectate" />}</Route>
-        <Route path="/replay" component={ReplayPicker} />
+        <Route path={PATHS.home} component={LandingPage} />
+        <Route path={PATHS.app} component={AppRoute} />
+        <Route path={PATHS.watch}>{() => <StageShell mode="spectate" />}</Route>
+        <Route path={PATHS.replays}>{() => <WithNav><ReplayPicker /></WithNav>}</Route>
         <Route path="/replay/:id">{(p) => <StageShell mode="replay" replayId={p.id} />}</Route>
-        <Route path="/ops" component={OpsPage} />
-        <Route path="/lab/stage" component={StageLab} />
-        <Route path="/lab/brand" component={BrandLab} />
-        <Route path="/lab/panels" component={PanelsLab} />
-        <Route path="/lab/chain" component={ChainLab} />
-        <Route path="/lab/engine" component={EngineLab} />
+        <Route path={PATHS.ops}>{() => <WithNav><OpsPage /></WithNav>}</Route>
+        <Route path={PATHS.labs.stage} component={StageLab} />
+        <Route path={PATHS.labs.brand} component={BrandLab} />
+        <Route path={PATHS.labs.panels} component={PanelsLab} />
+        <Route path={PATHS.labs.chain} component={ChainLab} />
+        <Route path={PATHS.labs.engine} component={EngineLab} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

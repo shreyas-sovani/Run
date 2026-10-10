@@ -10,12 +10,25 @@ RUN! is "Plague Inc. for bank runs", built for Monad Blitz Pune. You pick a fict
 
 The product spec is [`docs/PRD.md`](docs/PRD.md); the work breakdown is [`docs/BACKLOG.md`](docs/BACKLOG.md); the stage script and fallbacks are [`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md).
 
+## Pages
+
+The landing page at `/` explains the project, prints the passbook from a recorded run, and links to every page below. Every app page has a slim nav bar back to it (hidden in full screen, so the projector shows only the stage).
+
+| Path | Page |
+|---|---|
+| `/` | Landing: what RUN! is, the recorded run, the four ways in, recordings, contract addresses, builder labs |
+| `/app` | The stage: Live with an operator key and a green preflight, otherwise Practice |
+| `/watch` | The stage in Spectate mode, rebuilt from chain data |
+| `/replay`, `/replay/:id` | Recorded runs and their playback |
+| `/ops` | Operator desk: keys, preflight, fund, reset, save a replay |
+| `/lab/stage`, `/lab/brand`, `/lab/panels`, `/lab/chain`, `/lab/engine` | Builder sandboxes |
+
 ## Modes
 
 | Mode | Where | What it does |
 |---|---|---|
-| **Live** | Presenter laptop with an operator key | Runs the bank on Monad testnet. Chip: `LIVE · sealed on Monad testnet` |
-| **Practice** | Anywhere, no key | The same engine against a mock chain in the browser. Chip: `PRACTICE · simulated in your browser, not onchain` |
+| **Live** | `/app` on the presenter laptop with an operator key | Runs the bank on Monad testnet. Chip: `LIVE · sealed on Monad testnet` |
+| **Practice** | `/app` anywhere, no key | The same engine against a mock chain in the browser. Chip: `PRACTICE · simulated in your browser, not onchain` |
 | **Replay** | `/replay`, `/replay/:id`, `Shift+R` | Plays a recorded real run; every tick links to a real transaction |
 | **Spectate** | `/watch` | Rebuilds the live run from chain data alone |
 
@@ -27,8 +40,8 @@ Requirements: Node 22+, pnpm.
 cd app
 pnpm install
 cp .env.example .env.local      # testnet-only keys; see below
-pnpm dev                        # http://localhost:5173
-pnpm build && pnpm preview      # the stage: http://localhost:4173
+pnpm dev                        # http://localhost:5173 (landing), /app (stage)
+pnpm build && pnpm preview      # the stage: http://localhost:4173/app
 pnpm test                       # engine, chain, controller and UI tests
 pnpm typecheck
 ```
@@ -44,7 +57,7 @@ VITE_PUBLIC_URL=http://localhost:4173
 
 You can also paste the keys on `/ops`; they stay in that tab's `sessionStorage`. Use testnet-only keys: a local build embeds `VITE_*` variables in the JavaScript.
 
-Hotkeys: `1`/`2` bank, `Q W E R` rumor, `Enter` start, `P` proof, `C` passbook, `X` reset, `F` full screen, `M` mute, `H` help, `Shift+O` ops, `Shift+R` latest recorded run.
+Hotkeys (stage pages only: `/app`, `/watch`, `/replay/:id`): `1`/`2` bank, `Q W E R` rumor, `Enter` start, `P` proof, `C` passbook, `X` reset, `F` full screen, `M` mute, `H` help, `L` closing card, `Shift+O` ops, `Shift+R` latest recorded run. Keys do nothing on the landing page, so nothing starts a run off screen.
 
 ## Contracts (Monad testnet, chain 10143)
 
@@ -68,7 +81,7 @@ pnpm dlx vercel@latest deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-p
 
 - **Never** put a `VITE_*PK` variable in Vercel. `vite.config.ts` fails the build if one is present on Vercel, and `app/.vercelignore` keeps `.env*` out of the upload. Don't use `--prebuilt` from a machine with `.env.local`.
 - `VITE_PUBLIC_URL` sets the absolute `og:image` URL; on Vercel it falls back to the production domain.
-- After a deploy: every route returns 200 (`/`, `/watch`, `/replay`, `/ops`), `og:image` is an absolute URL that returns 200, the build id in the `/ops` footer matches `git rev-parse --short HEAD`, and no key appears in the deployed JavaScript.
+- After a deploy (`pnpm verify:deploy <url> --expect-build <sha>`): every route returns 200 (`/`, `/app`, `/watch`, `/replay`, `/ops`), `og:image` is an absolute URL that returns 200, the build id in the `/ops` footer matches `git rev-parse --short HEAD`, and no key appears in the deployed JavaScript.
 
 Public URL: https://run-bank-run.vercel.app (Vercel project `run-bank-run`).
 
@@ -77,7 +90,7 @@ Public URL: https://run-bank-run.vercel.app (Vercel project `run-bank-run`).
 ```text
                    Presenter laptop (Chrome) — Vite + React SPA (same build as Vercel)
 
- ui/stage  ui/panels  ui/brand ── read ──► app/store (RunView, UiState)
+ ui/site  ui/stage  ui/panels  ui/brand ── read ──► app/store (RunView, UiState)
                                                  ▲
                                   app/controller (module singleton: modes, hotkeys, run loop)
                      every 400 ms │                 │ TickPayloads
@@ -93,8 +106,8 @@ Public URL: https://run-bank-run.vercel.app (Vercel project `run-bank-run`).
 - `contracts/`: `RunBank` (ledger of 500 balances, cash, bonds, queue, insurance, failure logic), `Street`, `MockAUSD` fallback.
 - `app/src/engine/`: deterministic depositor model and a TypeScript mirror of the contract's bank maths, proven against shared golden vectors.
 - `app/src/chain/`: clients, keys, adapters (live, mock), SealQueue, preflight, error translation, spectator, recorder.
-- `app/src/app/`: store, controller (Practice, Live, Replay, Spectate), routes, hotkeys.
-- `app/src/ui/`: stage, brand kit, panels.
+- `app/src/app/`: store, controller (Practice, Live, Replay, Spectate), routes (`paths.ts` lists them all), hotkeys.
+- `app/src/ui/`: landing page and nav (`site`), stage, brand kit, panels.
 
 ## Credits
 

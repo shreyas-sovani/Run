@@ -27,7 +27,7 @@ async function main() {
 
   console.log('Routes return 200 and the SPA shell');
   let indexHtml = '';
-  for (const path of ['/', '/watch', '/replay', '/replay/does-not-exist', '/ops']) {
+  for (const path of ['/', '/app', '/watch', '/replay', '/replay/does-not-exist', '/ops']) {
     const r = await get(path);
     if (r.status === 200 && r.text.includes('<div id="root">')) ok(`${path} → 200`);
     else bad(`${path} → ${r.status}`);

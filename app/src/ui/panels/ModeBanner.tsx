@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
-import { runActions, useRunView } from '@/app/store';
+import { PATHS, runActions, useRunView } from '@/app/store';
 import type { RunMode } from '@/types';
 import { Button, CrossIcon } from '@/ui/brand';
 import { copy } from '@/ui/copy';
@@ -122,9 +122,9 @@ export function ModeBanner() {
         mode={mode}
         replay={replay}
         onWatchRecorded={() => runActions.setMode('replay')}
-        onFollowLive={() => navigate('/watch')}
-        onAllRecorded={() => navigate('/replay')}
-        onPractice={() => navigate('/')}
+        onFollowLive={() => navigate(PATHS.watch)}
+        onAllRecorded={() => navigate(PATHS.replays)}
+        onPractice={() => navigate(PATHS.app)}
         onDismiss={phone ? undefined : () => setDismissed(mode)}
       />
     </div>

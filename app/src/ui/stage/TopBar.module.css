@@ -33,6 +33,12 @@
   margin: 0;
 }
 
+.markLink {
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--r-1);
+}
+
 /* ── Keycap badges ──────────────────────────────────────────────────── */
 .key {
   flex: 0 0 auto;

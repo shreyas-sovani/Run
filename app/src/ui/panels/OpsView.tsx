@@ -1,7 +1,6 @@
 import { useId, useMemo, useState } from 'react';
 import type { Hex } from 'viem';
 import type { PreflightCheck, PreflightReport, RunView, UiError } from '@/types';
-import { Link } from 'wouter';
 import { Address, Button, CheckIcon, CrossIcon } from '@/ui/brand';
 import { copy } from '@/ui/copy';
 import { fmtMon, fmtRecorded } from '@/ui/format';
@@ -53,9 +52,6 @@ export function OpsView(props: OpsViewProps) {
             <h2 className={s.title}>{copy.ops.title}</h2>
             <p className={s.lead}>{copy.ops.lead}</p>
           </div>
-          <Link className={s.back} href="/">
-            {copy.ops.back}
-          </Link>
         </header>
 
         <ol className={s.stepper} aria-label={copy.ops.title}>

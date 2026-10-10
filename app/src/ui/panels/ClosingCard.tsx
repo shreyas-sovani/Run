@@ -34,7 +34,12 @@ export function ClosingCard(props: { open: boolean; onClose(): void }) {
       if (e.key === 'Escape') {
         e.preventDefault();
         onClose();
+        return;
       }
+      // The card is modal. The stage hotkeys listen on `window`, so stopping the event here keeps them from opening
+      // overlays or starting a run underneath it. `L` (this card), full screen, mute and Tab still work.
+      if (['l', 'f', 'm'].includes(e.key.toLowerCase()) || e.key === 'Tab') return;
+      e.stopPropagation();
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
