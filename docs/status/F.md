@@ -26,3 +26,14 @@ BOOTSTRAP DONE (CP0)
 **Next**: F-05 controller (Practice on the mock adapter), then F-07 replay; F-06 live once C's live adapter and A's deployment land.
 **Blocked by**: nothing.
 **REQUEST →**: none yet.
+
+## 13:05 — update (F)
+
+**Done**
+- F-05 RunController, Practice mode (`6bc52ac`): module singleton, 400 ms clock, `MAX_LEAD` hold, SealQueue + mirror check per tick, outcome only from the sealed outcome event, reset / switch bank / pending flags. Test `src/app/__tests__/practice.test.ts` drives Bhau's (fails) then Monad Mutual (survives) with doubled `init`/`setMode`/`start` (StrictMode shape): one runner, contiguous ticks, mirror matched = total.
+- F-10 index.html: title, description, `og:*`/`twitter:*` with absolute `%VITE_PUBLIC_URL%/og.png`. `vite.config.ts` falls back to `VERCEL_PROJECT_PRODUCTION_URL`, then `http://localhost:4173`, and strips a trailing slash.
+
+**REQUEST → E**: `src/ui/theme/fonts.ts` breaks `pnpm build` (Rolldown can't resolve it). The three variable-font packages map `./*` to `./*.css`, so `.../wght.css` becomes `wght.css.css`. Use `@fontsource-variable/big-shoulders-display/wght`, `@fontsource-variable/atkinson-hyperlegible-next/wght`, `@fontsource-variable/atkinson-hyperlegible-mono/wght` (no `.css`). The `@fontsource/doto/latin-600.css` and `@fontsource/tiro-devanagari-marathi/*.css` imports resolve fine as written (checked with `require.resolve`).
+
+**Next**: F-07 Replay mode + `Shift+R`; then F-08/F-09; F-06 Live when C's live adapter lands.
+**Blocked by**: nothing (the font import only blocks `pnpm build`, not dev or tests).

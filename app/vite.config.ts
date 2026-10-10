@@ -21,6 +21,15 @@ if (process.env.VERCEL) {
   }
 }
 
+// Absolute URL for og:image / og:url (PRD §13.3 rule 8). Explicit VITE_PUBLIC_URL wins; on Vercel fall back
+// to the production domain Vercel exposes; locally use the preview port. Never a relative URL.
+if (!process.env.VITE_PUBLIC_URL) {
+  process.env.VITE_PUBLIC_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:4173';
+}
+process.env.VITE_PUBLIC_URL = process.env.VITE_PUBLIC_URL.replace(/\/+$/, '');
+
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
