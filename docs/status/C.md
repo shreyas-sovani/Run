@@ -45,7 +45,7 @@ Other live runs (all `OK`, bank back to `ready` each time):
 - `--mini --stress` (60 synthetic ids, 3 ticks): 1.21 s, gas limit 393,486.
 - `--run --card 3` (full fixture run through the SealQueue): ticks 1 + 2–3, **BankFailed at tick 3, trapped 336 / 3,573 AUSD**, mirror 3/3. Same for cards 1 and 2. Card 0 survives at tick 8 (8/8).
 - **`--soak 20`**: 20 ticks in 11 transactions over 9.7 s, **gap-free**, 0.6–1.2 s per transaction.
-- Fork (anvil fork of testnet, real engine from B-07): `chain:fork --run --card 3 --level 1` seals **36 ticks gap-free, mirror 36/36, Monad Mutual survives at tick 36**, through both `eth_sendRawTransactionSync` and the `--no-sync` fallback. Level 0 with cards 1 and 3 fails the bank at tick 3 (trapped 429 and 336); card 0 survives at tick 8 (nobody panics). That is still not the ~13-tick failure the PRD wants: B's tuning, not C's.
+- Fork (anvil fork of testnet, real engine from B-07): `chain:fork --run --card 3 --level 1` seals **36 ticks gap-free, mirror 36/36, Monad Mutual survives at tick 36**, through both `eth_sendRawTransactionSync` and the `--no-sync` fallback. Level 0 with cards 1 and 3 fails the bank at tick 3 (trapped 429 and 336); card 0 survives at tick 8 (nobody panics). (That was before B's tuned model landed; B and F now report Bhau's × W failing at tick 8. I have not re-run the real-model smoke since.)
 - On the real testnet someone else's live run reached run 16 / tick 36 (survived) through this adapter while I was testing, so the 15+ tick check also holds on chain.
 - Late fix: if `estimateGas` fails for a transport reason (not a revert, not out-of-funds) the send now uses A's fixed `callGas` (or the tick formula) instead of failing. Found on the fork, where `estimateGas` for a level-1 `setLevel` takes 10+ s because anvil fetches the whole ledger cold.
 
@@ -69,13 +69,19 @@ Other live runs (all `OK`, bank back to `ready` each time):
 
 ### REQUEST →
 
-- **REQUEST → F**: add `"chain:fork": "tsx --env-file=.env.local scripts/chain-fork.ts"` to `app/package.json`. Until then: `pnpm tsx --env-file=.env.local scripts/chain-fork.ts --mini`. Also `chain:smoke` takes `--ping | --mini | --run | --soak N`.
+- ~~REQUEST → F: `chain:fork` script~~ done (`0fca95e`). `chain:smoke` takes `--ping | --mini | --run | --soak N`.
 - **REQUEST → F**: when B's real `stepRun` lands, run `pnpm chain:smoke --run --card 0` (and 1) for the 15+ tick check on the real model. With the fixture engine every card ends by tick 3–8.
 - **REQUEST → A**: nothing blocking. Re-run the gas fit if the contract changes; the smoke script prints the comparison table.
 - **FYI → A/F**: the shared bank is a single resource. My smoke runs reset it (they `reset()` first if it isn't `ready`). If you are mid-run on testnet, say so here before I run `--mini`.
 
-### Blocked by
-- Nothing.
+### Blocked by (14:00; nothing is stopping the code, these are about *proving* it again)
+1. **Shared testnet bank has several writers on one operator key.** A reported nonce collisions ("EOA nonce changed unexpectedly") and `runId` climbing 2 → 27; F's `live:e2e`, A's calibration and my smoke runs all write to the same bank. I won't send another live transaction until the writers agree on a protocol. **Owner: F + A** (agree on the `LIVE BANK: <agent> until HH:MM` line at the top of each status file; see their files). **C's part (queued, waiting for the go):** advisory lock `/tmp/run-bank.lock` and a refuse-to-start check in `chain:smoke` / `chain:fork`, and fail loudly on nonce drift, as A asked. Until then C only runs read-only smoke on testnet and uses `pnpm chain:fork` for everything else.
+2. **No final model yet.** My last real-engine smoke ran on the pre-tuning model. A live re-check of the 15+ tick path on the final model is F's `live:e2e` result (Mutual × W t25, × R t34, both mirror N/N), which is enough for me; I'd only re-run `--run` if B/A change `model.json`, `configs.json` or `ledger.json`. **Owner: B** (say when it is final).
+3. **Real rehearsal gas numbers.** `status/A.md` offers to refine the level-1 envelope from C's rehearsal data. I have the level-0 table above but none for level 1 on the tuned model. F's e2e has the batch sizes (biggest 387 requests = 1.41M gas) but not a per-batch log. **Owner: F** (run `pnpm live:e2e` and paste `adapter.gasLog`, or let me run it when the bank is free).
 
 ### Next
 - P2 items (none defined for C in the backlog beyond C-13). Remaining time goes to: a rehearsal with the real engine once B-07 lands, WSS/Ankr behaviour on venue WiFi, and anything F finds when wiring Live mode.
+
+## 13:45 note from A (coordination, not a contract blocker)
+- **REQUEST → C**: the operator key is used by several processes at once (your `chain:smoke`/`chain:fork`, F's `live:e2e`, and my earlier gas calibration). We hit "EOA nonce changed unexpectedly" and `WrongStatus` from interleaved resets while `runId` climbed 2 → 27. Please (1) add a simple advisory lock to the smoke scripts (e.g. refuse to start if the bank is `Running` and the last `Ping`/`TickSealed` event is < 60 s old, or take a lock file at `/tmp/run-bank.lock`), and (2) make them fail loudly instead of retrying silently when the nonce moves. Contracts are unchanged; no A change is needed. I have stopped sending transactions to the live bank.
+- Your gas comparison table is welcome: if the formula is below any real sample, tell me the `{ticks, ids, estimate}` row and I'll refit `app/src/chain/gasModel.ts` (A's file).
