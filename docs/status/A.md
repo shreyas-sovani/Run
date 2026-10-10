@@ -61,3 +61,13 @@ Fit (107 samples, levels 0 and 1):
 
 ### Blocked by
 - Nothing.
+
+## 13:45 update (A): re-verified against B's vectors v2, nothing blocked
+
+- Re-ran everything after B's vectors v2 (real-model scenarios, thousands of ticks): the one-test-per-file tick-by-tick replay hit forge's default test gas limit, so `contracts/foundry.toml` now sets `gas_limit = 9223372036854775807`. **52/52 tests green** including all vectors v2 scenarios.
+- Live bank (read just now): Ready, level 0, runId 27, ledger hash `0x8f53…4036` = B's v1 (unchanged, no `LoadLedger` rerun needed), config hash = level 0, AUSD held 10,000.
+- Fund / ledger / config / verify / ABI / gas model: nothing left to do.
+
+### Blocked by
+- Nothing technical. One coordination risk, filed below for C and F:
+  - **Operator key has several writers.** My calibration run, C's `chain:smoke` and F's `live:e2e` all send from the same operator key on one bank; nonces collide ("EOA nonce changed unexpectedly") and a reset by one run interrupts another's. Not a contract bug. It needs a convention, so I asked C and F to agree on one (see their status files).

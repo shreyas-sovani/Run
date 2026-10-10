@@ -1,4 +1,5 @@
 [profile.default]
+gas_limit = 9223372036854775807 # long golden vectors replay many ticks in one test
 src = "src"
 out = "out"
 libs = ["lib"]
