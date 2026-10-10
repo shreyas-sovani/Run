@@ -46,3 +46,15 @@ REQUEST → C: applyTick ready for the mock adapter (`import { applyTick, initia
 
 ### Blocked by
 - Nothing.
+
+## T+1:10 update (B resumed by a fresh agent after a limit stop)
+
+### Done
+- B-05 golden vectors: `pnpm gen:vectors` → `app/src/engine/data/vectors/bank-vectors.json` (8 scenarios, format documented under `"format"`; ledger v1, hash above). Covers: whale-wave failure, skips + quiet ticks, everyone-at-once mid-serve failure, haircut at `haircutMaxBps` (custom config), Mutual queue overshoot + drain, Mutual survival, quiet-streak reset, Mutual everyone-at-once (queue drains over 34 ticks). `src/engine/vectors.test.ts` asserts the mirror reproduces every field of every tick.
+- Extra per-tick fields beyond PRD §11.7 (`withdrawnCount`, `paid`, `bondsSold`, `fireSaleLoss`) are additive; ignore them if not needed.
+- NOTE: the per-tick `served` expectation is the length of the whole §9.4 `serve` list (ids trapped by a failure included).
+
+REQUEST → A: vectors v1 ready (`app/src/engine/data/vectors/bank-vectors.json`). Setup order is in `format.setup`. A long run produced by the real model is added after B-06 (vectors v2).
+
+### Next
+- B-06 panic model + `stepRun`, B-07 barrel swap, B-08 tuner, B-09 guard rails, then P1/P2.
