@@ -100,6 +100,7 @@ let runToken = 0; // bumped on every new run/reset so stale async results are ig
 let liveAdapter: ChainAdapter | null = null;
 let chainTicks: TickPayload[] = []; // request lists exactly as sealed onchain (feeds the decision check)
 let snapshotBusy = false;
+let snapshotDirty = false; // a read was requested while one was in flight: re-read when it lands (the in-flight one may predate the tx)
 
 const view = () => runStore.getState();
 
@@ -124,7 +125,11 @@ function scheduleDecisionCheck(m: Model, params: RunParams, ticks: TickPayload[]
 // ── Chain snapshot and balances (live) ──────────────────────────────────
 async function refreshSnapshot(): Promise<BankSnapshotView | null> {
   const a = adapter;
-  if (!a || a.kind !== 'live' || snapshotBusy) return null;
+  if (!a || a.kind !== 'live') return null;
+  if (snapshotBusy) {
+    snapshotDirty = true;
+    return null;
+  }
   snapshotBusy = true;
   try {
     const snap = await a.readSnapshot();
@@ -134,6 +139,10 @@ async function refreshSnapshot(): Promise<BankSnapshotView | null> {
     return null; // the seal path surfaces real errors; a missed read is harmless
   } finally {
     snapshotBusy = false;
+    if (snapshotDirty) {
+      snapshotDirty = false;
+      void refreshSnapshot();
+    }
   }
 }
 

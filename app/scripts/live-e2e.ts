@@ -2,12 +2,16 @@
 //   pnpm live:e2e                 → Bhau's Bank × W (fails), then Monad Mutual × W (survives); prints the proof data
 //   pnpm live:e2e --record        → also writes app/public/replays/<id>.json and updates index.json
 //   pnpm live:e2e --runs 0:1,1:1  → custom sequence of level:card pairs (card 0=Q 1=W 2=E 3=R)
+//   pnpm live:e2e --preflight     → connect and run the preflight only (one ping transaction), then exit
 // Testnet only. Keys come from app/.env.local (VITE_OPERATOR_PK / VITE_BACKUP_PK) and are never printed.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { controller } from '@/app/controller';
-import { getRunView, runActions } from '@/app/store';
+import { runStore } from '@/app/state'; // not '@/app/store': that barrel pulls in UI modules (CSS) that tsx can't load
+
+const getRunView = () => runStore.getState();
+const runActions = controller;
 import { copy } from '@/ui/copy';
 import type { BankLevel, ReplayFile, ReplayIndexEntry, RumorCard } from '@/types';
 
@@ -66,6 +70,10 @@ async function main() {
   const report = getRunView().preflight;
   for (const c of report?.checks ?? []) console.log(`  [${c.status.padEnd(7)}] ${c.label}: ${c.detail}`);
   if (!report?.ok) throw new Error('Preflight is not green; fix the failing checks first.');
+  if (process.argv.includes('--preflight')) {
+    console.log('Preflight is green.');
+    process.exit(0);
+  }
 
   runActions.setMode('live');
   if (getRunView().mode !== 'live') throw new Error('Controller did not enter live mode.');
