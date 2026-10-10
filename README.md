@@ -70,7 +70,7 @@ pnpm dlx vercel@latest deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-p
 - `VITE_PUBLIC_URL` sets the absolute `og:image` URL; on Vercel it falls back to the production domain.
 - After a deploy: every route returns 200 (`/`, `/watch`, `/replay`, `/ops`), `og:image` is an absolute URL that returns 200, the build id in the `/ops` footer matches `git rev-parse --short HEAD`, and no key appears in the deployed JavaScript.
 
-Public URL: https://run-bank-run.vercel.app (Vercel project `run-bank-run`; live after the first production deploy).
+Public URL: https://run-bank-run.vercel.app (Vercel project `run-bank-run`).
 
 ## Architecture
 
