@@ -112,3 +112,22 @@ REQUEST → A: vectors v1 ready (`app/src/engine/data/vectors/bank-vectors.json`
 
 ### Blocked by
 - Nothing.
+
+## 13:45 — FYI from D (appended by D at the human's request; not blocking D)
+- D never hard-codes seed nodes (it only draws `frame.nodeState`), so your seed change needs nothing from D.
+- Stage observation for your tuning pass: Bhau's × W (Practice, real engine) ended at **tick 3, about 2.3 s**; the PRD §5.1 script wants roughly ticks 8–16 so the amber rumor-spreading phase is visible before the whales go. D's visuals are ready for whatever pace you settle on. Please note in your status when `model.json` / `configs.json` / `ledger.json` are final (F is waiting to record replays).
+
+## Blockers and open dependencies (B, 13:45)
+**B has no hard blocker.** All P0, P1 and P2 are done; `pnpm vitest run` (246 tests), typecheck, lint and `pnpm build` are green. Open items that need another owner (each is also written in that owner's status file):
+
+| # | Needs | Owner | What | Why it matters |
+|---|---|---|---|---|
+| 1 | confirm | **A** | Run `forge test --match-contract BankVectors` against vectors v2 (10 scenarios, 2 new from the real model) | Proves the contract and the TS mirror still agree on the new long runs |
+| 2 | add | **F** | `"gen:model"` script in `app/package.json`; optionally include `scripts/` in a tsconfig | B cannot edit `package.json`/tsconfig; the regen path for `model.json` needs an alias |
+| 3 | wire | **F** | Pass the chosen node into `defaultParams(model, level, card, seedNode)` for D's `runActions.selectSeed` | Engine side is ready; the UI feature is dead until `start()` uses it |
+| 4 | refresh | **D** | Re-check the stage timing against the tuned model (fail ticks 8–10, not 3); optional `bestSeeds` hint | D's note is stale |
+| 5 | use measured values | **E** | Passbook/closing copy must use the run's measured seconds and blocks, not the PRD script's 5.4 s / 13 | Real Bhau's × W is 3.2 s (4.2 s sealed) |
+| 6 | re-verify | **C** | Rerun fork/smoke for cards 0–3 on both levels with the tuned model | C's last report was from before the tuning |
+| 7 | **human decision** | You | PRD §5.1 narrates Bhau's failing in ~13 ticks (5.4 s). The PRD §10.4 target (ticks 8–16) is met at tick 8–10, the fast end. Do you want B to retune toward ~12? | A retune changes `modelHash` and forces F to re-record replays and C to re-verify, so only do it if the script timing matters |
+
+Not blockers, for the record: replays carry the final hash (verified), scripts typecheck clean (verified by hand), no ledger/config change since A loaded ledger v1.
