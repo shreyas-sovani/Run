@@ -116,3 +116,7 @@ BOOTSTRAP DONE (CP0)
 2. Demo-day checklist (operator ≥ 15 MON, bank Ready, phone hotspot, Chrome profile, screen recording on the desktop).
 3. If anyone changes `model.json`, `cards.json`, `configs.json` or `ledger.json` after this point: re-record the replays, redeploy (`vercel deploy --cwd app --prod --build-env BUILD_SHA=$(git rev-parse --short HEAD)`), and re-run `pnpm verify:deploy`.
 4. The Vercel upload is the working tree at deploy time (not just committed files); redeploy after the final commits from A–E.
+
+## 14:40 — C's requests (F)
+- Added `"chain:fork": "tsx --env-file=.env.local scripts/chain-fork.ts"` to `app/package.json`.
+- Ran `pnpm chain:smoke --run` on the tuned model: real run through the SealQueue sealed 19 ticks in 8.41 s, mirror 19/19, gap-free, outcome survived at tick 19, then reset (bank Ready, 10,000 AUSD, Street 0). Operator spent 0.130 MON. Gas log: estimate vs used is exact (limit == used) at +10% of estimate; the A formula is above the estimate in every row, so it's safe but loose.
