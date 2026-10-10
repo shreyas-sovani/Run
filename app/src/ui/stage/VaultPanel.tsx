@@ -142,7 +142,9 @@ export const VaultPanel = forwardRef<HTMLElement>(function VaultPanel(_props, re
       </div>
 
       <footer className={styles.foot}>
-        <p className={styles.held}>{held !== null ? S.heldOnchain(fmtAusd(held)) : S.heldSim()}</p>
+        <p className={styles.held}>
+          {held !== null ? S.heldOnchain(fmtAusd(held)) : mode === 'practice' ? S.heldSim() : mode === 'replay' ? S.heldReplay() : ''}
+        </p>
         <p className={styles.scale}>
           {S.haircut()} {fmtBps(haircutBps)} · {S.scaleNote()}
         </p>

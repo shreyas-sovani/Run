@@ -162,6 +162,7 @@ export const S = {
   scaleNote: () => str(['scale', 'note'], '1 AUSD = $1M'),
   heldOnchain: (amount: string) => fill(st('heldOnchain', '{amount} held by the contract · live from Monad'), { amount }),
   heldSim: () => st('heldSim', 'Practice: simulated balance'),
+  heldReplay: () => st('heldReplay', 'Recorded from Monad testnet'),
   vaultBarLabel: (cash: string, bonds: string, loss: string) =>
     fill(st('vaultBarLabel', 'Vault: {cash} cash, {bonds} bonds, {loss} lost in fire sales'), { cash, bonds, loss }),
 
