@@ -1,3504 +1,3504 @@
 {
- "version": 0,
+ "version": 1,
  "nodes": [
   {
    "id": 0,
-   "x": 0.03,
-   "y": 0.03,
-   "degree": 5,
-   "whale": false
+   "x": 0.3283,
+   "y": 0.5138,
+   "degree": 57,
+   "whale": true
   },
   {
    "id": 1,
-   "x": 0.0558,
-   "y": 0.03,
-   "degree": 6,
-   "whale": false
+   "x": 0.4925,
+   "y": 0.5346,
+   "degree": 22,
+   "whale": true
   },
   {
    "id": 2,
-   "x": 0.0984,
-   "y": 0.03,
-   "degree": 5,
-   "whale": false
+   "x": 0.6756,
+   "y": 0.5846,
+   "degree": 70,
+   "whale": true
   },
   {
    "id": 3,
-   "x": 0.1393,
-   "y": 0.03,
-   "degree": 4,
-   "whale": false
+   "x": 0.5553,
+   "y": 0.6609,
+   "degree": 39,
+   "whale": true
   },
   {
    "id": 4,
-   "x": 0.1666,
-   "y": 0.0309,
-   "degree": 3,
-   "whale": false
+   "x": 0.4425,
+   "y": 0.6319,
+   "degree": 26,
+   "whale": true
   },
   {
    "id": 5,
-   "x": 0.218,
-   "y": 0.0319,
-   "degree": 4,
-   "whale": false
+   "x": 0.4861,
+   "y": 0.5567,
+   "degree": 18,
+   "whale": true
   },
   {
    "id": 6,
-   "x": 0.2674,
-   "y": 0.03,
-   "degree": 5,
-   "whale": false
+   "x": 0.6075,
+   "y": 0.5851,
+   "degree": 16,
+   "whale": true
   },
   {
    "id": 7,
-   "x": 0.3136,
-   "y": 0.0413,
-   "degree": 4,
-   "whale": false
+   "x": 0.4806,
+   "y": 0.6172,
+   "degree": 21,
+   "whale": true
   },
   {
    "id": 8,
-   "x": 0.3451,
-   "y": 0.03,
-   "degree": 6,
-   "whale": false
+   "x": 0.4609,
+   "y": 0.3585,
+   "degree": 30,
+   "whale": true
   },
   {
    "id": 9,
-   "x": 0.3923,
-   "y": 0.03,
-   "degree": 4,
+   "x": 0.5089,
+   "y": 0.5578,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 10,
-   "x": 0.4122,
-   "y": 0.0322,
-   "degree": 5,
-   "whale": false
+   "x": 0.5999,
+   "y": 0.6455,
+   "degree": 28,
+   "whale": true
   },
   {
    "id": 11,
-   "x": 0.4566,
-   "y": 0.0306,
-   "degree": 4,
+   "x": 0.4638,
+   "y": 0.4466,
+   "degree": 5,
    "whale": false
   },
   {
    "id": 12,
-   "x": 0.5002,
-   "y": 0.03,
-   "degree": 5,
+   "x": 0.3866,
+   "y": 0.3614,
+   "degree": 8,
    "whale": false
   },
   {
    "id": 13,
-   "x": 0.5519,
-   "y": 0.03,
-   "degree": 5,
+   "x": 0.3576,
+   "y": 0.6595,
+   "degree": 7,
    "whale": false
   },
   {
    "id": 14,
-   "x": 0.5873,
-   "y": 0.0406,
-   "degree": 4,
+   "x": 0.1545,
+   "y": 0.5666,
+   "degree": 9,
    "whale": false
   },
   {
    "id": 15,
-   "x": 0.6259,
-   "y": 0.03,
-   "degree": 5,
+   "x": 0.8478,
+   "y": 0.5903,
+   "degree": 9,
    "whale": false
   },
   {
    "id": 16,
-   "x": 0.6573,
-   "y": 0.03,
-   "degree": 4,
+   "x": 0.4729,
+   "y": 0.8532,
+   "degree": 7,
    "whale": false
   },
   {
    "id": 17,
-   "x": 0.7041,
-   "y": 0.03,
-   "degree": 6,
-   "whale": false
+   "x": 0.5508,
+   "y": 0.3237,
+   "degree": 25,
+   "whale": true
   },
   {
    "id": 18,
-   "x": 0.7487,
-   "y": 0.0407,
-   "degree": 3,
+   "x": 0.5961,
+   "y": 0.4412,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 19,
-   "x": 0.7772,
-   "y": 0.03,
-   "degree": 7,
-   "whale": true
+   "x": 0.4182,
+   "y": 0.2335,
+   "degree": 8,
+   "whale": false
   },
   {
    "id": 20,
-   "x": 0.8068,
-   "y": 0.038,
-   "degree": 6,
-   "whale": false
+   "x": 0.4868,
+   "y": 0.4857,
+   "degree": 20,
+   "whale": true
   },
   {
    "id": 21,
-   "x": 0.874,
-   "y": 0.03,
-   "degree": 3,
-   "whale": false
+   "x": 0.3087,
+   "y": 0.4557,
+   "degree": 21,
+   "whale": true
   },
   {
    "id": 22,
-   "x": 0.8943,
-   "y": 0.0363,
-   "degree": 5,
-   "whale": false
+   "x": 0.3213,
+   "y": 0.6568,
+   "degree": 48,
+   "whale": true
   },
   {
    "id": 23,
-   "x": 0.9372,
-   "y": 0.03,
-   "degree": 5,
+   "x": 0.395,
+   "y": 0.3173,
+   "degree": 7,
    "whale": false
   },
   {
    "id": 24,
-   "x": 0.97,
-   "y": 0.0423,
-   "degree": 5,
+   "x": 0.4622,
+   "y": 0.7566,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 25,
-   "x": 0.03,
-   "y": 0.0695,
-   "degree": 5,
-   "whale": false
+   "x": 0.4421,
+   "y": 0.7063,
+   "degree": 31,
+   "whale": true
   },
   {
    "id": 26,
-   "x": 0.0717,
-   "y": 0.0857,
-   "degree": 7,
-   "whale": true
+   "x": 0.5801,
+   "y": 0.7134,
+   "degree": 4,
+   "whale": false
   },
   {
    "id": 27,
-   "x": 0.0927,
-   "y": 0.0873,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 28,
-   "x": 0.1426,
-   "y": 0.0642,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 29,
-   "x": 0.1826,
-   "y": 0.0766,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 30,
-   "x": 0.2224,
-   "y": 0.0679,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 31,
-   "x": 0.2625,
-   "y": 0.0923,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 32,
-   "x": 0.3044,
-   "y": 0.0853,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 33,
-   "x": 0.3265,
-   "y": 0.0837,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 34,
-   "x": 0.3909,
-   "y": 0.0722,
-   "degree": 7,
-   "whale": true
-  },
-  {
-   "id": 35,
-   "x": 0.4281,
-   "y": 0.0676,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 36,
-   "x": 0.4579,
-   "y": 0.0817,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 37,
-   "x": 0.5117,
-   "y": 0.0902,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 38,
-   "x": 0.5455,
-   "y": 0.0841,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 39,
-   "x": 0.5708,
-   "y": 0.0651,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 40,
-   "x": 0.6228,
-   "y": 0.0669,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 41,
-   "x": 0.6628,
-   "y": 0.0656,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 42,
-   "x": 0.7003,
-   "y": 0.0781,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 43,
-   "x": 0.7352,
-   "y": 0.0581,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 44,
-   "x": 0.7705,
-   "y": 0.0699,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 45,
-   "x": 0.8189,
-   "y": 0.0753,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 46,
-   "x": 0.8495,
-   "y": 0.0601,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 47,
-   "x": 0.8887,
-   "y": 0.0615,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 48,
-   "x": 0.9344,
-   "y": 0.0617,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 49,
-   "x": 0.97,
-   "y": 0.0758,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 50,
-   "x": 0.03,
-   "y": 0.1395,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 51,
-   "x": 0.0579,
-   "y": 0.1412,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 52,
-   "x": 0.0927,
-   "y": 0.1247,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 53,
-   "x": 0.1311,
-   "y": 0.1298,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 54,
-   "x": 0.1754,
-   "y": 0.1201,
-   "degree": 7,
-   "whale": true
-  },
-  {
-   "id": 55,
-   "x": 0.2337,
-   "y": 0.1163,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 56,
-   "x": 0.2575,
-   "y": 0.1378,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 57,
-   "x": 0.3008,
-   "y": 0.1288,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 58,
-   "x": 0.327,
-   "y": 0.1148,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 59,
-   "x": 0.382,
-   "y": 0.1388,
-   "degree": 7,
-   "whale": true
-  },
-  {
-   "id": 60,
-   "x": 0.4202,
-   "y": 0.115,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 61,
-   "x": 0.4548,
-   "y": 0.1293,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 62,
-   "x": 0.5131,
-   "y": 0.1361,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 63,
-   "x": 0.5311,
-   "y": 0.1076,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 64,
-   "x": 0.5933,
-   "y": 0.1249,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 65,
-   "x": 0.6198,
-   "y": 0.1127,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 66,
-   "x": 0.6702,
-   "y": 0.1148,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 67,
-   "x": 0.6904,
-   "y": 0.1297,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 68,
-   "x": 0.7302,
-   "y": 0.114,
-   "degree": 7,
-   "whale": true
-  },
-  {
-   "id": 69,
-   "x": 0.7808,
-   "y": 0.1124,
-   "degree": 7,
-   "whale": true
-  },
-  {
-   "id": 70,
-   "x": 0.8133,
-   "y": 0.1217,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 71,
-   "x": 0.8567,
-   "y": 0.1199,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 72,
-   "x": 0.9109,
-   "y": 0.1094,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 73,
-   "x": 0.9428,
-   "y": 0.1318,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 74,
-   "x": 0.97,
-   "y": 0.1207,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 75,
-   "x": 0.03,
-   "y": 0.1675,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 76,
-   "x": 0.0574,
-   "y": 0.1772,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 77,
-   "x": 0.1131,
-   "y": 0.1868,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 78,
-   "x": 0.1469,
-   "y": 0.1747,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 79,
-   "x": 0.1834,
-   "y": 0.1685,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 80,
-   "x": 0.2107,
-   "y": 0.1658,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 81,
-   "x": 0.2525,
-   "y": 0.1745,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 82,
-   "x": 0.3019,
-   "y": 0.1794,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 83,
-   "x": 0.3537,
-   "y": 0.1907,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 84,
-   "x": 0.3756,
-   "y": 0.1653,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 85,
-   "x": 0.4169,
-   "y": 0.1766,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 86,
-   "x": 0.4662,
-   "y": 0.1592,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 87,
-   "x": 0.5102,
-   "y": 0.1643,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 88,
-   "x": 0.5282,
-   "y": 0.1676,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 89,
-   "x": 0.576,
-   "y": 0.1833,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 90,
-   "x": 0.6172,
-   "y": 0.1711,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 91,
-   "x": 0.6724,
-   "y": 0.18,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 92,
-   "x": 0.7066,
-   "y": 0.1655,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 93,
-   "x": 0.7411,
-   "y": 0.1779,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 94,
-   "x": 0.7849,
-   "y": 0.1767,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 95,
-   "x": 0.8174,
-   "y": 0.1655,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 96,
-   "x": 0.8618,
-   "y": 0.1592,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 97,
-   "x": 0.8893,
-   "y": 0.161,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 98,
-   "x": 0.9467,
-   "y": 0.1662,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 99,
-   "x": 0.97,
-   "y": 0.1725,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 100,
-   "x": 0.03,
-   "y": 0.2333,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 101,
-   "x": 0.048,
-   "y": 0.2082,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 102,
-   "x": 0.0958,
-   "y": 0.2113,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 103,
-   "x": 0.1515,
-   "y": 0.2326,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 104,
-   "x": 0.1914,
-   "y": 0.2269,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 105,
-   "x": 0.2247,
-   "y": 0.2412,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 106,
-   "x": 0.2576,
-   "y": 0.2394,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 107,
-   "x": 0.3112,
-   "y": 0.2327,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 108,
-   "x": 0.3262,
-   "y": 0.2378,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 109,
-   "x": 0.3898,
-   "y": 0.2136,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 110,
-   "x": 0.431,
-   "y": 0.2101,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 111,
-   "x": 0.452,
-   "y": 0.216,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 112,
-   "x": 0.5107,
-   "y": 0.2245,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 113,
-   "x": 0.538,
-   "y": 0.2301,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 114,
-   "x": 0.5697,
-   "y": 0.2094,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 115,
-   "x": 0.6279,
-   "y": 0.236,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 116,
-   "x": 0.6606,
-   "y": 0.2402,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 117,
-   "x": 0.698,
-   "y": 0.2077,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 118,
-   "x": 0.7495,
-   "y": 0.2423,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 119,
-   "x": 0.7689,
-   "y": 0.2134,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 120,
-   "x": 0.8269,
-   "y": 0.2151,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 121,
-   "x": 0.8523,
-   "y": 0.2093,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 122,
-   "x": 0.9123,
-   "y": 0.222,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 123,
-   "x": 0.9276,
-   "y": 0.208,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 124,
-   "x": 0.97,
-   "y": 0.2343,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 125,
-   "x": 0.03,
-   "y": 0.2748,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 126,
-   "x": 0.0574,
-   "y": 0.2773,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 127,
-   "x": 0.0947,
-   "y": 0.2924,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 128,
-   "x": 0.1444,
-   "y": 0.2797,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 129,
-   "x": 0.1905,
-   "y": 0.2625,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 130,
-   "x": 0.2191,
-   "y": 0.2613,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 131,
-   "x": 0.2461,
-   "y": 0.275,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 132,
-   "x": 0.2896,
-   "y": 0.2765,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 133,
-   "x": 0.338,
-   "y": 0.2614,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 134,
-   "x": 0.3734,
-   "y": 0.2874,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 135,
-   "x": 0.4201,
-   "y": 0.2895,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 136,
-   "x": 0.454,
-   "y": 0.275,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 137,
-   "x": 0.5139,
-   "y": 0.2708,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 138,
-   "x": 0.5268,
-   "y": 0.2639,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 139,
-   "x": 0.5873,
-   "y": 0.264,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 140,
-   "x": 0.6114,
-   "y": 0.2722,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 141,
-   "x": 0.6589,
-   "y": 0.2733,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 142,
-   "x": 0.7005,
-   "y": 0.2721,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 143,
-   "x": 0.7506,
-   "y": 0.2742,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 144,
-   "x": 0.7727,
-   "y": 0.269,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 145,
-   "x": 0.8331,
-   "y": 0.2675,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 146,
-   "x": 0.8585,
-   "y": 0.2711,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 147,
-   "x": 0.9067,
-   "y": 0.2712,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 148,
-   "x": 0.9468,
-   "y": 0.2848,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 149,
-   "x": 0.97,
-   "y": 0.2838,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 150,
-   "x": 0.03,
-   "y": 0.3097,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 151,
-   "x": 0.0697,
-   "y": 0.3085,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 152,
-   "x": 0.0889,
-   "y": 0.3138,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 153,
-   "x": 0.136,
-   "y": 0.3087,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 154,
-   "x": 0.1902,
-   "y": 0.3411,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 155,
-   "x": 0.2194,
-   "y": 0.3081,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 156,
-   "x": 0.2624,
-   "y": 0.3153,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 157,
-   "x": 0.2977,
-   "y": 0.3147,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 158,
-   "x": 0.3493,
-   "y": 0.341,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 159,
-   "x": 0.3688,
-   "y": 0.3262,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 160,
-   "x": 0.4299,
-   "y": 0.3323,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 161,
-   "x": 0.4689,
-   "y": 0.3077,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 162,
-   "x": 0.4973,
-   "y": 0.3302,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 163,
-   "x": 0.5303,
-   "y": 0.3321,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 164,
-   "x": 0.5719,
-   "y": 0.3141,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 165,
-   "x": 0.625,
-   "y": 0.3263,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 166,
-   "x": 0.6526,
-   "y": 0.3311,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 167,
-   "x": 0.714,
-   "y": 0.3109,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 168,
-   "x": 0.7419,
-   "y": 0.3357,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 169,
-   "x": 0.7727,
-   "y": 0.3169,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 170,
-   "x": 0.8161,
-   "y": 0.3106,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 171,
-   "x": 0.8736,
-   "y": 0.3119,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 172,
-   "x": 0.8989,
-   "y": 0.3215,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 173,
-   "x": 0.9304,
-   "y": 0.3084,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 174,
-   "x": 0.97,
-   "y": 0.3205,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 175,
-   "x": 0.03,
-   "y": 0.3686,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 176,
-   "x": 0.0711,
-   "y": 0.3682,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 177,
-   "x": 0.104,
-   "y": 0.3849,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 178,
-   "x": 0.147,
-   "y": 0.3829,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 179,
-   "x": 0.1706,
-   "y": 0.364,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 180,
-   "x": 0.2167,
-   "y": 0.3731,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 181,
-   "x": 0.2461,
-   "y": 0.391,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 182,
-   "x": 0.303,
-   "y": 0.3854,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 183,
-   "x": 0.3347,
-   "y": 0.3742,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 184,
-   "x": 0.3837,
-   "y": 0.3866,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 185,
-   "x": 0.4245,
-   "y": 0.3835,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 186,
-   "x": 0.4712,
-   "y": 0.3908,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 187,
-   "x": 0.4923,
-   "y": 0.3746,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 188,
-   "x": 0.5451,
-   "y": 0.3596,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 189,
-   "x": 0.5902,
-   "y": 0.3718,
-   "degree": 8,
-   "whale": true
-  },
-  {
-   "id": 190,
-   "x": 0.621,
-   "y": 0.3722,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 191,
-   "x": 0.6679,
-   "y": 0.3607,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 192,
-   "x": 0.6983,
-   "y": 0.3833,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 193,
-   "x": 0.7333,
-   "y": 0.3823,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 194,
-   "x": 0.7768,
-   "y": 0.3593,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 195,
-   "x": 0.8322,
-   "y": 0.3725,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 196,
-   "x": 0.8712,
-   "y": 0.362,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 197,
-   "x": 0.9131,
-   "y": 0.3795,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 198,
-   "x": 0.9414,
-   "y": 0.3649,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 199,
-   "x": 0.97,
-   "y": 0.3657,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 200,
-   "x": 0.03,
-   "y": 0.4179,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 201,
-   "x": 0.0472,
-   "y": 0.4235,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 202,
-   "x": 0.0975,
-   "y": 0.4149,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 203,
-   "x": 0.1528,
-   "y": 0.4256,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 204,
-   "x": 0.1769,
-   "y": 0.4294,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 205,
-   "x": 0.2324,
-   "y": 0.4093,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 206,
-   "x": 0.2622,
+   "x": 0.1828,
    "y": 0.4214,
    "degree": 7,
    "whale": false
   },
   {
-   "id": 207,
-   "x": 0.29,
-   "y": 0.4137,
+   "id": 28,
+   "x": 0.439,
+   "y": 0.4125,
    "degree": 5,
    "whale": false
   },
   {
-   "id": 208,
-   "x": 0.3284,
-   "y": 0.4414,
-   "degree": 5,
-   "whale": false
+   "id": 29,
+   "x": 0.4664,
+   "y": 0.327,
+   "degree": 22,
+   "whale": true
   },
   {
-   "id": 209,
-   "x": 0.3793,
-   "y": 0.4131,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 210,
-   "x": 0.4143,
-   "y": 0.4412,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 211,
-   "x": 0.4688,
-   "y": 0.4387,
+   "id": 30,
+   "x": 0.419,
+   "y": 0.4548,
    "degree": 4,
    "whale": false
   },
   {
-   "id": 212,
-   "x": 0.4905,
-   "y": 0.43,
-   "degree": 6,
-   "whale": false
+   "id": 31,
+   "x": 0.4577,
+   "y": 0.505,
+   "degree": 20,
+   "whale": true
   },
   {
-   "id": 213,
-   "x": 0.5272,
-   "y": 0.4252,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 214,
-   "x": 0.5937,
-   "y": 0.4295,
+   "id": 32,
+   "x": 0.1478,
+   "y": 0.4945,
    "degree": 5,
    "whale": false
   },
   {
-   "id": 215,
-   "x": 0.6145,
-   "y": 0.4186,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 216,
-   "x": 0.6723,
-   "y": 0.4399,
+   "id": 33,
+   "x": 0.1998,
+   "y": 0.6366,
    "degree": 3,
    "whale": false
   },
   {
-   "id": 217,
-   "x": 0.6948,
+   "id": 34,
+   "x": 0.2067,
+   "y": 0.4232,
+   "degree": 9,
+   "whale": false
+  },
+  {
+   "id": 35,
+   "x": 0.6858,
+   "y": 0.6814,
+   "degree": 21,
+   "whale": true
+  },
+  {
+   "id": 36,
+   "x": 0.5338,
+   "y": 0.7133,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 37,
+   "x": 0.5202,
+   "y": 0.4106,
+   "degree": 17,
+   "whale": true
+  },
+  {
+   "id": 38,
+   "x": 0.229,
+   "y": 0.6547,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 39,
+   "x": 0.3217,
+   "y": 0.5412,
+   "degree": 24,
+   "whale": true
+  },
+  {
+   "id": 40,
+   "x": 0.5519,
+   "y": 0.5756,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 41,
+   "x": 0.3867,
+   "y": 0.5778,
+   "degree": 20,
+   "whale": true
+  },
+  {
+   "id": 42,
+   "x": 0.205,
+   "y": 0.4747,
+   "degree": 8,
+   "whale": false
+  },
+  {
+   "id": 43,
+   "x": 0.28,
+   "y": 0.5293,
+   "degree": 21,
+   "whale": true
+  },
+  {
+   "id": 44,
+   "x": 0.4444,
+   "y": 0.5646,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 45,
+   "x": 0.5571,
+   "y": 0.433,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 46,
+   "x": 0.3886,
+   "y": 0.516,
+   "degree": 8,
+   "whale": false
+  },
+  {
+   "id": 47,
+   "x": 0.4445,
+   "y": 0.2122,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 48,
+   "x": 0.4698,
+   "y": 0.3023,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 49,
+   "x": 0.7578,
+   "y": 0.6522,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 50,
+   "x": 0.2154,
+   "y": 0.4943,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 51,
+   "x": 0.3639,
+   "y": 0.8481,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 52,
+   "x": 0.6329,
+   "y": 0.7794,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 53,
+   "x": 0.5207,
+   "y": 0.7419,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 54,
+   "x": 0.3456,
+   "y": 0.3366,
+   "degree": 26,
+   "whale": true
+  },
+  {
+   "id": 55,
+   "x": 0.2492,
+   "y": 0.3907,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 56,
+   "x": 0.298,
+   "y": 0.6101,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 57,
+   "x": 0.5569,
+   "y": 0.8427,
+   "degree": 10,
+   "whale": false
+  },
+  {
+   "id": 58,
+   "x": 0.4155,
+   "y": 0.4941,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 59,
+   "x": 0.2129,
+   "y": 0.3347,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 60,
+   "x": 0.7305,
+   "y": 0.6056,
+   "degree": 9,
+   "whale": false
+  },
+  {
+   "id": 61,
+   "x": 0.5385,
+   "y": 0.1811,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 62,
+   "x": 0.7039,
+   "y": 0.2578,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 63,
+   "x": 0.6289,
+   "y": 0.7995,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 64,
+   "x": 0.5677,
+   "y": 0.7112,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 65,
+   "x": 0.4974,
+   "y": 0.7906,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 66,
+   "x": 0.168,
+   "y": 0.6802,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 67,
+   "x": 0.624,
+   "y": 0.3604,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 68,
+   "x": 0.7237,
+   "y": 0.6393,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 69,
+   "x": 0.5888,
+   "y": 0.2681,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 70,
+   "x": 0.356,
+   "y": 0.2842,
+   "degree": 10,
+   "whale": false
+  },
+  {
+   "id": 71,
+   "x": 0.6915,
+   "y": 0.8202,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 72,
+   "x": 0.5816,
+   "y": 0.4732,
+   "degree": 21,
+   "whale": true
+  },
+  {
+   "id": 73,
+   "x": 0.5769,
+   "y": 0.6822,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 74,
+   "x": 0.2528,
+   "y": 0.7829,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 75,
+   "x": 0.2496,
+   "y": 0.7314,
+   "degree": 10,
+   "whale": false
+  },
+  {
+   "id": 76,
+   "x": 0.5068,
+   "y": 0.4427,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 77,
+   "x": 0.7743,
+   "y": 0.7729,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 78,
+   "x": 0.772,
+   "y": 0.4554,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 79,
+   "x": 0.3447,
+   "y": 0.3835,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 80,
+   "x": 0.7407,
+   "y": 0.4644,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 81,
+   "x": 0.5105,
+   "y": 0.2631,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 82,
+   "x": 0.3896,
+   "y": 0.5616,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 83,
+   "x": 0.4749,
+   "y": 0.757,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 84,
+   "x": 0.3028,
+   "y": 0.8247,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 85,
+   "x": 0.6834,
+   "y": 0.391,
+   "degree": 9,
+   "whale": false
+  },
+  {
+   "id": 86,
+   "x": 0.6438,
+   "y": 0.2073,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 87,
+   "x": 0.4432,
+   "y": 0.7365,
+   "degree": 8,
+   "whale": false
+  },
+  {
+   "id": 88,
+   "x": 0.1521,
+   "y": 0.4045,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 89,
+   "x": 0.5902,
+   "y": 0.2921,
+   "degree": 10,
+   "whale": false
+  },
+  {
+   "id": 90,
+   "x": 0.5438,
+   "y": 0.8047,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 91,
+   "x": 0.2653,
+   "y": 0.7082,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 92,
+   "x": 0.7075,
+   "y": 0.6261,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 93,
+   "x": 0.4706,
+   "y": 0.213,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 94,
+   "x": 0.7198,
+   "y": 0.7379,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 95,
+   "x": 0.5042,
+   "y": 0.7097,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 96,
+   "x": 0.6318,
+   "y": 0.3087,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 97,
+   "x": 0.7119,
+   "y": 0.4341,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 98,
+   "x": 0.5864,
+   "y": 0.7961,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 99,
+   "x": 0.5384,
+   "y": 0.6118,
+   "degree": 10,
+   "whale": false
+  },
+  {
+   "id": 100,
+   "x": 0.8478,
+   "y": 0.3546,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 101,
+   "x": 0.5273,
+   "y": 0.478,
+   "degree": 23,
+   "whale": true
+  },
+  {
+   "id": 102,
+   "x": 0.3809,
+   "y": 0.7958,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 103,
+   "x": 0.4993,
+   "y": 0.4564,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 104,
+   "x": 0.5258,
+   "y": 0.834,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 105,
+   "x": 0.5292,
+   "y": 0.683,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 106,
+   "x": 0.4319,
+   "y": 0.9103,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 107,
+   "x": 0.3654,
+   "y": 0.371,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 108,
+   "x": 0.5976,
+   "y": 0.3599,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 109,
+   "x": 0.5613,
+   "y": 0.6,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 110,
+   "x": 0.7785,
+   "y": 0.3571,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 111,
+   "x": 0.6671,
+   "y": 0.2197,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 112,
+   "x": 0.5242,
+   "y": 0.3636,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 113,
+   "x": 0.7346,
+   "y": 0.5134,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 114,
+   "x": 0.6639,
+   "y": 0.5177,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 115,
+   "x": 0.3872,
+   "y": 0.6795,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 116,
+   "x": 0.4767,
+   "y": 0.2347,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 117,
+   "x": 0.4026,
+   "y": 0.1849,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 118,
+   "x": 0.6458,
+   "y": 0.7398,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 119,
+   "x": 0.5541,
+   "y": 0.5389,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 120,
+   "x": 0.1269,
+   "y": 0.7415,
+   "degree": 8,
+   "whale": false
+  },
+  {
+   "id": 121,
+   "x": 0.666,
+   "y": 0.7669,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 122,
+   "x": 0.1961,
+   "y": 0.6604,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 123,
+   "x": 0.3941,
+   "y": 0.711,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 124,
+   "x": 0.4065,
+   "y": 0.5023,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 125,
+   "x": 0.6357,
+   "y": 0.5897,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 126,
+   "x": 0.7017,
+   "y": 0.581,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 127,
+   "x": 0.5681,
+   "y": 0.619,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 128,
+   "x": 0.2482,
+   "y": 0.4968,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 129,
+   "x": 0.8269,
+   "y": 0.6528,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 130,
+   "x": 0.5359,
+   "y": 0.8831,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 131,
+   "x": 0.2656,
+   "y": 0.4385,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 132,
+   "x": 0.5088,
+   "y": 0.2058,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 133,
+   "x": 0.7408,
+   "y": 0.6999,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 134,
+   "x": 0.6951,
+   "y": 0.7721,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 135,
+   "x": 0.7052,
+   "y": 0.2204,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 136,
+   "x": 0.7017,
+   "y": 0.334,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 137,
+   "x": 0.4432,
+   "y": 0.4617,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 138,
+   "x": 0.5363,
+   "y": 0.3464,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 139,
+   "x": 0.7893,
+   "y": 0.7882,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 140,
+   "x": 0.5564,
+   "y": 0.774,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 141,
+   "x": 0.4829,
+   "y": 0.4192,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 142,
+   "x": 0.6092,
+   "y": 0.1832,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 143,
+   "x": 0.5653,
+   "y": 0.3997,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 144,
+   "x": 0.2442,
+   "y": 0.5717,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 145,
+   "x": 0.6196,
+   "y": 0.4781,
+   "degree": 7,
+   "whale": false
+  },
+  {
+   "id": 146,
+   "x": 0.6531,
+   "y": 0.8572,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 147,
+   "x": 0.154,
+   "y": 0.785,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 148,
+   "x": 0.5082,
+   "y": 0.2332,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 149,
+   "x": 0.4698,
+   "y": 0.8175,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 150,
+   "x": 0.1508,
+   "y": 0.3227,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 151,
+   "x": 0.1632,
+   "y": 0.3695,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 152,
+   "x": 0.281,
+   "y": 0.929,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 153,
+   "x": 0.6695,
    "y": 0.4306,
    "degree": 6,
    "whale": false
   },
   {
-   "id": 218,
-   "x": 0.7315,
-   "y": 0.432,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 219,
-   "x": 0.7874,
-   "y": 0.4125,
-   "degree": 6,
-   "whale": false
-  },
-  {
-   "id": 220,
-   "x": 0.8134,
-   "y": 0.4247,
-   "degree": 3,
-   "whale": false
-  },
-  {
-   "id": 221,
-   "x": 0.859,
-   "y": 0.426,
-   "degree": 7,
-   "whale": false
-  },
-  {
-   "id": 222,
-   "x": 0.9124,
-   "y": 0.4097,
+   "id": 154,
+   "x": 0.6266,
+   "y": 0.602,
    "degree": 4,
    "whale": false
   },
   {
-   "id": 223,
-   "x": 0.9397,
-   "y": 0.4211,
+   "id": 155,
+   "x": 0.8306,
+   "y": 0.772,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 156,
+   "x": 0.1171,
+   "y": 0.4327,
    "degree": 7,
    "whale": false
   },
   {
+   "id": 157,
+   "x": 0.3482,
+   "y": 0.5897,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 158,
+   "x": 0.525,
+   "y": 0.6049,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 159,
+   "x": 0.7124,
+   "y": 0.7165,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 160,
+   "x": 0.7671,
+   "y": 0.2992,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 161,
+   "x": 0.6959,
+   "y": 0.4803,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 162,
+   "x": 0.3476,
+   "y": 0.5645,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 163,
+   "x": 0.2454,
+   "y": 0.4395,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 164,
+   "x": 0.5727,
+   "y": 0.1283,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 165,
+   "x": 0.5859,
+   "y": 0.3732,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 166,
+   "x": 0.8008,
+   "y": 0.6935,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 167,
+   "x": 0.2918,
+   "y": 0.2553,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 168,
+   "x": 0.5012,
+   "y": 0.3598,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 169,
+   "x": 0.3114,
+   "y": 0.3398,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 170,
+   "x": 0.716,
+   "y": 0.5412,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 171,
+   "x": 0.5685,
+   "y": 0.3349,
+   "degree": 8,
+   "whale": false
+  },
+  {
+   "id": 172,
+   "x": 0.5373,
+   "y": 0.1546,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 173,
+   "x": 0.4119,
+   "y": 0.2553,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 174,
+   "x": 0.5947,
+   "y": 0.8675,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 175,
+   "x": 0.5959,
+   "y": 0.79,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 176,
+   "x": 0.3984,
+   "y": 0.7668,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 177,
+   "x": 0.796,
+   "y": 0.6202,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 178,
+   "x": 0.1583,
+   "y": 0.4809,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 179,
+   "x": 0.628,
+   "y": 0.4085,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 180,
+   "x": 0.642,
+   "y": 0.7175,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 181,
+   "x": 0.4486,
+   "y": 0.6818,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 182,
+   "x": 0.8716,
+   "y": 0.5933,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 183,
+   "x": 0.2915,
+   "y": 0.5812,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 184,
+   "x": 0.0866,
+   "y": 0.407,
+   "degree": 6,
+   "whale": false
+  },
+  {
+   "id": 185,
+   "x": 0.1765,
+   "y": 0.3007,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 186,
+   "x": 0.6642,
+   "y": 0.8214,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 187,
+   "x": 0.6664,
+   "y": 0.3958,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 188,
+   "x": 0.2892,
+   "y": 0.805,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 189,
+   "x": 0.3463,
+   "y": 0.746,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 190,
+   "x": 0.2049,
+   "y": 0.3788,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 191,
+   "x": 0.414,
+   "y": 0.3639,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 192,
+   "x": 0.4533,
+   "y": 0.3778,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 193,
+   "x": 0.1391,
+   "y": 0.5857,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 194,
+   "x": 0.6275,
+   "y": 0.3765,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 195,
+   "x": 0.2743,
+   "y": 0.4157,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 196,
+   "x": 0.6936,
+   "y": 0.229,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 197,
+   "x": 0.4433,
+   "y": 0.8326,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 198,
+   "x": 0.2981,
+   "y": 0.642,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 199,
+   "x": 0.7919,
+   "y": 0.4222,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 200,
+   "x": 0.405,
+   "y": 0.2915,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 201,
+   "x": 0.5914,
+   "y": 0.3473,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 202,
+   "x": 0.1665,
+   "y": 0.7462,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 203,
+   "x": 0.4016,
+   "y": 0.2706,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 204,
+   "x": 0.7292,
+   "y": 0.8756,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 205,
+   "x": 0.3018,
+   "y": 0.2633,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 206,
+   "x": 0.8095,
+   "y": 0.2242,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 207,
+   "x": 0.5732,
+   "y": 0.7319,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 208,
+   "x": 0.2145,
+   "y": 0.8214,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 209,
+   "x": 0.166,
+   "y": 0.4988,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 210,
+   "x": 0.1832,
+   "y": 0.7175,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 211,
+   "x": 0.33,
+   "y": 0.1972,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 212,
+   "x": 0.7016,
+   "y": 0.7866,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 213,
+   "x": 0.4081,
+   "y": 0.8298,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 214,
+   "x": 0.332,
+   "y": 0.4546,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 215,
+   "x": 0.5092,
+   "y": 0.3679,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 216,
+   "x": 0.5234,
+   "y": 0.2165,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 217,
+   "x": 0.4754,
+   "y": 0.1018,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 218,
+   "x": 0.6252,
+   "y": 0.7202,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 219,
+   "x": 0.2019,
+   "y": 0.6941,
+   "degree": 4,
+   "whale": false
+  },
+  {
+   "id": 220,
+   "x": 0.2193,
+   "y": 0.7624,
+   "degree": 5,
+   "whale": false
+  },
+  {
+   "id": 221,
+   "x": 0.3413,
+   "y": 0.7935,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 222,
+   "x": 0.3689,
+   "y": 0.4377,
+   "degree": 3,
+   "whale": false
+  },
+  {
+   "id": 223,
+   "x": 0.4073,
+   "y": 0.1498,
+   "degree": 4,
+   "whale": false
+  },
+  {
    "id": 224,
-   "x": 0.9684,
-   "y": 0.4365,
+   "x": 0.3618,
+   "y": 0.7863,
    "degree": 4,
    "whale": false
   },
   {
    "id": 225,
-   "x": 0.03,
-   "y": 0.484,
-   "degree": 7,
+   "x": 0.8676,
+   "y": 0.5047,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 226,
-   "x": 0.0497,
-   "y": 0.4864,
-   "degree": 5,
+   "x": 0.1152,
+   "y": 0.3696,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 227,
-   "x": 0.1014,
-   "y": 0.4738,
-   "degree": 5,
+   "x": 0.466,
+   "y": 0.6541,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 228,
-   "x": 0.1481,
-   "y": 0.4615,
-   "degree": 4,
+   "x": 0.4435,
+   "y": 0.265,
+   "degree": 6,
    "whale": false
   },
   {
    "id": 229,
-   "x": 0.1866,
-   "y": 0.4811,
+   "x": 0.1827,
+   "y": 0.5801,
    "degree": 3,
    "whale": false
   },
   {
    "id": 230,
-   "x": 0.2161,
-   "y": 0.4786,
-   "degree": 7,
+   "x": 0.5632,
+   "y": 0.8174,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 231,
-   "x": 0.2727,
-   "y": 0.4774,
-   "degree": 6,
+   "x": 0.2369,
+   "y": 0.2521,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 232,
-   "x": 0.3044,
-   "y": 0.4746,
-   "degree": 5,
+   "x": 0.3361,
+   "y": 0.3229,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 233,
-   "x": 0.342,
-   "y": 0.4785,
-   "degree": 5,
+   "x": 0.3227,
+   "y": 0.5676,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 234,
-   "x": 0.3921,
-   "y": 0.4608,
-   "degree": 6,
+   "x": 0.7249,
+   "y": 0.3619,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 235,
-   "x": 0.4131,
-   "y": 0.4882,
-   "degree": 4,
+   "x": 0.7989,
+   "y": 0.4056,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 236,
-   "x": 0.4646,
-   "y": 0.4724,
-   "degree": 4,
+   "x": 0.335,
+   "y": 0.408,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 237,
-   "x": 0.4868,
-   "y": 0.4684,
-   "degree": 5,
+   "x": 0.6016,
+   "y": 0.5234,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 238,
-   "x": 0.5266,
-   "y": 0.4791,
-   "degree": 6,
+   "x": 0.2969,
+   "y": 0.4202,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 239,
-   "x": 0.5807,
-   "y": 0.4618,
-   "degree": 7,
+   "x": 0.3723,
+   "y": 0.6346,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 240,
-   "x": 0.6298,
-   "y": 0.473,
-   "degree": 4,
+   "x": 0.614,
+   "y": 0.8661,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 241,
-   "x": 0.6467,
-   "y": 0.4729,
-   "degree": 4,
+   "x": 0.2315,
+   "y": 0.7142,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 242,
-   "x": 0.7138,
-   "y": 0.4784,
-   "degree": 8,
-   "whale": true
+   "x": 0.6407,
+   "y": 0.5627,
+   "degree": 7,
+   "whale": false
   },
   {
    "id": 243,
-   "x": 0.7362,
-   "y": 0.487,
-   "degree": 6,
+   "x": 0.2953,
+   "y": 0.6596,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 244,
-   "x": 0.7723,
-   "y": 0.4868,
-   "degree": 5,
+   "x": 0.3161,
+   "y": 0.3724,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 245,
-   "x": 0.8338,
-   "y": 0.4795,
+   "x": 0.7227,
+   "y": 0.1608,
    "degree": 4,
    "whale": false
   },
   {
    "id": 246,
-   "x": 0.8461,
-   "y": 0.4839,
-   "degree": 4,
+   "x": 0.5108,
+   "y": 0.7752,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 247,
-   "x": 0.887,
-   "y": 0.4611,
+   "x": 0.3404,
+   "y": 0.216,
    "degree": 4,
    "whale": false
   },
   {
    "id": 248,
-   "x": 0.9497,
-   "y": 0.4874,
-   "degree": 8,
-   "whale": true
+   "x": 0.303,
+   "y": 0.7329,
+   "degree": 3,
+   "whale": false
   },
   {
    "id": 249,
-   "x": 0.97,
-   "y": 0.4739,
-   "degree": 4,
+   "x": 0.7282,
+   "y": 0.5322,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 250,
-   "x": 0.03,
-   "y": 0.5088,
-   "degree": 5,
+   "x": 0.6148,
+   "y": 0.7285,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 251,
-   "x": 0.0467,
-   "y": 0.5103,
-   "degree": 5,
+   "x": 0.7659,
+   "y": 0.5737,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 252,
-   "x": 0.1022,
-   "y": 0.5301,
-   "degree": 3,
+   "x": 0.778,
+   "y": 0.4423,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 253,
-   "x": 0.1437,
-   "y": 0.5218,
-   "degree": 7,
+   "x": 0.5846,
+   "y": 0.4929,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 254,
-   "x": 0.1865,
-   "y": 0.5164,
-   "degree": 5,
+   "x": 0.8893,
+   "y": 0.5082,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 255,
-   "x": 0.2125,
-   "y": 0.5232,
-   "degree": 3,
+   "x": 0.5074,
+   "y": 0.1802,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 256,
-   "x": 0.2593,
-   "y": 0.5337,
-   "degree": 6,
+   "x": 0.8155,
+   "y": 0.599,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 257,
-   "x": 0.2957,
-   "y": 0.5151,
-   "degree": 4,
+   "x": 0.6864,
+   "y": 0.9031,
+   "degree": 6,
    "whale": false
   },
   {
    "id": 258,
-   "x": 0.3459,
-   "y": 0.5141,
-   "degree": 4,
+   "x": 0.4255,
+   "y": 0.551,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 259,
-   "x": 0.3821,
-   "y": 0.5126,
-   "degree": 4,
+   "x": 0.3478,
+   "y": 0.808,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 260,
-   "x": 0.4267,
-   "y": 0.5303,
+   "x": 0.4883,
+   "y": 0.9259,
    "degree": 3,
    "whale": false
   },
   {
    "id": 261,
-   "x": 0.4488,
-   "y": 0.5264,
+   "x": 0.7709,
+   "y": 0.181,
    "degree": 3,
    "whale": false
   },
   {
    "id": 262,
-   "x": 0.4871,
-   "y": 0.5134,
-   "degree": 5,
+   "x": 0.6281,
+   "y": 0.1321,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 263,
-   "x": 0.5503,
-   "y": 0.5403,
-   "degree": 3,
+   "x": 0.1301,
+   "y": 0.818,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 264,
-   "x": 0.5897,
-   "y": 0.5394,
-   "degree": 6,
+   "x": 0.3273,
+   "y": 0.1617,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 265,
-   "x": 0.609,
-   "y": 0.518,
-   "degree": 4,
+   "x": 0.3738,
+   "y": 0.3317,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 266,
-   "x": 0.6533,
-   "y": 0.5319,
-   "degree": 6,
+   "x": 0.795,
+   "y": 0.4743,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 267,
-   "x": 0.7131,
-   "y": 0.535,
-   "degree": 5,
+   "x": 0.4884,
+   "y": 0.6315,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 268,
-   "x": 0.7532,
-   "y": 0.5231,
+   "x": 0.2174,
+   "y": 0.8728,
    "degree": 5,
    "whale": false
   },
   {
    "id": 269,
-   "x": 0.7895,
-   "y": 0.5409,
-   "degree": 4,
+   "x": 0.6999,
+   "y": 0.2835,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 270,
-   "x": 0.822,
-   "y": 0.5143,
-   "degree": 4,
+   "x": 0.3856,
+   "y": 0.2173,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 271,
-   "x": 0.8561,
-   "y": 0.5249,
-   "degree": 6,
+   "x": 0.6235,
+   "y": 0.6681,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 272,
-   "x": 0.8947,
-   "y": 0.5375,
-   "degree": 6,
+   "x": 0.2834,
+   "y": 0.3852,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 273,
-   "x": 0.9393,
-   "y": 0.5184,
-   "degree": 5,
+   "x": 0.1416,
+   "y": 0.6096,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 274,
-   "x": 0.97,
-   "y": 0.517,
-   "degree": 4,
+   "x": 0.3398,
+   "y": 0.6629,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 275,
-   "x": 0.0326,
-   "y": 0.5789,
-   "degree": 5,
+   "x": 0.8491,
+   "y": 0.5636,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 276,
-   "x": 0.0568,
-   "y": 0.5583,
-   "degree": 6,
+   "x": 0.553,
+   "y": 0.8602,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 277,
-   "x": 0.1027,
-   "y": 0.5725,
-   "degree": 5,
+   "x": 0.5421,
+   "y": 0.4051,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 278,
-   "x": 0.1493,
-   "y": 0.5741,
-   "degree": 4,
+   "x": 0.3331,
+   "y": 0.9092,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 279,
-   "x": 0.1817,
-   "y": 0.572,
-   "degree": 3,
+   "x": 0.4366,
+   "y": 0.3732,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 280,
-   "x": 0.2171,
-   "y": 0.5588,
-   "degree": 6,
+   "x": 0.4756,
+   "y": 0.3825,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 281,
-   "x": 0.2484,
-   "y": 0.5798,
-   "degree": 4,
+   "x": 0.8013,
+   "y": 0.679,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 282,
-   "x": 0.3004,
-   "y": 0.5902,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 283,
-   "x": 0.3355,
-   "y": 0.5594,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 284,
-   "x": 0.3827,
-   "y": 0.5893,
+   "x": 0.5775,
+   "y": 0.6082,
    "degree": 3,
    "whale": false
   },
   {
+   "id": 283,
+   "x": 0.6682,
+   "y": 0.6632,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 284,
+   "x": 0.4647,
+   "y": 0.1428,
+   "degree": 2,
+   "whale": false
+  },
+  {
    "id": 285,
-   "x": 0.4184,
-   "y": 0.5896,
-   "degree": 5,
+   "x": 0.6148,
+   "y": 0.6965,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 286,
-   "x": 0.4667,
-   "y": 0.5691,
-   "degree": 7,
+   "x": 0.6592,
+   "y": 0.8043,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 287,
-   "x": 0.5041,
-   "y": 0.5729,
-   "degree": 5,
+   "x": 0.4,
+   "y": 0.8756,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 288,
-   "x": 0.5508,
-   "y": 0.5913,
-   "degree": 7,
+   "x": 0.635,
+   "y": 0.4594,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 289,
-   "x": 0.5909,
-   "y": 0.5606,
-   "degree": 8,
-   "whale": true
+   "x": 0.544,
+   "y": 0.6725,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 290,
-   "x": 0.621,
-   "y": 0.5909,
-   "degree": 7,
+   "x": 0.1216,
+   "y": 0.5217,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 291,
-   "x": 0.6545,
-   "y": 0.5922,
+   "x": 0.3707,
+   "y": 0.6654,
    "degree": 3,
    "whale": false
   },
   {
    "id": 292,
-   "x": 0.7012,
-   "y": 0.5924,
-   "degree": 5,
+   "x": 0.3905,
+   "y": 0.2735,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 293,
-   "x": 0.7519,
-   "y": 0.5587,
-   "degree": 7,
+   "x": 0.4086,
+   "y": 0.7902,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 294,
-   "x": 0.777,
-   "y": 0.5921,
-   "degree": 4,
+   "x": 0.3838,
+   "y": 0.7402,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 295,
-   "x": 0.8115,
-   "y": 0.5627,
-   "degree": 5,
+   "x": 0.2832,
+   "y": 0.7215,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 296,
-   "x": 0.8475,
-   "y": 0.558,
-   "degree": 4,
+   "x": 0.2527,
+   "y": 0.4232,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 297,
-   "x": 0.9067,
-   "y": 0.5696,
-   "degree": 4,
+   "x": 0.5215,
+   "y": 0.4543,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 298,
-   "x": 0.9383,
-   "y": 0.565,
-   "degree": 4,
+   "x": 0.4559,
+   "y": 0.5494,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 299,
-   "x": 0.9677,
-   "y": 0.5806,
-   "degree": 8,
-   "whale": true
+   "x": 0.3894,
+   "y": 0.6149,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 300,
-   "x": 0.03,
-   "y": 0.6424,
-   "degree": 5,
+   "x": 0.4766,
+   "y": 0.1667,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 301,
-   "x": 0.054,
-   "y": 0.6294,
-   "degree": 5,
+   "x": 0.52,
+   "y": 0.2792,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 302,
-   "x": 0.1102,
-   "y": 0.6123,
-   "degree": 5,
+   "x": 0.6387,
+   "y": 0.5183,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 303,
-   "x": 0.1354,
-   "y": 0.6157,
-   "degree": 4,
+   "x": 0.3348,
+   "y": 0.7466,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 304,
-   "x": 0.1703,
-   "y": 0.6085,
-   "degree": 5,
+   "x": 0.1869,
+   "y": 0.3696,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 305,
-   "x": 0.2272,
-   "y": 0.6201,
-   "degree": 5,
+   "x": 0.4684,
+   "y": 0.4066,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 306,
-   "x": 0.2599,
-   "y": 0.6212,
-   "degree": 7,
+   "x": 0.2556,
+   "y": 0.4775,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 307,
-   "x": 0.2888,
-   "y": 0.6138,
-   "degree": 6,
+   "x": 0.3006,
+   "y": 0.3954,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 308,
-   "x": 0.326,
-   "y": 0.6419,
-   "degree": 3,
+   "x": 0.2479,
+   "y": 0.1785,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 309,
-   "x": 0.3777,
-   "y": 0.613,
-   "degree": 6,
+   "x": 0.3603,
+   "y": 0.1725,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 310,
-   "x": 0.4248,
-   "y": 0.6171,
-   "degree": 6,
+   "x": 0.1398,
+   "y": 0.6777,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 311,
-   "x": 0.4465,
-   "y": 0.6411,
-   "degree": 6,
+   "x": 0.4033,
+   "y": 0.97,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 312,
-   "x": 0.5062,
-   "y": 0.6193,
-   "degree": 7,
+   "x": 0.6923,
+   "y": 0.5503,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 313,
-   "x": 0.5531,
-   "y": 0.6207,
-   "degree": 3,
+   "x": 0.3387,
+   "y": 0.8247,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 314,
-   "x": 0.5667,
-   "y": 0.6264,
-   "degree": 4,
+   "x": 0.4185,
+   "y": 0.3937,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 315,
-   "x": 0.6231,
-   "y": 0.6231,
-   "degree": 4,
+   "x": 0.269,
+   "y": 0.8787,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 316,
-   "x": 0.6499,
-   "y": 0.6356,
-   "degree": 3,
+   "x": 0.3881,
+   "y": 0.1238,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 317,
-   "x": 0.7124,
-   "y": 0.6213,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 318,
-   "x": 0.7524,
-   "y": 0.6391,
-   "degree": 5,
-   "whale": false
-  },
-  {
-   "id": 319,
-   "x": 0.7904,
-   "y": 0.6135,
-   "degree": 4,
-   "whale": false
-  },
-  {
-   "id": 320,
-   "x": 0.8186,
-   "y": 0.6419,
+   "x": 0.8266,
+   "y": 0.3476,
    "degree": 3,
    "whale": false
   },
   {
+   "id": 318,
+   "x": 0.2718,
+   "y": 0.688,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 319,
+   "x": 0.4183,
+   "y": 0.7126,
+   "degree": 2,
+   "whale": false
+  },
+  {
+   "id": 320,
+   "x": 0.3716,
+   "y": 0.4182,
+   "degree": 2,
+   "whale": false
+  },
+  {
    "id": 321,
-   "x": 0.8476,
-   "y": 0.6082,
+   "x": 0.7449,
+   "y": 0.2976,
    "degree": 4,
    "whale": false
   },
   {
    "id": 322,
-   "x": 0.8923,
-   "y": 0.6263,
-   "degree": 4,
+   "x": 0.805,
+   "y": 0.2433,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 323,
-   "x": 0.9462,
-   "y": 0.617,
-   "degree": 5,
+   "x": 0.7721,
+   "y": 0.596,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 324,
-   "x": 0.97,
-   "y": 0.6229,
-   "degree": 5,
+   "x": 0.5804,
+   "y": 0.2355,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 325,
-   "x": 0.03,
-   "y": 0.6922,
-   "degree": 6,
+   "x": 0.4164,
+   "y": 0.6587,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 326,
-   "x": 0.0594,
-   "y": 0.6632,
+   "x": 0.3798,
+   "y": 0.7541,
    "degree": 4,
    "whale": false
   },
   {
    "id": 327,
-   "x": 0.0997,
-   "y": 0.6584,
-   "degree": 5,
+   "x": 0.7017,
+   "y": 0.3092,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 328,
-   "x": 0.1396,
-   "y": 0.6863,
-   "degree": 7,
+   "x": 0.1995,
+   "y": 0.5064,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 329,
-   "x": 0.1837,
-   "y": 0.664,
-   "degree": 4,
+   "x": 0.1521,
+   "y": 0.2014,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 330,
-   "x": 0.2196,
-   "y": 0.6622,
-   "degree": 3,
+   "x": 0.3699,
+   "y": 0.5916,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 331,
-   "x": 0.2512,
-   "y": 0.6845,
-   "degree": 5,
+   "x": 0.6565,
+   "y": 0.7469,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 332,
-   "x": 0.3099,
-   "y": 0.6917,
-   "degree": 5,
+   "x": 0.4186,
+   "y": 0.6712,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 333,
-   "x": 0.3371,
-   "y": 0.6607,
-   "degree": 5,
+   "x": 0.7982,
+   "y": 0.319,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 334,
-   "x": 0.3812,
-   "y": 0.6755,
-   "degree": 4,
+   "x": 0.2069,
+   "y": 0.5446,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 335,
-   "x": 0.4228,
-   "y": 0.6876,
-   "degree": 6,
+   "x": 0.7383,
+   "y": 0.6279,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 336,
-   "x": 0.4504,
-   "y": 0.6651,
-   "degree": 3,
+   "x": 0.6399,
+   "y": 0.4458,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 337,
-   "x": 0.491,
-   "y": 0.6914,
-   "degree": 4,
+   "x": 0.7413,
+   "y": 0.7595,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 338,
-   "x": 0.5447,
-   "y": 0.6749,
-   "degree": 6,
+   "x": 0.3924,
+   "y": 0.2884,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 339,
-   "x": 0.5731,
-   "y": 0.6696,
-   "degree": 3,
+   "x": 0.3608,
+   "y": 0.5502,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 340,
-   "x": 0.6135,
-   "y": 0.6864,
-   "degree": 5,
+   "x": 0.5488,
+   "y": 0.7515,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 341,
-   "x": 0.6548,
-   "y": 0.6914,
-   "degree": 5,
+   "x": 0.6782,
+   "y": 0.4971,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 342,
-   "x": 0.6961,
-   "y": 0.6865,
-   "degree": 6,
+   "x": 0.6147,
+   "y": 0.6064,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 343,
-   "x": 0.7324,
-   "y": 0.6598,
-   "degree": 6,
+   "x": 0.6182,
+   "y": 0.2766,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 344,
-   "x": 0.7905,
-   "y": 0.6614,
-   "degree": 5,
+   "x": 0.182,
+   "y": 0.3188,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 345,
-   "x": 0.8245,
-   "y": 0.6862,
-   "degree": 5,
+   "x": 0.3041,
+   "y": 0.3493,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 346,
-   "x": 0.8509,
-   "y": 0.677,
-   "degree": 5,
+   "x": 0.4254,
+   "y": 0.1607,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 347,
-   "x": 0.9063,
-   "y": 0.6624,
-   "degree": 5,
+   "x": 0.4886,
+   "y": 0.2178,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 348,
-   "x": 0.9394,
-   "y": 0.6827,
-   "degree": 6,
+   "x": 0.6404,
+   "y": 0.6501,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 349,
-   "x": 0.97,
-   "y": 0.6899,
-   "degree": 5,
+   "x": 0.834,
+   "y": 0.6996,
+   "degree": 6,
    "whale": false
   },
   {
    "id": 350,
-   "x": 0.0322,
-   "y": 0.7138,
-   "degree": 7,
+   "x": 0.4778,
+   "y": 0.6348,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 351,
-   "x": 0.0532,
-   "y": 0.7379,
-   "degree": 6,
+   "x": 0.7567,
+   "y": 0.7434,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 352,
-   "x": 0.1054,
-   "y": 0.7114,
-   "degree": 6,
+   "x": 0.671,
+   "y": 0.1766,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 353,
-   "x": 0.1284,
-   "y": 0.7419,
-   "degree": 4,
+   "x": 0.3658,
+   "y": 0.4809,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 354,
-   "x": 0.1892,
-   "y": 0.7287,
-   "degree": 4,
+   "x": 0.0642,
+   "y": 0.3764,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 355,
-   "x": 0.2149,
-   "y": 0.7149,
-   "degree": 9,
-   "whale": true
+   "x": 0.353,
+   "y": 0.3072,
+   "degree": 4,
+   "whale": false
   },
   {
    "id": 356,
-   "x": 0.2618,
-   "y": 0.7256,
-   "degree": 4,
+   "x": 0.4319,
+   "y": 0.6853,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 357,
-   "x": 0.2883,
-   "y": 0.719,
-   "degree": 5,
+   "x": 0.5958,
+   "y": 0.4994,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 358,
-   "x": 0.3363,
-   "y": 0.7376,
-   "degree": 4,
+   "x": 0.3725,
+   "y": 0.2414,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 359,
-   "x": 0.3915,
-   "y": 0.7157,
-   "degree": 6,
+   "x": 0.0341,
+   "y": 0.5231,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 360,
-   "x": 0.4197,
-   "y": 0.7187,
-   "degree": 5,
+   "x": 0.6295,
+   "y": 0.1557,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 361,
-   "x": 0.456,
-   "y": 0.7327,
-   "degree": 7,
+   "x": 0.2784,
+   "y": 0.37,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 362,
-   "x": 0.4885,
-   "y": 0.7191,
-   "degree": 4,
+   "x": 0.6467,
+   "y": 0.3933,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 363,
-   "x": 0.5362,
-   "y": 0.7316,
-   "degree": 7,
+   "x": 0.2683,
+   "y": 0.2066,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 364,
-   "x": 0.5907,
-   "y": 0.7222,
-   "degree": 5,
+   "x": 0.7989,
+   "y": 0.7239,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 365,
-   "x": 0.6266,
-   "y": 0.7163,
-   "degree": 5,
+   "x": 0.267,
+   "y": 0.2952,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 366,
-   "x": 0.6579,
-   "y": 0.719,
-   "degree": 5,
+   "x": 0.6821,
+   "y": 0.2083,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 367,
-   "x": 0.7101,
-   "y": 0.7125,
-   "degree": 5,
+   "x": 0.3861,
+   "y": 0.8178,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 368,
-   "x": 0.74,
-   "y": 0.712,
-   "degree": 4,
+   "x": 0.2362,
+   "y": 0.596,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 369,
-   "x": 0.7816,
-   "y": 0.7298,
-   "degree": 4,
+   "x": 0.605,
+   "y": 0.8191,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 370,
-   "x": 0.8269,
-   "y": 0.7142,
-   "degree": 7,
+   "x": 0.2259,
+   "y": 0.6086,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 371,
-   "x": 0.8548,
-   "y": 0.7227,
-   "degree": 4,
+   "x": 0.2231,
+   "y": 0.2199,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 372,
-   "x": 0.8946,
-   "y": 0.7208,
-   "degree": 9,
-   "whale": true
+   "x": 0.3047,
+   "y": 0.5913,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 373,
-   "x": 0.9402,
-   "y": 0.7103,
-   "degree": 7,
+   "x": 0.5378,
+   "y": 0.5662,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 374,
-   "x": 0.97,
-   "y": 0.7302,
-   "degree": 4,
+   "x": 0.9166,
+   "y": 0.3166,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 375,
-   "x": 0.03,
-   "y": 0.7907,
-   "degree": 6,
+   "x": 0.5974,
+   "y": 0.827,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 376,
-   "x": 0.0623,
-   "y": 0.7683,
-   "degree": 3,
+   "x": 0.5404,
+   "y": 0.6508,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 377,
-   "x": 0.1065,
-   "y": 0.7837,
-   "degree": 3,
+   "x": 0.8651,
+   "y": 0.2813,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 378,
-   "x": 0.141,
-   "y": 0.7869,
-   "degree": 6,
+   "x": 0.7054,
+   "y": 0.3576,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 379,
-   "x": 0.1899,
-   "y": 0.7647,
-   "degree": 5,
+   "x": 0.884,
+   "y": 0.741,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 380,
-   "x": 0.2306,
-   "y": 0.7682,
-   "degree": 5,
+   "x": 0.8465,
+   "y": 0.7082,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 381,
-   "x": 0.2706,
-   "y": 0.7652,
-   "degree": 4,
+   "x": 0.5222,
+   "y": 0.6632,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 382,
-   "x": 0.2991,
-   "y": 0.7924,
-   "degree": 5,
+   "x": 0.2891,
+   "y": 0.781,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 383,
-   "x": 0.3407,
-   "y": 0.7734,
-   "degree": 5,
+   "x": 0.2396,
+   "y": 0.315,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 384,
-   "x": 0.3804,
-   "y": 0.7715,
-   "degree": 5,
+   "x": 0.9235,
+   "y": 0.6368,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 385,
-   "x": 0.4101,
-   "y": 0.7609,
-   "degree": 5,
+   "x": 0.5002,
+   "y": 0.8788,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 386,
-   "x": 0.4711,
-   "y": 0.7755,
-   "degree": 4,
+   "x": 0.4113,
+   "y": 0.3535,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 387,
-   "x": 0.5042,
-   "y": 0.7858,
-   "degree": 6,
+   "x": 0.4547,
+   "y": 0.8712,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 388,
-   "x": 0.5293,
-   "y": 0.7704,
-   "degree": 4,
+   "x": 0.2039,
+   "y": 0.5958,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 389,
-   "x": 0.5881,
-   "y": 0.7604,
-   "degree": 3,
+   "x": 0.599,
+   "y": 0.5502,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 390,
-   "x": 0.6219,
-   "y": 0.7827,
-   "degree": 4,
+   "x": 0.1026,
+   "y": 0.5985,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 391,
-   "x": 0.6484,
-   "y": 0.7584,
-   "degree": 5,
+   "x": 0.6489,
+   "y": 0.5375,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 392,
-   "x": 0.6936,
-   "y": 0.7925,
-   "degree": 8,
-   "whale": true
+   "x": 0.6166,
+   "y": 0.5067,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 393,
-   "x": 0.7355,
-   "y": 0.7579,
-   "degree": 5,
+   "x": 0.437,
+   "y": 0.7902,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 394,
-   "x": 0.7672,
-   "y": 0.7636,
-   "degree": 4,
+   "x": 0.3621,
+   "y": 0.1568,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 395,
-   "x": 0.8337,
-   "y": 0.7639,
-   "degree": 4,
+   "x": 0.4281,
+   "y": 0.3817,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 396,
-   "x": 0.8526,
-   "y": 0.7703,
-   "degree": 5,
+   "x": 0.1014,
+   "y": 0.6306,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 397,
-   "x": 0.9013,
-   "y": 0.7855,
-   "degree": 5,
+   "x": 0.1574,
+   "y": 0.6576,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 398,
-   "x": 0.9466,
-   "y": 0.7638,
-   "degree": 7,
+   "x": 0.4334,
+   "y": 0.3555,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 399,
-   "x": 0.97,
-   "y": 0.7725,
-   "degree": 6,
+   "x": 0.806,
+   "y": 0.5126,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 400,
-   "x": 0.03,
-   "y": 0.8186,
-   "degree": 6,
+   "x": 0.6585,
+   "y": 0.711,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 401,
-   "x": 0.0612,
-   "y": 0.8288,
-   "degree": 5,
+   "x": 0.6626,
+   "y": 0.5036,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 402,
-   "x": 0.1099,
-   "y": 0.8334,
-   "degree": 6,
+   "x": 0.9166,
+   "y": 0.5348,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 403,
-   "x": 0.1267,
-   "y": 0.8134,
-   "degree": 5,
+   "x": 0.5326,
+   "y": 0.3078,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 404,
-   "x": 0.1762,
-   "y": 0.8088,
-   "degree": 8,
-   "whale": true
+   "x": 0.1462,
+   "y": 0.6348,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 405,
-   "x": 0.2179,
-   "y": 0.8264,
-   "degree": 8,
-   "whale": true
+   "x": 0.668,
+   "y": 0.4679,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 406,
-   "x": 0.2479,
-   "y": 0.8218,
-   "degree": 6,
+   "x": 0.2013,
+   "y": 0.2393,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 407,
-   "x": 0.307,
-   "y": 0.8091,
-   "degree": 4,
+   "x": 0.7798,
+   "y": 0.379,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 408,
-   "x": 0.3406,
-   "y": 0.835,
-   "degree": 4,
+   "x": 0.2639,
+   "y": 0.5638,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 409,
-   "x": 0.3695,
-   "y": 0.8173,
-   "degree": 5,
+   "x": 0.7509,
+   "y": 0.7993,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 410,
-   "x": 0.4106,
-   "y": 0.8391,
-   "degree": 5,
+   "x": 0.93,
+   "y": 0.4738,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 411,
-   "x": 0.4643,
-   "y": 0.8148,
-   "degree": 6,
+   "x": 0.1854,
+   "y": 0.2067,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 412,
-   "x": 0.49,
-   "y": 0.832,
-   "degree": 5,
+   "x": 0.6102,
+   "y": 0.2639,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 413,
-   "x": 0.5328,
-   "y": 0.8213,
-   "degree": 6,
+   "x": 0.2263,
+   "y": 0.8471,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 414,
-   "x": 0.5887,
-   "y": 0.8205,
-   "degree": 5,
+   "x": 0.4886,
+   "y": 0.3461,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 415,
-   "x": 0.6291,
-   "y": 0.8217,
-   "degree": 7,
+   "x": 0.1783,
+   "y": 0.4746,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 416,
-   "x": 0.6608,
-   "y": 0.8238,
-   "degree": 6,
+   "x": 0.7705,
+   "y": 0.5335,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 417,
-   "x": 0.6987,
-   "y": 0.8396,
-   "degree": 5,
+   "x": 0.5668,
+   "y": 0.1577,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 418,
-   "x": 0.7433,
-   "y": 0.8206,
-   "degree": 3,
+   "x": 0.3292,
+   "y": 0.9533,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 419,
-   "x": 0.7758,
-   "y": 0.8351,
-   "degree": 8,
-   "whale": true
+   "x": 0.3582,
+   "y": 0.4694,
+   "degree": 3,
+   "whale": false
   },
   {
    "id": 420,
-   "x": 0.8303,
-   "y": 0.8189,
-   "degree": 5,
+   "x": 0.2649,
+   "y": 0.5867,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 421,
-   "x": 0.8717,
-   "y": 0.8255,
-   "degree": 4,
+   "x": 0.2325,
+   "y": 0.7513,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 422,
-   "x": 0.8922,
-   "y": 0.8227,
-   "degree": 7,
+   "x": 0.7551,
+   "y": 0.5427,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 423,
-   "x": 0.9387,
-   "y": 0.8179,
-   "degree": 4,
+   "x": 0.7483,
+   "y": 0.6603,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 424,
-   "x": 0.97,
-   "y": 0.8292,
-   "degree": 3,
+   "x": 0.6796,
+   "y": 0.5288,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 425,
-   "x": 0.03,
-   "y": 0.8774,
-   "degree": 8,
-   "whale": true
+   "x": 0.7218,
+   "y": 0.5793,
+   "degree": 2,
+   "whale": false
   },
   {
    "id": 426,
-   "x": 0.0555,
-   "y": 0.8851,
-   "degree": 3,
+   "x": 0.0925,
+   "y": 0.733,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 427,
-   "x": 0.1111,
-   "y": 0.8853,
-   "degree": 6,
+   "x": 0.7917,
+   "y": 0.892,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 428,
-   "x": 0.1334,
-   "y": 0.8605,
-   "degree": 3,
+   "x": 0.347,
+   "y": 0.705,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 429,
-   "x": 0.1726,
-   "y": 0.8661,
-   "degree": 7,
+   "x": 0.0609,
+   "y": 0.5018,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 430,
-   "x": 0.2074,
-   "y": 0.8873,
-   "degree": 4,
+   "x": 0.2504,
+   "y": 0.6285,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 431,
-   "x": 0.2689,
-   "y": 0.8862,
-   "degree": 5,
+   "x": 0.7335,
+   "y": 0.8308,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 432,
-   "x": 0.2958,
-   "y": 0.8737,
-   "degree": 4,
+   "x": 0.5125,
+   "y": 0.5435,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 433,
-   "x": 0.3369,
-   "y": 0.8657,
-   "degree": 3,
+   "x": 0.231,
+   "y": 0.3675,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 434,
-   "x": 0.3796,
-   "y": 0.8758,
-   "degree": 5,
+   "x": 0.66,
+   "y": 0.3631,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 435,
-   "x": 0.4326,
-   "y": 0.883,
-   "degree": 4,
+   "x": 0.3863,
+   "y": 0.9236,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 436,
-   "x": 0.4597,
-   "y": 0.86,
-   "degree": 5,
+   "x": 0.1669,
+   "y": 0.2955,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 437,
-   "x": 0.4915,
-   "y": 0.891,
-   "degree": 5,
+   "x": 0.1554,
+   "y": 0.5477,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 438,
-   "x": 0.5487,
-   "y": 0.8895,
-   "degree": 6,
+   "x": 0.1991,
+   "y": 0.5373,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 439,
-   "x": 0.593,
-   "y": 0.8802,
-   "degree": 3,
+   "x": 0.8083,
+   "y": 0.4414,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 440,
-   "x": 0.6254,
-   "y": 0.8642,
-   "degree": 5,
+   "x": 0.4585,
+   "y": 0.7773,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 441,
-   "x": 0.6511,
-   "y": 0.8886,
-   "degree": 6,
+   "x": 0.6503,
+   "y": 0.7769,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 442,
-   "x": 0.7069,
-   "y": 0.8804,
-   "degree": 4,
+   "x": 0.1442,
+   "y": 0.7194,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 443,
-   "x": 0.732,
-   "y": 0.8767,
-   "degree": 6,
+   "x": 0.5415,
+   "y": 0.7843,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 444,
-   "x": 0.7891,
-   "y": 0.8598,
-   "degree": 5,
+   "x": 0.3478,
+   "y": 0.3697,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 445,
-   "x": 0.8105,
-   "y": 0.8671,
-   "degree": 6,
+   "x": 0.97,
+   "y": 0.3821,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 446,
-   "x": 0.8573,
-   "y": 0.8625,
-   "degree": 4,
+   "x": 0.2146,
+   "y": 0.527,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 447,
-   "x": 0.9137,
-   "y": 0.8779,
-   "degree": 6,
+   "x": 0.8469,
+   "y": 0.6297,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 448,
-   "x": 0.9369,
-   "y": 0.8598,
-   "degree": 6,
+   "x": 0.251,
+   "y": 0.5269,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 449,
-   "x": 0.9698,
-   "y": 0.8887,
-   "degree": 4,
+   "x": 0.03,
+   "y": 0.565,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 450,
-   "x": 0.03,
-   "y": 0.9372,
-   "degree": 6,
+   "x": 0.4548,
+   "y": 0.03,
+   "degree": 3,
    "whale": false
   },
   {
    "id": 451,
-   "x": 0.0535,
-   "y": 0.9366,
-   "degree": 7,
+   "x": 0.4566,
+   "y": 0.8992,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 452,
-   "x": 0.1122,
-   "y": 0.915,
-   "degree": 6,
+   "x": 0.5858,
+   "y": 0.958,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 453,
-   "x": 0.1265,
-   "y": 0.9367,
-   "degree": 5,
+   "x": 0.4212,
+   "y": 0.9517,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 454,
-   "x": 0.189,
-   "y": 0.9239,
-   "degree": 6,
+   "x": 0.3915,
+   "y": 0.252,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 455,
-   "x": 0.2118,
-   "y": 0.9277,
-   "degree": 7,
+   "x": 0.4284,
+   "y": 0.601,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 456,
-   "x": 0.2562,
-   "y": 0.9121,
-   "degree": 7,
+   "x": 0.7924,
+   "y": 0.3435,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 457,
-   "x": 0.2955,
-   "y": 0.9309,
-   "degree": 4,
+   "x": 0.3833,
+   "y": 0.0315,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 458,
-   "x": 0.343,
-   "y": 0.9269,
-   "degree": 5,
+   "x": 0.1546,
+   "y": 0.2231,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 459,
-   "x": 0.3879,
-   "y": 0.9091,
-   "degree": 4,
+   "x": 0.523,
+   "y": 0.7839,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 460,
-   "x": 0.4302,
-   "y": 0.909,
-   "degree": 6,
+   "x": 0.5014,
+   "y": 0.7655,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 461,
-   "x": 0.4527,
-   "y": 0.91,
-   "degree": 6,
+   "x": 0.1915,
+   "y": 0.5945,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 462,
-   "x": 0.4995,
-   "y": 0.9116,
-   "degree": 5,
+   "x": 0.7271,
+   "y": 0.6788,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 463,
-   "x": 0.5529,
-   "y": 0.922,
-   "degree": 5,
+   "x": 0.2768,
+   "y": 0.611,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 464,
-   "x": 0.566,
-   "y": 0.9388,
+   "x": 0.8031,
+   "y": 0.757,
    "degree": 3,
    "whale": false
   },
   {
    "id": 465,
-   "x": 0.6162,
-   "y": 0.9402,
-   "degree": 5,
+   "x": 0.8077,
+   "y": 0.6499,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 466,
-   "x": 0.6603,
-   "y": 0.9353,
-   "degree": 6,
+   "x": 0.4036,
+   "y": 0.7297,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 467,
-   "x": 0.7034,
-   "y": 0.9334,
-   "degree": 5,
+   "x": 0.1604,
+   "y": 0.1622,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 468,
-   "x": 0.7532,
-   "y": 0.9281,
-   "degree": 3,
+   "x": 0.295,
+   "y": 0.303,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 469,
-   "x": 0.7933,
-   "y": 0.9173,
-   "degree": 3,
+   "x": 0.4432,
+   "y": 0.952,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 470,
-   "x": 0.8204,
-   "y": 0.9393,
-   "degree": 5,
+   "x": 0.3277,
+   "y": 0.8777,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 471,
-   "x": 0.85,
-   "y": 0.9405,
-   "degree": 5,
+   "x": 0.4514,
+   "y": 0.2335,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 472,
-   "x": 0.9137,
-   "y": 0.914,
-   "degree": 4,
+   "x": 0.615,
+   "y": 0.5321,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 473,
-   "x": 0.9486,
-   "y": 0.9393,
-   "degree": 5,
+   "x": 0.8002,
+   "y": 0.847,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 474,
-   "x": 0.97,
-   "y": 0.9188,
-   "degree": 5,
+   "x": 0.1762,
+   "y": 0.5356,
+   "degree": 4,
    "whale": false
   },
   {
    "id": 475,
-   "x": 0.03,
-   "y": 0.97,
-   "degree": 6,
+   "x": 0.7263,
+   "y": 0.4051,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 476,
-   "x": 0.0693,
-   "y": 0.9612,
-   "degree": 7,
+   "x": 0.1127,
+   "y": 0.8007,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 477,
-   "x": 0.1082,
-   "y": 0.97,
-   "degree": 5,
+   "x": 0.2867,
+   "y": 0.4578,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 478,
-   "x": 0.1301,
-   "y": 0.9611,
-   "degree": 4,
+   "x": 0.8473,
+   "y": 0.8401,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 479,
-   "x": 0.1761,
-   "y": 0.97,
-   "degree": 4,
+   "x": 0.7353,
+   "y": 0.4845,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 480,
-   "x": 0.2138,
-   "y": 0.97,
-   "degree": 5,
+   "x": 0.2794,
+   "y": 0.3402,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 481,
-   "x": 0.2502,
-   "y": 0.97,
-   "degree": 3,
+   "x": 0.6422,
+   "y": 0.6831,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 482,
-   "x": 0.3019,
-   "y": 0.97,
-   "degree": 6,
+   "x": 0.4717,
+   "y": 0.6954,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 483,
-   "x": 0.349,
-   "y": 0.97,
-   "degree": 5,
+   "x": 0.0795,
+   "y": 0.497,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 484,
-   "x": 0.3724,
-   "y": 0.9696,
-   "degree": 3,
+   "x": 0.5575,
+   "y": 0.4722,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 485,
-   "x": 0.4226,
-   "y": 0.97,
-   "degree": 4,
+   "x": 0.8657,
+   "y": 0.3772,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 486,
-   "x": 0.4588,
-   "y": 0.97,
-   "degree": 5,
+   "x": 0.7351,
+   "y": 0.391,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 487,
-   "x": 0.4944,
-   "y": 0.97,
-   "degree": 6,
+   "x": 0.3539,
+   "y": 0.6843,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 488,
-   "x": 0.5349,
-   "y": 0.9666,
-   "degree": 5,
+   "x": 0.556,
+   "y": 0.1156,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 489,
-   "x": 0.5836,
-   "y": 0.97,
-   "degree": 7,
+   "x": 0.4987,
+   "y": 0.6806,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 490,
-   "x": 0.6309,
-   "y": 0.9631,
-   "degree": 5,
+   "x": 0.786,
+   "y": 0.5045,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 491,
-   "x": 0.6465,
-   "y": 0.97,
-   "degree": 4,
+   "x": 0.387,
+   "y": 0.5411,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 492,
-   "x": 0.7081,
-   "y": 0.97,
-   "degree": 5,
+   "x": 0.6023,
+   "y": 0.8492,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 493,
-   "x": 0.7506,
-   "y": 0.97,
-   "degree": 4,
+   "x": 0.5563,
+   "y": 0.7631,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 494,
-   "x": 0.772,
-   "y": 0.97,
-   "degree": 4,
+   "x": 0.3213,
+   "y": 0.6932,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 495,
-   "x": 0.8234,
-   "y": 0.97,
-   "degree": 5,
+   "x": 0.3425,
+   "y": 0.6062,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 496,
-   "x": 0.8685,
-   "y": 0.97,
-   "degree": 6,
+   "x": 0.2777,
+   "y": 0.7588,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 497,
-   "x": 0.8883,
-   "y": 0.97,
-   "degree": 6,
+   "x": 0.7603,
+   "y": 0.2759,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 498,
-   "x": 0.9524,
-   "y": 0.97,
-   "degree": 3,
+   "x": 0.5506,
+   "y": 0.893,
+   "degree": 2,
    "whale": false
   },
   {
    "id": 499,
-   "x": 0.97,
-   "y": 0.97,
-   "degree": 6,
+   "x": 0.6996,
+   "y": 0.7373,
+   "degree": 2,
    "whale": false
   }
  ],
@@ -3509,19 +3509,227 @@
   ],
   [
    0,
-   195
+   2
   ],
   [
    0,
-   225
+   3
   ],
   [
    0,
-   440
+   9
   ],
   [
    0,
-   499
+   10
+  ],
+  [
+   0,
+   12
+  ],
+  [
+   0,
+   14
+  ],
+  [
+   0,
+   21
+  ],
+  [
+   0,
+   24
+  ],
+  [
+   0,
+   29
+  ],
+  [
+   0,
+   31
+  ],
+  [
+   0,
+   32
+  ],
+  [
+   0,
+   34
+  ],
+  [
+   0,
+   39
+  ],
+  [
+   0,
+   40
+  ],
+  [
+   0,
+   41
+  ],
+  [
+   0,
+   42
+  ],
+  [
+   0,
+   45
+  ],
+  [
+   0,
+   54
+  ],
+  [
+   0,
+   55
+  ],
+  [
+   0,
+   56
+  ],
+  [
+   0,
+   66
+  ],
+  [
+   0,
+   70
+  ],
+  [
+   0,
+   72
+  ],
+  [
+   0,
+   73
+  ],
+  [
+   0,
+   81
+  ],
+  [
+   0,
+   101
+  ],
+  [
+   0,
+   124
+  ],
+  [
+   0,
+   126
+  ],
+  [
+   0,
+   163
+  ],
+  [
+   0,
+   178
+  ],
+  [
+   0,
+   183
+  ],
+  [
+   0,
+   192
+  ],
+  [
+   0,
+   214
+  ],
+  [
+   0,
+   227
+  ],
+  [
+   0,
+   229
+  ],
+  [
+   0,
+   232
+  ],
+  [
+   0,
+   238
+  ],
+  [
+   0,
+   242
+  ],
+  [
+   0,
+   244
+  ],
+  [
+   0,
+   296
+  ],
+  [
+   0,
+   299
+  ],
+  [
+   0,
+   319
+  ],
+  [
+   0,
+   326
+  ],
+  [
+   0,
+   328
+  ],
+  [
+   0,
+   398
+  ],
+  [
+   0,
+   432
+  ],
+  [
+   0,
+   438
+  ],
+  [
+   0,
+   446
+  ],
+  [
+   0,
+   455
+  ],
+  [
+   0,
+   461
+  ],
+  [
+   0,
+   463
+  ],
+  [
+   0,
+   466
+  ],
+  [
+   0,
+   474
+  ],
+  [
+   0,
+   480
+  ],
+  [
+   0,
+   494
+  ],
+  [
+   0,
+   495
   ],
   [
    1,
@@ -3529,19 +3737,83 @@
   ],
   [
    1,
-   22
+   6
   ],
   [
    1,
-   411
+   7
   ],
   [
    1,
-   413
+   10
   ],
   [
    1,
-   487
+   19
+  ],
+  [
+   1,
+   21
+  ],
+  [
+   1,
+   29
+  ],
+  [
+   1,
+   39
+  ],
+  [
+   1,
+   43
+  ],
+  [
+   1,
+   46
+  ],
+  [
+   1,
+   51
+  ],
+  [
+   1,
+   53
+  ],
+  [
+   1,
+   54
+  ],
+  [
+   1,
+   56
+  ],
+  [
+   1,
+   67
+  ],
+  [
+   1,
+   78
+  ],
+  [
+   1,
+   108
+  ],
+  [
+   1,
+   158
+  ],
+  [
+   1,
+   239
+  ],
+  [
+   1,
+   271
+  ],
+  [
+   1,
+   285
   ],
   [
    2,
@@ -3549,15 +3821,271 @@
   ],
   [
    2,
+   4
+  ],
+  [
+   2,
+   5
+  ],
+  [
+   2,
+   7
+  ],
+  [
+   2,
+   8
+  ],
+  [
+   2,
+   9
+  ],
+  [
+   2,
+   10
+  ],
+  [
+   2,
+   13
+  ],
+  [
+   2,
+   15
+  ],
+  [
+   2,
+   17
+  ],
+  [
+   2,
+   18
+  ],
+  [
+   2,
+   20
+  ],
+  [
+   2,
+   21
+  ],
+  [
+   2,
+   22
+  ],
+  [
+   2,
+   26
+  ],
+  [
+   2,
+   31
+  ],
+  [
+   2,
+   36
+  ],
+  [
+   2,
+   37
+  ],
+  [
+   2,
+   41
+  ],
+  [
+   2,
+   44
+  ],
+  [
+   2,
    49
   ],
   [
    2,
-   95
+   60
   ],
   [
    2,
-   177
+   64
+  ],
+  [
+   2,
+   69
+  ],
+  [
+   2,
+   71
+  ],
+  [
+   2,
+   73
+  ],
+  [
+   2,
+   76
+  ],
+  [
+   2,
+   89
+  ],
+  [
+   2,
+   92
+  ],
+  [
+   2,
+   93
+  ],
+  [
+   2,
+   94
+  ],
+  [
+   2,
+   96
+  ],
+  [
+   2,
+   100
+  ],
+  [
+   2,
+   101
+  ],
+  [
+   2,
+   105
+  ],
+  [
+   2,
+   119
+  ],
+  [
+   2,
+   133
+  ],
+  [
+   2,
+   141
+  ],
+  [
+   2,
+   149
+  ],
+  [
+   2,
+   159
+  ],
+  [
+   2,
+   161
+  ],
+  [
+   2,
+   166
+  ],
+  [
+   2,
+   170
+  ],
+  [
+   2,
+   179
+  ],
+  [
+   2,
+   180
+  ],
+  [
+   2,
+   182
+  ],
+  [
+   2,
+   212
+  ],
+  [
+   2,
+   215
+  ],
+  [
+   2,
+   242
+  ],
+  [
+   2,
+   253
+  ],
+  [
+   2,
+   256
+  ],
+  [
+   2,
+   266
+  ],
+  [
+   2,
+   283
+  ],
+  [
+   2,
+   302
+  ],
+  [
+   2,
+   323
+  ],
+  [
+   2,
+   335
+  ],
+  [
+   2,
+   340
+  ],
+  [
+   2,
+   349
+  ],
+  [
+   2,
+   369
+  ],
+  [
+   2,
+   399
+  ],
+  [
+   2,
+   407
+  ],
+  [
+   2,
+   416
+  ],
+  [
+   2,
+   423
+  ],
+  [
+   2,
+   432
+  ],
+  [
+   2,
+   441
+  ],
+  [
+   2,
+   462
+  ],
+  [
+   2,
+   465
+  ],
+  [
+   2,
+   484
   ],
   [
    3,
@@ -3565,47 +4093,359 @@
   ],
   [
    3,
-   312
-  ],
-  [
-   3,
-   497
-  ],
-  [
-   4,
    5
   ],
   [
-   4,
-   238
-  ],
-  [
-   5,
+   3,
    6
   ],
   [
-   5,
-   19
-  ],
-  [
-   5,
-   114
-  ],
-  [
-   6,
+   3,
    7
   ],
   [
-   6,
-   308
+   3,
+   8
+  ],
+  [
+   3,
+   10
+  ],
+  [
+   3,
+   13
+  ],
+  [
+   3,
+   17
+  ],
+  [
+   3,
+   20
+  ],
+  [
+   3,
+   21
+  ],
+  [
+   3,
+   22
+  ],
+  [
+   3,
+   24
+  ],
+  [
+   3,
+   25
+  ],
+  [
+   3,
+   31
+  ],
+  [
+   3,
+   52
+  ],
+  [
+   3,
+   57
+  ],
+  [
+   3,
+   58
+  ],
+  [
+   3,
+   72
+  ],
+  [
+   3,
+   102
+  ],
+  [
+   3,
+   109
+  ],
+  [
+   3,
+   119
+  ],
+  [
+   3,
+   127
+  ],
+  [
+   3,
+   145
+  ],
+  [
+   3,
+   158
+  ],
+  [
+   3,
+   170
+  ],
+  [
+   3,
+   175
+  ],
+  [
+   3,
+   176
+  ],
+  [
+   3,
+   177
+  ],
+  [
+   3,
+   283
+  ],
+  [
+   3,
+   297
+  ],
+  [
+   3,
+   348
+  ],
+  [
+   3,
+   350
+  ],
+  [
+   3,
+   367
+  ],
+  [
+   3,
+   373
+  ],
+  [
+   3,
+   385
+  ],
+  [
+   3,
+   455
+  ],
+  [
+   3,
+   499
+  ],
+  [
+   4,
+   6
+  ],
+  [
+   4,
+   7
+  ],
+  [
+   4,
+   8
+  ],
+  [
+   4,
+   15
+  ],
+  [
+   4,
+   17
+  ],
+  [
+   4,
+   22
+  ],
+  [
+   4,
+   25
+  ],
+  [
+   4,
+   33
+  ],
+  [
+   4,
+   39
+  ],
+  [
+   4,
+   54
+  ],
+  [
+   4,
+   63
+  ],
+  [
+   4,
+   72
+  ],
+  [
+   4,
+   74
+  ],
+  [
+   4,
+   130
+  ],
+  [
+   4,
+   148
+  ],
+  [
+   4,
+   153
+  ],
+  [
+   4,
+   274
+  ],
+  [
+   4,
+   289
+  ],
+  [
+   4,
+   291
+  ],
+  [
+   4,
+   295
+  ],
+  [
+   4,
+   339
+  ],
+  [
+   4,
+   356
+  ],
+  [
+   4,
+   393
+  ],
+  [
+   4,
+   495
+  ],
+  [
+   5,
+   8
+  ],
+  [
+   5,
+   12
+  ],
+  [
+   5,
+   17
+  ],
+  [
+   5,
+   20
+  ],
+  [
+   5,
+   21
+  ],
+  [
+   5,
+   25
+  ],
+  [
+   5,
+   39
+  ],
+  [
+   5,
+   41
+  ],
+  [
+   5,
+   54
+  ],
+  [
+   5,
+   68
+  ],
+  [
+   5,
+   143
+  ],
+  [
+   5,
+   154
+  ],
+  [
+   5,
+   258
+  ],
+  [
+   5,
+   293
+  ],
+  [
+   5,
+   389
+  ],
+  [
+   5,
+   487
   ],
   [
    6,
-   372
+   11
   ],
   [
    6,
-   458
+   20
+  ],
+  [
+   6,
+   22
+  ],
+  [
+   6,
+   25
+  ],
+  [
+   6,
+   35
+  ],
+  [
+   6,
+   43
+  ],
+  [
+   6,
+   92
+  ],
+  [
+   6,
+   98
+  ],
+  [
+   6,
+   113
+  ],
+  [
+   6,
+   160
+  ],
+  [
+   6,
+   341
+  ],
+  [
+   6,
+   348
+  ],
+  [
+   6,
+   481
   ],
   [
    7,
@@ -3613,43 +4453,167 @@
   ],
   [
    7,
-   47
-  ],
-  [
-   7,
-   497
-  ],
-  [
-   8,
-   9
-  ],
-  [
-   8,
-   11
-  ],
-  [
-   8,
-   52
-  ],
-  [
-   8,
-   102
-  ],
-  [
-   8,
-   359
-  ],
-  [
-   9,
    10
   ],
   [
-   9,
-   339
+   7,
+   16
   ],
   [
-   9,
-   425
+   7,
+   21
+  ],
+  [
+   7,
+   22
+  ],
+  [
+   7,
+   31
+  ],
+  [
+   7,
+   36
+  ],
+  [
+   7,
+   37
+  ],
+  [
+   7,
+   41
+  ],
+  [
+   7,
+   43
+  ],
+  [
+   7,
+   72
+  ],
+  [
+   7,
+   83
+  ],
+  [
+   7,
+   115
+  ],
+  [
+   7,
+   302
+  ],
+  [
+   7,
+   336
+  ],
+  [
+   7,
+   356
+  ],
+  [
+   7,
+   440
+  ],
+  [
+   8,
+   17
+  ],
+  [
+   8,
+   18
+  ],
+  [
+   8,
+   20
+  ],
+  [
+   8,
+   21
+  ],
+  [
+   8,
+   28
+  ],
+  [
+   8,
+   31
+  ],
+  [
+   8,
+   37
+  ],
+  [
+   8,
+   39
+  ],
+  [
+   8,
+   40
+  ],
+  [
+   8,
+   43
+  ],
+  [
+   8,
+   54
+  ],
+  [
+   8,
+   58
+  ],
+  [
+   8,
+   60
+  ],
+  [
+   8,
+   69
+  ],
+  [
+   8,
+   70
+  ],
+  [
+   8,
+   116
+  ],
+  [
+   8,
+   128
+  ],
+  [
+   8,
+   131
+  ],
+  [
+   8,
+   171
+  ],
+  [
+   8,
+   236
+  ],
+  [
+   8,
+   301
+  ],
+  [
+   8,
+   338
+  ],
+  [
+   8,
+   343
+  ],
+  [
+   8,
+   454
+  ],
+  [
+   8,
+   471
   ],
   [
    10,
@@ -3657,99 +4621,271 @@
   ],
   [
    10,
-   127
-  ],
-  [
-   10,
-   276
-  ],
-  [
-   10,
-   392
-  ],
-  [
-   11,
-   12
-  ],
-  [
-   11,
-   303
-  ],
-  [
-   12,
-   13
-  ],
-  [
-   12,
-   248
-  ],
-  [
-   12,
-   313
-  ],
-  [
-   12,
-   318
-  ],
-  [
-   13,
    14
   ],
   [
-   13,
-   24
-  ],
-  [
-   13,
-   34
-  ],
-  [
-   13,
-   53
-  ],
-  [
-   14,
-   15
-  ],
-  [
-   14,
-   398
-  ],
-  [
-   14,
-   476
-  ],
-  [
-   15,
+   10,
    16
   ],
   [
-   15,
-   72
-  ],
-  [
-   15,
-   197
-  ],
-  [
-   15,
-   341
-  ],
-  [
-   16,
+   10,
    17
   ],
   [
-   16,
-   63
+   10,
+   25
+  ],
+  [
+   10,
+   37
+  ],
+  [
+   10,
+   39
+  ],
+  [
+   10,
+   41
+  ],
+  [
+   10,
+   45
+  ],
+  [
+   10,
+   65
+  ],
+  [
+   10,
+   99
+  ],
+  [
+   10,
+   110
+  ],
+  [
+   10,
+   114
+  ],
+  [
+   10,
+   137
+  ],
+  [
+   10,
+   155
+  ],
+  [
+   10,
+   186
+  ],
+  [
+   10,
+   207
+  ],
+  [
+   10,
+   250
+  ],
+  [
+   10,
+   312
+  ],
+  [
+   10,
+   375
+  ],
+  [
+   10,
+   405
+  ],
+  [
+   10,
+   409
+  ],
+  [
+   10,
+   493
+  ],
+  [
+   11,
+   19
+  ],
+  [
+   11,
+   419
+  ],
+  [
+   11,
+   444
+  ],
+  [
+   12,
+   61
+  ],
+  [
+   12,
+   72
+  ],
+  [
+   12,
+   198
+  ],
+  [
+   12,
+   228
+  ],
+  [
+   12,
+   338
+  ],
+  [
+   12,
+   468
+  ],
+  [
+   13,
+   42
+  ],
+  [
+   13,
+   152
+  ],
+  [
+   13,
+   203
+  ],
+  [
+   13,
+   208
+  ],
+  [
+   13,
+   463
+  ],
+  [
+   14,
+   32
+  ],
+  [
+   14,
+   33
+  ],
+  [
+   14,
+   66
+  ],
+  [
+   14,
+   131
+  ],
+  [
+   14,
+   184
+  ],
+  [
+   14,
+   273
+  ],
+  [
+   14,
+   449
+  ],
+  [
+   15,
+   97
+  ],
+  [
+   15,
+   155
+  ],
+  [
+   15,
+   177
+  ],
+  [
+   15,
+   254
+  ],
+  [
+   15,
+   256
+  ],
+  [
+   15,
+   380
+  ],
+  [
+   15,
+   410
   ],
   [
    16,
-   266
+   121
+  ],
+  [
+   16,
+   313
+  ],
+  [
+   16,
+   393
+  ],
+  [
+   16,
+   452
+  ],
+  [
+   16,
+   496
   ],
   [
    17,
-   18
+   21
+  ],
+  [
+   17,
+   25
+  ],
+  [
+   17,
+   27
+  ],
+  [
+   17,
+   29
+  ],
+  [
+   17,
+   30
+  ],
+  [
+   17,
+   37
+  ],
+  [
+   17,
+   47
+  ],
+  [
+   17,
+   93
+  ],
+  [
+   17,
+   96
+  ],
+  [
+   17,
+   101
+  ],
+  [
+   17,
+   132
+  ],
+  [
+   17,
+   135
   ],
   [
    17,
@@ -3757,371 +4893,907 @@
   ],
   [
    17,
-   257
+   200
   ],
   [
    17,
-   364
+   269
   ],
   [
    17,
-   451
+   280
   ],
   [
-   18,
-   19
+   17,
+   282
   ],
   [
-   18,
-   350
+   17,
+   358
   ],
   [
-   19,
-   20
-  ],
-  [
-   19,
-   254
+   17,
+   486
   ],
   [
    19,
-   312
-  ],
-  [
-   19,
-   361
-  ],
-  [
-   19,
-   437
-  ],
-  [
-   20,
-   21
-  ],
-  [
-   20,
-   139
-  ],
-  [
-   20,
-   151
-  ],
-  [
-   20,
-   176
-  ],
-  [
-   20,
-   398
-  ],
-  [
-   21,
-   22
-  ],
-  [
-   21,
-   365
-  ],
-  [
-   22,
    23
   ],
   [
-   22,
-   28
+   19,
+   34
   ],
   [
-   22,
-   79
+   19,
+   132
   ],
   [
-   23,
-   24
+   19,
+   172
   ],
   [
-   23,
-   275
+   19,
+   284
   ],
   [
-   23,
-   310
+   19,
+   307
   ],
   [
-   23,
-   332
+   20,
+   22
   ],
   [
-   24,
+   20,
+   23
+  ],
+  [
+   20,
    25
   ],
   [
-   24,
-   129
-  ],
-  [
-   24,
-   365
-  ],
-  [
-   25,
-   26
-  ],
-  [
-   25,
-   217
-  ],
-  [
-   25,
-   239
-  ],
-  [
-   25,
-   481
-  ],
-  [
-   26,
-   27
-  ],
-  [
-   26,
-   85
-  ],
-  [
-   26,
-   244
-  ],
-  [
-   26,
-   292
-  ],
-  [
-   26,
-   347
-  ],
-  [
-   26,
-   484
-  ],
-  [
-   27,
-   28
-  ],
-  [
-   27,
-   70
-  ],
-  [
-   28,
+   20,
    29
   ],
   [
-   28,
-   74
-  ],
-  [
-   28,
-   328
-  ],
-  [
-   29,
-   30
-  ],
-  [
-   29,
-   251
-  ],
-  [
-   29,
-   458
-  ],
-  [
-   30,
+   20,
    31
   ],
   [
-   30,
+   20,
+   35
+  ],
+  [
+   20,
+   43
+  ],
+  [
+   20,
+   72
+  ],
+  [
+   20,
+   82
+  ],
+  [
+   20,
+   101
+  ],
+  [
+   20,
+   137
+  ],
+  [
+   20,
+   168
+  ],
+  [
+   20,
+   320
+  ],
+  [
+   20,
+   357
+  ],
+  [
+   20,
+   373
+  ],
+  [
+   21,
+   25
+  ],
+  [
+   21,
+   29
+  ],
+  [
+   21,
+   41
+  ],
+  [
+   21,
+   43
+  ],
+  [
+   21,
+   50
+  ],
+  [
+   21,
+   87
+  ],
+  [
+   21,
+   88
+  ],
+  [
+   21,
+   101
+  ],
+  [
+   21,
+   151
+  ],
+  [
+   21,
+   191
+  ],
+  [
+   21,
+   193
+  ],
+  [
+   21,
+   365
+  ],
+  [
+   21,
+   433
+  ],
+  [
+   22,
+   25
+  ],
+  [
+   22,
+   26
+  ],
+  [
+   22,
+   27
+  ],
+  [
+   22,
+   28
+  ],
+  [
+   22,
+   29
+  ],
+  [
+   22,
+   30
+  ],
+  [
+   22,
+   37
+  ],
+  [
+   22,
+   38
+  ],
+  [
+   22,
+   43
+  ],
+  [
+   22,
+   51
+  ],
+  [
+   22,
+   53
+  ],
+  [
+   22,
+   72
+  ],
+  [
+   22,
+   82
+  ],
+  [
+   22,
+   84
+  ],
+  [
+   22,
+   95
+  ],
+  [
+   22,
+   99
+  ],
+  [
+   22,
+   115
+  ],
+  [
+   22,
    128
   ],
   [
-   30,
-   343
+   22,
+   188
+  ],
+  [
+   22,
+   189
+  ],
+  [
+   22,
+   198
+  ],
+  [
+   22,
+   220
+  ],
+  [
+   22,
+   221
+  ],
+  [
+   22,
+   224
+  ],
+  [
+   22,
+   229
+  ],
+  [
+   22,
+   233
+  ],
+  [
+   22,
+   267
+  ],
+  [
+   22,
+   287
+  ],
+  [
+   22,
+   290
+  ],
+  [
+   22,
+   303
+  ],
+  [
+   22,
+   307
+  ],
+  [
+   22,
+   325
+  ],
+  [
+   22,
+   330
+  ],
+  [
+   22,
+   332
+  ],
+  [
+   22,
+   372
+  ],
+  [
+   22,
+   381
+  ],
+  [
+   22,
+   388
+  ],
+  [
+   22,
+   408
+  ],
+  [
+   22,
+   420
+  ],
+  [
+   22,
+   421
+  ],
+  [
+   22,
+   430
+  ],
+  [
+   22,
+   437
+  ],
+  [
+   23,
+   64
+  ],
+  [
+   23,
+   108
+  ],
+  [
+   23,
+   169
+  ],
+  [
+   23,
+   205
+  ],
+  [
+   23,
+   383
+  ],
+  [
+   24,
+   52
+  ],
+  [
+   24,
+   106
+  ],
+  [
+   25,
+   29
+  ],
+  [
+   25,
+   31
+  ],
+  [
+   25,
+   35
+  ],
+  [
+   25,
+   39
+  ],
+  [
+   25,
+   41
+  ],
+  [
+   25,
+   46
+  ],
+  [
+   25,
+   63
+  ],
+  [
+   25,
+   98
+  ],
+  [
+   25,
+   101
+  ],
+  [
+   25,
+   105
+  ],
+  [
+   25,
+   118
+  ],
+  [
+   25,
+   169
+  ],
+  [
+   25,
+   183
+  ],
+  [
+   25,
+   189
+  ],
+  [
+   25,
+   197
+  ],
+  [
+   25,
+   224
+  ],
+  [
+   25,
+   230
+  ],
+  [
+   25,
+   293
+  ],
+  [
+   25,
+   303
+  ],
+  [
+   25,
+   368
+  ],
+  [
+   25,
+   443
+  ],
+  [
+   25,
+   460
+  ],
+  [
+   26,
+   125
+  ],
+  [
+   26,
+   240
+  ],
+  [
+   27,
+   150
+  ],
+  [
+   27,
+   354
+  ],
+  [
+   27,
+   383
+  ],
+  [
+   27,
+   390
+  ],
+  [
+   27,
+   477
+  ],
+  [
+   28,
+   67
+  ],
+  [
+   28,
+   253
+  ],
+  [
+   28,
+   270
+  ],
+  [
+   29,
+   39
+  ],
+  [
+   29,
+   57
+  ],
+  [
+   29,
+   62
+  ],
+  [
+   29,
+   72
+  ],
+  [
+   29,
+   117
+  ],
+  [
+   29,
+   141
+  ],
+  [
+   29,
+   142
+  ],
+  [
+   29,
+   144
+  ],
+  [
+   29,
+   168
+  ],
+  [
+   29,
+   244
+  ],
+  [
+   29,
+   247
+  ],
+  [
+   29,
+   252
+  ],
+  [
+   29,
+   308
+  ],
+  [
+   29,
+   347
+  ],
+  [
+   29,
+   412
   ],
   [
    30,
-   431
+   171
+  ],
+  [
+   30,
+   233
   ],
   [
    31,
-   32
+   35
   ],
   [
    31,
-   81
+   37
   ],
   [
    31,
-   154
+   39
+  ],
+  [
+   31,
+   43
+  ],
+  [
+   31,
+   54
+  ],
+  [
+   31,
+   72
+  ],
+  [
+   31,
+   161
+  ],
+  [
+   31,
+   277
+  ],
+  [
+   31,
+   314
+  ],
+  [
+   31,
+   330
   ],
   [
    31,
    350
   ],
   [
-   32,
-   33
+   31,
+   477
+  ],
+  [
+   31,
+   491
   ],
   [
    32,
-   73
-  ],
-  [
-   33,
-   34
-  ],
-  [
-   33,
-   40
-  ],
-  [
-   33,
-   405
-  ],
-  [
-   33,
-   499
-  ],
-  [
-   34,
-   35
-  ],
-  [
-   34,
-   47
-  ],
-  [
-   34,
-   52
-  ],
-  [
-   34,
-   145
-  ],
-  [
-   34,
-   386
-  ],
-  [
-   35,
-   36
-  ],
-  [
-   35,
-   248
-  ],
-  [
-   35,
-   453
-  ],
-  [
-   36,
-   37
-  ],
-  [
-   36,
-   82
-  ],
-  [
-   36,
-   228
-  ],
-  [
-   36,
-   406
-  ],
-  [
-   37,
-   38
-  ],
-  [
-   37,
-   346
-  ],
-  [
-   37,
-   366
-  ],
-  [
-   37,
-   436
-  ],
-  [
-   38,
    39
   ],
   [
-   38,
-   84
+   32,
+   185
   ],
   [
-   38,
-   169
+   32,
+   390
   ],
   [
-   38,
-   367
+   33,
+   193
   ],
   [
-   38,
-   450
+   34,
+   38
   ],
   [
-   39,
-   40
+   34,
+   61
   ],
   [
-   39,
-   98
+   34,
+   75
   ],
   [
-   39,
-   234
+   34,
+   88
   ],
   [
-   40,
-   41
+   34,
+   151
   ],
   [
-   40,
-   192
+   34,
+   167
   ],
   [
-   40,
-   416
+   34,
+   397
   ],
   [
-   41,
-   42
+   35,
+   37
   ],
   [
-   41,
-   248
-  ],
-  [
-   41,
-   310
-  ],
-  [
-   42,
+   35,
    43
   ],
   [
-   42,
-   204
+   35,
+   49
+  ],
+  [
+   35,
+   68
+  ],
+  [
+   35,
+   72
+  ],
+  [
+   35,
+   95
+  ],
+  [
+   35,
+   101
+  ],
+  [
+   35,
+   104
+  ],
+  [
+   35,
+   109
+  ],
+  [
+   35,
+   139
+  ],
+  [
+   35,
+   165
+  ],
+  [
+   35,
+   240
+  ],
+  [
+   35,
+   281
+  ],
+  [
+   35,
+   286
+  ],
+  [
+   35,
+   423
+  ],
+  [
+   35,
+   425
+  ],
+  [
+   35,
+   464
+  ],
+  [
+   36,
+   259
+  ],
+  [
+   37,
+   41
+  ],
+  [
+   37,
+   43
+  ],
+  [
+   37,
+   48
+  ],
+  [
+   37,
+   50
+  ],
+  [
+   37,
+   80
+  ],
+  [
+   37,
+   111
+  ],
+  [
+   37,
+   216
+  ],
+  [
+   37,
+   272
+  ],
+  [
+   37,
+   362
+  ],
+  [
+   38,
+   102
+  ],
+  [
+   39,
+   54
+  ],
+  [
+   39,
+   72
+  ],
+  [
+   39,
+   74
+  ],
+  [
+   39,
+   85
+  ],
+  [
+   39,
+   91
+  ],
+  [
+   39,
+   101
+  ],
+  [
+   39,
+   103
+  ],
+  [
+   39,
+   107
+  ],
+  [
+   39,
+   122
+  ],
+  [
+   39,
+   123
+  ],
+  [
+   39,
+   150
+  ],
+  [
+   39,
+   236
+  ],
+  [
+   39,
+   291
+  ],
+  [
+   39,
+   430
+  ],
+  [
+   40,
+   90
+  ],
+  [
+   40,
+   126
+  ],
+  [
+   40,
+   134
+  ],
+  [
+   40,
+   237
+  ],
+  [
+   41,
+   43
+  ],
+  [
+   41,
+   54
+  ],
+  [
+   41,
+   55
+  ],
+  [
+   41,
+   65
+  ],
+  [
+   41,
+   72
+  ],
+  [
+   41,
+   76
+  ],
+  [
+   41,
+   101
+  ],
+  [
+   41,
+   162
+  ],
+  [
+   41,
+   163
+  ],
+  [
+   41,
+   219
+  ],
+  [
+   41,
+   353
+  ],
+  [
+   41,
+   459
   ],
   [
    42,
-   325
+   47
+  ],
+  [
+   42,
+   54
+  ],
+  [
+   42,
+   157
+  ],
+  [
+   42,
+   290
+  ],
+  [
+   42,
+   328
+  ],
+  [
+   42,
+   404
   ],
   [
    43,
@@ -4129,67 +5801,91 @@
   ],
   [
    43,
-   55
+   54
   ],
   [
    43,
-   70
+   101
   ],
   [
    43,
-   351
+   156
   ],
   [
    43,
-   359
+   178
+  ],
+  [
+   43,
+   209
+  ],
+  [
+   43,
+   310
+  ],
+  [
+   43,
+   318
+  ],
+  [
+   43,
+   361
+  ],
+  [
+   43,
+   382
   ],
   [
    44,
-   45
-  ],
-  [
-   44,
-   192
-  ],
-  [
-   44,
-   421
+   162
   ],
   [
    45,
-   46
+   85
   ],
   [
    45,
-   133
-  ],
-  [
-   45,
-   392
-  ],
-  [
-   45,
-   444
-  ],
-  [
-   45,
-   449
+   324
   ],
   [
    46,
-   47
-  ],
-  [
-   46,
-   406
-  ],
-  [
-   47,
    48
   ],
   [
+   46,
+   157
+  ],
+  [
+   46,
+   181
+  ],
+  [
+   46,
+   222
+  ],
+  [
+   46,
+   280
+  ],
+  [
+   46,
+   372
+  ],
+  [
    47,
-   296
+   59
+  ],
+  [
+   47,
+   62
+  ],
+  [
+   47,
+   205
+  ],
+  [
+   47,
+   316
   ],
   [
    47,
@@ -4197,7825 +5893,5199 @@
   ],
   [
    48,
-   49
+   309
   ],
   [
    48,
-   90
-  ],
-  [
-   49,
-   50
-  ],
-  [
-   49,
-   299
-  ],
-  [
-   49,
-   311
-  ],
-  [
-   49,
-   349
+   336
   ],
   [
    50,
-   51
+   75
   ],
   [
    50,
-   288
-  ],
-  [
-   50,
-   489
-  ],
-  [
-   51,
-   52
-  ],
-  [
-   51,
-   245
-  ],
-  [
-   51,
-   326
-  ],
-  [
-   51,
-   374
-  ],
-  [
-   52,
-   53
-  ],
-  [
-   53,
-   54
-  ],
-  [
-   53,
-   78
-  ],
-  [
-   53,
-   230
-  ],
-  [
-   53,
-   415
-  ],
-  [
-   54,
-   55
-  ],
-  [
-   54,
-   94
-  ],
-  [
-   54,
-   208
-  ],
-  [
-   54,
-   310
-  ],
-  [
-   54,
-   378
-  ],
-  [
-   54,
-   418
-  ],
-  [
-   55,
-   56
-  ],
-  [
-   55,
-   72
-  ],
-  [
-   55,
-   240
-  ],
-  [
-   55,
-   333
-  ],
-  [
-   56,
-   57
-  ],
-  [
-   56,
-   172
-  ],
-  [
-   56,
-   286
-  ],
-  [
-   56,
-   293
-  ],
-  [
-   57,
-   58
-  ],
-  [
-   57,
-   162
-  ],
-  [
-   57,
-   223
-  ],
-  [
-   58,
-   59
-  ],
-  [
-   58,
-   242
-  ],
-  [
-   58,
-   415
-  ],
-  [
-   58,
-   416
-  ],
-  [
-   59,
-   60
-  ],
-  [
-   59,
-   91
-  ],
-  [
-   59,
-   264
-  ],
-  [
-   59,
-   349
-  ],
-  [
-   59,
-   408
-  ],
-  [
-   59,
-   430
-  ],
-  [
-   60,
-   61
-  ],
-  [
-   60,
-   267
-  ],
-  [
-   60,
-   451
-  ],
-  [
-   61,
-   62
-  ],
-  [
-   61,
-   208
-  ],
-  [
-   61,
-   238
-  ],
-  [
-   62,
-   63
-  ],
-  [
-   62,
-   105
-  ],
-  [
-   62,
-   181
-  ],
-  [
-   62,
-   264
-  ],
-  [
-   63,
-   64
-  ],
-  [
-   63,
    200
   ],
   [
-   63,
+   50,
    209
   ],
   [
-   64,
-   65
+   50,
+   388
   ],
   [
-   64,
-   115
+   50,
+   396
   ],
   [
-   64,
-   372
+   51,
+   188
   ],
   [
-   64,
-   400
+   51,
+   219
   ],
   [
-   65,
-   66
+   51,
+   311
   ],
   [
-   65,
-   71
+   51,
+   340
   ],
   [
-   65,
-   76
+   51,
+   469
   ],
   [
-   65,
-   348
+   52,
+   351
   ],
   [
-   65,
-   456
+   53,
+   106
   ],
   [
-   66,
-   67
+   53,
+   146
   ],
   [
-   66,
-   91
+   53,
+   249
   ],
   [
-   66,
+   54,
+   59
+  ],
+  [
+   54,
+   107
+  ],
+  [
+   54,
+   112
+  ],
+  [
+   54,
+   117
+  ],
+  [
+   54,
+   138
+  ],
+  [
+   54,
+   165
+  ],
+  [
+   54,
+   173
+  ],
+  [
+   54,
+   195
+  ],
+  [
+   54,
+   211
+  ],
+  [
+   54,
+   279
+  ],
+  [
+   54,
+   292
+  ],
+  [
+   54,
+   309
+  ],
+  [
+   54,
+   334
+  ],
+  [
+   54,
+   395
+  ],
+  [
+   54,
+   414
+  ],
+  [
+   54,
+   448
+  ],
+  [
+   55,
+   79
+  ],
+  [
+   55,
+   89
+  ],
+  [
+   55,
+   184
+  ],
+  [
+   55,
+   226
+  ],
+  [
+   56,
    202
   ],
   [
-   66,
-   375
+   57,
+   71
+  ],
+  [
+   57,
+   83
+  ],
+  [
+   57,
+   104
+  ],
+  [
+   57,
+   146
+  ],
+  [
+   57,
+   175
+  ],
+  [
+   57,
+   257
+  ],
+  [
+   57,
+   319
+  ],
+  [
+   57,
+   435
+  ],
+  [
+   58,
+   127
+  ],
+  [
+   58,
+   265
+  ],
+  [
+   58,
+   370
+  ],
+  [
+   59,
+   120
+  ],
+  [
+   59,
+   411
+  ],
+  [
+   60,
+   129
+  ],
+  [
+   60,
+   140
+  ],
+  [
+   60,
+   182
+  ],
+  [
+   60,
+   199
+  ],
+  [
+   60,
+   218
+  ],
+  [
+   60,
+   381
+  ],
+  [
+   60,
+   424
+  ],
+  [
+   61,
+   196
+  ],
+  [
+   61,
+   262
+  ],
+  [
+   61,
+   324
+  ],
+  [
+   61,
+   417
+  ],
+  [
+   62,
+   199
+  ],
+  [
+   62,
+   206
+  ],
+  [
+   62,
+   407
+  ],
+  [
+   63,
+   139
+  ],
+  [
+   63,
+   159
+  ],
+  [
+   63,
+   364
+  ],
+  [
+   63,
+   387
+  ],
+  [
+   64,
+   94
+  ],
+  [
+   64,
+   241
+  ],
+  [
+   64,
+   342
+  ],
+  [
+   64,
+   481
+  ],
+  [
+   64,
+   492
+  ],
+  [
+   65,
+   174
+  ],
+  [
+   65,
+   197
   ],
   [
    66,
+   84
+  ],
+  [
+   66,
+   147
+  ],
+  [
+   66,
+   370
+  ],
+  [
+   67,
+   86
+  ],
+  [
+   67,
+   479
+  ],
+  [
+   68,
+   260
+  ],
+  [
+   68,
+   317
+  ],
+  [
+   68,
+   351
+  ],
+  [
+   68,
+   479
+  ],
+  [
+   69,
+   352
+  ],
+  [
+   69,
+   398
+  ],
+  [
+   69,
+   488
+  ],
+  [
+   70,
+   86
+  ],
+  [
+   70,
+   124
+  ],
+  [
+   70,
+   153
+  ],
+  [
+   70,
+   215
+  ],
+  [
+   70,
+   223
+  ],
+  [
+   70,
+   344
+  ],
+  [
+   70,
+   345
+  ],
+  [
+   70,
+   436
+  ],
+  [
+   71,
+   77
+  ],
+  [
+   71,
+   130
+  ],
+  [
+   71,
+   285
+  ],
+  [
+   72,
+   78
+  ],
+  [
+   72,
+   81
+  ],
+  [
+   72,
+   97
+  ],
+  [
+   72,
+   112
+  ],
+  [
+   72,
+   125
+  ],
+  [
+   72,
+   129
+  ],
+  [
+   72,
+   138
+  ],
+  [
+   72,
+   237
+  ],
+  [
+   72,
+   342
+  ],
+  [
+   73,
+   77
+  ],
+  [
+   73,
+   460
+  ],
+  [
+   74,
+   120
+  ],
+  [
+   74,
+   176
+  ],
+  [
+   74,
+   210
+  ],
+  [
+   74,
+   421
+  ],
+  [
+   74,
+   470
+  ],
+  [
+   75,
+   122
+  ],
+  [
+   75,
+   147
+  ],
+  [
+   75,
+   207
+  ],
+  [
+   75,
+   259
+  ],
+  [
+   75,
+   294
+  ],
+  [
+   75,
+   413
+  ],
+  [
+   75,
+   448
+  ],
+  [
+   75,
+   487
+  ],
+  [
+   76,
+   79
+  ],
+  [
+   76,
+   160
+  ],
+  [
+   76,
+   419
+  ],
+  [
+   77,
+   447
+  ],
+  [
+   78,
+   80
+  ],
+  [
+   78,
+   113
+  ],
+  [
+   78,
+   136
+  ],
+  [
+   78,
+   254
+  ],
+  [
+   78,
+   275
+  ],
+  [
+   80,
+   447
+  ],
+  [
+   81,
+   116
+  ],
+  [
+   81,
+   194
+  ],
+  [
+   81,
+   217
+  ],
+  [
+   81,
+   222
+  ],
+  [
+   81,
+   360
+  ],
+  [
+   83,
+   195
+  ],
+  [
+   83,
+   498
+  ],
+  [
+   84,
+   91
+  ],
+  [
+   84,
+   140
+  ],
+  [
+   84,
+   287
+  ],
+  [
+   85,
+   87
+  ],
+  [
+   85,
+   100
+  ],
+  [
+   85,
+   103
+  ],
+  [
+   85,
+   135
+  ],
+  [
+   85,
+   235
+  ],
+  [
+   85,
+   288
+  ],
+  [
+   85,
+   333
+  ],
+  [
+   86,
+   142
+  ],
+  [
+   86,
+   172
+  ],
+  [
+   86,
+   245
+  ],
+  [
+   86,
+   439
+  ],
+  [
+   87,
+   90
+  ],
+  [
+   87,
+   144
+  ],
+  [
+   87,
+   149
+  ],
+  [
+   87,
+   218
+  ],
+  [
+   87,
+   274
+  ],
+  [
+   87,
+   451
+  ],
+  [
+   88,
+   156
+  ],
+  [
+   89,
+   111
+  ],
+  [
+   89,
+   143
+  ],
+  [
+   89,
+   148
+  ],
+  [
+   89,
+   173
+  ],
+  [
+   89,
+   192
+  ],
+  [
+   89,
+   201
+  ],
+  [
+   89,
+   321
+  ],
+  [
+   89,
+   378
+  ],
+  [
+   90,
+   118
+  ],
+  [
+   90,
+   123
+  ],
+  [
+   90,
+   286
+  ],
+  [
+   90,
+   376
+  ],
+  [
+   91,
+   239
+  ],
+  [
+   93,
+   167
+  ],
+  [
+   93,
+   217
+  ],
+  [
+   93,
+   264
+  ],
+  [
+   93,
+   346
+  ],
+  [
+   94,
+   275
+  ],
+  [
+   94,
+   276
+  ],
+  [
+   96,
+   164
+  ],
+  [
+   96,
+   305
+  ],
+  [
+   96,
+   355
+  ],
+  [
+   96,
+   405
+  ],
+  [
+   96,
+   497
+  ],
+  [
+   97,
+   203
+  ],
+  [
+   97,
+   249
+  ],
+  [
+   98,
+   186
+  ],
+  [
+   98,
+   492
+  ],
+  [
+   99,
+   181
+  ],
+  [
+   99,
+   194
+  ],
+  [
+   99,
+   228
+  ],
+  [
+   99,
+   251
+  ],
+  [
+   99,
+   325
+  ],
+  [
+   99,
+   332
+  ],
+  [
+   99,
+   400
+  ],
+  [
+   99,
+   482
+  ],
+  [
+   100,
+   322
+  ],
+  [
+   100,
+   374
+  ],
+  [
+   100,
+   377
+  ],
+  [
+   101,
+   114
+  ],
+  [
+   101,
+   154
+  ],
+  [
+   101,
+   179
+  ],
+  [
+   101,
+   201
+  ],
+  [
+   101,
+   214
+  ],
+  [
+   101,
+   248
+  ],
+  [
+   101,
+   279
+  ],
+  [
+   101,
+   301
+  ],
+  [
+   101,
+   376
+  ],
+  [
+   101,
+   395
+  ],
+  [
+   101,
+   401
+  ],
+  [
+   101,
+   403
+  ],
+  [
+   101,
+   424
+  ],
+  [
+   102,
+   121
+  ],
+  [
+   102,
+   213
+  ],
+  [
+   102,
+   315
+  ],
+  [
+   102,
+   318
+  ],
+  [
+   102,
+   489
+  ],
+  [
+   104,
+   382
+  ],
+  [
+   105,
+   299
+  ],
+  [
+   106,
+   278
+  ],
+  [
+   107,
+   211
+  ],
+  [
+   107,
+   484
+  ],
+  [
+   108,
+   110
+  ],
+  [
+   108,
+   277
+  ],
+  [
+   109,
+   238
+  ],
+  [
+   110,
+   196
+  ],
+  [
+   110,
+   266
+  ],
+  [
+   110,
+   269
+  ],
+  [
+   110,
+   333
+  ],
+  [
+   110,
+   485
+  ],
+  [
+   111,
+   262
+  ],
+  [
+   111,
+   322
+  ],
+  [
+   112,
+   288
+  ],
+  [
+   114,
+   187
+  ],
+  [
+   114,
+   389
+  ],
+  [
+   117,
+   450
+  ],
+  [
+   118,
+   174
+  ],
+  [
+   118,
+   227
+  ],
+  [
+   118,
+   349
+  ],
+  [
+   118,
+   391
+  ],
+  [
+   118,
+   422
+  ],
+  [
+   119,
+   345
+  ],
+  [
+   120,
+   202
+  ],
+  [
+   120,
+   208
+  ],
+  [
+   120,
+   248
+  ],
+  [
+   120,
+   268
+  ],
+  [
+   120,
+   396
+  ],
+  [
+   120,
+   476
+  ],
+  [
+   121,
+   133
+  ],
+  [
+   121,
+   252
+  ],
+  [
+   121,
+   400
+  ],
+  [
+   122,
+   461
+  ],
+  [
+   124,
+   250
+  ],
+  [
+   124,
+   258
+  ],
+  [
+   126,
+   134
+  ],
+  [
+   126,
+   234
+  ],
+  [
+   126,
+   323
+  ],
+  [
+   126,
+   337
+  ],
+  [
+   126,
+   401
+  ],
+  [
+   127,
+   145
+  ],
+  [
+   127,
+   246
+  ],
+  [
+   128,
+   359
+  ],
+  [
+   129,
+   331
+  ],
+  [
+   129,
+   379
+  ],
+  [
+   129,
+   384
+  ],
+  [
+   130,
+   375
+  ],
+  [
+   130,
+   441
+  ],
+  [
+   130,
+   466
+  ],
+  [
+   130,
    469
+  ],
+  [
+   134,
+   204
+  ],
+  [
+   134,
+   220
+  ],
+  [
+   134,
+   271
+  ],
+  [
+   134,
+   380
+  ],
+  [
+   134,
+   409
+  ],
+  [
+   135,
+   261
+  ],
+  [
+   135,
+   352
+  ],
+  [
+   137,
+   231
+  ],
+  [
+   138,
+   187
+  ],
+  [
+   139,
+   379
+  ],
+  [
+   141,
+   190
+  ],
+  [
+   142,
+   245
+  ],
+  [
+   144,
+   210
+  ],
+  [
+   144,
+   438
+  ],
+  [
+   144,
+   446
+  ],
+  [
+   145,
+   225
+  ],
+  [
+   145,
+   298
+  ],
+  [
+   145,
+   386
+  ],
+  [
+   145,
+   414
+  ],
+  [
+   145,
+   425
+  ],
+  [
+   146,
+   204
+  ],
+  [
+   146,
+   282
+  ],
+  [
+   147,
+   152
+  ],
+  [
+   147,
+   263
+  ],
+  [
+   147,
+   334
+  ],
+  [
+   148,
+   164
+  ],
+  [
+   148,
+   223
+  ],
+  [
+   148,
+   300
+  ],
+  [
+   149,
+   221
+  ],
+  [
+   149,
+   470
+  ],
+  [
+   150,
+   329
+  ],
+  [
+   150,
+   458
+  ],
+  [
+   151,
+   185
+  ],
+  [
+   152,
+   260
+  ],
+  [
+   152,
+   268
+  ],
+  [
+   152,
+   418
+  ],
+  [
+   153,
+   235
+  ],
+  [
+   153,
+   312
+  ],
+  [
+   153,
+   456
+  ],
+  [
+   153,
+   472
+  ],
+  [
+   154,
+   289
+  ],
+  [
+   154,
+   335
+  ],
+  [
+   155,
+   166
+  ],
+  [
+   155,
+   427
+  ],
+  [
+   155,
+   478
+  ],
+  [
+   156,
+   226
+  ],
+  [
+   156,
+   272
+  ],
+  [
+   156,
+   344
+  ],
+  [
+   156,
+   368
+  ],
+  [
+   156,
+   429
+  ],
+  [
+   157,
+   180
+  ],
+  [
+   157,
+   491
+  ],
+  [
+   160,
+   206
+  ],
+  [
+   160,
+   261
+  ],
+  [
+   160,
+   377
+  ],
+  [
+   161,
+   362
+  ],
+  [
+   161,
+   416
+  ],
+  [
+   163,
+   371
+  ],
+  [
+   164,
+   450
+  ],
+  [
+   165,
+   255
+  ],
+  [
+   165,
+   475
+  ],
+  [
+   169,
+   306
+  ],
+  [
+   169,
+   363
+  ],
+  [
+   169,
+   394
+  ],
+  [
+   170,
+   378
+  ],
+  [
+   171,
+   191
+  ],
+  [
+   171,
+   232
+  ],
+  [
+   171,
+   366
+  ],
+  [
+   171,
+   391
+  ],
+  [
+   171,
+   392
+  ],
+  [
+   171,
+   434
+  ],
+  [
+   173,
+   361
+  ],
+  [
+   177,
+   281
+  ],
+  [
+   177,
+   490
+  ],
+  [
+   178,
+   231
+  ],
+  [
+   178,
+   241
+  ],
+  [
+   178,
+   483
+  ],
+  [
+   179,
+   216
+  ],
+  [
+   180,
+   443
+  ],
+  [
+   180,
+   462
+  ],
+  [
+   181,
+   213
+  ],
+  [
+   182,
+   225
+  ],
+  [
+   182,
+   384
+  ],
+  [
+   183,
+   273
+  ],
+  [
+   183,
+   305
+  ],
+  [
+   184,
+   190
+  ],
+  [
+   184,
+   354
+  ],
+  [
+   184,
+   436
+  ],
+  [
+   184,
+   437
+  ],
+  [
+   185,
+   358
+  ],
+  [
+   186,
+   212
+  ],
+  [
+   193,
+   442
+  ],
+  [
+   194,
+   234
+  ],
+  [
+   195,
+   304
+  ],
+  [
+   195,
+   320
+  ],
+  [
+   198,
+   298
+  ],
+  [
+   198,
+   313
+  ],
+  [
+   198,
+   428
+  ],
+  [
+   200,
+   347
+  ],
+  [
+   202,
+   295
+  ],
+  [
+   203,
+   265
+  ],
+  [
+   203,
+   346
+  ],
+  [
+   203,
+   371
+  ],
+  [
+   205,
+   415
+  ],
+  [
+   206,
+   321
+  ],
+  [
+   207,
+   337
+  ],
+  [
+   207,
+   392
+  ],
+  [
+   208,
+   315
+  ],
+  [
+   208,
+   326
+  ],
+  [
+   211,
+   316
+  ],
+  [
+   212,
+   230
+  ],
+  [
+   213,
+   246
+  ],
+  [
+   213,
+   494
+  ],
+  [
+   214,
+   339
+  ],
+  [
+   214,
+   355
+  ],
+  [
+   214,
+   408
+  ],
+  [
+   215,
+   292
+  ],
+  [
+   216,
+   247
+  ],
+  [
+   216,
+   284
+  ],
+  [
+   217,
+   394
+  ],
+  [
+   217,
+   488
+  ],
+  [
+   219,
+   415
+  ],
+  [
+   219,
+   426
+  ],
+  [
+   220,
+   310
+  ],
+  [
+   220,
+   404
+  ],
+  [
+   220,
+   476
+  ],
+  [
+   222,
+   243
+  ],
+  [
+   223,
+   255
+  ],
+  [
+   223,
+   270
+  ],
+  [
+   224,
+   243
+  ],
+  [
+   224,
+   276
+  ],
+  [
+   225,
+   402
+  ],
+  [
+   228,
+   297
+  ],
+  [
+   228,
+   300
+  ],
+  [
+   228,
+   363
+  ],
+  [
+   228,
+   471
+  ],
+  [
+   229,
+   429
+  ],
+  [
+   231,
+   264
+  ],
+  [
+   231,
+   308
+  ],
+  [
+   232,
+   406
+  ],
+  [
+   234,
+   412
+  ],
+  [
+   235,
+   399
+  ],
+  [
+   236,
+   444
+  ],
+  [
+   238,
+   406
+  ],
+  [
+   240,
+   453
+  ],
+  [
+   241,
+   263
+  ],
+  [
+   242,
+   251
+  ],
+  [
+   242,
+   257
+  ],
+  [
+   242,
+   267
+  ],
+  [
+   242,
+   327
+  ],
+  [
+   242,
+   357
+  ],
+  [
+   244,
+   296
+  ],
+  [
+   245,
+   317
+  ],
+  [
+   245,
+   360
+  ],
+  [
+   247,
+   365
+  ],
+  [
+   247,
+   480
+  ],
+  [
+   248,
+   278
+  ],
+  [
+   249,
+   475
+  ],
+  [
+   250,
+   431
+  ],
+  [
+   251,
+   402
+  ],
+  [
+   252,
+   410
+  ],
+  [
+   252,
+   485
+  ],
+  [
+   257,
+   427
+  ],
+  [
+   257,
+   452
+  ],
+  [
+   257,
+   459
+  ],
+  [
+   257,
+   473
+  ],
+  [
+   260,
+   311
+  ],
+  [
+   261,
+   366
+  ],
+  [
+   268,
+   367
+  ],
+  [
+   268,
+   397
+  ],
+  [
+   268,
+   435
+  ],
+  [
+   274,
+   306
+  ],
+  [
+   275,
+   364
+  ],
+  [
+   275,
+   486
+  ],
+  [
+   282,
+   294
+  ],
+  [
+   287,
+   369
+  ],
+  [
+   287,
+   385
+  ],
+  [
+   288,
+   489
+  ],
+  [
+   290,
+   304
+  ],
+  [
+   290,
+   359
+  ],
+  [
+   291,
+   482
+  ],
+  [
+   293,
+   418
+  ],
+  [
+   301,
+   314
+  ],
+  [
+   301,
+   417
+  ],
+  [
+   302,
+   434
+  ],
+  [
+   304,
+   386
+  ],
+  [
+   307,
+   468
+  ],
+  [
+   308,
+   329
+  ],
+  [
+   308,
+   411
+  ],
+  [
+   309,
+   457
+  ],
+  [
+   310,
+   426
+  ],
+  [
+   314,
+   353
+  ],
+  [
+   317,
+   456
+  ],
+  [
+   321,
+   343
+  ],
+  [
+   321,
+   422
+  ],
+  [
+   326,
+   331
+  ],
+  [
+   326,
+   440
+  ],
+  [
+   327,
+   374
+  ],
+  [
+   336,
+   341
+  ],
+  [
+   336,
+   490
+  ],
+  [
+   337,
+   431
+  ],
+  [
+   345,
+   433
+  ],
+  [
+   347,
+   403
+  ],
+  [
+   349,
+   439
+  ],
+  [
+   349,
+   464
+  ],
+  [
+   349,
+   465
+  ],
+  [
+   349,
+   473
+  ],
+  [
+   350,
+   428
+  ],
+  [
+   350,
+   472
+  ],
+  [
+   355,
+   454
+  ],
+  [
+   355,
+   474
+  ],
+  [
+   359,
+   449
+  ],
+  [
+   363,
+   458
+  ],
+  [
+   369,
+   498
+  ],
+  [
+   371,
+   467
+  ],
+  [
+   374,
+   445
+  ],
+  [
+   382,
+   387
+  ],
+  [
+   382,
+   442
+  ],
+  [
+   385,
+   451
+  ],
+  [
+   390,
+   413
+  ],
+  [
+   406,
+   467
+  ],
+  [
+   407,
+   497
+  ],
+  [
+   409,
+   478
+  ],
+  [
+   410,
+   445
+  ],
+  [
+   413,
+   453
+  ],
+  [
+   419,
+   420
+  ],
+  [
+   440,
+   493
+  ],
+  [
+   450,
+   457
+  ],
+  [
+   464,
+   499
+  ],
+  [
+   474,
+   483
+  ],
+  [
+   474,
+   496
+  ]
+ ],
+ "neighbors": [
+  [
+   1,
+   2,
+   3,
+   9,
+   10,
+   12,
+   14,
+   21,
+   24,
+   29,
+   31,
+   32,
+   34,
+   39,
+   40,
+   41,
+   42,
+   45,
+   54,
+   55,
+   56,
+   66,
+   70,
+   72,
+   73,
+   81,
+   101,
+   124,
+   126,
+   163,
+   178,
+   183,
+   192,
+   214,
+   227,
+   229,
+   232,
+   238,
+   242,
+   244,
+   296,
+   299,
+   319,
+   326,
+   328,
+   398,
+   432,
+   438,
+   446,
+   455,
+   461,
+   463,
+   466,
+   474,
+   480,
+   494,
+   495
+  ],
+  [
+   0,
+   2,
+   6,
+   7,
+   10,
+   19,
+   21,
+   29,
+   39,
+   43,
+   46,
+   51,
+   53,
+   54,
+   56,
+   67,
+   78,
+   108,
+   158,
+   239,
+   271,
+   285
+  ],
+  [
+   0,
+   1,
+   3,
+   4,
+   5,
+   7,
+   8,
+   9,
+   10,
+   13,
+   15,
+   17,
+   18,
+   20,
+   21,
+   22,
+   26,
+   31,
+   36,
+   37,
+   41,
+   44,
+   49,
+   60,
+   64,
+   69,
+   71,
+   73,
+   76,
+   89,
+   92,
+   93,
+   94,
+   96,
+   100,
+   101,
+   105,
+   119,
+   133,
+   141,
+   149,
+   159,
+   161,
+   166,
+   170,
+   179,
+   180,
+   182,
+   212,
+   215,
+   242,
+   253,
+   256,
+   266,
+   283,
+   302,
+   323,
+   335,
+   340,
+   349,
+   369,
+   399,
+   407,
+   416,
+   423,
+   432,
+   441,
+   462,
+   465,
+   484
+  ],
+  [
+   0,
+   2,
+   4,
+   5,
+   6,
+   7,
+   8,
+   10,
+   13,
+   17,
+   20,
+   21,
+   22,
+   24,
+   25,
+   31,
+   52,
+   57,
+   58,
+   72,
+   102,
+   109,
+   119,
+   127,
+   145,
+   158,
+   170,
+   175,
+   176,
+   177,
+   283,
+   297,
+   348,
+   350,
+   367,
+   373,
+   385,
+   455,
+   499
+  ],
+  [
+   2,
+   3,
+   6,
+   7,
+   8,
+   15,
+   17,
+   22,
+   25,
+   33,
+   39,
+   54,
+   63,
+   72,
+   74,
+   130,
+   148,
+   153,
+   274,
+   289,
+   291,
+   295,
+   339,
+   356,
+   393,
+   495
+  ],
+  [
+   2,
+   3,
+   8,
+   12,
+   17,
+   20,
+   21,
+   25,
+   39,
+   41,
+   54,
+   68,
+   143,
+   154,
+   258,
+   293,
+   389,
+   487
+  ],
+  [
+   1,
+   3,
+   4,
+   11,
+   20,
+   22,
+   25,
+   35,
+   43,
+   92,
+   98,
+   113,
+   160,
+   341,
+   348,
+   481
+  ],
+  [
+   1,
+   2,
+   3,
+   4,
+   8,
+   10,
+   16,
+   21,
+   22,
+   31,
+   36,
+   37,
+   41,
+   43,
+   72,
+   83,
+   115,
+   302,
+   336,
+   356,
+   440
+  ],
+  [
+   2,
+   3,
+   4,
+   5,
+   7,
+   17,
+   18,
+   20,
+   21,
+   28,
+   31,
+   37,
+   39,
+   40,
+   43,
+   54,
+   58,
+   60,
+   69,
+   70,
+   116,
+   128,
+   131,
+   171,
+   236,
+   301,
+   338,
+   343,
+   454,
+   471
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   0,
+   1,
+   2,
+   3,
+   7,
+   11,
+   14,
+   16,
+   17,
+   25,
+   37,
+   39,
+   41,
+   45,
+   65,
+   99,
+   110,
+   114,
+   137,
+   155,
+   186,
+   207,
+   250,
+   312,
+   375,
+   405,
+   409,
+   493
+  ],
+  [
+   6,
+   10,
+   19,
+   419,
+   444
+  ],
+  [
+   0,
+   5,
+   61,
+   72,
+   198,
+   228,
+   338,
+   468
+  ],
+  [
+   2,
+   3,
+   42,
+   152,
+   203,
+   208,
+   463
+  ],
+  [
+   0,
+   10,
+   32,
+   33,
+   66,
+   131,
+   184,
+   273,
+   449
+  ],
+  [
+   2,
+   4,
+   97,
+   155,
+   177,
+   254,
+   256,
+   380,
+   410
+  ],
+  [
+   7,
+   10,
+   121,
+   313,
+   393,
+   452,
+   496
+  ],
+  [
+   2,
+   3,
+   4,
+   5,
+   8,
+   10,
+   21,
+   25,
+   27,
+   29,
+   30,
+   37,
+   47,
+   93,
+   96,
+   101,
+   132,
+   135,
+   136,
+   200,
+   269,
+   280,
+   282,
+   358,
+   486
+  ],
+  [
+   2,
+   8
+  ],
+  [
+   1,
+   11,
+   23,
+   34,
+   132,
+   172,
+   284,
+   307
+  ],
+  [
+   2,
+   3,
+   5,
+   6,
+   8,
+   22,
+   23,
+   25,
+   29,
+   31,
+   35,
+   43,
+   72,
+   82,
+   101,
+   137,
+   168,
+   320,
+   357,
+   373
+  ],
+  [
+   0,
+   1,
+   2,
+   3,
+   5,
+   7,
+   8,
+   17,
+   25,
+   29,
+   41,
+   43,
+   50,
+   87,
+   88,
+   101,
+   151,
+   191,
+   193,
+   365,
+   433
+  ],
+  [
+   2,
+   3,
+   4,
+   6,
+   7,
+   20,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   37,
+   38,
+   43,
+   51,
+   53,
+   72,
+   82,
+   84,
+   95,
+   99,
+   115,
+   128,
+   188,
+   189,
+   198,
+   220,
+   221,
+   224,
+   229,
+   233,
+   267,
+   287,
+   290,
+   303,
+   307,
+   325,
+   330,
+   332,
+   372,
+   381,
+   388,
+   408,
+   420,
+   421,
+   430,
+   437
+  ],
+  [
+   19,
+   20,
+   64,
+   108,
+   169,
+   205,
+   383
+  ],
+  [
+   0,
+   3,
+   52,
+   106
+  ],
+  [
+   3,
+   4,
+   5,
+   6,
+   10,
+   17,
+   20,
+   21,
+   22,
+   29,
+   31,
+   35,
+   39,
+   41,
+   46,
+   63,
+   98,
+   101,
+   105,
+   118,
+   169,
+   183,
+   189,
+   197,
+   224,
+   230,
+   293,
+   303,
+   368,
+   443,
+   460
+  ],
+  [
+   2,
+   22,
+   125,
+   240
+  ],
+  [
+   17,
+   22,
+   150,
+   354,
+   383,
+   390,
+   477
+  ],
+  [
+   8,
+   22,
+   67,
+   253,
+   270
+  ],
+  [
+   0,
+   1,
+   17,
+   20,
+   21,
+   22,
+   25,
+   39,
+   57,
+   62,
+   72,
+   117,
+   141,
+   142,
+   144,
+   168,
+   244,
+   247,
+   252,
+   308,
+   347,
+   412
+  ],
+  [
+   17,
+   22,
+   171,
+   233
+  ],
+  [
+   0,
+   2,
+   3,
+   7,
+   8,
+   20,
+   25,
+   35,
+   37,
+   39,
+   43,
+   54,
+   72,
+   161,
+   277,
+   314,
+   330,
+   350,
+   477,
+   491
+  ],
+  [
+   0,
+   14,
+   39,
+   185,
+   390
+  ],
+  [
+   4,
+   14,
+   193
+  ],
+  [
+   0,
+   19,
+   38,
+   61,
+   75,
+   88,
+   151,
+   167,
+   397
+  ],
+  [
+   6,
+   20,
+   25,
+   31,
+   37,
+   43,
+   49,
+   68,
+   72,
+   95,
+   101,
+   104,
+   109,
+   139,
+   165,
+   240,
+   281,
+   286,
+   423,
+   425,
+   464
+  ],
+  [
+   2,
+   7,
+   259
+  ],
+  [
+   2,
+   7,
+   8,
+   10,
+   17,
+   22,
+   31,
+   35,
+   41,
+   43,
+   48,
+   50,
+   80,
+   111,
+   216,
+   272,
+   362
+  ],
+  [
+   22,
+   34,
+   102
+  ],
+  [
+   0,
+   1,
+   4,
+   5,
+   8,
+   10,
+   25,
+   29,
+   31,
+   32,
+   54,
+   72,
+   74,
+   85,
+   91,
+   101,
+   103,
+   107,
+   122,
+   123,
+   150,
+   236,
+   291,
+   430
+  ],
+  [
+   0,
+   8,
+   90,
+   126,
+   134,
+   237
+  ],
+  [
+   0,
+   2,
+   5,
+   7,
+   10,
+   21,
+   25,
+   37,
+   43,
+   54,
+   55,
+   65,
+   72,
+   76,
+   101,
+   162,
+   163,
+   219,
+   353,
+   459
+  ],
+  [
+   0,
+   13,
+   47,
+   54,
+   157,
+   290,
+   328,
+   404
+  ],
+  [
+   1,
+   6,
+   7,
+   8,
+   20,
+   21,
+   22,
+   31,
+   35,
+   37,
+   41,
+   44,
+   54,
+   101,
+   156,
+   178,
+   209,
+   310,
+   318,
+   361,
+   382
+  ],
+  [
+   2,
+   43,
+   162
+  ],
+  [
+   0,
+   10,
+   85,
+   324
+  ],
+  [
+   1,
+   25,
+   48,
+   157,
+   181,
+   222,
+   280,
+   372
+  ],
+  [
+   17,
+   42,
+   59,
+   62,
+   205,
+   316,
+   327
+  ],
+  [
+   37,
+   46,
+   309,
+   336
+  ],
+  [
+   2,
+   35
+  ],
+  [
+   21,
+   37,
+   75,
+   200,
+   209,
+   388,
+   396
+  ],
+  [
+   1,
+   22,
+   188,
+   219,
+   311,
+   340,
+   469
+  ],
+  [
+   3,
+   24,
+   351
+  ],
+  [
+   1,
+   22,
+   106,
+   146,
+   249
+  ],
+  [
+   0,
+   1,
+   4,
+   5,
+   8,
+   31,
+   39,
+   41,
+   42,
+   43,
+   59,
+   107,
+   112,
+   117,
+   138,
+   165,
+   173,
+   195,
+   211,
+   279,
+   292,
+   309,
+   334,
+   395,
+   414,
+   448
+  ],
+  [
+   0,
+   41,
+   79,
+   89,
+   184,
+   226
+  ],
+  [
+   0,
+   1,
+   202
+  ],
+  [
+   3,
+   29,
+   71,
+   83,
+   104,
+   146,
+   175,
+   257,
+   319,
+   435
+  ],
+  [
+   3,
+   8,
+   127,
+   265,
+   370
+  ],
+  [
+   47,
+   54,
+   120,
+   411
+  ],
+  [
+   2,
+   8,
+   129,
+   140,
+   182,
+   199,
+   218,
+   381,
+   424
+  ],
+  [
+   12,
+   34,
+   196,
+   262,
+   324,
+   417
+  ],
+  [
+   29,
+   47,
+   199,
+   206,
+   407
+  ],
+  [
+   4,
+   25,
+   139,
+   159,
+   364,
+   387
+  ],
+  [
+   2,
+   23,
+   94,
+   241,
+   342,
+   481,
+   492
+  ],
+  [
+   10,
+   41,
+   174,
+   197
+  ],
+  [
+   0,
+   14,
+   84,
+   147,
+   370
+  ],
+  [
+   1,
+   28,
+   86,
+   479
+  ],
+  [
+   5,
+   35,
+   260,
+   317,
+   351,
+   479
+  ],
+  [
+   2,
+   8,
+   352,
+   398,
+   488
+  ],
+  [
+   0,
+   8,
+   86,
+   124,
+   153,
+   215,
+   223,
+   344,
+   345,
+   436
+  ],
+  [
+   2,
+   57,
+   77,
+   130,
+   285
+  ],
+  [
+   0,
+   3,
+   4,
+   7,
+   12,
+   20,
+   22,
+   29,
+   31,
+   35,
+   39,
+   41,
+   78,
+   81,
+   97,
+   112,
+   125,
+   129,
+   138,
+   237,
+   342
+  ],
+  [
+   0,
+   2,
+   77,
+   460
+  ],
+  [
+   4,
+   39,
+   120,
+   176,
+   210,
+   421,
+   470
+  ],
+  [
+   34,
+   50,
+   122,
+   147,
+   207,
+   259,
+   294,
+   413,
+   448,
+   487
+  ],
+  [
+   2,
+   41,
+   79,
+   160,
+   419
+  ],
+  [
+   71,
+   73,
+   447
+  ],
+  [
+   1,
+   72,
+   80,
+   113,
+   136,
+   254,
+   275
+  ],
+  [
+   55,
+   76
+  ],
+  [
+   37,
+   78,
+   447
+  ],
+  [
+   0,
+   72,
+   116,
+   194,
+   217,
+   222,
+   360
+  ],
+  [
+   20,
+   22
+  ],
+  [
+   7,
+   57,
+   195,
+   498
+  ],
+  [
+   22,
+   66,
+   91,
+   140,
+   287
+  ],
+  [
+   39,
+   45,
+   87,
+   100,
+   103,
+   135,
+   235,
+   288,
+   333
+  ],
+  [
+   67,
+   70,
+   142,
+   172,
+   245,
+   439
+  ],
+  [
+   21,
+   85,
+   90,
+   144,
+   149,
+   218,
+   274,
+   451
+  ],
+  [
+   21,
+   34,
+   156
+  ],
+  [
+   2,
+   55,
+   111,
+   143,
+   148,
+   173,
+   192,
+   201,
+   321,
+   378
+  ],
+  [
+   40,
+   87,
+   118,
+   123,
+   286,
+   376
+  ],
+  [
+   39,
+   84,
+   239
+  ],
+  [
+   2,
+   6
+  ],
+  [
+   2,
+   17,
+   167,
+   217,
+   264,
+   346
+  ],
+  [
+   2,
+   64,
+   275,
+   276
+  ],
+  [
+   22,
+   35
+  ],
+  [
+   2,
+   17,
+   164,
+   305,
+   355,
+   405,
+   497
+  ],
+  [
+   15,
+   72,
+   203,
+   249
+  ],
+  [
+   6,
+   25,
+   186,
+   492
+  ],
+  [
+   10,
+   22,
+   181,
+   194,
+   228,
+   251,
+   325,
+   332,
+   400,
+   482
+  ],
+  [
+   2,
+   85,
+   322,
+   374,
+   377
+  ],
+  [
+   0,
+   2,
+   17,
+   20,
+   21,
+   25,
+   35,
+   39,
+   41,
+   43,
+   114,
+   154,
+   179,
+   201,
+   214,
+   248,
+   279,
+   301,
+   376,
+   395,
+   401,
+   403,
+   424
+  ],
+  [
+   3,
+   38,
+   121,
+   213,
+   315,
+   318,
+   489
+  ],
+  [
+   39,
+   85
+  ],
+  [
+   35,
+   57,
+   382
+  ],
+  [
+   2,
+   25,
+   299
+  ],
+  [
+   24,
+   53,
+   278
+  ],
+  [
+   39,
+   54,
+   211,
+   484
+  ],
+  [
+   1,
+   23,
+   110,
+   277
+  ],
+  [
+   3,
+   35,
+   238
+  ],
+  [
+   10,
+   108,
+   196,
+   266,
+   269,
+   333,
+   485
+  ],
+  [
+   37,
+   89,
+   262,
+   322
+  ],
+  [
+   54,
+   72,
+   288
+  ],
+  [
+   6,
+   78
+  ],
+  [
+   10,
+   101,
+   187,
+   389
+  ],
+  [
+   7,
+   22
+  ],
+  [
+   8,
+   81
+  ],
+  [
+   29,
+   54,
+   450
+  ],
+  [
+   25,
+   90,
+   174,
+   227,
+   349,
+   391,
+   422
+  ],
+  [
+   2,
+   3,
+   345
+  ],
+  [
+   59,
+   74,
+   202,
+   208,
+   248,
+   268,
+   396,
+   476
+  ],
+  [
+   16,
+   102,
+   133,
+   252,
+   400
+  ],
+  [
+   39,
+   75,
+   461
+  ],
+  [
+   39,
+   90
+  ],
+  [
+   0,
+   70,
+   250,
+   258
+  ],
+  [
+   26,
+   72
+  ],
+  [
+   0,
+   40,
+   134,
+   234,
+   323,
+   337,
+   401
+  ],
+  [
+   3,
+   58,
+   145,
+   246
+  ],
+  [
+   8,
+   22,
+   359
+  ],
+  [
+   60,
+   72,
+   331,
+   379,
+   384
+  ],
+  [
+   4,
+   71,
+   375,
+   441,
+   466,
+   469
+  ],
+  [
+   8,
+   14
+  ],
+  [
+   17,
+   19
+  ],
+  [
+   2,
+   121
+  ],
+  [
+   40,
+   126,
+   204,
+   220,
+   271,
+   380,
+   409
+  ],
+  [
+   17,
+   85,
+   261,
+   352
+  ],
+  [
+   17,
+   78
+  ],
+  [
+   10,
+   20,
+   231
+  ],
+  [
+   54,
+   72,
+   187
+  ],
+  [
+   35,
+   63,
+   379
+  ],
+  [
+   60,
+   84
+  ],
+  [
+   2,
+   29,
+   190
+  ],
+  [
+   29,
+   86,
+   245
+  ],
+  [
+   5,
+   89
+  ],
+  [
+   29,
+   87,
+   210,
+   438,
+   446
+  ],
+  [
+   3,
+   127,
+   225,
+   298,
+   386,
+   414,
+   425
+  ],
+  [
+   53,
+   57,
+   204,
+   282
+  ],
+  [
+   66,
+   75,
+   152,
+   263,
+   334
+  ],
+  [
+   4,
+   89,
+   164,
+   223,
+   300
+  ],
+  [
+   2,
+   87,
+   221,
+   470
+  ],
+  [
+   27,
+   39,
+   329,
+   458
+  ],
+  [
+   21,
+   34,
+   185
+  ],
+  [
+   13,
+   147,
+   260,
+   268,
+   418
+  ],
+  [
+   4,
+   70,
+   235,
+   312,
+   456,
+   472
+  ],
+  [
+   5,
+   101,
+   289,
+   335
+  ],
+  [
+   10,
+   15,
+   166,
+   427,
+   478
+  ],
+  [
+   43,
+   88,
+   226,
+   272,
+   344,
+   368,
+   429
+  ],
+  [
+   42,
+   46,
+   180,
+   491
+  ],
+  [
+   1,
+   3
+  ],
+  [
+   2,
+   63
+  ],
+  [
+   6,
+   76,
+   206,
+   261,
+   377
+  ],
+  [
+   2,
+   31,
+   362,
+   416
+  ],
+  [
+   41,
+   44
+  ],
+  [
+   0,
+   41,
+   371
+  ],
+  [
+   96,
+   148,
+   450
+  ],
+  [
+   35,
+   54,
+   255,
+   475
+  ],
+  [
+   2,
+   155
+  ],
+  [
+   34,
+   93
+  ],
+  [
+   20,
+   29
+  ],
+  [
+   23,
+   25,
+   306,
+   363,
+   394
+  ],
+  [
+   2,
+   3,
+   378
+  ],
+  [
+   8,
+   30,
+   191,
+   232,
+   366,
+   391,
+   392,
+   434
+  ],
+  [
+   19,
+   86
+  ],
+  [
+   54,
+   89,
+   361
+  ],
+  [
+   65,
+   118
+  ],
+  [
+   3,
+   57
+  ],
+  [
+   3,
+   74
+  ],
+  [
+   3,
+   15,
+   281,
+   490
+  ],
+  [
+   0,
+   43,
+   231,
+   241,
+   483
+  ],
+  [
+   2,
+   101,
+   216
+  ],
+  [
+   2,
+   157,
+   443,
+   462
+  ],
+  [
+   46,
+   99,
+   213
+  ],
+  [
+   2,
+   60,
+   225,
+   384
+  ],
+  [
+   0,
+   25,
+   273,
+   305
+  ],
+  [
+   14,
+   55,
+   190,
+   354,
+   436,
+   437
+  ],
+  [
+   32,
+   151,
+   358
+  ],
+  [
+   10,
+   98,
+   212
+  ],
+  [
+   114,
+   138
+  ],
+  [
+   22,
+   51
+  ],
+  [
+   22,
+   25
+  ],
+  [
+   141,
+   184
+  ],
+  [
+   21,
+   171
+  ],
+  [
+   0,
+   89
+  ],
+  [
+   21,
+   33,
+   442
+  ],
+  [
+   81,
+   99,
+   234
+  ],
+  [
+   54,
+   83,
+   304,
+   320
+  ],
+  [
+   61,
+   110
+  ],
+  [
+   25,
+   65
+  ],
+  [
+   12,
+   22,
+   298,
+   313,
+   428
+  ],
+  [
+   60,
+   62
+  ],
+  [
+   17,
+   50,
+   347
+  ],
+  [
+   89,
+   101
+  ],
+  [
+   56,
+   120,
+   295
+  ],
+  [
+   13,
+   97,
+   265,
+   346,
+   371
+  ],
+  [
+   134,
+   146
+  ],
+  [
+   23,
+   47,
+   415
+  ],
+  [
+   62,
+   160,
+   321
+  ],
+  [
+   10,
+   75,
+   337,
+   392
+  ],
+  [
+   13,
+   120,
+   315,
+   326
+  ],
+  [
+   43,
+   50
+  ],
+  [
+   74,
+   144
+  ],
+  [
+   54,
+   107,
+   316
+  ],
+  [
+   2,
+   186,
+   230
+  ],
+  [
+   102,
+   181,
+   246,
+   494
+  ],
+  [
+   0,
+   101,
+   339,
+   355,
+   408
+  ],
+  [
+   2,
+   70,
+   292
+  ],
+  [
+   37,
+   179,
+   247,
+   284
+  ],
+  [
+   81,
+   93,
+   394,
+   488
+  ],
+  [
+   60,
+   87
+  ],
+  [
+   41,
+   51,
+   415,
+   426
+  ],
+  [
+   22,
+   134,
+   310,
+   404,
+   476
+  ],
+  [
+   22,
+   149
+  ],
+  [
+   46,
+   81,
+   243
+  ],
+  [
+   70,
+   148,
+   255,
+   270
+  ],
+  [
+   22,
+   25,
+   243,
+   276
+  ],
+  [
+   145,
+   182,
+   402
+  ],
+  [
+   55,
+   156
+  ],
+  [
+   0,
+   118
+  ],
+  [
+   12,
+   99,
+   297,
+   300,
+   363,
+   471
+  ],
+  [
+   0,
+   22,
+   429
+  ],
+  [
+   25,
+   212
+  ],
+  [
+   137,
+   178,
+   264,
+   308
+  ],
+  [
+   0,
+   171,
+   406
+  ],
+  [
+   22,
+   30
+  ],
+  [
+   126,
+   194,
+   412
+  ],
+  [
+   85,
+   153,
+   399
+  ],
+  [
+   8,
+   39,
+   444
+  ],
+  [
+   40,
+   72
+  ],
+  [
+   0,
+   109,
+   406
+  ],
+  [
+   1,
+   91
+  ],
+  [
+   26,
+   35,
+   453
+  ],
+  [
+   64,
+   178,
+   263
+  ],
+  [
+   0,
+   2,
+   251,
+   257,
+   267,
+   327,
+   357
+  ],
+  [
+   222,
+   224
+  ],
+  [
+   0,
+   29,
+   296
+  ],
+  [
+   86,
+   142,
+   317,
+   360
+  ],
+  [
+   127,
+   213
+  ],
+  [
+   29,
+   216,
+   365,
+   480
+  ],
+  [
+   101,
+   120,
+   278
+  ],
+  [
+   53,
+   97,
+   475
+  ],
+  [
+   10,
+   124,
+   431
+  ],
+  [
+   99,
+   242,
+   402
+  ],
+  [
+   29,
+   121,
+   410,
+   485
+  ],
+  [
+   2,
+   28
+  ],
+  [
+   15,
+   78
+  ],
+  [
+   165,
+   223
+  ],
+  [
+   2,
+   15
+  ],
+  [
+   57,
+   242,
+   427,
+   452,
+   459,
+   473
+  ],
+  [
+   5,
+   124
+  ],
+  [
+   36,
+   75
+  ],
+  [
+   68,
+   152,
+   311
+  ],
+  [
+   135,
+   160,
+   366
+  ],
+  [
+   61,
+   111
+  ],
+  [
+   147,
+   241
+  ],
+  [
+   93,
+   231
+  ],
+  [
+   58,
+   203
+  ],
+  [
+   2,
+   110
+  ],
+  [
+   22,
+   242
+  ],
+  [
+   120,
+   152,
+   367,
+   397,
+   435
+  ],
+  [
+   17,
+   110
+  ],
+  [
+   28,
+   223
+  ],
+  [
+   1,
+   134
+  ],
+  [
+   37,
+   156
+  ],
+  [
+   14,
+   183
+  ],
+  [
+   4,
+   87,
+   306
+  ],
+  [
+   78,
+   94,
+   364,
+   486
+  ],
+  [
+   94,
+   224
+  ],
+  [
+   31,
+   108
+  ],
+  [
+   106,
+   248
+  ],
+  [
+   54,
+   101
+  ],
+  [
+   17,
+   46
+  ],
+  [
+   35,
+   177
+  ],
+  [
+   17,
+   146,
+   294
+  ],
+  [
+   2,
+   3
+  ],
+  [
+   19,
+   216
+  ],
+  [
+   1,
+   71
+  ],
+  [
+   35,
+   90
+  ],
+  [
+   22,
+   84,
+   369,
+   385
+  ],
+  [
+   85,
+   112,
+   489
+  ],
+  [
+   4,
+   154
+  ],
+  [
+   22,
+   42,
+   304,
+   359
+  ],
+  [
+   4,
+   39,
+   482
+  ],
+  [
+   54,
+   215
+  ],
+  [
+   5,
+   25,
+   418
+  ],
+  [
+   75,
+   282
+  ],
+  [
+   4,
+   202
+  ],
+  [
+   0,
+   244
+  ],
+  [
+   3,
+   228
+  ],
+  [
+   145,
+   198
+  ],
+  [
+   0,
+   105
+  ],
+  [
+   148,
+   228
+  ],
+  [
+   8,
+   101,
+   314,
+   417
+  ],
+  [
+   2,
+   7,
+   434
+  ],
+  [
+   22,
+   25
+  ],
+  [
+   195,
+   290,
+   386
+  ],
+  [
+   96,
+   183
+  ],
+  [
+   169,
+   274
+  ],
+  [
+   19,
+   22,
+   468
+  ],
+  [
+   29,
+   231,
+   329,
+   411
+  ],
+  [
+   48,
+   54,
+   457
+  ],
+  [
+   43,
+   220,
+   426
+  ],
+  [
+   51,
+   260
+  ],
+  [
+   10,
+   153
+  ],
+  [
+   16,
+   198
+  ],
+  [
+   31,
+   301,
+   353
+  ],
+  [
+   102,
+   208
+  ],
+  [
+   47,
+   211
+  ],
+  [
+   68,
+   245,
+   456
+  ],
+  [
+   43,
+   102
+  ],
+  [
+   0,
+   57
+  ],
+  [
+   20,
+   195
+  ],
+  [
+   89,
+   206,
+   343,
+   422
+  ],
+  [
+   100,
+   111
+  ],
+  [
+   2,
+   126
+  ],
+  [
+   45,
+   61
+  ],
+  [
+   22,
+   99
+  ],
+  [
+   0,
+   208,
+   331,
+   440
+  ],
+  [
+   47,
+   242,
+   374
+  ],
+  [
+   0,
+   42
+  ],
+  [
+   150,
+   308
+  ],
+  [
+   22,
+   31
+  ],
+  [
+   129,
+   326
+  ],
+  [
+   22,
+   99
+  ],
+  [
+   85,
+   110
+  ],
+  [
+   54,
+   147
+  ],
+  [
+   2,
+   154
+  ],
+  [
+   7,
+   48,
+   341,
+   490
+  ],
+  [
+   126,
+   207,
+   431
+  ],
+  [
+   8,
+   12
+  ],
+  [
+   4,
+   214
+  ],
+  [
+   2,
+   51
+  ],
+  [
+   6,
+   336
+  ],
+  [
+   64,
+   72
+  ],
+  [
+   8,
+   321
+  ],
+  [
+   70,
+   156
+  ],
+  [
+   70,
+   119,
+   433
+  ],
+  [
+   93,
+   203
+  ],
+  [
+   29,
+   200,
+   403
+  ],
+  [
+   3,
+   6
+  ],
+  [
+   2,
+   118,
+   439,
+   464,
+   465,
+   473
+  ],
+  [
+   3,
+   31,
+   428,
+   472
+  ],
+  [
+   52,
+   68
+  ],
+  [
+   69,
+   135
+  ],
+  [
+   41,
+   314
+  ],
+  [
+   27,
+   184
+  ],
+  [
+   96,
+   214,
+   454,
+   474
+  ],
+  [
+   4,
+   7
+  ],
+  [
+   20,
+   242
+  ],
+  [
+   17,
+   185
+  ],
+  [
+   128,
+   290,
+   449
+  ],
+  [
+   81,
+   245
+  ],
+  [
+   43,
+   173
+  ],
+  [
+   37,
+   161
+  ],
+  [
+   169,
+   228,
+   458
+  ],
+  [
+   63,
+   275
+  ],
+  [
+   21,
+   247
+  ],
+  [
+   171,
+   261
+  ],
+  [
+   3,
+   268
+  ],
+  [
+   25,
+   156
+  ],
+  [
+   2,
+   287,
+   498
+  ],
+  [
+   58,
+   66
+  ],
+  [
+   163,
+   203,
+   467
+  ],
+  [
+   22,
+   46
+  ],
+  [
+   3,
+   20
+  ],
+  [
+   100,
+   327,
+   445
+  ],
+  [
+   10,
+   130
+  ],
+  [
+   90,
+   101
+  ],
+  [
+   100,
+   160
+  ],
+  [
+   89,
+   170
+  ],
+  [
+   129,
+   139
+  ],
+  [
+   15,
+   134
+  ],
+  [
+   22,
+   60
+  ],
+  [
+   43,
+   104,
+   387,
+   442
+  ],
+  [
+   23,
+   27
+  ],
+  [
+   129,
+   182
+  ],
+  [
+   3,
+   287,
+   451
+  ],
+  [
+   145,
+   304
+  ],
+  [
+   63,
+   382
+  ],
+  [
+   22,
+   50
+  ],
+  [
+   5,
+   114
+  ],
+  [
+   27,
+   32,
+   413
+  ],
+  [
+   118,
+   171
+  ],
+  [
+   171,
+   207
+  ],
+  [
+   4,
+   16
+  ],
+  [
+   169,
+   217
+  ],
+  [
+   54,
+   101
+  ],
+  [
+   50,
+   120
+  ],
+  [
+   34,
+   268
+  ],
+  [
+   0,
+   69
+  ],
+  [
+   2,
+   235
+  ],
+  [
+   99,
+   121
+  ],
+  [
+   101,
+   126
+  ],
+  [
+   225,
+   251
+  ],
+  [
+   101,
+   347
+  ],
+  [
+   42,
+   220
+  ],
+  [
+   10,
+   96
+  ],
+  [
+   232,
+   238,
+   467
+  ],
+  [
+   2,
+   62,
+   497
+  ],
+  [
+   22,
+   214
+  ],
+  [
+   10,
+   134,
+   478
+  ],
+  [
+   15,
+   252,
+   445
+  ],
+  [
+   59,
+   308
+  ],
+  [
+   29,
+   234
+  ],
+  [
+   75,
+   390,
+   453
+  ],
+  [
+   54,
+   145
+  ],
+  [
+   205,
+   219
+  ],
+  [
+   2,
+   161
+  ],
+  [
+   61,
+   301
+  ],
+  [
+   152,
+   293
+  ],
+  [
+   11,
+   76,
+   420
+  ],
+  [
+   22,
+   419
+  ],
+  [
+   22,
+   74
+  ],
+  [
+   118,
+   321
+  ],
+  [
+   2,
+   35
+  ],
+  [
+   60,
+   101
+  ],
+  [
+   35,
+   145
+  ],
+  [
+   219,
+   310
+  ],
+  [
+   155,
+   257
+  ],
+  [
+   198,
+   350
+  ],
+  [
+   156,
+   229
+  ],
+  [
+   22,
+   39
+  ],
+  [
+   250,
+   337
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   21,
+   345
+  ],
+  [
+   171,
+   302
+  ],
+  [
+   57,
+   268
+  ],
+  [
+   70,
+   184
+  ],
+  [
+   22,
+   184
+  ],
+  [
+   0,
+   144
+  ],
+  [
+   86,
+   349
+  ],
+  [
+   7,
+   326,
+   493
+  ],
+  [
+   2,
+   130
+  ],
+  [
+   193,
+   382
+  ],
+  [
+   25,
+   180
+  ],
+  [
+   11,
+   236
+  ],
+  [
+   374,
+   410
+  ],
+  [
+   0,
+   144
+  ],
+  [
+   77,
+   80
+  ],
+  [
+   54,
+   75
+  ],
+  [
+   14,
+   359
+  ],
+  [
+   117,
+   164,
+   457
+  ],
+  [
+   87,
+   385
+  ],
+  [
+   16,
+   257
+  ],
+  [
+   240,
+   413
+  ],
+  [
+   8,
+   355
+  ],
+  [
+   0,
+   3
+  ],
+  [
+   153,
+   317
+  ],
+  [
+   309,
+   450
+  ],
+  [
+   150,
+   363
+  ],
+  [
+   41,
+   257
+  ],
+  [
+   25,
+   73
+  ],
+  [
+   0,
+   122
+  ],
+  [
+   2,
+   180
+  ],
+  [
+   0,
+   13
+  ],
+  [
+   35,
+   349,
+   499
+  ],
+  [
+   2,
+   349
+  ],
+  [
+   0,
+   130
+  ],
+  [
+   371,
+   406
+  ],
+  [
+   12,
+   307
+  ],
+  [
+   51,
+   130
+  ],
+  [
+   74,
+   149
+  ],
+  [
+   8,
+   228
+  ],
+  [
+   153,
+   350
+  ],
+  [
+   257,
+   349
+  ],
+  [
+   0,
+   355,
+   483,
+   496
+  ],
+  [
+   165,
+   249
+  ],
+  [
+   120,
+   220
+  ],
+  [
+   27,
+   31
+  ],
+  [
+   155,
+   409
   ],
   [
    67,
    68
   ],
   [
-   67,
-   123
-  ],
-  [
-   67,
-   162
-  ],
-  [
-   67,
-   263
-  ],
-  [
-   68,
-   69
-  ],
-  [
-   68,
-   104
-  ],
-  [
-   68,
-   110
-  ],
-  [
-   68,
-   180
-  ],
-  [
-   68,
-   307
-  ],
-  [
-   68,
-   462
-  ],
-  [
-   69,
-   70
-  ],
-  [
-   69,
-   147
-  ],
-  [
-   69,
-   186
-  ],
-  [
-   69,
-   254
-  ],
-  [
-   69,
-   345
-  ],
-  [
-   69,
-   387
-  ],
-  [
-   70,
-   71
-  ],
-  [
-   70,
-   113
-  ],
-  [
-   70,
-   403
-  ],
-  [
-   71,
-   72
-  ],
-  [
-   71,
-   78
-  ],
-  [
-   71,
-   393
-  ],
-  [
-   72,
-   73
-  ],
-  [
-   72,
-   320
-  ],
-  [
-   72,
-   393
-  ],
-  [
-   73,
-   74
-  ],
-  [
-   73,
-   116
-  ],
-  [
-   73,
-   177
-  ],
-  [
-   73,
-   241
-  ],
-  [
-   73,
-   343
-  ],
-  [
-   73,
-   405
-  ],
-  [
-   74,
-   75
-  ],
-  [
-   74,
-   479
-  ],
-  [
-   75,
-   76
-  ],
-  [
-   75,
-   162
-  ],
-  [
-   75,
-   278
-  ],
-  [
-   76,
-   77
-  ],
-  [
-   76,
-   138
-  ],
-  [
-   76,
-   195
-  ],
-  [
-   76,
-   233
-  ],
-  [
-   76,
-   453
-  ],
-  [
-   77,
-   78
-  ],
-  [
-   77,
-   367
-  ],
-  [
-   77,
-   442
-  ],
-  [
-   77,
-   498
-  ],
-  [
-   78,
-   79
-  ],
-  [
-   78,
-   350
-  ],
-  [
-   79,
-   80
-  ],
-  [
-   79,
-   305
-  ],
-  [
-   80,
-   81
-  ],
-  [
-   80,
-   112
-  ],
-  [
-   81,
-   82
-  ],
-  [
-   81,
-   290
-  ],
-  [
-   81,
-   381
-  ],
-  [
-   82,
-   83
-  ],
-  [
-   82,
-   189
-  ],
-  [
-   82,
-   480
-  ],
-  [
-   83,
-   84
-  ],
-  [
-   83,
-   124
-  ],
-  [
-   83,
-   155
-  ],
-  [
-   84,
-   85
-  ],
-  [
-   84,
-   299
-  ],
-  [
-   84,
-   440
-  ],
-  [
-   85,
-   86
-  ],
-  [
-   86,
-   87
-  ],
-  [
-   86,
-   437
-  ],
-  [
-   86,
-   441
-  ],
-  [
-   87,
-   88
-  ],
-  [
-   87,
-   101
-  ],
-  [
-   87,
-   160
-  ],
-  [
-   87,
-   221
-  ],
-  [
-   87,
-   268
-  ],
-  [
-   87,
-   272
-  ],
-  [
-   88,
-   89
-  ],
-  [
-   88,
-   171
-  ],
-  [
-   88,
-   256
-  ],
-  [
-   89,
-   90
-  ],
-  [
-   89,
-   241
-  ],
-  [
-   89,
-   319
-  ],
-  [
-   89,
-   350
-  ],
-  [
-   89,
-   391
-  ],
-  [
-   90,
-   91
-  ],
-  [
-   90,
-   162
-  ],
-  [
-   90,
-   212
-  ],
-  [
-   90,
-   415
-  ],
-  [
-   91,
-   92
-  ],
-  [
-   91,
-   144
-  ],
-  [
-   91,
-   163
-  ],
-  [
-   91,
-   369
-  ],
-  [
-   91,
-   384
-  ],
-  [
-   92,
-   93
-  ],
-  [
-   92,
-   302
-  ],
-  [
-   92,
-   470
-  ],
-  [
-   92,
-   490
-  ],
-  [
-   93,
-   94
-  ],
-  [
-   93,
-   137
-  ],
-  [
-   93,
-   209
-  ],
-  [
-   93,
-   488
-  ],
-  [
-   94,
-   95
-  ],
-  [
-   94,
-   391
-  ],
-  [
-   94,
-   404
-  ],
-  [
-   94,
-   497
-  ],
-  [
-   95,
-   96
-  ],
-  [
-   95,
-   128
-  ],
-  [
-   95,
-   206
-  ],
-  [
-   95,
-   355
-  ],
-  [
-   95,
-   366
-  ],
-  [
-   96,
-   97
-  ],
-  [
-   96,
-   301
-  ],
-  [
-   96,
-   455
-  ],
-  [
-   97,
-   98
-  ],
-  [
-   97,
-   451
-  ],
-  [
-   98,
-   99
-  ],
-  [
-   98,
-   401
-  ],
-  [
-   98,
-   468
-  ],
-  [
-   99,
-   100
-  ],
-  [
-   99,
-   423
-  ],
-  [
-   100,
-   101
-  ],
-  [
-   100,
-   239
-  ],
-  [
-   100,
-   451
-  ],
-  [
-   100,
-   465
-  ],
-  [
-   100,
-   477
-  ],
-  [
-   101,
-   102
-  ],
-  [
-   101,
-   261
-  ],
-  [
-   101,
-   286
-  ],
-  [
-   102,
-   103
-  ],
-  [
-   102,
-   237
-  ],
-  [
-   102,
-   244
-  ],
-  [
-   103,
-   104
-  ],
-  [
-   103,
-   352
-  ],
-  [
-   103,
-   404
-  ],
-  [
-   103,
-   479
-  ],
-  [
-   104,
-   105
-  ],
-  [
-   104,
-   136
-  ],
-  [
-   104,
-   416
-  ],
-  [
-   105,
-   106
-  ],
-  [
-   105,
-   219
-  ],
-  [
-   105,
-   402
-  ],
-  [
-   105,
-   412
-  ],
-  [
-   106,
-   107
-  ],
-  [
-   106,
-   179
-  ],
-  [
-   106,
-   298
-  ],
-  [
-   106,
-   318
-  ],
-  [
-   106,
-   358
-  ],
-  [
-   107,
-   108
-  ],
-  [
-   107,
-   416
-  ],
-  [
-   108,
-   109
-  ],
-  [
-   108,
-   319
-  ],
-  [
-   108,
-   425
-  ],
-  [
-   108,
-   427
-  ],
-  [
-   108,
-   486
-  ],
-  [
-   109,
-   110
-  ],
-  [
-   109,
-   161
-  ],
-  [
-   109,
-   235
-  ],
-  [
-   110,
-   111
-  ],
-  [
-   111,
-   112
-  ],
-  [
-   111,
-   382
-  ],
-  [
-   112,
-   113
-  ],
-  [
-   112,
-   117
-  ],
-  [
-   112,
-   373
-  ],
-  [
-   113,
-   114
-  ],
-  [
-   113,
-   377
-  ],
-  [
-   113,
-   394
-  ],
-  [
-   114,
-   115
-  ],
-  [
-   114,
-   181
-  ],
-  [
-   114,
-   434
-  ],
-  [
-   115,
-   116
-  ],
-  [
-   115,
-   216
-  ],
-  [
-   115,
-   327
-  ],
-  [
-   116,
-   117
-  ],
-  [
-   116,
-   228
-  ],
-  [
-   116,
-   296
-  ],
-  [
-   116,
-   373
-  ],
-  [
-   116,
-   446
-  ],
-  [
-   117,
-   118
-  ],
-  [
-   117,
-   398
-  ],
-  [
-   117,
-   402
-  ],
-  [
-   118,
-   119
-  ],
-  [
-   118,
-   144
-  ],
-  [
-   118,
-   335
-  ],
-  [
-   119,
-   120
-  ],
-  [
-   119,
-   299
-  ],
-  [
-   119,
-   383
-  ],
-  [
-   119,
-   451
-  ],
-  [
-   120,
-   121
-  ],
-  [
-   120,
-   253
-  ],
-  [
-   120,
-   384
-  ],
-  [
-   121,
-   122
-  ],
-  [
-   121,
-   175
-  ],
-  [
-   121,
-   436
-  ],
-  [
-   122,
-   123
-  ],
-  [
-   122,
-   259
-  ],
-  [
-   122,
-   325
-  ],
-  [
-   123,
-   124
-  ],
-  [
-   123,
-   163
-  ],
-  [
-   123,
-   180
-  ],
-  [
-   123,
-   249
-  ],
-  [
-   123,
-   362
-  ],
-  [
-   124,
-   125
-  ],
-  [
-   124,
-   142
-  ],
-  [
-   124,
-   155
-  ],
-  [
-   124,
-   286
-  ],
-  [
-   124,
-   429
-  ],
-  [
-   124,
-   461
-  ],
-  [
-   125,
-   126
-  ],
-  [
-   125,
-   383
-  ],
-  [
-   126,
-   127
-  ],
-  [
-   126,
-   206
-  ],
-  [
-   127,
-   128
-  ],
-  [
-   127,
-   159
-  ],
-  [
-   127,
-   290
-  ],
-  [
-   127,
-   455
-  ],
-  [
-   128,
-   129
-  ],
-  [
-   129,
-   130
-  ],
-  [
-   129,
-   341
-  ],
-  [
-   129,
-   492
-  ],
-  [
-   130,
-   131
-  ],
-  [
-   130,
-   361
-  ],
-  [
-   130,
-   422
-  ],
-  [
-   130,
-   432
-  ],
-  [
-   130,
-   450
-  ],
-  [
-   131,
-   132
-  ],
-  [
-   131,
-   206
-  ],
-  [
-   131,
-   256
-  ],
-  [
-   132,
-   133
-  ],
-  [
-   132,
-   218
-  ],
-  [
-   132,
-   309
-  ],
-  [
-   133,
-   134
-  ],
-  [
-   133,
-   262
-  ],
-  [
-   133,
-   289
-  ],
-  [
-   133,
-   302
-  ],
-  [
-   133,
-   323
-  ],
-  [
-   134,
-   135
-  ],
-  [
-   134,
-   222
-  ],
-  [
-   134,
-   378
-  ],
-  [
-   135,
-   136
-  ],
-  [
-   135,
-   171
-  ],
-  [
-   135,
-   185
-  ],
-  [
-   135,
-   370
-  ],
-  [
-   136,
-   137
-  ],
-  [
-   136,
-   164
-  ],
-  [
-   137,
-   138
-  ],
-  [
-   137,
-   294
-  ],
-  [
-   138,
-   139
-  ],
-  [
-   138,
+   0,
    247
   ],
   [
-   138,
-   318
+   6,
+   64
   ],
   [
-   138,
-   472
-  ],
-  [
-   139,
-   140
-  ],
-  [
-   139,
-   215
-  ],
-  [
-   139,
-   429
-  ],
-  [
-   140,
-   141
-  ],
-  [
-   140,
-   293
-  ],
-  [
-   140,
-   337
-  ],
-  [
-   140,
-   380
-  ],
-  [
-   141,
-   142
-  ],
-  [
-   141,
-   164
-  ],
-  [
-   141,
-   356
-  ],
-  [
-   141,
-   392
-  ],
-  [
-   142,
-   143
-  ],
-  [
-   142,
-   171
-  ],
-  [
-   142,
-   248
-  ],
-  [
-   143,
-   144
-  ],
-  [
-   143,
-   199
-  ],
-  [
-   143,
-   231
-  ],
-  [
-   143,
-   273
-  ],
-  [
-   143,
-   431
-  ],
-  [
-   143,
-   462
-  ],
-  [
-   144,
-   145
-  ],
-  [
-   145,
-   146
-  ],
-  [
-   145,
-   214
-  ],
-  [
-   145,
-   215
-  ],
-  [
-   145,
-   276
-  ],
-  [
-   145,
-   373
-  ],
-  [
-   145,
-   497
-  ],
-  [
-   146,
-   147
-  ],
-  [
-   146,
-   165
-  ],
-  [
-   146,
-   168
-  ],
-  [
-   146,
-   352
-  ],
-  [
-   146,
-   368
-  ],
-  [
-   146,
-   401
-  ],
-  [
-   146,
-   477
-  ],
-  [
-   147,
-   148
-  ],
-  [
-   147,
-   180
-  ],
-  [
-   147,
-   470
-  ],
-  [
-   148,
-   149
-  ],
-  [
-   148,
-   288
-  ],
-  [
-   148,
-   461
-  ],
-  [
-   149,
-   150
-  ],
-  [
-   149,
-   167
-  ],
-  [
-   149,
-   348
-  ],
-  [
-   150,
-   151
-  ],
-  [
-   150,
-   361
-  ],
-  [
-   150,
-   402
-  ],
-  [
-   151,
-   152
-  ],
-  [
-   151,
-   375
-  ],
-  [
-   152,
-   153
-  ],
-  [
-   152,
-   167
-  ],
-  [
-   152,
-   171
-  ],
-  [
-   153,
-   154
-  ],
-  [
-   153,
-   165
-  ],
-  [
-   153,
-   173
-  ],
-  [
-   154,
-   155
-  ],
-  [
-   154,
-   251
-  ],
-  [
-   154,
-   286
-  ],
-  [
-   155,
-   156
-  ],
-  [
-   155,
-   250
-  ],
-  [
-   155,
-   332
-  ],
-  [
-   156,
-   157
-  ],
-  [
-   156,
-   159
-  ],
-  [
-   156,
-   359
-  ],
-  [
-   156,
-   363
-  ],
-  [
-   156,
-   394
-  ],
-  [
-   157,
-   158
-  ],
-  [
-   157,
-   410
-  ],
-  [
-   157,
-   476
-  ],
-  [
-   158,
-   159
-  ],
-  [
-   158,
-   239
-  ],
-  [
-   158,
-   387
-  ],
-  [
-   159,
-   160
-  ],
-  [
-   159,
-   441
-  ],
-  [
-   160,
-   161
-  ],
-  [
-   160,
-   266
-  ],
-  [
-   160,
-   466
-  ],
-  [
-   161,
-   162
-  ],
-  [
-   161,
-   172
-  ],
-  [
-   161,
-   265
-  ],
-  [
-   161,
-   365
-  ],
-  [
-   162,
-   163
-  ],
-  [
-   162,
-   471
-  ],
-  [
-   163,
-   164
-  ],
-  [
-   163,
-   242
-  ],
-  [
-   163,
-   251
-  ],
-  [
-   164,
-   165
-  ],
-  [
-   164,
-   344
-  ],
-  [
-   165,
-   166
-  ],
-  [
-   165,
-   248
-  ],
-  [
-   166,
-   167
-  ],
-  [
-   166,
-   237
-  ],
-  [
-   166,
-   336
-  ],
-  [
-   166,
-   340
-  ],
-  [
-   167,
-   168
-  ],
-  [
-   167,
-   269
-  ],
-  [
-   168,
-   169
-  ],
-  [
-   168,
-   174
-  ],
-  [
-   169,
-   170
-  ],
-  [
-   169,
-   323
-  ],
-  [
-   170,
-   171
-  ],
-  [
-   170,
-   190
-  ],
-  [
-   170,
-   191
-  ],
-  [
-   170,
-   400
-  ],
-  [
-   171,
-   172
-  ],
-  [
-   172,
-   173
-  ],
-  [
-   172,
-   189
-  ],
-  [
-   172,
-   340
-  ],
-  [
-   173,
-   174
-  ],
-  [
-   173,
-   178
-  ],
-  [
-   173,
-   203
-  ],
-  [
-   173,
-   215
-  ],
-  [
-   173,
-   396
-  ],
-  [
-   174,
-   175
-  ],
-  [
-   174,
-   192
-  ],
-  [
-   174,
-   354
-  ],
-  [
-   174,
-   443
-  ],
-  [
-   174,
-   471
-  ],
-  [
-   174,
-   496
-  ],
-  [
-   175,
-   176
-  ],
-  [
-   175,
-   230
-  ],
-  [
-   175,
-   353
-  ],
-  [
-   175,
-   433
-  ],
-  [
-   176,
-   177
-  ],
-  [
-   176,
-   231
-  ],
-  [
-   176,
-   357
-  ],
-  [
-   177,
-   178
-  ],
-  [
-   177,
-   196
-  ],
-  [
-   177,
-   284
-  ],
-  [
-   177,
-   483
-  ],
-  [
-   178,
-   179
-  ],
-  [
-   178,
-   225
-  ],
-  [
-   179,
-   180
-  ],
-  [
-   179,
-   221
-  ],
-  [
-   179,
-   372
-  ],
-  [
-   180,
-   181
-  ],
-  [
-   180,
-   294
-  ],
-  [
-   180,
-   466
-  ],
-  [
-   181,
-   182
-  ],
-  [
-   181,
-   478
-  ],
-  [
-   182,
-   183
-  ],
-  [
-   182,
-   372
-  ],
-  [
-   182,
-   438
-  ],
-  [
-   183,
-   184
-  ],
-  [
-   183,
-   276
-  ],
-  [
-   183,
-   290
-  ],
-  [
-   184,
-   185
-  ],
-  [
-   184,
-   223
-  ],
-  [
-   184,
-   231
-  ],
-  [
-   184,
-   244
-  ],
-  [
-   185,
-   186
-  ],
-  [
-   186,
-   187
-  ],
-  [
-   186,
-   289
-  ],
-  [
-   187,
-   188
-  ],
-  [
-   187,
-   466
-  ],
-  [
-   188,
-   189
-  ],
-  [
-   188,
-   217
-  ],
-  [
-   188,
-   350
-  ],
-  [
-   188,
-   435
-  ],
-  [
-   188,
-   475
-  ],
-  [
-   189,
-   190
-  ],
-  [
-   189,
-   218
-  ],
-  [
-   189,
-   342
-  ],
-  [
-   189,
-   437
-  ],
-  [
-   189,
-   444
-  ],
-  [
-   190,
-   191
-  ],
-  [
-   191,
-   192
-  ],
-  [
-   191,
-   328
-  ],
-  [
-   192,
-   193
-  ],
-  [
-   193,
-   194
-  ],
-  [
-   193,
-   231
-  ],
-  [
-   193,
-   355
-  ],
-  [
-   194,
-   195
-  ],
-  [
-   194,
-   357
-  ],
-  [
-   195,
-   196
-  ],
-  [
-   195,
-   267
-  ],
-  [
-   195,
-   454
-  ],
-  [
-   196,
-   197
-  ],
-  [
-   196,
-   242
-  ],
-  [
-   196,
-   292
-  ],
-  [
-   196,
-   386
-  ],
-  [
-   196,
-   452
-  ],
-  [
-   197,
-   198
-  ],
-  [
-   197,
-   242
-  ],
-  [
-   197,
-   445
-  ],
-  [
-   198,
-   199
-  ],
-  [
-   198,
-   215
-  ],
-  [
-   198,
-   346
-  ],
-  [
-   198,
-   489
-  ],
-  [
-   199,
-   200
-  ],
-  [
-   200,
-   201
-  ],
-  [
-   201,
-   202
-  ],
-  [
-   201,
-   355
-  ],
-  [
-   202,
-   203
-  ],
-  [
-   202,
-   288
-  ],
-  [
-   202,
-   297
-  ],
-  [
-   203,
-   204
-  ],
-  [
-   203,
-   276
-  ],
-  [
-   203,
-   344
-  ],
-  [
-   203,
-   499
-  ],
-  [
-   204,
-   205
-  ],
-  [
-   204,
-   243
-  ],
-  [
-   204,
-   325
-  ],
-  [
-   204,
-   480
-  ],
-  [
-   205,
-   206
-  ],
-  [
-   205,
-   373
-  ],
-  [
-   206,
-   207
-  ],
-  [
-   206,
-   385
-  ],
-  [
-   206,
-   399
-  ],
-  [
-   207,
-   208
-  ],
-  [
-   207,
-   265
-  ],
-  [
-   207,
-   450
-  ],
-  [
-   207,
-   480
-  ],
-  [
-   208,
-   209
-  ],
-  [
-   208,
-   470
-  ],
-  [
-   209,
-   210
-  ],
-  [
-   209,
-   243
-  ],
-  [
-   210,
-   211
-  ],
-  [
-   210,
-   452
-  ],
-  [
-   211,
-   212
-  ],
-  [
-   211,
-   364
-  ],
-  [
-   211,
-   495
-  ],
-  [
-   212,
-   213
-  ],
-  [
-   212,
-   243
-  ],
-  [
-   212,
-   358
-  ],
-  [
-   212,
-   493
-  ],
-  [
-   213,
-   214
-  ],
-  [
-   213,
-   396
-  ],
-  [
-   214,
-   215
-  ],
-  [
-   214,
-   300
-  ],
-  [
-   214,
-   419
-  ],
-  [
-   215,
-   216
-  ],
-  [
-   216,
-   217
-  ],
-  [
-   217,
-   218
-  ],
-  [
-   217,
-   271
-  ],
-  [
-   217,
-   312
-  ],
-  [
-   218,
-   219
-  ],
-  [
-   218,
-   354
-  ],
-  [
-   218,
-   461
-  ],
-  [
-   218,
-   476
-  ],
-  [
-   219,
-   220
-  ],
-  [
-   219,
-   312
-  ],
-  [
-   219,
-   491
-  ],
-  [
-   219,
-   492
-  ],
-  [
-   220,
-   221
-  ],
-  [
-   220,
-   447
-  ],
-  [
-   221,
-   222
-  ],
-  [
-   221,
-   289
-  ],
-  [
-   221,
-   347
-  ],
-  [
-   221,
-   400
-  ],
-  [
-   222,
-   223
-  ],
-  [
-   222,
-   467
-  ],
-  [
-   223,
-   224
-  ],
-  [
-   223,
-   342
-  ],
-  [
-   223,
-   379
-  ],
-  [
-   223,
-   412
-  ],
-  [
-   224,
-   225
-  ],
-  [
-   224,
-   302
-  ],
-  [
-   224,
-   405
-  ],
-  [
-   225,
-   226
-  ],
-  [
-   225,
-   239
-  ],
-  [
-   225,
-   314
-  ],
-  [
-   225,
-   399
-  ],
-  [
-   226,
-   227
-  ],
-  [
-   226,
-   383
-  ],
-  [
-   226,
-   398
-  ],
-  [
-   226,
-   419
-  ],
-  [
-   227,
-   228
-  ],
-  [
-   227,
-   236
-  ],
-  [
-   227,
-   390
-  ],
-  [
-   227,
-   392
-  ],
-  [
-   228,
-   229
-  ],
-  [
-   229,
-   230
-  ],
-  [
-   229,
-   234
-  ],
-  [
-   230,
-   231
-  ],
-  [
-   230,
-   371
-  ],
-  [
-   230,
-   411
-  ],
-  [
-   230,
-   485
-  ],
-  [
-   231,
-   232
-  ],
-  [
-   232,
-   233
-  ],
-  [
-   232,
-   324
-  ],
-  [
-   232,
-   363
-  ],
-  [
-   232,
-   387
-  ],
-  [
-   233,
-   234
-  ],
-  [
-   233,
-   311
-  ],
-  [
-   233,
-   364
-  ],
-  [
-   234,
-   235
-  ],
-  [
-   234,
-   444
-  ],
-  [
-   234,
-   487
-  ],
-  [
-   235,
-   236
-  ],
-  [
-   235,
-   393
-  ],
-  [
-   236,
-   237
-  ],
-  [
-   236,
-   335
-  ],
-  [
-   237,
-   238
-  ],
-  [
-   237,
-   419
-  ],
-  [
-   238,
-   239
-  ],
-  [
-   238,
-   279
-  ],
-  [
-   238,
-   456
-  ],
-  [
-   239,
-   240
-  ],
-  [
-   239,
-   269
-  ],
-  [
-   240,
-   241
-  ],
-  [
-   240,
-   273
-  ],
-  [
-   241,
-   242
-  ],
-  [
-   242,
-   243
-  ],
-  [
-   242,
-   307
-  ],
-  [
-   242,
-   452
-  ],
-  [
-   243,
-   244
-  ],
-  [
-   243,
-   492
-  ],
-  [
-   244,
-   245
-  ],
-  [
-   245,
-   246
-  ],
-  [
-   245,
-   345
-  ],
-  [
-   246,
-   247
-  ],
-  [
-   246,
-   272
-  ],
-  [
-   246,
-   425
-  ],
-  [
-   247,
-   248
-  ],
-  [
-   247,
-   288
-  ],
-  [
-   248,
-   249
-  ],
-  [
-   248,
-   494
-  ],
-  [
-   249,
-   250
-  ],
-  [
-   249,
-   420
-  ],
-  [
-   250,
-   251
-  ],
-  [
-   250,
-   281
-  ],
-  [
-   250,
-   355
-  ],
-  [
-   251,
-   252
-  ],
-  [
-   252,
-   253
-  ],
-  [
-   252,
-   465
-  ],
-  [
-   253,
-   254
-  ],
-  [
-   253,
-   369
-  ],
-  [
-   253,
-   392
-  ],
-  [
-   253,
-   424
-  ],
-  [
-   253,
-   496
-  ],
-  [
-   254,
-   255
-  ],
-  [
-   254,
-   408
-  ],
-  [
-   255,
-   256
-  ],
-  [
-   255,
-   422
-  ],
-  [
-   256,
-   257
-  ],
-  [
-   256,
-   340
-  ],
-  [
-   256,
-   342
-  ],
-  [
-   257,
-   258
-  ],
-  [
-   257,
-   425
-  ],
-  [
-   258,
-   259
-  ],
-  [
-   258,
-   260
-  ],
-  [
-   258,
-   456
-  ],
-  [
-   259,
-   260
-  ],
-  [
-   259,
-   299
-  ],
-  [
-   260,
-   261
-  ],
-  [
-   261,
-   262
-  ],
-  [
-   262,
-   263
-  ],
-  [
-   262,
-   301
-  ],
-  [
-   262,
-   304
-  ],
-  [
-   263,
-   264
-  ],
-  [
-   264,
-   265
-  ],
-  [
-   264,
-   351
-  ],
-  [
-   264,
-   360
-  ],
-  [
-   265,
-   266
-  ],
-  [
-   266,
-   267
-  ],
-  [
-   266,
-   380
-  ],
-  [
-   266,
-   399
-  ],
-  [
-   267,
-   268
-  ],
-  [
-   267,
-   414
-  ],
-  [
-   268,
-   269
-  ],
-  [
-   268,
-   285
-  ],
-  [
-   268,
-   428
-  ],
-  [
-   269,
-   270
-  ],
-  [
-   270,
-   271
-  ],
-  [
-   270,
-   307
-  ],
-  [
-   270,
-   447
-  ],
-  [
-   271,
-   272
-  ],
-  [
-   271,
-   346
-  ],
-  [
-   271,
-   443
-  ],
-  [
-   271,
-   446
-  ],
-  [
-   272,
-   273
-  ],
-  [
-   272,
-   338
-  ],
-  [
-   272,
-   438
-  ],
-  [
-   273,
-   274
-  ],
-  [
-   273,
-   283
-  ],
-  [
-   274,
-   275
-  ],
-  [
-   274,
-   322
-  ],
-  [
-   274,
-   456
-  ],
-  [
-   275,
-   276
-  ],
-  [
-   275,
-   287
-  ],
-  [
-   275,
-   402
-  ],
-  [
-   276,
-   277
-  ],
-  [
-   277,
-   278
-  ],
-  [
-   277,
-   328
-  ],
-  [
-   277,
-   450
-  ],
-  [
-   277,
-   476
-  ],
-  [
-   278,
-   279
-  ],
-  [
-   278,
-   459
-  ],
-  [
-   279,
-   280
-  ],
-  [
-   280,
-   281
-  ],
-  [
-   280,
-   293
-  ],
-  [
-   280,
-   338
-  ],
-  [
-   280,
-   344
-  ],
-  [
-   280,
-   391
-  ],
-  [
-   281,
-   282
-  ],
-  [
-   281,
-   327
-  ],
-  [
-   282,
-   283
-  ],
-  [
-   282,
-   372
-  ],
-  [
-   282,
-   409
-  ],
-  [
-   283,
-   284
-  ],
-  [
-   283,
-   361
-  ],
-  [
-   283,
-   382
-  ],
-  [
-   284,
-   285
-  ],
-  [
-   285,
-   286
-  ],
-  [
-   285,
-   323
-  ],
-  [
-   285,
-   355
-  ],
-  [
-   286,
-   287
-  ],
-  [
-   286,
-   449
-  ],
-  [
-   287,
-   288
-  ],
-  [
-   287,
-   413
-  ],
-  [
-   287,
-   454
-  ],
-  [
-   288,
-   289
-  ],
-  [
-   288,
-   495
-  ],
-  [
-   289,
-   290
-  ],
-  [
-   289,
-   384
-  ],
-  [
-   289,
-   422
-  ],
-  [
-   289,
-   496
-  ],
-  [
-   290,
+   99,
    291
   ],
   [
-   290,
-   328
-  ],
-  [
-   290,
-   396
-  ],
-  [
-   291,
-   292
-  ],
-  [
-   291,
-   448
-  ],
-  [
-   292,
-   293
-  ],
-  [
-   292,
-   310
-  ],
-  [
-   293,
-   294
-  ],
-  [
-   293,
-   395
-  ],
-  [
-   293,
-   460
-  ],
-  [
-   294,
-   295
-  ],
-  [
-   295,
-   296
-  ],
-  [
-   295,
-   306
-  ],
-  [
-   295,
-   476
-  ],
-  [
-   295,
-   493
-  ],
-  [
-   296,
-   297
-  ],
-  [
-   297,
-   298
-  ],
-  [
-   297,
-   430
-  ],
-  [
-   298,
-   299
-  ],
-  [
-   298,
-   427
-  ],
-  [
-   299,
-   300
-  ],
-  [
-   299,
-   379
-  ],
-  [
-   299,
-   404
-  ],
-  [
-   300,
-   301
-  ],
-  [
-   300,
-   361
-  ],
-  [
-   300,
-   397
-  ],
-  [
-   301,
-   302
-  ],
-  [
-   301,
-   448
-  ],
-  [
-   302,
-   303
-  ],
-  [
-   303,
-   304
-  ],
-  [
-   303,
-   315
-  ],
-  [
-   304,
-   305
-  ],
-  [
-   304,
-   385
-  ],
-  [
-   304,
-   478
-  ],
-  [
-   305,
-   306
-  ],
-  [
-   305,
-   463
-  ],
-  [
-   305,
-   475
-  ],
-  [
-   306,
-   307
-  ],
-  [
-   306,
-   333
-  ],
-  [
-   306,
-   357
-  ],
-  [
-   306,
-   455
-  ],
-  [
-   306,
-   485
-  ],
-  [
-   307,
-   308
-  ],
-  [
-   307,
-   314
-  ],
-  [
-   308,
-   309
-  ],
-  [
-   309,
-   310
-  ],
-  [
-   309,
-   351
-  ],
-  [
-   309,
-   403
-  ],
-  [
-   309,
-   486
-  ],
-  [
-   310,
-   311
-  ],
-  [
-   311,
-   312
-  ],
-  [
-   311,
-   315
-  ],
-  [
-   311,
-   429
-  ],
-  [
-   312,
-   313
-  ],
-  [
-   312,
-   317
-  ],
-  [
-   313,
-   314
-  ],
-  [
-   314,
-   315
-  ],
-  [
-   315,
-   316
-  ],
-  [
-   316,
-   317
-  ],
-  [
-   316,
-   375
-  ],
-  [
-   317,
-   318
-  ],
-  [
-   317,
-   417
-  ],
-  [
-   318,
-   319
-  ],
-  [
-   319,
-   320
-  ],
-  [
-   320,
-   321
-  ],
-  [
-   321,
-   322
-  ],
-  [
-   321,
-   457
-  ],
-  [
-   321,
-   489
-  ],
-  [
-   322,
-   323
-  ],
-  [
-   322,
-   499
-  ],
-  [
-   323,
-   324
-  ],
-  [
-   324,
-   325
-  ],
-  [
-   324,
-   397
-  ],
-  [
-   324,
-   490
-  ],
-  [
-   325,
-   326
-  ],
-  [
-   325,
-   370
-  ],
-  [
-   326,
-   327
-  ],
-  [
-   326,
-   421
-  ],
-  [
-   327,
-   328
-  ],
-  [
-   328,
-   329
-  ],
-  [
-   328,
-   475
-  ],
-  [
-   329,
-   330
-  ],
-  [
-   329,
-   352
-  ],
-  [
-   329,
-   375
-  ],
-  [
-   330,
-   331
-  ],
-  [
-   330,
-   404
-  ],
-  [
-   331,
-   332
-  ],
-  [
-   331,
-   389
-  ],
-  [
-   331,
-   403
-  ],
-  [
-   331,
-   420
-  ],
-  [
-   332,
-   333
-  ],
-  [
-   332,
-   337
-  ],
-  [
-   333,
-   334
-  ],
-  [
-   333,
-   422
-  ],
-  [
-   334,
-   335
-  ],
-  [
-   334,
-   407
-  ],
-  [
-   334,
-   438
-  ],
-  [
-   335,
-   336
-  ],
-  [
-   335,
-   441
-  ],
-  [
-   335,
-   477
-  ],
-  [
-   336,
-   337
-  ],
-  [
-   337,
-   338
-  ],
-  [
-   338,
-   339
-  ],
-  [
-   338,
-   341
-  ],
-  [
-   338,
-   482
-  ],
-  [
-   339,
-   340
-  ],
-  [
-   340,
-   341
-  ],
-  [
-   341,
-   342
-  ],
-  [
-   342,
-   343
-  ],
-  [
-   342,
-   360
-  ],
-  [
-   343,
-   344
-  ],
-  [
-   343,
-   356
-  ],
-  [
-   343,
-   379
-  ],
-  [
-   344,
-   345
-  ],
-  [
-   345,
-   346
-  ],
-  [
-   345,
-   388
-  ],
-  [
-   346,
-   347
-  ],
-  [
-   347,
-   348
-  ],
-  [
-   347,
-   475
-  ],
-  [
-   348,
-   349
-  ],
-  [
-   348,
-   414
-  ],
-  [
-   348,
-   489
-  ],
-  [
-   349,
-   350
-  ],
-  [
-   349,
-   462
-  ],
-  [
-   350,
-   351
-  ],
-  [
-   351,
-   352
-  ],
-  [
-   351,
-   382
-  ],
-  [
-   352,
-   353
-  ],
-  [
-   352,
-   387
-  ],
-  [
-   353,
-   354
-  ],
-  [
-   353,
-   404
-  ],
-  [
-   354,
-   355
-  ],
-  [
-   355,
-   356
-  ],
-  [
-   355,
-   392
-  ],
-  [
-   355,
-   395
-  ],
-  [
-   356,
-   357
-  ],
-  [
-   357,
-   358
-  ],
-  [
-   358,
-   359
-  ],
-  [
-   359,
-   360
-  ],
-  [
-   359,
-   367
-  ],
-  [
-   360,
-   361
-  ],
-  [
-   360,
-   370
-  ],
-  [
-   361,
-   362
-  ],
-  [
-   362,
-   363
-  ],
-  [
-   362,
-   414
-  ],
-  [
-   363,
-   364
-  ],
-  [
-   363,
-   405
-  ],
-  [
-   363,
-   448
-  ],
-  [
-   363,
-   488
-  ],
-  [
-   364,
-   365
-  ],
-  [
-   365,
-   366
-  ],
-  [
-   366,
-   367
-  ],
-  [
-   366,
-   440
-  ],
-  [
-   367,
-   368
-  ],
-  [
-   368,
-   369
-  ],
-  [
-   368,
-   491
-  ],
-  [
-   369,
-   370
-  ],
-  [
-   370,
-   371
-  ],
-  [
-   370,
-   426
-  ],
-  [
-   370,
-   482
-  ],
-  [
-   371,
-   372
-  ],
-  [
-   371,
-   438
-  ],
-  [
-   372,
-   373
-  ],
-  [
-   372,
-   398
-  ],
-  [
-   372,
+   178,
    474
   ],
   [
-   373,
-   374
-  ],
-  [
-   373,
-   423
-  ],
-  [
-   374,
-   375
-  ],
-  [
-   374,
-   443
-  ],
-  [
-   375,
-   376
-  ],
-  [
-   376,
-   377
-  ],
-  [
-   376,
-   495
-  ],
-  [
-   377,
-   378
-  ],
-  [
-   378,
-   379
-  ],
-  [
-   378,
-   467
-  ],
-  [
-   378,
-   487
-  ],
-  [
-   379,
-   380
-  ],
-  [
-   380,
-   381
-  ],
-  [
-   380,
-   473
-  ],
-  [
-   381,
-   382
-  ],
-  [
-   381,
-   474
-  ],
-  [
-   382,
-   383
-  ],
-  [
-   383,
-   384
-  ],
-  [
-   384,
-   385
-  ],
-  [
-   385,
-   386
-  ],
-  [
-   385,
-   463
-  ],
-  [
-   386,
-   387
-  ],
-  [
-   387,
-   388
-  ],
-  [
-   388,
-   389
-  ],
-  [
-   388,
-   456
-  ],
-  [
-   389,
-   390
-  ],
-  [
-   390,
-   391
-  ],
-  [
-   390,
-   454
-  ],
-  [
-   391,
-   392
-  ],
-  [
-   392,
-   393
-  ],
-  [
-   393,
-   394
-  ],
-  [
-   394,
-   395
-  ],
-  [
-   395,
-   396
-  ],
-  [
-   396,
-   397
-  ],
-  [
-   397,
-   398
-  ],
-  [
-   397,
-   415
-  ],
-  [
-   398,
-   399
-  ],
-  [
-   399,
-   400
-  ],
-  [
-   399,
-   466
-  ],
-  [
-   400,
-   401
-  ],
-  [
-   400,
-   445
-  ],
-  [
-   401,
-   402
-  ],
-  [
-   401,
-   419
-  ],
-  [
-   402,
-   403
-  ],
-  [
-   403,
-   404
-  ],
-  [
-   404,
-   405
-  ],
-  [
-   404,
-   483
-  ],
-  [
-   405,
-   406
-  ],
-  [
-   405,
-   432
-  ],
-  [
-   405,
-   490
-  ],
-  [
-   406,
-   407
-  ],
-  [
-   406,
-   419
-  ],
-  [
-   406,
-   473
-  ],
-  [
-   407,
-   408
-  ],
-  [
-   407,
-   447
-  ],
-  [
-   408,
-   409
-  ],
-  [
-   409,
-   410
-  ],
-  [
-   409,
-   442
-  ],
-  [
-   409,
-   459
-  ],
-  [
-   410,
-   411
-  ],
-  [
-   410,
-   453
-  ],
-  [
-   410,
-   494
-  ],
-  [
-   411,
-   412
-  ],
-  [
-   411,
-   441
-  ],
-  [
-   411,
-   471
-  ],
-  [
-   412,
-   413
-  ],
-  [
-   412,
-   431
-  ],
-  [
-   413,
-   414
-  ],
-  [
-   413,
-   445
-  ],
-  [
-   413,
-   486
-  ],
-  [
-   414,
-   415
-  ],
-  [
-   415,
-   416
-  ],
-  [
-   415,
-   455
-  ],
-  [
-   416,
-   417
-  ],
-  [
-   417,
-   418
-  ],
-  [
-   417,
-   434
-  ],
-  [
-   417,
-   465
-  ],
-  [
-   418,
-   419
-  ],
-  [
-   419,
-   420
-  ],
-  [
-   419,
-   473
-  ],
-  [
-   420,
-   421
-  ],
-  [
-   420,
-   447
-  ],
-  [
-   421,
-   422
-  ],
-  [
-   422,
-   423
-  ],
-  [
-   422,
-   488
-  ],
-  [
-   423,
-   424
-  ],
-  [
-   424,
-   425
-  ],
-  [
-   425,
-   426
-  ],
-  [
-   425,
-   460
-  ],
-  [
-   425,
-   487
-  ],
-  [
-   426,
-   427
-  ],
-  [
-   427,
-   428
-  ],
-  [
-   427,
-   434
-  ],
-  [
-   427,
-   464
-  ],
-  [
-   428,
-   429
-  ],
-  [
-   429,
-   430
-  ],
-  [
-   429,
-   474
-  ],
-  [
-   429,
-   499
-  ],
-  [
-   430,
-   431
-  ],
-  [
-   431,
-   432
-  ],
-  [
-   432,
-   433
-  ],
-  [
-   433,
-   434
-  ],
-  [
-   434,
-   435
-  ],
-  [
-   435,
-   436
-  ],
-  [
-   435,
-   448
-  ],
-  [
-   436,
-   437
-  ],
-  [
-   436,
-   455
-  ],
-  [
-   437,
-   438
-  ],
-  [
-   438,
-   439
-  ],
-  [
-   439,
-   440
-  ],
-  [
-   439,
-   460
-  ],
-  [
-   440,
-   441
-  ],
-  [
-   441,
-   442
-  ],
-  [
-   442,
-   443
-  ],
-  [
-   443,
-   444
-  ],
-  [
-   443,
-   467
-  ],
-  [
-   444,
-   445
-  ],
-  [
-   445,
-   446
-  ],
-  [
-   445,
-   454
-  ],
-  [
-   446,
-   447
-  ],
-  [
-   447,
-   448
-  ],
-  [
-   448,
-   449
-  ],
-  [
-   449,
-   450
-  ],
-  [
-   450,
-   451
-  ],
-  [
-   451,
-   452
-  ],
-  [
-   452,
-   453
-  ],
-  [
-   452,
-   483
-  ],
-  [
-   453,
-   454
-  ],
-  [
-   454,
-   455
-  ],
-  [
-   455,
-   456
-  ],
-  [
-   456,
-   457
-  ],
-  [
-   457,
-   458
-  ],
-  [
-   457,
-   461
-  ],
-  [
-   458,
-   459
-  ],
-  [
-   458,
-   482
-  ],
-  [
-   459,
-   460
-  ],
-  [
-   460,
-   461
-  ],
-  [
-   460,
-   489
-  ],
-  [
-   461,
-   462
-  ],
-  [
-   462,
-   463
-  ],
-  [
-   463,
-   464
-  ],
-  [
-   463,
-   496
-  ],
-  [
-   464,
-   465
-  ],
-  [
-   465,
-   466
-  ],
-  [
-   466,
-   467
-  ],
-  [
-   467,
-   468
-  ],
-  [
-   468,
-   469
-  ],
-  [
-   469,
-   470
-  ],
-  [
-   470,
-   471
-  ],
-  [
-   471,
-   472
-  ],
-  [
-   472,
-   473
-  ],
-  [
-   472,
-   482
-  ],
-  [
-   473,
-   474
-  ],
-  [
-   474,
-   475
-  ],
-  [
-   475,
-   476
-  ],
-  [
-   476,
-   477
-  ],
-  [
-   477,
-   478
-  ],
-  [
-   478,
-   479
-  ],
-  [
-   479,
-   480
-  ],
-  [
-   480,
-   481
-  ],
-  [
-   481,
-   482
-  ],
-  [
-   482,
-   483
-  ],
-  [
-   483,
-   484
-  ],
-  [
-   484,
-   485
-  ],
-  [
-   485,
-   486
-  ],
-  [
-   486,
-   487
-  ],
-  [
-   487,
-   488
-  ],
-  [
-   488,
-   489
-  ],
-  [
-   489,
-   490
-  ],
-  [
-   490,
-   491
-  ],
-  [
-   491,
-   492
-  ],
-  [
-   492,
-   493
-  ],
-  [
-   493,
-   494
-  ],
-  [
-   494,
-   495
-  ],
-  [
-   495,
-   496
-  ],
-  [
-   496,
-   497
-  ],
-  [
-   497,
-   498
-  ],
-  [
-   498,
-   499
-  ]
- ],
- "neighbors": [
-  [
-   1,
-   195,
-   225,
-   440,
-   499
-  ],
-  [
-   0,
    2,
-   22,
-   411,
-   413,
-   487
-  ],
-  [
-   1,
-   3,
-   49,
-   95,
-   177
-  ],
-  [
-   2,
-   4,
-   312,
-   497
-  ],
-  [
-   3,
-   5,
-   238
-  ],
-  [
-   4,
-   6,
-   19,
-   114
-  ],
-  [
-   5,
-   7,
-   308,
-   372,
-   458
-  ],
-  [
-   6,
-   8,
-   47,
-   497
-  ],
-  [
-   7,
-   9,
-   11,
-   52,
-   102,
-   359
-  ],
-  [
-   8,
-   10,
-   339,
-   425
-  ],
-  [
-   9,
-   11,
-   127,
-   276,
-   392
-  ],
-  [
-   8,
-   10,
-   12,
-   303
-  ],
-  [
-   11,
-   13,
-   248,
-   313,
-   318
-  ],
-  [
-   12,
-   14,
-   24,
-   34,
-   53
-  ],
-  [
-   13,
-   15,
-   398,
-   476
-  ],
-  [
-   14,
-   16,
-   72,
-   197,
-   341
-  ],
-  [
-   15,
-   17,
-   63,
-   266
-  ],
-  [
-   16,
-   18,
-   136,
-   257,
-   364,
-   451
-  ],
-  [
-   17,
-   19,
-   350
-  ],
-  [
-   5,
-   18,
-   20,
-   254,
-   312,
-   361,
-   437
-  ],
-  [
-   19,
-   21,
-   139,
-   151,
-   176,
-   398
-  ],
-  [
-   20,
-   22,
-   365
-  ],
-  [
-   1,
-   21,
-   23,
-   28,
-   79
-  ],
-  [
-   22,
-   24,
-   275,
-   310,
-   332
-  ],
-  [
-   13,
-   23,
-   25,
-   129,
-   365
-  ],
-  [
-   24,
-   26,
-   217,
-   239,
-   481
-  ],
-  [
-   25,
-   27,
-   85,
-   244,
-   292,
-   347,
-   484
-  ],
-  [
-   26,
-   28,
-   70
-  ],
-  [
-   22,
-   27,
-   29,
-   74,
-   328
-  ],
-  [
-   28,
-   30,
-   251,
-   458
-  ],
-  [
-   29,
-   31,
-   128,
-   343,
-   431
-  ],
-  [
-   30,
-   32,
-   81,
-   154,
-   350
-  ],
-  [
-   31,
-   33,
-   73
-  ],
-  [
-   32,
-   34,
-   40,
-   405,
-   499
-  ],
-  [
-   13,
-   33,
-   35,
-   47,
-   52,
-   145,
-   386
-  ],
-  [
-   34,
-   36,
-   248,
-   453
-  ],
-  [
-   35,
-   37,
-   82,
-   228,
-   406
-  ],
-  [
-   36,
-   38,
-   346,
-   366,
-   436
-  ],
-  [
-   37,
-   39,
-   84,
-   169,
-   367,
-   450
-  ],
-  [
-   38,
-   40,
-   98,
-   234
-  ],
-  [
-   33,
-   39,
-   41,
-   192,
-   416
-  ],
-  [
-   40,
-   42,
-   248,
-   310
-  ],
-  [
-   41,
-   43,
-   204,
-   325
-  ],
-  [
-   42,
-   44,
-   55,
-   70,
-   351,
-   359
-  ],
-  [
-   43,
-   45,
-   192,
-   421
-  ],
-  [
-   44,
-   46,
-   133,
-   392,
-   444,
-   449
-  ],
-  [
-   45,
-   47,
-   406
-  ],
-  [
-   7,
-   34,
-   46,
-   48,
-   296,
-   327
-  ],
-  [
-   47,
-   49,
-   90
-  ],
-  [
-   2,
-   48,
-   50,
-   299,
-   311,
-   349
-  ],
-  [
-   49,
-   51,
-   288,
-   489
-  ],
-  [
-   50,
-   52,
-   245,
-   326,
-   374
-  ],
-  [
-   8,
-   34,
-   51,
-   53
-  ],
-  [
-   13,
-   52,
-   54,
-   78,
-   230,
-   415
-  ],
-  [
-   53,
-   55,
-   94,
-   208,
-   310,
-   378,
-   418
-  ],
-  [
-   43,
-   54,
-   56,
-   72,
-   240,
-   333
-  ],
-  [
-   55,
-   57,
-   172,
-   286,
-   293
-  ],
-  [
-   56,
-   58,
-   162,
-   223
-  ],
-  [
-   57,
-   59,
-   242,
-   415,
-   416
-  ],
-  [
-   58,
-   60,
-   91,
-   264,
-   349,
-   408,
-   430
-  ],
-  [
-   59,
-   61,
-   267,
-   451
-  ],
-  [
-   60,
-   62,
-   208,
-   238
-  ],
-  [
-   61,
-   63,
-   105,
-   181,
-   264
-  ],
-  [
-   16,
-   62,
-   64,
-   200,
-   209
-  ],
-  [
-   63,
-   65,
-   115,
-   372,
-   400
-  ],
-  [
-   64,
-   66,
-   71,
-   76,
-   348,
-   456
-  ],
-  [
-   65,
-   67,
-   91,
-   202,
-   375,
-   469
-  ],
-  [
-   66,
-   68,
-   123,
-   162,
-   263
-  ],
-  [
-   67,
-   69,
-   104,
-   110,
-   180,
-   307,
-   462
-  ],
-  [
-   68,
-   70,
-   147,
-   186,
-   254,
-   345,
-   387
-  ],
-  [
-   27,
-   43,
-   69,
-   71,
-   113,
-   403
-  ],
-  [
-   65,
-   70,
-   72,
-   78,
-   393
-  ],
-  [
-   15,
-   55,
-   71,
-   73,
-   320,
-   393
-  ],
-  [
-   32,
-   72,
-   74,
-   116,
-   177,
-   241,
-   343,
-   405
-  ],
-  [
-   28,
-   73,
-   75,
-   479
-  ],
-  [
-   74,
-   76,
-   162,
-   278
-  ],
-  [
-   65,
-   75,
-   77,
-   138,
-   195,
-   233,
-   453
-  ],
-  [
-   76,
-   78,
-   367,
-   442,
-   498
-  ],
-  [
-   53,
-   71,
-   77,
-   79,
-   350
-  ],
-  [
-   22,
-   78,
-   80,
-   305
-  ],
-  [
-   79,
-   81,
-   112
-  ],
-  [
-   31,
-   80,
-   82,
-   290,
-   381
-  ],
-  [
-   36,
-   81,
-   83,
-   189,
-   480
-  ],
-  [
-   82,
-   84,
-   124,
-   155
-  ],
-  [
-   38,
-   83,
-   85,
-   299,
-   440
-  ],
-  [
-   26,
-   84,
-   86
-  ],
-  [
-   85,
-   87,
-   437,
-   441
-  ],
-  [
-   86,
-   88,
-   101,
-   160,
-   221,
-   268,
-   272
-  ],
-  [
-   87,
-   89,
-   171,
-   256
-  ],
-  [
-   88,
-   90,
-   241,
-   319,
-   350,
-   391
-  ],
-  [
-   48,
-   89,
-   91,
-   162,
-   212,
-   415
-  ],
-  [
-   59,
-   66,
-   90,
-   92,
-   144,
-   163,
-   369,
-   384
-  ],
-  [
-   91,
-   93,
-   302,
-   470,
-   490
-  ],
-  [
-   92,
-   94,
-   137,
-   209,
-   488
-  ],
-  [
-   54,
-   93,
-   95,
-   391,
-   404,
-   497
-  ],
-  [
-   2,
-   94,
-   96,
-   128,
-   206,
-   355,
-   366
-  ],
-  [
-   95,
-   97,
-   301,
-   455
-  ],
-  [
-   96,
-   98,
-   451
-  ],
-  [
-   39,
-   97,
-   99,
-   401,
-   468
-  ],
-  [
-   98,
-   100,
-   423
-  ],
-  [
-   99,
-   101,
-   239,
-   451,
-   465,
-   477
-  ],
-  [
-   87,
-   100,
-   102,
-   261,
-   286
-  ],
-  [
-   8,
-   101,
-   103,
-   237,
-   244
-  ],
-  [
-   102,
-   104,
-   352,
-   404,
-   479
-  ],
-  [
-   68,
-   103,
-   105,
-   136,
-   416
-  ],
-  [
-   62,
-   104,
-   106,
-   219,
-   402,
-   412
-  ],
-  [
-   105,
-   107,
-   179,
-   298,
-   318,
-   358
-  ],
-  [
-   106,
-   108,
-   416
-  ],
-  [
-   107,
-   109,
-   319,
-   425,
-   427,
-   486
-  ],
-  [
-   108,
-   110,
-   161,
-   235
-  ],
-  [
-   68,
-   109,
-   111
+   107
   ],
   [
    110,
-   112,
-   382
-  ],
-  [
-   80,
-   111,
-   113,
-   117,
-   373
-  ],
-  [
-   70,
-   112,
-   114,
-   377,
-   394
-  ],
-  [
-   5,
-   113,
-   115,
-   181,
-   434
-  ],
-  [
-   64,
-   114,
-   116,
-   216,
-   327
-  ],
-  [
-   73,
-   115,
-   117,
-   228,
-   296,
-   373,
-   446
-  ],
-  [
-   112,
-   116,
-   118,
-   398,
-   402
-  ],
-  [
-   117,
-   119,
-   144,
-   335
-  ],
-  [
-   118,
-   120,
-   299,
-   383,
-   451
-  ],
-  [
-   119,
-   121,
-   253,
-   384
-  ],
-  [
-   120,
-   122,
-   175,
-   436
-  ],
-  [
-   121,
-   123,
-   259,
-   325
-  ],
-  [
-   67,
-   122,
-   124,
-   163,
-   180,
-   249,
-   362
-  ],
-  [
-   83,
-   123,
-   125,
-   142,
-   155,
-   286,
-   429,
-   461
-  ],
-  [
-   124,
-   126,
-   383
-  ],
-  [
-   125,
-   127,
-   206
-  ],
-  [
-   10,
-   126,
-   128,
-   159,
-   290,
-   455
-  ],
-  [
-   30,
-   95,
-   127,
-   129
-  ],
-  [
-   24,
-   128,
-   130,
-   341,
-   492
-  ],
-  [
-   129,
-   131,
-   361,
-   422,
-   432,
-   450
-  ],
-  [
-   130,
-   132,
-   206,
-   256
-  ],
-  [
-   131,
-   133,
-   218,
-   309
-  ],
-  [
-   45,
-   132,
-   134,
-   262,
-   289,
-   302,
-   323
-  ],
-  [
-   133,
-   135,
-   222,
-   378
-  ],
-  [
-   134,
-   136,
-   171,
-   185,
-   370
-  ],
-  [
-   17,
-   104,
-   135,
-   137,
-   164
-  ],
-  [
-   93,
-   136,
-   138,
-   294
-  ],
-  [
-   76,
-   137,
-   139,
-   247,
-   318,
-   472
-  ],
-  [
-   20,
-   138,
-   140,
-   215,
-   429
-  ],
-  [
-   139,
-   141,
-   293,
-   337,
-   380
-  ],
-  [
-   140,
-   142,
-   164,
-   356,
-   392
-  ],
-  [
-   124,
-   141,
-   143,
-   171,
-   248
-  ],
-  [
-   142,
-   144,
-   199,
-   231,
-   273,
-   431,
-   462
-  ],
-  [
-   91,
-   118,
-   143,
-   145
-  ],
-  [
-   34,
-   144,
-   146,
-   214,
-   215,
-   276,
-   373,
-   497
-  ],
-  [
-   145,
-   147,
-   165,
-   168,
-   352,
-   368,
-   401,
-   477
-  ],
-  [
-   69,
-   146,
-   148,
-   180,
-   470
-  ],
-  [
-   147,
-   149,
-   288,
-   461
-  ],
-  [
-   148,
-   150,
-   167,
-   348
-  ],
-  [
-   149,
-   151,
-   361,
-   402
-  ],
-  [
-   20,
-   150,
-   152,
-   375
-  ],
-  [
-   151,
-   153,
-   167,
-   171
-  ],
-  [
-   152,
-   154,
-   165,
-   173
-  ],
-  [
-   31,
-   153,
-   155,
-   251,
-   286
-  ],
-  [
-   83,
-   124,
-   154,
-   156,
-   250,
-   332
-  ],
-  [
-   155,
-   157,
-   159,
-   359,
-   363,
-   394
-  ],
-  [
-   156,
-   158,
-   410,
-   476
-  ],
-  [
-   157,
-   159,
-   239,
-   387
-  ],
-  [
-   127,
-   156,
-   158,
-   160,
-   441
-  ],
-  [
-   87,
-   159,
-   161,
-   266,
-   466
-  ],
-  [
-   109,
-   160,
-   162,
-   172,
-   265,
-   365
-  ],
-  [
-   57,
-   67,
-   75,
-   90,
-   161,
-   163,
-   471
-  ],
-  [
-   91,
-   123,
-   162,
-   164,
-   242,
-   251
-  ],
-  [
-   136,
-   141,
-   163,
-   165,
-   344
-  ],
-  [
-   146,
-   153,
-   164,
-   166,
-   248
-  ],
-  [
-   165,
-   167,
-   237,
-   336,
-   340
-  ],
-  [
-   149,
-   152,
-   166,
-   168,
-   269
-  ],
-  [
-   146,
-   167,
-   169,
-   174
-  ],
-  [
-   38,
-   168,
-   170,
-   323
-  ],
-  [
-   169,
-   171,
-   190,
-   191,
-   400
-  ],
-  [
-   88,
-   135,
-   142,
-   152,
-   170,
-   172
-  ],
-  [
-   56,
-   161,
-   171,
-   173,
-   189,
-   340
-  ],
-  [
-   153,
-   172,
-   174,
-   178,
-   203,
-   215,
-   396
-  ],
-  [
-   168,
-   173,
-   175,
-   192,
-   354,
-   443,
-   471,
-   496
-  ],
-  [
-   121,
-   174,
-   176,
-   230,
-   353,
-   433
-  ],
-  [
-   20,
-   175,
-   177,
-   231,
-   357
-  ],
-  [
-   2,
-   73,
-   176,
-   178,
-   196,
-   284,
-   483
-  ],
-  [
-   173,
-   177,
-   179,
-   225
-  ],
-  [
-   106,
-   178,
-   180,
-   221,
-   372
-  ],
-  [
-   68,
-   123,
-   147,
-   179,
-   181,
-   294,
-   466
-  ],
-  [
-   62,
-   114,
-   180,
-   182,
-   478
-  ],
-  [
-   181,
-   183,
-   372,
-   438
-  ],
-  [
-   182,
-   184,
-   276,
-   290
-  ],
-  [
-   183,
-   185,
-   223,
-   231,
-   244
-  ],
-  [
-   135,
-   184,
-   186
-  ],
-  [
-   69,
-   185,
-   187,
-   289
-  ],
-  [
-   186,
-   188,
-   466
-  ],
-  [
-   187,
-   189,
-   217,
-   350,
-   435,
-   475
-  ],
-  [
-   82,
-   172,
-   188,
-   190,
-   218,
-   342,
-   437,
-   444
-  ],
-  [
-   170,
-   189,
-   191
-  ],
-  [
-   170,
-   190,
-   192,
-   328
-  ],
-  [
-   40,
-   44,
-   174,
-   191,
-   193
-  ],
-  [
-   192,
-   194,
-   231,
-   355
-  ],
-  [
-   193,
-   195,
-   357
-  ],
-  [
-   0,
-   76,
-   194,
-   196,
-   267,
-   454
-  ],
-  [
-   177,
-   195,
-   197,
-   242,
-   292,
-   386,
-   452
-  ],
-  [
-   15,
-   196,
-   198,
-   242,
-   445
-  ],
-  [
-   197,
-   199,
-   215,
-   346,
-   489
-  ],
-  [
-   143,
-   198,
-   200
-  ],
-  [
-   63,
-   199,
-   201
-  ],
-  [
-   200,
-   202,
-   355
-  ],
-  [
-   66,
-   201,
-   203,
-   288,
-   297
-  ],
-  [
-   173,
-   202,
-   204,
-   276,
-   344,
-   499
-  ],
-  [
-   42,
-   203,
-   205,
-   243,
-   325,
-   480
-  ],
-  [
-   204,
-   206,
-   373
-  ],
-  [
-   95,
-   126,
-   131,
-   205,
-   207,
-   385,
-   399
-  ],
-  [
-   206,
-   208,
-   265,
-   450,
-   480
-  ],
-  [
-   54,
-   61,
-   207,
-   209,
-   470
-  ],
-  [
-   63,
-   93,
-   208,
-   210,
-   243
-  ],
-  [
-   209,
-   211,
-   452
-  ],
-  [
-   210,
-   212,
-   364,
-   495
-  ],
-  [
-   90,
-   211,
-   213,
-   243,
-   358,
-   493
-  ],
-  [
-   212,
-   214,
-   396
-  ],
-  [
-   145,
-   213,
-   215,
-   300,
-   419
-  ],
-  [
-   139,
-   145,
-   173,
-   198,
-   214,
-   216
-  ],
-  [
-   115,
-   215,
-   217
-  ],
-  [
-   25,
-   188,
-   216,
-   218,
-   271,
-   312
-  ],
-  [
-   132,
-   189,
-   217,
-   219,
-   354,
-   461,
-   476
-  ],
-  [
-   105,
-   218,
-   220,
-   312,
-   491,
-   492
-  ],
-  [
-   219,
-   221,
-   447
-  ],
-  [
-   87,
-   179,
-   220,
-   222,
-   289,
-   347,
-   400
-  ],
-  [
-   134,
-   221,
-   223,
-   467
-  ],
-  [
-   57,
-   184,
-   222,
-   224,
-   342,
-   379,
-   412
-  ],
-  [
-   223,
-   225,
-   302,
-   405
-  ],
-  [
-   0,
-   178,
-   224,
-   226,
-   239,
-   314,
-   399
-  ],
-  [
-   225,
-   227,
-   383,
-   398,
-   419
-  ],
-  [
-   226,
-   228,
-   236,
-   390,
-   392
-  ],
-  [
-   36,
-   116,
-   227,
-   229
-  ],
-  [
-   228,
-   230,
-   234
-  ],
-  [
-   53,
-   175,
-   229,
-   231,
-   371,
-   411,
-   485
-  ],
-  [
-   143,
-   176,
-   184,
-   193,
-   230,
-   232
-  ],
-  [
-   231,
-   233,
-   324,
-   363,
-   387
-  ],
-  [
-   76,
-   232,
-   234,
-   311,
-   364
-  ],
-  [
-   39,
-   229,
-   233,
-   235,
-   444,
-   487
-  ],
-  [
-   109,
-   234,
-   236,
-   393
-  ],
-  [
-   227,
-   235,
-   237,
-   335
-  ],
-  [
-   102,
-   166,
-   236,
-   238,
-   419
-  ],
-  [
-   4,
-   61,
-   237,
-   239,
-   279,
-   456
-  ],
-  [
-   25,
-   100,
-   158,
-   225,
-   238,
-   240,
-   269
-  ],
-  [
-   55,
-   239,
-   241,
-   273
-  ],
-  [
-   73,
-   89,
-   240,
-   242
-  ],
-  [
-   58,
-   163,
-   196,
-   197,
-   241,
-   243,
-   307,
-   452
-  ],
-  [
-   204,
-   209,
-   212,
-   242,
-   244,
-   492
-  ],
-  [
-   26,
-   102,
-   184,
-   243,
-   245
-  ],
-  [
-   51,
-   244,
-   246,
-   345
-  ],
-  [
-   245,
-   247,
-   272,
-   425
-  ],
-  [
-   138,
-   246,
-   248,
-   288
-  ],
-  [
-   12,
-   35,
-   41,
-   142,
-   165,
-   247,
-   249,
-   494
-  ],
-  [
-   123,
-   248,
-   250,
-   420
-  ],
-  [
-   155,
-   249,
-   251,
-   281,
-   355
-  ],
-  [
-   29,
-   154,
-   163,
-   250,
    252
   ],
   [
-   251,
-   253,
-   465
-  ],
-  [
-   120,
-   252,
-   254,
-   369,
-   392,
-   424,
-   496
-  ],
-  [
-   19,
-   69,
-   253,
-   255,
-   408
-  ],
-  [
-   254,
-   256,
-   422
-  ],
-  [
-   88,
-   131,
-   255,
-   257,
-   340,
-   342
-  ],
-  [
    17,
-   256,
-   258,
-   425
+   275
   ],
   [
-   257,
-   259,
-   260,
-   456
+   5,
+   75
   ],
   [
-   122,
-   258,
-   260,
-   299
+   69,
+   217
   ],
   [
-   258,
-   259,
-   261
-  ],
-  [
-   101,
-   260,
-   262
-  ],
-  [
-   133,
-   261,
-   263,
-   301,
-   304
-  ],
-  [
-   67,
-   262,
-   264
-  ],
-  [
-   59,
-   62,
-   263,
-   265,
-   351,
-   360
-  ],
-  [
-   161,
-   207,
-   264,
-   266
-  ],
-  [
-   16,
-   160,
-   265,
-   267,
-   380,
-   399
-  ],
-  [
-   60,
-   195,
-   266,
-   268,
-   414
-  ],
-  [
-   87,
-   267,
-   269,
-   285,
-   428
-  ],
-  [
-   167,
-   239,
-   268,
-   270
-  ],
-  [
-   269,
-   271,
-   307,
-   447
-  ],
-  [
-   217,
-   270,
-   272,
-   346,
-   443,
-   446
-  ],
-  [
-   87,
-   246,
-   271,
-   273,
-   338,
-   438
-  ],
-  [
-   143,
-   240,
-   272,
-   274,
-   283
-  ],
-  [
-   273,
-   275,
-   322,
-   456
-  ],
-  [
-   23,
-   274,
-   276,
-   287,
-   402
-  ],
-  [
-   10,
-   145,
-   183,
-   203,
-   275,
-   277
-  ],
-  [
-   276,
-   278,
-   328,
-   450,
-   476
-  ],
-  [
-   75,
-   277,
-   279,
-   459
-  ],
-  [
-   238,
-   278,
-   280
-  ],
-  [
-   279,
-   281,
-   293,
-   338,
-   344,
-   391
-  ],
-  [
-   250,
-   280,
-   282,
-   327
-  ],
-  [
-   281,
-   283,
-   372,
-   409
-  ],
-  [
-   273,
-   282,
-   284,
-   361,
-   382
+   102,
+   288
   ],
   [
    177,
-   283,
-   285
+   336
   ],
   [
-   268,
-   284,
-   286,
-   323,
-   355
-  ],
-  [
-   56,
-   101,
-   124,
-   154,
-   285,
-   287,
-   449
-  ],
-  [
-   275,
-   286,
-   288,
-   413,
-   454
-  ],
-  [
-   50,
-   148,
-   202,
-   247,
-   287,
-   289,
-   495
-  ],
-  [
-   133,
-   186,
-   221,
-   288,
-   290,
-   384,
-   422,
-   496
-  ],
-  [
-   81,
-   127,
-   183,
-   289,
-   291,
-   328,
-   396
-  ],
-  [
-   290,
-   292,
-   448
-  ],
-  [
-   26,
-   196,
-   291,
-   293,
-   310
-  ],
-  [
-   56,
-   140,
-   280,
-   292,
-   294,
-   395,
-   460
-  ],
-  [
-   137,
-   180,
-   293,
-   295
-  ],
-  [
-   294,
-   296,
-   306,
-   476,
-   493
-  ],
-  [
-   47,
-   116,
-   295,
-   297
-  ],
-  [
-   202,
-   296,
-   298,
-   430
-  ],
-  [
-   106,
-   297,
-   299,
-   427
-  ],
-  [
-   49,
-   84,
-   119,
-   259,
-   298,
-   300,
-   379,
-   404
-  ],
-  [
-   214,
-   299,
-   301,
-   361,
-   397
-  ],
-  [
-   96,
-   262,
-   300,
-   302,
-   448
-  ],
-  [
-   92,
-   133,
-   224,
-   301,
-   303
-  ],
-  [
-   11,
-   302,
-   304,
-   315
-  ],
-  [
-   262,
-   303,
-   305,
-   385,
-   478
-  ],
-  [
-   79,
-   304,
-   306,
-   463,
-   475
-  ],
-  [
-   295,
-   305,
-   307,
-   333,
-   357,
-   455,
-   485
-  ],
-  [
-   68,
-   242,
-   270,
-   306,
-   308,
-   314
-  ],
-  [
-   6,
-   307,
-   309
-  ],
-  [
-   132,
-   308,
-   310,
-   351,
-   403,
-   486
-  ],
-  [
-   23,
-   41,
-   54,
-   292,
-   309,
-   311
-  ],
-  [
-   49,
-   233,
-   310,
-   312,
-   315,
-   429
-  ],
-  [
-   3,
-   19,
-   217,
-   219,
-   311,
-   313,
-   317
-  ],
-  [
-   12,
-   312,
-   314
-  ],
-  [
-   225,
-   307,
-   313,
-   315
-  ],
-  [
-   303,
-   311,
-   314,
-   316
-  ],
-  [
-   315,
-   317,
-   375
-  ],
-  [
-   312,
-   316,
-   318,
-   417
-  ],
-  [
-   12,
-   106,
-   138,
-   317,
-   319
-  ],
-  [
-   89,
-   108,
-   318,
-   320
-  ],
-  [
-   72,
-   319,
-   321
-  ],
-  [
-   320,
-   322,
-   457,
-   489
-  ],
-  [
-   274,
-   321,
-   323,
-   499
-  ],
-  [
-   133,
-   169,
-   285,
-   322,
-   324
-  ],
-  [
-   232,
-   323,
-   325,
-   397,
-   490
-  ],
-  [
-   42,
-   122,
-   204,
-   324,
-   326,
-   370
-  ],
-  [
-   51,
-   325,
-   327,
-   421
-  ],
-  [
-   47,
-   115,
-   281,
-   326,
-   328
-  ],
-  [
-   28,
-   191,
-   277,
-   290,
-   327,
-   329,
-   475
-  ],
-  [
-   328,
-   330,
-   352,
-   375
-  ],
-  [
-   329,
-   331,
-   404
-  ],
-  [
-   330,
-   332,
-   389,
-   403,
-   420
-  ],
-  [
-   23,
-   155,
-   331,
-   333,
-   337
-  ],
-  [
-   55,
-   306,
-   332,
-   334,
-   422
-  ],
-  [
-   333,
-   335,
-   407,
-   438
-  ],
-  [
-   118,
-   236,
-   334,
-   336,
-   441,
-   477
-  ],
-  [
-   166,
-   335,
-   337
-  ],
-  [
-   140,
-   332,
-   336,
-   338
-  ],
-  [
-   272,
-   280,
-   337,
-   339,
-   341,
-   482
-  ],
-  [
-   9,
-   338,
-   340
-  ],
-  [
-   166,
-   172,
-   256,
-   339,
-   341
-  ],
-  [
-   15,
-   129,
-   338,
-   340,
-   342
-  ],
-  [
-   189,
-   223,
-   256,
-   341,
-   343,
-   360
-  ],
-  [
-   30,
-   73,
-   342,
-   344,
-   356,
-   379
-  ],
-  [
-   164,
-   203,
-   280,
-   343,
-   345
-  ],
-  [
-   69,
-   245,
-   344,
-   346,
-   388
-  ],
-  [
-   37,
-   198,
-   271,
-   345,
-   347
-  ],
-  [
-   26,
-   221,
-   346,
-   348,
-   475
-  ],
-  [
-   65,
-   149,
-   347,
-   349,
-   414,
-   489
-  ],
-  [
-   49,
-   59,
-   348,
-   350,
-   462
-  ],
-  [
-   18,
    31,
-   78,
-   89,
-   188,
-   349,
-   351
+   157
   ],
   [
-   43,
-   264,
-   309,
-   350,
-   352,
-   382
+   64,
+   98
   ],
   [
-   103,
-   146,
-   329,
-   351,
-   353,
-   387
-  ],
-  [
-   175,
-   352,
-   354,
-   404
-  ],
-  [
-   174,
-   218,
-   353,
-   355
-  ],
-  [
-   95,
-   193,
-   201,
-   250,
-   285,
-   354,
-   356,
-   392,
-   395
-  ],
-  [
-   141,
-   343,
-   355,
-   357
-  ],
-  [
-   176,
-   194,
-   306,
-   356,
-   358
-  ],
-  [
-   106,
-   212,
-   357,
-   359
-  ],
-  [
-   8,
-   43,
-   156,
-   358,
-   360,
-   367
-  ],
-  [
-   264,
-   342,
-   359,
-   361,
-   370
-  ],
-  [
-   19,
-   130,
-   150,
-   283,
-   300,
-   360,
-   362
-  ],
-  [
-   123,
-   361,
-   363,
-   414
-  ],
-  [
-   156,
-   232,
-   362,
-   364,
-   405,
-   448,
-   488
-  ],
-  [
-   17,
-   211,
-   233,
-   363,
-   365
-  ],
-  [
-   21,
-   24,
-   161,
-   364,
-   366
-  ],
-  [
-   37,
-   95,
-   365,
-   367,
+   10,
    440
   ],
   [
-   38,
-   77,
-   359,
-   366,
-   368
-  ],
-  [
-   146,
-   367,
-   369,
-   491
-  ],
-  [
-   91,
-   253,
-   368,
-   370
-  ],
-  [
-   135,
-   325,
-   360,
-   369,
-   371,
-   426,
-   482
-  ],
-  [
-   230,
-   370,
-   372,
-   438
-  ],
-  [
-   6,
-   64,
-   179,
-   182,
-   282,
-   371,
-   373,
-   398,
-   474
-  ],
-  [
-   112,
-   116,
-   145,
-   205,
-   372,
-   374,
-   423
-  ],
-  [
-   51,
-   373,
-   375,
-   443
-  ],
-  [
-   66,
-   151,
-   316,
-   329,
-   374,
-   376
-  ],
-  [
-   375,
-   377,
-   495
-  ],
-  [
-   113,
-   376,
-   378
-  ],
-  [
-   54,
-   134,
-   377,
-   379,
-   467,
-   487
-  ],
-  [
-   223,
-   299,
-   343,
-   378,
-   380
-  ],
-  [
-   140,
-   266,
-   379,
-   381,
-   473
-  ],
-  [
-   81,
-   380,
-   382,
-   474
-  ],
-  [
-   111,
-   283,
-   351,
-   381,
-   383
-  ],
-  [
-   119,
-   125,
-   226,
-   382,
-   384
-  ],
-  [
-   91,
-   120,
-   289,
-   383,
-   385
-  ],
-  [
-   206,
-   304,
-   384,
-   386,
-   463
-  ],
-  [
-   34,
-   196,
-   385,
-   387
-  ],
-  [
-   69,
-   158,
-   232,
-   352,
-   386,
-   388
-  ],
-  [
-   345,
-   387,
-   389,
-   456
-  ],
-  [
-   331,
-   388,
-   390
-  ],
-  [
-   227,
-   389,
-   391,
-   454
-  ],
-  [
-   89,
-   94,
-   280,
-   390,
-   392
-  ],
-  [
-   10,
-   45,
-   141,
-   227,
-   253,
-   355,
-   391,
-   393
-  ],
-  [
-   71,
-   72,
-   235,
-   392,
-   394
-  ],
-  [
-   113,
-   156,
-   393,
-   395
-  ],
-  [
-   293,
-   355,
-   394,
-   396
-  ],
-  [
-   173,
-   213,
-   290,
-   395,
-   397
-  ],
-  [
-   300,
-   324,
-   396,
-   398,
-   415
-  ],
-  [
-   14,
-   20,
-   117,
-   226,
-   372,
-   397,
-   399
-  ],
-  [
-   206,
-   225,
-   266,
-   398,
-   400,
-   466
-  ],
-  [
-   64,
-   170,
-   221,
-   399,
-   401,
-   445
-  ],
-  [
-   98,
-   146,
-   400,
-   402,
-   419
-  ],
-  [
-   105,
-   117,
-   150,
-   275,
-   401,
-   403
-  ],
-  [
-   70,
-   309,
-   331,
-   402,
-   404
-  ],
-  [
-   94,
-   103,
-   299,
-   330,
-   353,
-   403,
-   405,
-   483
-  ],
-  [
-   33,
-   73,
-   224,
-   363,
-   404,
-   406,
-   432,
-   490
-  ],
-  [
-   36,
-   46,
-   405,
-   407,
-   419,
-   473
-  ],
-  [
-   334,
-   406,
-   408,
-   447
-  ],
-  [
-   59,
-   254,
-   407,
-   409
-  ],
-  [
-   282,
-   408,
-   410,
-   442,
-   459
-  ],
-  [
-   157,
-   409,
-   411,
-   453,
-   494
-  ],
-  [
-   1,
-   230,
-   410,
-   412,
-   441,
-   471
-  ],
-  [
-   105,
-   223,
-   411,
-   413,
-   431
-  ],
-  [
-   1,
-   287,
-   412,
-   414,
-   445,
-   486
-  ],
-  [
-   267,
-   348,
-   362,
-   413,
-   415
-  ],
-  [
-   53,
-   58,
-   90,
-   397,
-   414,
-   416,
-   455
-  ],
-  [
-   40,
-   58,
-   104,
-   107,
-   415,
-   417
-  ],
-  [
-   317,
-   416,
-   418,
-   434,
-   465
-  ],
-  [
-   54,
-   417,
-   419
-  ],
-  [
-   214,
-   226,
-   237,
-   401,
-   406,
-   418,
-   420,
-   473
-  ],
-  [
-   249,
-   331,
-   419,
-   421,
-   447
-  ],
-  [
-   44,
-   326,
-   420,
-   422
-  ],
-  [
-   130,
-   255,
-   289,
-   333,
-   421,
-   423,
-   488
-  ],
-  [
-   99,
-   373,
-   422,
-   424
-  ],
-  [
-   253,
-   423,
-   425
-  ],
-  [
-   9,
-   108,
-   246,
-   257,
-   424,
-   426,
-   460,
-   487
-  ],
-  [
-   370,
-   425,
-   427
-  ],
-  [
-   108,
-   298,
-   426,
-   428,
-   434,
-   464
-  ],
-  [
-   268,
-   427,
-   429
-  ],
-  [
-   124,
-   139,
-   311,
-   428,
-   430,
-   474,
-   499
-  ],
-  [
-   59,
-   297,
-   429,
-   431
-  ],
-  [
-   30,
-   143,
-   412,
-   430,
-   432
-  ],
-  [
-   130,
-   405,
-   431,
-   433
-  ],
-  [
-   175,
-   432,
-   434
-  ],
-  [
-   114,
-   417,
-   427,
-   433,
-   435
-  ],
-  [
-   188,
-   434,
-   436,
-   448
-  ],
-  [
-   37,
-   121,
-   435,
-   437,
-   455
-  ],
-  [
-   19,
-   86,
-   189,
-   436,
-   438
-  ],
-  [
-   182,
-   272,
-   334,
-   371,
-   437,
-   439
-  ],
-  [
-   438,
-   440,
-   460
+   0,
+   213
   ],
   [
    0,
-   84,
-   366,
-   439,
-   441
+   4
   ],
   [
-   86,
-   159,
-   335,
-   411,
-   440,
-   442
-  ],
-  [
-   77,
-   409,
-   441,
-   443
-  ],
-  [
-   174,
-   271,
-   374,
-   442,
-   444,
-   467
-  ],
-  [
-   45,
-   189,
-   234,
-   443,
-   445
-  ],
-  [
-   197,
-   400,
-   413,
-   444,
-   446,
-   454
-  ],
-  [
-   116,
-   271,
-   445,
-   447
-  ],
-  [
-   220,
-   270,
-   407,
-   420,
-   446,
-   448
-  ],
-  [
-   291,
-   301,
-   363,
-   435,
-   447,
-   449
-  ],
-  [
-   45,
-   286,
-   448,
-   450
-  ],
-  [
-   38,
-   130,
-   207,
-   277,
-   449,
-   451
-  ],
-  [
-   17,
-   60,
-   97,
-   100,
-   119,
-   450,
-   452
-  ],
-  [
-   196,
-   210,
-   242,
-   451,
-   453,
-   483
-  ],
-  [
-   35,
-   76,
-   410,
-   452,
-   454
-  ],
-  [
-   195,
-   287,
-   390,
-   445,
-   453,
-   455
+   16,
+   474
   ],
   [
    96,
-   127,
-   306,
-   415,
-   436,
-   454,
-   456
+   407
   ],
   [
-   65,
-   238,
-   258,
-   274,
-   388,
-   455,
-   457
-  ],
-  [
-   321,
-   456,
-   458,
-   461
-  ],
-  [
-   6,
-   29,
-   457,
-   459,
-   482
-  ],
-  [
-   278,
-   409,
-   458,
-   460
-  ],
-  [
-   293,
-   425,
-   439,
-   459,
-   461,
-   489
-  ],
-  [
-   124,
-   148,
-   218,
-   457,
-   460,
-   462
-  ],
-  [
-   68,
-   143,
-   349,
-   461,
-   463
-  ],
-  [
-   305,
-   385,
-   462,
-   464,
-   496
-  ],
-  [
-   427,
-   463,
-   465
-  ],
-  [
-   100,
-   252,
-   417,
-   464,
-   466
-  ],
-  [
-   160,
-   180,
-   187,
-   399,
-   465,
-   467
-  ],
-  [
-   222,
-   378,
-   443,
-   466,
-   468
-  ],
-  [
-   98,
-   467,
-   469
-  ],
-  [
-   66,
-   468,
-   470
-  ],
-  [
-   92,
-   147,
-   208,
-   469,
-   471
-  ],
-  [
-   162,
-   174,
-   411,
-   470,
-   472
-  ],
-  [
-   138,
-   471,
-   473,
-   482
-  ],
-  [
-   380,
-   406,
-   419,
-   472,
-   474
-  ],
-  [
-   372,
-   381,
-   429,
-   473,
-   475
-  ],
-  [
-   188,
-   305,
-   328,
-   347,
-   474,
-   476
-  ],
-  [
-   14,
-   157,
-   218,
-   277,
-   295,
-   475,
-   477
-  ],
-  [
-   100,
-   146,
-   335,
-   476,
-   478
-  ],
-  [
-   181,
-   304,
-   477,
-   479
-  ],
-  [
-   74,
-   103,
-   478,
-   480
-  ],
-  [
-   82,
-   204,
-   207,
-   479,
-   481
-  ],
-  [
-   25,
-   480,
-   482
-  ],
-  [
-   338,
-   370,
-   458,
-   472,
-   481,
-   483
-  ],
-  [
-   177,
-   404,
-   452,
-   482,
-   484
-  ],
-  [
-   26,
-   483,
-   485
-  ],
-  [
-   230,
-   306,
-   484,
-   486
-  ],
-  [
-   108,
-   309,
-   413,
-   485,
-   487
-  ],
-  [
-   1,
-   234,
-   378,
-   425,
-   486,
-   488
-  ],
-  [
-   93,
-   363,
-   422,
-   487,
-   489
-  ],
-  [
-   50,
-   198,
-   321,
-   348,
-   460,
-   488,
-   490
-  ],
-  [
-   92,
-   324,
-   405,
-   489,
-   491
-  ],
-  [
-   219,
-   368,
-   490,
-   492
-  ],
-  [
-   129,
-   219,
-   243,
-   491,
-   493
-  ],
-  [
-   212,
-   295,
-   492,
-   494
-  ],
-  [
-   248,
-   410,
-   493,
-   495
-  ],
-  [
-   211,
-   288,
-   376,
-   494,
-   496
-  ],
-  [
-   174,
-   253,
-   289,
-   463,
-   495,
-   497
+   83,
+   369
   ],
   [
    3,
-   7,
-   94,
-   145,
-   496,
-   498
-  ],
-  [
-   77,
-   497,
-   499
-  ],
-  [
-   0,
-   33,
-   203,
-   322,
-   429,
-   498
+   464
   ]
  ]
 }
