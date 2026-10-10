@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds the animated SVGs used by the README (banner.svg, pipeline.svg).
+"""Builds the animated banner used by the README (banner.svg).
 
 Run from the repo root after `pnpm install` in app/ (the brand fonts are embedded from app/node_modules):
     python3 docs/readme/generate.py
@@ -189,71 +189,6 @@ def banner() -> str:
 </svg>"""
 
 
-# ── Pipeline ───────────────────────────────────────────────────────────────────────────────────────────────────────
-def pipeline() -> str:
-    W, H = 1280, 250
-    stations = [
-        ("Rumor", ["one card, one", "starting depositor"]),
-        ("Depositors", ["500 decide every", "400 ms, in the open"]),
-        ("SealQueue", ["one tx in flight,", "up to 8 ticks each"]),
-        ("Monad", ["400 ms blocks,", "sync receipts"]),
-        ("RunBank", ["pays, sells bonds,", "decides solvency"]),
-        ("Verdict", ["BankFailed or", "BankSurvived event"]),
-    ]
-    bw, bh, gap = 180, 116, 28
-    x0 = (W - (len(stations) * bw + (len(stations) - 1) * gap)) / 2
-    y0 = 70
-    css = [f"svg{{{BODY}}}", ".d{" + DISPLAY + "}", ".m{" + MONO + "}"]
-    css.append(
-        f"@keyframes pulse{{0%,100%{{fill:{SEAL};fill-opacity:.1}}12%{{fill:{SEAL};fill-opacity:.32}}}}"
-        f".pulse{{animation:pulse .4s linear infinite}}"
-    )
-    css.append(f"@keyframes go{{from{{transform:translateX(0);opacity:0}}12%{{opacity:1}}88%{{opacity:1}}to{{transform:translateX({gap + 4}px);opacity:0}}}}")
-    css.append(
-        f"@keyframes slam{{0%,70%{{opacity:0;transform:rotate(-14deg) scale(1.9)}}76%,94%{{opacity:1;transform:rotate(-7deg) scale(1)}}100%{{opacity:0;transform:rotate(-7deg) scale(1)}}}}"
-        f".slam{{transform-box:fill-box;transform-origin:center;opacity:0;animation:slam 4s linear infinite;mix-blend-mode:multiply}}"
-    )
-    parts = []
-    for i, (title, lines) in enumerate(stations):
-        x = x0 + i * (bw + gap)
-        is_chain = title == "Monad"
-        fill = f'class="pulse"' if is_chain else f'fill="{SLIP}"'
-        stroke = SEAL if is_chain or title in ("RunBank", "Verdict") else EDGE
-        parts.append(f'<rect x="{x:.1f}" y="{y0}" width="{bw}" height="{bh}" rx="4" {fill} stroke="{stroke}" stroke-width="{2 if stroke == SEAL else 1}"/>')
-        if is_chain:
-            parts.append(f'<rect x="{x:.1f}" y="{y0}" width="{bw}" height="{bh}" rx="4" fill="{SLIP}" fill-opacity=".55"/>')
-            parts.append(f'<rect x="{x:.1f}" y="{y0}" width="{bw}" height="{bh}" rx="4" class="pulse" stroke="{SEAL}" stroke-width="2"/>')
-        parts.append(f'<text x="{x + 16:.1f}" y="{y0 + 40}" class="d" font-size="32" font-weight="800" fill="{SEAL if is_chain else INK}">{title}</text>')
-        for k, line in enumerate(lines):
-            parts.append(f'<text x="{x + 16:.1f}" y="{y0 + 70 + k * 20}" class="m" font-size="13" fill="{INK2}">{line}</text>')
-        if title == "Verdict":
-            sx, sy = x + bw / 2, y0 + bh + 34
-            parts.append(
-                f'<g class="slam" filter="url(#ink)"><rect x="{sx - 70}" y="{sy - 20}" width="140" height="40" rx="3" fill="none" stroke="{SEAL}" stroke-width="3.5"/>'
-                f'<text x="{sx}" y="{sy + 9}" text-anchor="middle" class="d" font-size="26" font-weight="900" fill="{SEAL}">BANK FAILED</text></g>'
-            )
-        if i < len(stations) - 1:
-            ax = x + bw + 2
-            ay = y0 + bh / 2
-            parts.append(f'<path d="M{ax:.1f},{ay}L{ax + gap - 6:.1f},{ay}" stroke="{INK3}" stroke-width="1.5"/>')
-            parts.append(f'<path d="M{ax + gap - 10:.1f},{ay - 5}L{ax + gap - 3:.1f},{ay}L{ax + gap - 10:.1f},{ay + 5}" fill="none" stroke="{INK3}" stroke-width="1.5"/>')
-            for d in range(3):
-                parts.append(
-                    f'<circle cx="{ax:.1f}" cy="{ay}" r="4.5" fill="{RUN if i == 1 else SEAL}" '
-                    f'style="animation:go 1.2s linear {-(d * 0.4):.1f}s infinite"/>'
-                )
-    head = f'<text x="{x0:.1f}" y="40" class="m" font-size="14" font-weight="700" fill="{INK3}">ONE TICK, EVERY 400 MS · FROM RUMOR TO A VERDICT THE CONTRACT SIGNS</text>'
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-labelledby="t">
-<title id="t">How a tick is sealed: rumor, 500 depositors, SealQueue, a Monad block, the RunBank contract, then the verdict event.</title>
-<style>{FACES}{''.join(css)}</style>
-<defs>{INK_FILTER}</defs>
-<rect width="{W}" height="{H}" rx="18" fill="{PAPER}"/>
-{head}
-{''.join(parts)}
-</svg>"""
-
-
 if __name__ == "__main__":
     (OUT / "banner.svg").write_text(banner())
-    (OUT / "pipeline.svg").write_text(pipeline())
-    print("wrote", OUT / "banner.svg", OUT / "pipeline.svg")
+    print("wrote", OUT / "banner.svg")
