@@ -1,15 +1,22 @@
 [
   {
-    "id": "mutual-w-survived-202610100800",
+    "id": "bhaus-r-failed-202610100809",
+    "name": "Bhau's Bank × “Screenshot: the vault is empty.”",
+    "recordedAt": "2026-10-10T08:09:43.237Z",
+    "kind": "failed",
+    "level": 0
+  },
+  {
+    "id": "mutual-w-survived-202610100809",
     "name": "Monad Mutual × “The audit is delayed.”",
-    "recordedAt": "2026-10-10T08:00:46.300Z",
+    "recordedAt": "2026-10-10T08:09:28.395Z",
     "kind": "survived",
     "level": 1
   },
   {
-    "id": "bhaus-w-failed-202610100800",
+    "id": "bhaus-w-failed-202610100809",
     "name": "Bhau's Bank × “The audit is delayed.”",
-    "recordedAt": "2026-10-10T08:00:40.200Z",
+    "recordedAt": "2026-10-10T08:09:19.330Z",
     "kind": "failed",
     "level": 0
   }

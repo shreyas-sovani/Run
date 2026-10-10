@@ -1,0 +1,354 @@
+{
+  "version": 1,
+  "id": "mutual-w-survived-202610100809",
+  "name": "Monad Mutual × “The audit is delayed.”",
+  "recordedAt": "2026-10-10T08:09:28.395Z",
+  "chainId": 10143,
+  "runBank": "0x2cD82EE2b3C19E996Fa9da80052e912A2E90F41D",
+  "runId": 25,
+  "params": {
+    "level": 1,
+    "card": 1,
+    "seedNode": 39,
+    "modelSeed": "1380008226",
+    "modelHash": "0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96"
+  },
+  "rumor": {
+    "txHash": "0xcf7e6262123cac0392614569120722e591bd3cd2c98a22dcd0fe20d001438804",
+    "blockNumber": "69773815"
+  },
+  "ticks": [
+    {
+      "tick": 1,
+      "requested": []
+    },
+    {
+      "tick": 2,
+      "requested": []
+    },
+    {
+      "tick": 3,
+      "requested": []
+    },
+    {
+      "tick": 4,
+      "requested": []
+    },
+    {
+      "tick": 5,
+      "requested": []
+    },
+    {
+      "tick": 6,
+      "requested": [
+        22,
+        101
+      ]
+    },
+    {
+      "tick": 7,
+      "requested": [
+        0,
+        2,
+        3,
+        6,
+        8,
+        20,
+        29,
+        43
+      ]
+    },
+    {
+      "tick": 8,
+      "requested": [
+        1,
+        4,
+        17,
+        31,
+        37,
+        54,
+        128,
+        178,
+        198,
+        332
+      ]
+    },
+    {
+      "tick": 9,
+      "requested": [
+        5,
+        10,
+        18,
+        25,
+        26,
+        27,
+        28,
+        32,
+        33,
+        35,
+        41,
+        44,
+        51,
+        66,
+        72,
+        81,
+        89,
+        92,
+        99,
+        119,
+        126,
+        144,
+        149,
+        170,
+        212,
+        216,
+        227,
+        229,
+        253,
+        277,
+        283,
+        299,
+        301,
+        314,
+        326,
+        340,
+        348,
+        393,
+        432,
+        441
+      ]
+    },
+    {
+      "tick": 10,
+      "requested": [
+        7,
+        57,
+        117,
+        158,
+        162,
+        177,
+        289,
+        290,
+        295,
+        296,
+        370,
+        373,
+        405
+      ]
+    },
+    {
+      "tick": 11,
+      "requested": [
+        23,
+        98,
+        131,
+        160,
+        168,
+        357,
+        375,
+        414,
+        417,
+        471
+      ]
+    },
+    {
+      "tick": 12,
+      "requested": [
+        65,
+        78,
+        209,
+        211,
+        285,
+        359,
+        412
+      ]
+    },
+    {
+      "tick": 13,
+      "requested": [
+        47,
+        63,
+        132,
+        148,
+        153,
+        274
+      ]
+    },
+    {
+      "tick": 14,
+      "requested": [
+        240,
+        342,
+        383,
+        389
+      ]
+    },
+    {
+      "tick": 15,
+      "requested": [
+        137,
+        186,
+        197,
+        313,
+        493
+      ]
+    },
+    {
+      "tick": 16,
+      "requested": [
+        147,
+        353,
+        459
+      ]
+    },
+    {
+      "tick": 17,
+      "requested": [
+        83
+      ]
+    },
+    {
+      "tick": 18,
+      "requested": []
+    },
+    {
+      "tick": 19,
+      "requested": []
+    },
+    {
+      "tick": 20,
+      "requested": []
+    },
+    {
+      "tick": 21,
+      "requested": []
+    },
+    {
+      "tick": 22,
+      "requested": []
+    },
+    {
+      "tick": 23,
+      "requested": []
+    },
+    {
+      "tick": 24,
+      "requested": []
+    },
+    {
+      "tick": 25,
+      "requested": []
+    }
+  ],
+  "seals": [
+    {
+      "fromTick": 1,
+      "toTick": 1,
+      "txHash": "0xd45dfb6f8f4e926bf9e8d89925e3437a0ee38b27c2aabae71ebe39ef7b405096",
+      "blockNumber": "69773819",
+      "sentAtMs": 402,
+      "sealedAtMs": 1300,
+      "gasUsed": "65388"
+    },
+    {
+      "fromTick": 2,
+      "toTick": 3,
+      "txHash": "0x65f3fa4f243f513a6c9eb99b0c6dd5e84dd222f72f44a802a320db31bee27906",
+      "blockNumber": "69773823",
+      "sentAtMs": 1303,
+      "sealedAtMs": 2414,
+      "gasUsed": "74907"
+    },
+    {
+      "fromTick": 4,
+      "toTick": 6,
+      "txHash": "0x045e8d33b3fd20a6c850e4b69da31353f65d3637b6c38f920fa31f7b12f82a6b",
+      "blockNumber": "69773825",
+      "sentAtMs": 2417,
+      "sealedAtMs": 3162,
+      "gasUsed": "195830"
+    },
+    {
+      "fromTick": 7,
+      "toTick": 7,
+      "txHash": "0x902db8ae0e1f25c96a80975bfc63176fdf66dd70544889e0fcf12df875114a7d",
+      "blockNumber": "69773829",
+      "sentAtMs": 3165,
+      "sealedAtMs": 4287,
+      "gasUsed": "135368"
+    },
+    {
+      "fromTick": 8,
+      "toTick": 10,
+      "txHash": "0xc106542a062925a841c0a15d33de0a6f25c69d6580fadcdc8eca5433f756744e",
+      "blockNumber": "69773832",
+      "sentAtMs": 4288,
+      "sealedAtMs": 5166,
+      "gasUsed": "308805"
+    },
+    {
+      "fromTick": 11,
+      "toTick": 12,
+      "txHash": "0xfa110bf2d722a7be1a6608cc53ebfbb99787f24cc120e7a8155bf9021de39faa",
+      "blockNumber": "69773835",
+      "sentAtMs": 5167,
+      "sealedAtMs": 6057,
+      "gasUsed": "183559"
+    },
+    {
+      "fromTick": 13,
+      "toTick": 15,
+      "txHash": "0xd9ff628c8cad8e6220a6ad9257622520d25f7e5b9a9077bbb818c8cadba543d4",
+      "blockNumber": "69773837",
+      "sentAtMs": 6059,
+      "sealedAtMs": 6834,
+      "gasUsed": "264729"
+    },
+    {
+      "fromTick": 16,
+      "toTick": 17,
+      "txHash": "0x1701c19af73672ea1bf25c94871c0a751a4b8a2aae89e54ef2f825375b6bea65",
+      "blockNumber": "69773841",
+      "sentAtMs": 6835,
+      "sealedAtMs": 7896,
+      "gasUsed": "358553"
+    },
+    {
+      "fromTick": 18,
+      "toTick": 19,
+      "txHash": "0xdf27d36176605213d7a2d02334653793aaa7644998845fd983a8c90692159d5f",
+      "blockNumber": "69773845",
+      "sentAtMs": 7898,
+      "sealedAtMs": 9081,
+      "gasUsed": "174468"
+    },
+    {
+      "fromTick": 20,
+      "toTick": 22,
+      "txHash": "0x71e002e39113fb44c87434e876d14a0c4b7c2aaf4c7fb8ff9cb0d13fb2bc4aca",
+      "blockNumber": "69773849",
+      "sentAtMs": 9084,
+      "sealedAtMs": 10320,
+      "gasUsed": "84426"
+    },
+    {
+      "fromTick": 23,
+      "toTick": 25,
+      "txHash": "0xdf8792171b22e1c8de19df323287981ff1511e2c8130023c6f1099f12e258b06",
+      "blockNumber": "69773852",
+      "sentAtMs": 10322,
+      "sealedAtMs": 11206,
+      "gasUsed": "86071"
+    }
+  ],
+  "outcome": {
+    "kind": "survived",
+    "tick": 25,
+    "txHash": "0xdf8792171b22e1c8de19df323287981ff1511e2c8130023c6f1099f12e258b06",
+    "blockNumber": "69773852",
+    "atMs": 11207,
+    "trappedCount": 0,
+    "trappedAmount": "0",
+    "uninsuredTrapped": "0"
+  }
+}
