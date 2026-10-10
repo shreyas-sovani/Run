@@ -245,6 +245,7 @@ export const copy = {
     decisionsHint: 'The public depositor model re-run from chain data alone',
     street_out: 'AUSD that left the bank',
     street_out_hint: 'Live from Monad',
+    street_split: (paid: string, loss: string) => `${paid} paid to depositors + ${loss} lost in fire sales`,
     waiting: 'Waiting for the transaction…',
     simulated: 'simulated',
     recorded: 'recorded',

@@ -203,6 +203,8 @@ Read this section alone. It says what E built, where it lives, how to run and ch
 
 ## 7. Open items (with owner and exact next step)
 
+> **Update 15:50: items 1 and 2 below are DONE (see the section "15:50 — final pass" at the end of this file).** Items 3–6 are unchanged.
+
 None of these blocks E's own work. Statuses as of 14:25.
 
 1. **One Live run with the proof panel open (owner: F, or the human).** Why: the Live-only fields (`RunView.onchain.streetHeld` → "AUSD that left the bank", `finalized` ticks from `finalizedBlock`, `mirror` from real seals) have only been seen on fixtures and on a recorded replay. F said it will do this with the backup key after taking C's lock (`LIVE BANK: F until HH:MM` at the top of `docs/status/F.md`). Steps: start a Live run from the stage, press `P` while it runs and after the verdict. Expect: rumor tx with block, sealed time and "✓ finalized" once `blockNumber ≤ finalizedBlock`; "N / N ticks: screen and chain agree" with a green check; biggest batch; verdict row with trapped and uninsured amounts; "AUSD that left the bank" matching Street's balance; Contracts rows with `Verified source` links. Report mismatches in this file; E fixes `proofModel.ts` / `ProofPanel.tsx`.
@@ -247,3 +249,27 @@ F's commit `8964192` landed (the rows come from `environmentChecks()` in `store.
 `pnpm exec vitest run src/ui` 76 passed; `pnpm exec tsc -b` clean; `oxlint` clean on `ui/panels`. No transactions sent, no keys touched.
 
 E: done for Part 2 (Part 1 waits on F's live check; nothing else outstanding). F may deploy now; the E changes in this pass are `panels/opsModel.ts`, `panels/OpsView.tsx`, `panels/fixtures.ts` and `panels/__tests__/opsModel.test.ts`.
+
+## 15:50 — final pass (E): F's live-check requests done
+
+Source: F's "Live UI check (F, 15:31)" in `docs/status/F.md`: two live runs through the production build, proof panel read from the DOM. All Live-only numbers matched the chain and the vault (rumor / biggest batch / verdict all "✓ finalized"; mirror 8/8 and 25/25; decisions 8/8 and 25/25; "AUSD that left the bank" 7,080 AUSD = `balanceOf(Street)` 7,080.497326). So **no Live-only calculation was wrong**; the three requests were about presentation and one focus risk. Each is now handled, with a unit test written first where it is logic.
+
+1. **Early "Biggest batch: 0 depositors…" — fixed.** Test first (`proofModel.test.ts`, "biggestBatch ignores quiet batches"), which failed, then the fix: `biggestBatch()` now skips sealed batches with `requestedCount <= 0`, so the block stays hidden until a batch has at least one request (earliest still wins ties). Covers the Live and Recorded panel.
+2. **Unexplained explorer tab / focus on a link — hardened (cause not reproducible).** The panel itself focuses its container (`tabIndex -1`), never a link, and the in-IDE browser tool may have activated the link. Two real risks existed and are removed: (a) closing the panel restored focus to whatever had focus before opening, including an `<a>` (e.g. a ticker `TxLink`), after which `Enter` (the start-the-run hotkey) would activate the link; `ProofPanel` now never restores focus onto an anchor. (b) `Enter` on a focused `Address` / `TxLink` (link, copy or menu button) also bubbled to F's global hotkey and started a run; `HexRef` now stops `Enter` from bubbling (React handler on the control's root, which runs before F's `document` listener). I deliberately did **not** do this for `Button`: with the stage's "Start the run" button or a clicked rumor card focused, `Enter` must still start the run (demo flow). **REQUEST → F (optional, to confirm):** on production, press `P`, then `Enter` for the next run: no explorer tab should open and the run should start.
+3. **"AUSD that left the bank" split — added.** Test first (`streetSplit`: F's run 1 figures 6,055 + 1,025 = 7,080; no negative payout; no-loss case), then `streetSplit()` in `proofModel.ts` and a new line under the figure: "6,055 AUSD paid to depositors + 1,025 AUSD lost in fire sales" (`copy.proof.street_split`). Paid = Street balance − `onchain.cumulativeLoss`, so it reconciles with the vault's "out the door" and "fire-sale loss". Hidden when nothing has left the bank.
+
+### Part 2 recap (unchanged, 15:40)
+Environment rows `fonts`, `audio`, `window` render in the Preflight list only, belong to no step, never change "Go to stage"; non-critical `fail` rows draw as amber advisory rows (`rowLook()`).
+
+### Checks
+`pnpm exec vitest run src/ui` 82 passed; `pnpm exec tsc -b` clean; `oxlint` clean on `ui/panels`, `ui/brand`. Looked at `/lab/panels?tab=proof` (live fixture): split line renders ("6,696 AUSD paid to depositors + 934 AUSD lost in fire sales"). No transactions sent, no keys touched.
+
+### State of every earlier E item
+- Handoff §7 item 1 (Live check): **done** by F's live check; no defects found (above).
+- Item 2 (environment preflight rows): **done** (F's commit `8964192` + E's 15:40 commit).
+- Item 3 (absolute rumor sealed time in `ReplayFile`): still optional, still hidden in Replay; owner C + F.
+- Item 4 (OG figure if recorded data changes): unchanged; OG card says "BANK FAILED in 4.2 s · 14 Monad blocks" and F's latest Bhau's × W run measured 4.3 s / 14 blocks, so it stays accurate. Re-run `pnpm og` only if the model changes.
+- Item 5 (redeploy): **F must redeploy** to publish this pass (`panels/proofModel.ts`, `panels/ProofPanel.tsx`, `brand/HexRef.tsx`, `copy.ts`, tests).
+- Item 6 (real-display QA): needs a human (projector legibility, keyboard-only `/ops`, reduced motion).
+
+**E: done.** F can deploy.

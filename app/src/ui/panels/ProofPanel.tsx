@@ -5,7 +5,7 @@ import type { RunView } from '@/types';
 import { Address, Button, CheckIcon, CrossIcon, TxLink } from '@/ui/brand';
 import { copy } from '@/ui/copy';
 import { fmtAusd, fmtAusdWithUsd, fmtUsdScaled, fmtBlock, fmtCount, fmtGas, fmtSealTime, fmtTimeOfDay } from '@/ui/format';
-import { agreement, buildProof, isFinalized } from './proofModel';
+import { agreement, buildProof, isFinalized, streetSplit } from './proofModel';
 import s from './ProofPanel.module.css';
 
 /** What the proof panel reads from the run view (a slice, so the lab can feed fixtures). */
@@ -59,7 +59,8 @@ export function ProofPanel(props: { open: boolean; onClose(): void }) {
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
-      if (prev && document.contains(prev)) prev.focus({ preventScroll: true });
+      // Never hand focus back to a link: `Enter` is also the start-the-run hotkey and would open the explorer.
+      if (prev && document.contains(prev) && prev.tagName !== 'A') prev.focus({ preventScroll: true });
     };
   }, [open, onClose]);
 
@@ -262,6 +263,12 @@ export function ProofContent(props: { data: ProofData; onWatchRecorded(): void }
           </h3>
           <p className={`${s.big} tnum`}>{fmtAusd(d.onchain.streetHeld)}</p>
           <p className={`${s.line} tnum`}>{`${fmtUsdScaled(d.onchain.streetHeld)} at ${copy.scale.note}`}</p>
+          {(() => {
+            const split = streetSplit(d.onchain);
+            return split.total > 0n ? (
+              <p className={`${s.line} tnum`}>{copy.proof.street_split(fmtAusd(split.paid), fmtAusd(split.loss))}</p>
+            ) : null;
+          })()}
           <p className={s.hint}>
             {copy.proof.street_out_hint}
             {d.onchain.readAtBlock !== null ? ` · ${copy.generic.block.toLowerCase()} ${fmtBlock(d.onchain.readAtBlock)}` : ''}

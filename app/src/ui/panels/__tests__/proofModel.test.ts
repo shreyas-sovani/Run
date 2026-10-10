@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Outcome, SealRecord } from '@/types';
-import { agreement, biggestBatch, buildProof, isFinalized, verdictSeal } from '../proofModel';
+import { agreement, biggestBatch, buildProof, isFinalized, streetSplit, verdictSeal } from '../proofModel';
 
 let id = 0;
 function rec(over: Partial<SealRecord>): SealRecord {
@@ -92,5 +92,34 @@ describe('agreement', () => {
     expect(agreement({ matched: 14, total: 14, firstMismatchTick: null }).state).toBe('agree');
     expect(agreement({ matched: 9, total: 14, firstMismatchTick: null }).state).toBe('mismatch');
     expect(agreement({ matched: 14, total: 14, firstMismatchTick: 6 }).state).toBe('mismatch');
+  });
+});
+
+describe('biggestBatch ignores quiet batches (F, Live UI check)', () => {
+  it('is null while every sealed batch has zero requests', () => {
+    expect(biggestBatch([rec({ requestedCount: 0 }), rec({ requestedCount: 0, blockNumber: 101n })])).toBeNull();
+  });
+  it('picks the first batch that has requests', () => {
+    const quiet = rec({ requestedCount: 0 });
+    const busy = rec({ requestedCount: 1, blockNumber: 105n });
+    expect(biggestBatch([quiet, busy])?.record).toBe(busy);
+  });
+  it('buildProof shows no biggest batch before anyone has asked to withdraw', () => {
+    const m = buildProof({ mode: 'live', seals: [rec({ kind: 'rumor', requestedCount: null }), rec({ requestedCount: 0 })], outcome: null, sealedTick: 2 });
+    expect(m.biggest).toBeNull();
+  });
+});
+
+describe('streetSplit', () => {
+  it('splits what left the bank into paid-out and fire-sale loss (F run 1: 6,055 + 1,025 = 7,080)', () => {
+    const s = streetSplit({ streetHeld: 7_080_497_326n, cumulativeLoss: 1_025_000_000n });
+    expect(s).toEqual({ total: 7_080_497_326n, paid: 6_055_497_326n, loss: 1_025_000_000n });
+    expect(s.paid + s.loss).toBe(s.total);
+  });
+  it('never reports a negative payout', () => {
+    expect(streetSplit({ streetHeld: 100n, cumulativeLoss: 500n })).toEqual({ total: 100n, paid: 0n, loss: 100n });
+  });
+  it('a run with no fire sale is all payout', () => {
+    expect(streetSplit({ streetHeld: 2_000_000n, cumulativeLoss: 0n })).toEqual({ total: 2_000_000n, paid: 2_000_000n, loss: 0n });
   });
 });

@@ -31,11 +31,12 @@ export function sealMs(r: SealRecord): number | null {
   return r.sealedAtMs !== null && r.sentAtMs > 0 ? Math.max(0, r.sealedAtMs - r.sentAtMs) : null;
 }
 
-/** The tick transaction with the most requested depositors; the earliest wins a tie. */
+/** The tick transaction with the most requested depositors (at least one); the earliest wins a tie. */
 export function biggestBatch(seals: readonly SealRecord[]): BiggestBatch | null {
   let best: SealRecord | null = null;
   for (const r of seals) {
-    if (r.kind !== 'ticks' || r.status !== 'sealed' || r.requestedCount === null) continue;
+    // Quiet ticks (no one has asked to withdraw yet) are not a "biggest batch".
+    if (r.kind !== 'ticks' || r.status !== 'sealed' || r.requestedCount === null || r.requestedCount <= 0) continue;
     if (best === null || r.requestedCount > (best.requestedCount ?? 0)) best = r;
   }
   return best ? { record: best, count: best.requestedCount ?? 0, sealMs: sealMs(best) } : null;
@@ -78,4 +79,14 @@ export function agreement(m: { matched: number; total: number; firstMismatchTick
 } {
   if (m.firstMismatchTick !== null || m.matched < m.total) return { state: 'mismatch' };
   return { state: m.total === 0 ? 'none' : 'agree' };
+}
+
+/**
+ * What left the bank (the Street's AUSD) split into depositor payouts and fire-sale loss, so the panel's figure
+ * reconciles with the vault's "out the door" + "fire-sale loss". Street holds both; the loss never exceeds it.
+ */
+export function streetSplit(o: { streetHeld: bigint; cumulativeLoss: bigint }): { total: bigint; paid: bigint; loss: bigint } {
+  const total = o.streetHeld < 0n ? 0n : o.streetHeld;
+  const loss = o.cumulativeLoss < 0n ? 0n : o.cumulativeLoss > total ? total : o.cumulativeLoss;
+  return { total, paid: total - loss, loss };
 }

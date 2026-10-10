@@ -54,7 +54,15 @@ export function HexRef(props: Props) {
   }, [value]);
 
   return (
-    <span className={s.ref} ref={rootRef} data-kind={kind}>
+    <span
+      className={s.ref}
+      ref={rootRef}
+      data-kind={kind}
+      onKeyDown={(e) => {
+        // `Enter` on a focused link or button belongs to that control, not to the global start-the-run hotkey.
+        if (e.key === 'Enter') e.stopPropagation();
+      }}
+    >
       {label ? <span className={s.label}>{label}</span> : null}
       <a className={s.hex} href={primary} target="_blank" rel="noopener noreferrer" title={copy.buttons.openExplorer}>
         <span aria-hidden="true">{shown}</span>
