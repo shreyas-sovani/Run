@@ -18,6 +18,7 @@ const h = vi.hoisted(() => ({
     started: 0,
   },
   live: null as null | ChainAdapter,
+  failSeals: 0, // the next N sealTicks calls reject (simulates a revert / outage)
 }));
 
 vi.mock('@/chain', async (orig) => {
@@ -39,6 +40,13 @@ vi.mock('@/chain', async (orig) => {
         kind: 'live',
         operator: '0x85db51Abac83F8B1DF2E674c29f8D68527Bf6b10',
         balances: async () => h.balances,
+        async sealTicks(first, ticks) {
+          if (h.failSeals > 0) {
+            h.failSeals -= 1;
+            throw new Error('execution reverted: WrongStatus');
+          }
+          return base.sealTicks(first, ticks);
+        },
         switchToBackup: () => {
           if (h.balances.backup === null || usingBackup) return false;
           usingBackup = true;
@@ -138,6 +146,29 @@ describe('live mode on a fake live adapter', () => {
     runActions.reset();
     await waitFor(() => getRunView().phase === 'idle', 10_000, 'reset');
     h.balances = { primary: 40n * MON, backup: 25n * MON };
+  }, 60_000);
+
+  it('pauses on a seal failure with a Retry action, and retry resumes the same run to its outcome', async () => {
+    runActions.setMode('live', { auto: true });
+    // connectOperator was undone by the previous test? reconnect to be independent of order.
+    await runActions.connectOperator({ primary: generatePrivateKey() });
+    runActions.setMode('live', { auto: true });
+    runActions.reset();
+    await waitFor(() => getRunView().phase === 'idle', 10_000, 'idle');
+    runActions.selectLevel(0);
+    runActions.selectCard(1);
+    h.failSeals = 1;
+    void runActions.start();
+    await waitFor(() => getRunView().phase === 'paused', 20_000, 'paused');
+    expect(getRunView().error?.action?.run).toBe('retry');
+    expect(getRunView().health).toBe('paused');
+    runActions.retry();
+    expect(getRunView().error).toBeNull();
+    await waitFor(() => ['failed', 'survived'].includes(getRunView().phase), 30_000, 'outcome after retry');
+    const v = getRunView();
+    expect(v.mirror.matched).toBe(v.mirror.total);
+    const ticks = v.seals.filter((x) => x.kind === 'ticks').flatMap((x) => [x.fromTick!, x.toTick!]);
+    expect(ticks[0]).toBe(1); // no tick skipped or duplicated by the retry
   }, 60_000);
 
   it('disconnecting returns to practice with no operator', () => {
