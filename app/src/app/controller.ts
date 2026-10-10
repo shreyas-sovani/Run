@@ -5,36 +5,62 @@
 // plug into the same session shape: `dispose()` tears everything down before another mode starts.
 import type { Hex } from 'viem';
 import {
+  addressOfKey,
+  clearOperatorKeys,
+  createLiveAdapter,
   createMockAdapter,
   createRecorder,
   createSealQueue,
+  createSpectator,
+  deployment,
   listReplays,
+  loadOperatorKeys,
   loadReplay,
+  saveOperatorKeys,
   translateError,
 } from '@/chain';
 import type { ChainAdapter, Recorder, SealQueue } from '@/chain';
-import { MAX_LEAD, TICK_MS, createRun, defaultParams, loadModel, stepRun, stepRunWithRequested } from '@/engine';
+import {
+  MAX_LEAD,
+  TICK_MS,
+  createRun,
+  defaultParams,
+  hashConfig,
+  loadModel,
+  stepRun,
+  stepRunWithRequested,
+  verifyDecisions,
+} from '@/engine';
 import { initialRunView, patchPending, patchRun, runStore } from '@/app/state';
 import { stopFakeRun } from '@/app/fixtures/fakeRun';
 import type {
   BankLevel,
+  BankSnapshotView,
   Model,
   Outcome,
+  OutcomeEvent,
   PreflightReport,
   ReplayFile,
   RumorCard,
+  RumorEvent,
   RunMode,
   RunParams,
   RunPhase,
   RunState,
   SealRecord,
   SealResult,
+  TickPayload,
   TickResult,
   TickSealedEvent,
   UiError,
 } from '@/types';
 
 type ChainStatus = 'ready' | 'running' | 'failed' | 'survived';
+
+// PRD §12.4: below 15 MON warn, below 10.5 MON refuse (Monad's 10 MON reserve throttles the account).
+const MON = 10n ** 18n;
+const LOW_BALANCE_WARN = 15n * MON;
+const LOW_BALANCE_REFUSE = (21n * MON) / 2n;
 
 interface Session {
   mode: RunMode;
@@ -68,7 +94,63 @@ let pausedFrom: RunPhase | null = null;
 let busy = false; // start/reset/switch in flight: second calls are ignored (StrictMode, key repeat)
 let runToken = 0; // bumped on every new run/reset so stale async results are ignored
 
+// Live mode (F-06). The adapter outlives sessions (practice ↔ live ↔ replay); the keys live only inside it.
+let liveAdapter: ChainAdapter | null = null;
+let chainTicks: TickPayload[] = []; // request lists exactly as sealed onchain (feeds the decision check)
+let snapshotBusy = false;
+
 const view = () => runStore.getState();
+
+// ── Decision check (F-09) ───────────────────────────────────────────────
+// Re-runs the public depositor model from the chain's recorded request lists and counts agreeing decisions.
+// Deferred so it never delays the stamp.
+function scheduleDecisionCheck(m: Model, params: RunParams, ticks: TickPayload[], token: number): void {
+  if (ticks.length === 0) return;
+  const copy = ticks.map((t) => ({ tick: t.tick, requested: [...t.requested] }));
+  setTimeout(() => {
+    if (token !== runToken) return;
+    try {
+      const r = verifyDecisions(m, params, copy);
+      if (token === runToken) patchRun({ decisions: { matched: r.matched, total: r.total } });
+      log('decision check', r);
+    } catch {
+      // verification is informational; a failure here must never break the stage
+    }
+  }, 0);
+}
+
+// ── Chain snapshot and balances (live) ──────────────────────────────────
+async function refreshSnapshot(): Promise<BankSnapshotView | null> {
+  const a = adapter;
+  if (!a || a.kind !== 'live' || snapshotBusy) return null;
+  snapshotBusy = true;
+  try {
+    const snap = await a.readSnapshot();
+    if (adapter === a) patchRun({ onchain: snap });
+    return snap;
+  } catch {
+    return null; // the seal path surfaces real errors; a missed read is harmless
+  } finally {
+    snapshotBusy = false;
+  }
+}
+
+async function refreshBalances(): Promise<void> {
+  const a = liveAdapter;
+  if (!a) return;
+  try {
+    const b = await a.balances();
+    patchRun((v) => ({
+      operator: { ...v.operator, balanceWei: v.operator.usingBackup && b.backup !== null ? b.backup : b.primary },
+    }));
+  } catch {
+    // leave the last known balance
+  }
+}
+
+function activeBalance(b: { primary: bigint; backup: bigint | null }): bigint {
+  return view().operator.usingBackup && b.backup !== null ? b.backup : b.primary;
+}
 
 function requireModel(): Model {
   if (!model) model = loadModel();
@@ -139,6 +221,12 @@ function onSealed(res: SealResult, token: number): void {
     const allMatch = firstMismatch === null;
     const record: SealRecord = { ...res.record, mirrorMatch: allMatch };
     recorder.add({ ...res, record });
+    for (const e of res.ticks) {
+      if (chainTicks.length === 0 || e.tick > chainTicks[chainTicks.length - 1].tick) {
+        chainTicks.push({ tick: e.tick, requested: e.requested });
+      }
+    }
+    void refreshSnapshot();
     patchRun((v) => ({
       seals: [...v.seals, record],
       sealedTick: queue?.sealedTick ?? v.sealedTick,
@@ -193,6 +281,8 @@ function finalizeOutcome(res: SealResult, token: number): void {
   };
   lastReplay = recorder.finish(o) ?? lastReplay;
   chainStatus = o.kind;
+  scheduleDecisionCheck(requireModel(), run.params, chainTicks, token);
+  void refreshSnapshot();
   patchRun({
     phase: o.kind,
     outcome,
@@ -266,6 +356,7 @@ function resetRunState(): void {
   rumorResult = null;
   pausedFrom = null;
   busy = false;
+  chainTicks = [];
   recorder = createRecorder();
 }
 
@@ -311,6 +402,7 @@ function playReplay(file: ReplayFile, m: Model, onDone: (stop: () => void) => vo
     modelSeed: BigInt(file.params.modelSeed),
   };
   let eng = createRun(m, params);
+  const token = runToken;
   const t0 = Date.now();
   const rumorBlock = BigInt(file.rumor.blockNumber);
   const toRecord = (id: number, kind: SealRecord['kind'], over: Partial<SealRecord>): SealRecord => ({
@@ -370,6 +462,7 @@ function playReplay(file: ReplayFile, m: Model, onDone: (stop: () => void) => vo
         uninsuredTrapped: BigInt(o.uninsuredTrapped), withdrawnAmount: bank.deposits0 - bank.depositsOwed, sealed: true,
       };
       patchRun({ phase: o.kind, outcome, health: 'idle', elapsedMs: o.atMs, blockNumber: outcomeBlock, finalizedBlock: outcomeBlock });
+      scheduleDecisionCheck(m, params, file.ticks, token);
       onDone(stop);
     },
   });
@@ -432,9 +525,179 @@ function startReplaySession(replayId: string | null): Session {
   return s;
 }
 
-function startPlaceholderSession(mode: RunMode, replayId: string | null): Session {
-  // Replay (F-07) and Spectate (F-08) land here; for now they only label the stage.
-  return { mode, replayId, dispose() { resetRunState(); } };
+// ── Live (F-06) ─────────────────────────────────────────────────────────
+function startLiveSession(): Session {
+  const a = liveAdapter;
+  if (!a) throw new Error('No operator connected');
+  adapter = a;
+  chainLevel = 0;
+  chainStatus = 'ready';
+  const stopBlocks = a.watchBlocks((b) => patchRun({ blockNumber: b.number, finalizedBlock: b.finalized }));
+  const snapTimer = setInterval(() => void refreshSnapshot(), 2000);
+  const balTimer = setInterval(() => void refreshBalances(), 10_000);
+  void refreshSnapshot();
+  void refreshBalances();
+  return {
+    mode: 'live',
+    replayId: null,
+    dispose() {
+      stopBlocks();
+      clearInterval(snapTimer);
+      clearInterval(balTimer);
+      stopFakeRun();
+      stopChainObjects();
+      resetRunState();
+      adapter = null;
+    },
+  };
+}
+
+// ── Spectate (F-08) ─────────────────────────────────────────────────────
+// Rebuilds the run from chain events alone: the rumor event gives the params, every TickSealed gives the
+// request list, the engine re-derives the frames, and the per-tick summaries are checked against the mirror.
+function startSpectateSession(): Session {
+  const m = requireModel();
+  const token = runToken;
+  const sp = createSpectator();
+  let eng: RunState | null = null;
+  let rumor: RumorEvent | null = null;
+  const waiting = new Map<number, TickSealedEvent>();
+  const mirrorResults = new Map<number, TickResult>();
+  const spectated: TickPayload[] = [];
+  let nextRecordId = 2;
+  let heardAt = 0;
+
+  const blankRecord = (kind: SealRecord['kind'], over: Partial<SealRecord>): SealRecord => ({
+    id: nextRecordId++, kind, simulated: false, fromTick: null, toTick: null, requestedCount: null, txHash: null,
+    blockNumber: null, sentAtMs: Date.now(), sealedAtMs: Date.now(), gasLimit: null, gasUsed: null, status: 'sealed',
+    finalized: false, mirrorMatch: null, rpc: 'chain', ...over,
+  });
+
+  const begin = (e: RumorEvent) => {
+    if (rumor && rumor.runId === e.runId) return; // already following this run
+    rumor = e;
+    waiting.clear();
+    mirrorResults.clear();
+    spectated.length = 0;
+    heardAt = Date.now();
+    const params: RunParams = { level: e.level, card: e.card, seedNode: e.seedNode, modelSeed: e.modelSeed };
+    eng = createRun(m, params);
+    patchRun({
+      phase: 'running', level: e.level, card: e.card, frame: eng.frame, outcome: null, error: null, decisions: null,
+      startedAtMs: heardAt, elapsedMs: 0, sealedTick: 0, mirror: { matched: 0, total: 0, firstMismatchTick: null },
+      seals: [blankRecord('rumor', { txHash: e.txHash, blockNumber: e.blockNumber })],
+      blockNumber: e.blockNumber, health: 'idle',
+    });
+  };
+
+  const applyReady = () => {
+    if (!eng || !rumor) return;
+    let matched = 0;
+    let total = 0;
+    let firstMismatch: number | null = null;
+    let lastBlock: bigint | null = null;
+    const byTx = new Map<Hex, { from: number; to: number; requested: number; block: bigint; ok: boolean }>();
+    while (waiting.has(eng.frame.tick + 1) && eng.frame.bank.status === 'running') {
+      const ev = waiting.get(eng.frame.tick + 1)!;
+      waiting.delete(ev.tick);
+      const step = stepRunWithRequested(m, eng, ev.requested);
+      eng = step.run;
+      mirrorResults.set(ev.tick, step.result);
+      spectated.push({ tick: ev.tick, requested: ev.requested });
+      const ok = sameTick(ev, step.result);
+      total += 1;
+      if (ok) matched += 1;
+      else if (firstMismatch === null) firstMismatch = ev.tick;
+      lastBlock = ev.blockNumber;
+      const g = byTx.get(ev.txHash);
+      if (g) {
+        g.to = ev.tick;
+        g.requested += ev.requested.length;
+        g.ok &&= ok;
+      } else {
+        byTx.set(ev.txHash, { from: ev.tick, to: ev.tick, requested: ev.requested.length, block: ev.blockNumber, ok });
+      }
+    }
+    if (total === 0) return;
+    const records = [...byTx.entries()].map(([txHash, g]) =>
+      blankRecord('ticks', { fromTick: g.from, toTick: g.to, requestedCount: g.requested, txHash, blockNumber: g.block, mirrorMatch: g.ok }),
+    );
+    const st = eng.frame.bank.status;
+    const frame = eng.frame;
+    patchRun((v) => ({
+      frame,
+      seals: [...v.seals, ...records],
+      sealedTick: frame.tick,
+      elapsedMs: Date.now() - heardAt,
+      blockNumber: lastBlock ?? v.blockNumber,
+      mirror: {
+        matched: v.mirror.matched + matched,
+        total: v.mirror.total + total,
+        firstMismatchTick: v.mirror.firstMismatchTick ?? firstMismatch,
+      },
+      ...(st === 'failed' ? { phase: 'failing' as const } : st === 'survived' ? { phase: 'surviving' as const } : {}),
+    }));
+  };
+
+  const offs = [
+    sp.onRumor(begin),
+    sp.onTicks((evs) => {
+      if (!rumor) return; // joined mid-run without its rumor: wait for the spectator's backfill
+      for (const e of evs) if (e.runId === rumor.runId && e.tick > (eng?.frame.tick ?? 0)) waiting.set(e.tick, e);
+      applyReady();
+    }),
+    sp.onOutcome((o: OutcomeEvent) => {
+      if (!eng || !rumor || o.runId !== rumor.runId) return;
+      applyReady();
+      const bank = eng.frame.bank;
+      const blocks = Math.max(1, Number(o.blockNumber - rumor.blockNumber));
+      const outcome: Outcome = {
+        kind: o.kind, tick: o.tick,
+        wallMs: blocks * TICK_MS, // estimated from block count (400 ms blocks); spectators don't see the presenter's clock
+        blocks, rumorBlock: rumor.blockNumber, outcomeBlock: o.blockNumber,
+        trappedCount: o.trappedCount, trappedAmount: o.trappedAmount, uninsuredTrapped: o.uninsuredTrapped,
+        withdrawnAmount: bank.deposits0 - bank.depositsOwed, sealed: true,
+      };
+      patchRun((v) => ({
+        phase: o.kind, outcome, health: 'idle', blockNumber: o.blockNumber, sealedTick: Math.max(v.sealedTick, o.tick),
+        elapsedMs: blocks * TICK_MS,
+      }));
+      scheduleDecisionCheck(m, { level: rumor.level, card: rumor.card, seedNode: rumor.seedNode, modelSeed: rumor.modelSeed }, spectated, token);
+    }),
+    sp.onReset(() => {
+      rumor = null;
+      eng = null;
+      waiting.clear();
+      clearRunView();
+      patchRun({ mode: 'spectate' });
+    }),
+    sp.onSnapshot((snap) => {
+      patchRun({ onchain: snap, blockNumber: snap.readAtBlock ?? view().blockNumber });
+    }),
+  ];
+  sp.start();
+  return {
+    mode: 'spectate',
+    replayId: null,
+    dispose() {
+      offs.forEach((off) => off());
+      sp.stop();
+      resetRunState();
+    },
+  };
+}
+
+function startSession(mode: RunMode, replayId: string | null): Session {
+  switch (mode) {
+    case 'live':
+      return liveAdapter ? startLiveSession() : startPracticeSession();
+    case 'replay':
+      return startReplaySession(replayId);
+    case 'spectate':
+      return startSpectateSession();
+    default:
+      return startPracticeSession();
+  }
 }
 
 function switchSession(mode: RunMode, replayId: string | null): void {
@@ -442,8 +705,8 @@ function switchSession(mode: RunMode, replayId: string | null): void {
   session = null;
   clearRunView();
   patchRun({ mode });
-  session =
-    mode === 'practice' ? startPracticeSession() : mode === 'replay' ? startReplaySession(replayId) : startPlaceholderSession(mode, replayId);
+  session = startSession(mode, replayId);
+  if (session.mode !== mode) patchRun({ mode: session.mode }); // live requested without a connected operator → practice
 }
 
 // ── Public controller ───────────────────────────────────────────────────
@@ -482,11 +745,63 @@ export const controller = {
     const level = v.level;
     const params = defaultParams(m, level, v.card);
     tickResults = new Map();
+    chainTicks = [];
     rumorResult = null;
     recorder = createRecorder();
-    patchRun({ error: null, outcome: null, seals: [], sealedTick: 0, mirror: { matched: 0, total: 0, firstMismatchTick: null } });
+    patchRun({
+      error: null, outcome: null, seals: [], sealedTick: 0, decisions: null,
+      mirror: { matched: 0, total: 0, firstMismatchTick: null },
+    });
     try {
-      if (chainLevel !== level) {
+      // Low-balance guard (PRD §12.4): Monad's 10 MON reserve throttles an account below that line.
+      if (a.kind === 'live') {
+        const bal = activeBalance(await a.balances());
+        patchRun((s) => ({ operator: { ...s.operator, balanceWei: bal } }));
+        if (token !== runToken) return;
+        if (bal < LOW_BALANCE_REFUSE) {
+          const backup = view().operator.backupAddress !== null && !view().operator.usingBackup;
+          patchRun({
+            phase: 'idle',
+            error: {
+              code: 'low-balance',
+              title: 'Operator wallet is low on MON',
+              detail: `The operator wallet is low on MON (${(Number(bal / 10n ** 15n) / 1000).toFixed(2)}). ${
+                backup ? 'Switch to the backup key.' : 'Top it up above 15 MON before starting a run.'
+              }`,
+              action: backup ? { label: 'Switch to backup key', run: 'backup' } : null,
+            },
+          });
+          return;
+        }
+        if (bal < LOW_BALANCE_WARN) log('operator balance below 15 MON', bal);
+      }
+
+      // Bring the bank to the state this run needs: Ready, at the right level and config.
+      let snap: BankSnapshotView | null = null;
+      try {
+        snap = await a.readSnapshot();
+      } catch {
+        snap = null;
+      }
+      if (token !== runToken) return;
+      const status = snap?.status ?? chainStatus;
+      if (status !== 'ready') {
+        patchRun({ phase: 'resetting' });
+        patchPending({ resetting: true });
+        try {
+          const res = await a.reset();
+          if (token !== runToken) return;
+          chainStatus = 'ready';
+          patchRun((s) => ({ seals: [...s.seals, res.record] }));
+          snap = await a.readSnapshot().catch(() => null);
+        } finally {
+          patchPending({ resetting: false });
+        }
+      }
+      const needsLevel = snap
+        ? snap.level !== level || snap.configHash !== hashConfig(m.configs[level])
+        : chainLevel !== level;
+      if (needsLevel) {
         patchRun({ phase: 'switching' });
         patchPending({ switching: true });
         try {
@@ -497,6 +812,8 @@ export const controller = {
         } finally {
           patchPending({ switching: false });
         }
+      } else {
+        chainLevel = level;
       }
       patchRun({ phase: 'starting' });
       patchPending({ starting: true });
@@ -526,8 +843,7 @@ export const controller = {
       }
     } catch (e) {
       if (token !== runToken) return;
-      const err = translateError(e);
-      patchRun({ phase: 'idle', error: err });
+      patchRun({ phase: 'idle', error: translateError(e) });
     } finally {
       if (token === runToken) busy = false;
     }
@@ -542,23 +858,38 @@ export const controller = {
     }
     if (v.mode === 'spectate') return;
     if (v.phase === 'resetting') return;
-    const needsChainReset = chainStatus !== 'ready';
     const token = ++runToken; // invalidate everything in flight
     stopFakeRun();
     stopChainObjects();
     run = null;
     tickResults = new Map();
+    chainTicks = [];
     rumorResult = null;
     pausedFrom = null;
     busy = true;
     patchRun({ phase: 'resetting', error: null });
     patchPending({ resetting: true });
     try {
-      if (adapter && needsChainReset) await adapter.reset();
+      let needsChainReset = chainStatus !== 'ready';
+      if (adapter?.kind === 'live') {
+        // Ask the chain, not our memory: the bank may be Failed from an earlier session or stuck mid-run.
+        try {
+          needsChainReset = (await adapter.readSnapshot()).status !== 'ready';
+        } catch {
+          needsChainReset = true;
+        }
+      }
+      if (adapter && needsChainReset) {
+        const res = await adapter.reset();
+        if (token === runToken) patchRun((s) => ({ seals: [...s.seals, res.record] }));
+      }
       chainStatus = 'ready';
       recorder = createRecorder();
-      clearRunView();
-      if (token === runToken) patchRun({ phase: 'idle' });
+      if (token === runToken) {
+        clearRunView({ seals: [] });
+        patchRun({ phase: 'idle' });
+      }
+      void refreshSnapshot();
     } catch (e) {
       patchRun({ phase: 'paused', error: translateError(e) });
     } finally {
@@ -580,23 +911,162 @@ export const controller = {
     patchRun({ error: null });
   },
 
-  setMode(mode: RunMode, opts?: { replayId?: string }): void {
+  setMode(mode: RunMode, opts?: { replayId?: string; auto?: boolean }): void {
     const replayId = opts?.replayId ?? null;
-    if (session && session.mode === mode && session.replayId === replayId) return; // idempotent (StrictMode)
-    switchSession(mode, replayId);
+    const effective: RunMode = mode === 'live' && !liveAdapter ? 'practice' : mode;
+    if (session && session.mode === effective && session.replayId === replayId) return; // idempotent (StrictMode)
+    if (opts?.auto) {
+      // Route-driven switch (e.g. preflight turned green): never tear down a run in progress.
+      const p = view().phase;
+      if (session && (session.mode === 'practice' || session.mode === 'live') && p !== 'idle' && p !== 'failed' && p !== 'survived') return;
+    }
+    switchSession(effective, replayId);
   },
 
-  // ── Live mode lands in F-06 ──
-  async connectOperator(_keys: { primary: Hex; backup?: Hex | null; rpcOverride?: string | null }): Promise<void> {},
-  disconnectOperator(): void {},
-  switchToBackupKey(): void {},
-  async runPreflight(): Promise<PreflightReport> {
-    return { checks: [], ok: false, at: Date.now() };
+  // ── Live mode (F-06) ──
+  /** Called once at startup: if keys are loaded (session or local env) and the bank is deployed, connect and preflight. */
+  async autoConnect(): Promise<void> {
+    if (liveAdapter || !deployment.runBank) return;
+    const keys = loadOperatorKeys();
+    if (!keys.primary) return;
+    await connectWith({ primary: keys.primary, backup: keys.backup, rpcOverride: envRpc() });
   },
-  async fundBank(): Promise<void> {},
-  async ping(): Promise<void> {},
+
+  async connectOperator(keys: { primary: Hex; backup?: Hex | null; rpcOverride?: string | null }): Promise<void> {
+    try {
+      addressOfKey(keys.primary); // validates; throws without echoing the key
+      if (keys.backup) addressOfKey(keys.backup);
+    } catch (e) {
+      patchRun({ preflight: failedReport('keys', 'Operator key', e), error: translateError(e) });
+      return;
+    }
+    try {
+      saveOperatorKeys({ primary: keys.primary, backup: keys.backup ?? null });
+    } catch {
+      // sessionStorage unavailable (private mode / tests): the key still works for this page load
+    }
+    await connectWith({ primary: keys.primary, backup: keys.backup ?? null, rpcOverride: keys.rpcOverride ?? envRpc() });
+  },
+
+  disconnectOperator(): void {
+    if (session?.mode === 'live') switchSession('practice', null);
+    liveAdapter = null;
+    clearOperatorKeys();
+    patchRun({
+      preflight: null,
+      operator: { address: null, balanceWei: null, backupAddress: null, usingBackup: false },
+    });
+  },
+
+  switchToBackupKey(): void {
+    if (!liveAdapter || !liveAdapter.switchToBackup()) return;
+    patchRun((v) => ({
+      operator: { ...v.operator, usingBackup: true, address: liveAdapter?.operator ?? v.operator.address },
+      error: null,
+    }));
+    void refreshBalances();
+    if (view().phase === 'paused') controller.retry();
+  },
+
+  async runPreflight(): Promise<PreflightReport> {
+    if (!liveAdapter) {
+      const report = failedReport('operator', 'Operator key loaded', new Error('Load the operator key on the Ops page.'));
+      patchRun({ preflight: report });
+      return report;
+    }
+    patchPending({ preflight: true });
+    try {
+      const report = await liveAdapter.preflight(requireModel());
+      patchRun({ preflight: report });
+      return report;
+    } catch (e) {
+      const report = failedReport('preflight', 'Preflight', e);
+      patchRun({ preflight: report });
+      return report;
+    } finally {
+      patchPending({ preflight: false });
+    }
+  },
+
+  /** Tops the bank up to its starting balance sheet (cash0 + bonds0) from the operator's AUSD. */
+  async fundBank(): Promise<void> {
+    const a = liveAdapter;
+    const m = requireModel();
+    if (!a || view().pending.funding) return;
+    patchPending({ funding: true });
+    try {
+      const need = m.configs[view().level].cash0 + m.configs[view().level].bonds0;
+      const snap = await a.readSnapshot();
+      const missing = need > snap.ausdHeld ? need - snap.ausdHeld : 0n;
+      if (missing > 0n) await a.fundBank(missing);
+      patchRun({ error: null });
+      await refreshSnapshotFrom(a);
+    } catch (e) {
+      patchRun({ error: translateError(e) });
+    } finally {
+      patchPending({ funding: false });
+    }
+  },
+
+  async ping(): Promise<void> {
+    const a = liveAdapter;
+    if (!a || view().pending.pinging) return;
+    patchPending({ pinging: true });
+    try {
+      const res = await a.ping();
+      patchRun((v) => ({ blockNumber: res.record.blockNumber ?? v.blockNumber, error: null }));
+    } catch (e) {
+      patchRun({ error: translateError(e) });
+    } finally {
+      patchPending({ pinging: false });
+    }
+  },
 
   saveReplay(): ReplayFile | null {
     return lastReplay ?? recorder.current();
   },
 };
+
+// ── Live helpers (need `controller`, so they live below it) ─────────────
+function envRpc(): string | null {
+  const v = import.meta.env.VITE_RPC_URL;
+  return typeof v === 'string' && v.trim() ? v.trim() : null;
+}
+
+function failedReport(id: string, label: string, e: unknown): PreflightReport {
+  const detail = e instanceof Error ? e.message.replace(/0x[0-9a-fA-F]{64}/g, '0x…').slice(0, 160) : 'failed';
+  return { ok: false, at: Date.now(), checks: [{ id, label, status: 'fail', detail, critical: true }] };
+}
+
+async function refreshSnapshotFrom(a: ChainAdapter): Promise<void> {
+  try {
+    patchRun({ onchain: await a.readSnapshot() });
+  } catch {
+    // the next poll will catch up
+  }
+}
+
+async function connectWith(keys: { primary: Hex; backup: Hex | null; rpcOverride: string | null }): Promise<void> {
+  if (session?.mode === 'live') switchSession('practice', null); // drop the old live session before swapping adapters
+  liveAdapter = null;
+  try {
+    liveAdapter = createLiveAdapter({ primaryPk: keys.primary, backupPk: keys.backup, rpcOverride: keys.rpcOverride });
+  } catch (e) {
+    patchRun({ preflight: failedReport('adapter', 'Chain connection', e) });
+    return;
+  }
+  const a = liveAdapter;
+  let primaryAddr: RunViewAddress = null;
+  let backupAddr: RunViewAddress = null;
+  try {
+    primaryAddr = addressOfKey(keys.primary);
+    if (keys.backup) backupAddr = addressOfKey(keys.backup);
+  } catch {
+    // invalid key material: addresses stay null (never echo the key)
+  }
+  patchRun({ operator: { address: a.operator ?? primaryAddr, balanceWei: null, backupAddress: backupAddr, usingBackup: false } });
+  await refreshBalances();
+  await controller.runPreflight();
+}
+
+type RunViewAddress = ReturnType<typeof addressOfKey> | null;

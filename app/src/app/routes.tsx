@@ -15,7 +15,8 @@ const EngineLab = lazy(() => import('@/engine/lab/EngineLab').then((m) => ({ def
 function StageShell({ mode, replayId }: { mode: RunMode; replayId?: string }) {
   // setMode is idempotent, so StrictMode's double effect is harmless.
   useEffect(() => {
-    runActions.setMode(mode, replayId ? { replayId } : undefined);
+    // `auto`: a route-driven switch (e.g. preflight turned green) never tears down a run in progress.
+    runActions.setMode(mode, { ...(replayId ? { replayId } : {}), auto: true });
   }, [mode, replayId]);
   const proofOpen = useUi((u) => u.proofOpen);
   return (

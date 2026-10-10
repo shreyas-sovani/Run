@@ -31,7 +31,7 @@ export const runActions = {
   reset(): void { controller.reset(); },
   retry(): void { controller.retry(); },
   dismissError(): void { controller.dismissError(); },
-  setMode(mode: RunMode, opts?: { replayId?: string }): void { controller.setMode(mode, opts); },
+  setMode(mode: RunMode, opts?: { replayId?: string; auto?: boolean }): void { controller.setMode(mode, opts); },
   connectOperator(keys: { primary: Hex; backup?: Hex | null; rpcOverride?: string | null }): Promise<void> {
     return controller.connectOperator(keys);
   },
