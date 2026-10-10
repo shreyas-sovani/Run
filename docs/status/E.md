@@ -121,3 +121,113 @@ Ticks for D's 13:45 list, B's 13:45 requests and F's 14:50 requests:
 5. F: redeploy after the final commits.
 
 Note for the record: the automated review blocked my headless-Chrome screenshot helper this round, so the final visual checks above used the in-IDE browser and measurements instead.
+
+## REPLY → E (from F, 14:55)
+- `<ClosingCardHost />` is mounted in the stage shell and `L` is in `HOTKEYS`; production is redeployed (build `abfbdb9`) so your `og.png` and changes are live.
+- `ReplayFile.rumor.sealedAtMs?` added (additive); playback uses it for the rumor's sealed time. It will only be set once C's recorder emits it; until then you keep hiding the row.
+- The Live proof-panel check needs a live bank slot; I'll do it with the backup key once C's lock is in use, and say so here. Please don't start a live run before then.
+
+---
+
+# E HANDOFF (written 14:25, self-contained)
+
+Read this section alone. It says what E built, where it lives, how to run and check it, what other code depends on it, what is still open and exactly what to do about each item. Agent E's own backlog (E-00 … E-11) is **complete**. Everything below "Open items" is optional or depends on someone else.
+
+## 1. Snapshot
+
+- Owner paths: `app/src/ui/theme/**`, `app/src/ui/brand/**`, `app/src/ui/panels/**`, `app/src/ui/format.ts`, `app/src/ui/copy.ts`, `app/public/og.png`, `app/public/favicon.svg`, `app/scripts/og.ts`, `docs/status/E.md`.
+- Last E commit: `abfbdb9`. State at 14:20: `pnpm exec tsc -b` clean, `pnpm exec vitest run` 264 passed / 7 skipped (72 of them in `src/ui`), `pnpm build` passes, `oxlint` clean on E paths. Production (`https://run-bank-run.vercel.app`) was redeployed by F with E's changes.
+- Design: cheque security paper (`--paper` #E4ECE6, guilloche linework) and violet stamp ink (`--seal` #5B3FD6). Light only, by design. Voice and copy rules: PRD §14.8.
+- Dev server for E: `cd app && pnpm dev --port 5175 --strictPort` (other agents sometimes kill it; restart with `(nohup pnpm dev --port 5175 --strictPort > /tmp/e-dev.log 2>&1 &)`).
+
+## 2. File map
+
+### `src/ui/theme/`
+- `tokens.css`: every CSS variable (colours with contrast notes in the header comment, type scale with `clamp()` on `vmin`, spacing `--sp-1..8`, radii, motion, focus ring, shadows, z-layers `--z-*`). **Additive changes only**; D, F and E read these names.
+- `global.css`: reset, base font, `:focus-visible` ring, `.tnum`, `.srOnly`, reduced-motion defaults. The only global CSS in the app.
+- `fonts.ts`: imports the self-hosted faces and exports `fontsReady()` and `fontsLoaded()`. The three variable faces must be imported **without** `.css` (`.../wght`), otherwise Rolldown fails. `fontsource.d.ts` declares those modules for `tsc` (it must not be named `fonts.d.ts`; TS would treat it as the output of `fonts.ts` and ignore it).
+
+### `src/ui/brand/` (never imports the store; `store.ts` imports `sfx` from here, so importing the store would create a cycle)
+- `Button.tsx` / `.module.css`: primary (stamped label, double violet border) and secondary. Props: PRD §16.5 plus additive `size: 'md'|'lg'`, `title`, `disabledReason`, `id`, `type`. `pending` shows spinner + `pendingLabel`, sets `disabled` + `aria-busy`, keeps the button's width (both labels share one grid cell). Each caller passes its **own** pending flag.
+- `Chips.tsx`: `ModeChip` (plus additive `recordedAt`) and `HealthChip`. Text from `copy.chips`, `copy.replayChip`, `copy.healthChip`. HealthChip's visible text is `aria-hidden`; a separate `srOnly role=status` announces state changes only (tick/block counters change every 400 ms).
+- `Refs.tsx` + `HexRef.tsx` + `clipboard.ts`: `Address` / `TxLink`. Truncated mono text linking to MonadVision, a copy button with "Copied" feedback, a `⋯` menu with Monadscan. Uses `explorerAddress` / `explorerTx` from `@/chain`. `copyText()` falls back to a hidden textarea. **The only place raw hex may be rendered.**
+- `Stamp.tsx` / `.module.css`: failed = double-border rectangle (+ optional Marathi line), survived = round "PAID IN FULL" seal. Ink = SVG `feTurbulence` displacement + speckle mask, `mix-blend-mode: multiply`. Slam via `motion`'s `animate`: 140 ms scale 2.2→1 and rotate −14°→−7°, then `onImpact`, a 0.98 squash, and a ±6 px shake of `#root`. Reduced motion = 150 ms fade, no shake. Additive props: `size`, `shake`, `reducedMotion`. D passes `shake={false}` and shakes itself.
+- `sfx.ts`: Web Audio only (`unlock`, `alarm(on)`, `thud`, `seal`, `murmur(level)`, `setMuted`, `stopAll`, plus additive `isUnlocked`, `isMuted`). Prewarms the context and noise buffer on idle, arms its own first-gesture unlock, reads the mute flag from `localStorage['run.muted']` (the key F's store writes), and remembers a requested alarm until audio is unlocked.
+- `PaperBackground.tsx`, `guilloche.ts`: deterministic rosette and wave SVG data URIs. `guilloche.ts` is also used by `scripts/og.ts`.
+- `icons.tsx`: Check, Copy, Cross, External, More (exported from the barrel).
+- `BrandLab.tsx`: `/lab/brand`. `?slam=1` slams both stamps on load.
+- `__tests__/`: `copy.test.ts`, `format.test.ts`, `guilloche.test.ts`.
+- `index.ts`: the barrel (PRD §16.5 + `copyText` + icons).
+
+### `src/ui/panels/` (may import the store)
+- `ProofPanel.tsx`: store-connected slide-over (`role=dialog`, focus moves in, `Esc` and the close button close it, returns focus; bottom sheet at ≤ 640 px). Also exports `ProofContent` (pure, takes a `ProofData` slice) so the lab can feed fixtures. `useProofData()` selects primitives and store-owned references only (nested fresh objects would re-render forever with `useShallow`).
+- `proofModel.ts`: pure derivations: `isFinalized`, `biggestBatch`, `verdictSeal`, `buildProof`, `agreement`. Practice or all-simulated seals never claim transactions.
+- `OpsPage.tsx` (store wiring, downloads the replay JSON) and `OpsView.tsx` (pure view: stepper, four step cards, preflight list, bank actions, footer). `opsModel.ts`: `deriveSteps`, `checksForStep`, `checkKey(s)`, `checkRpc`.
+- `ReplayPicker.tsx` (+ `ReplayPickerView`), `replayModel.ts` (`sortReplays`, `ReplayListState`).
+- `ModeBanner.tsx` (+ `ModeBannerView`): practice / replay / spectate banners; dismissible on desktop, persistent ≤ 640 px; writes its height to `--banner-h` on `<html>` (px). Live mode renders nothing.
+- `ClosingCard.tsx` (+ `ClosingCardHost`: owns the `L` key and `Esc`), `closingModel.ts` (`publicBase`, `displayUrl`). Mounted once in the shell by F (`routes.tsx`).
+- `PanelsLab.tsx` + `fixtures.ts`: `/lab/panels`. Tabs: proof, ops, replays, banners, closing card, connected (store). Query params: `?tab=proof|ops|replays|banners|closing|connected`, `&open=1` (closing card), `&fake=failed|survived` and `&proof=1` (connected tab).
+- `__tests__/`: `proofModel`, `opsModel`, `replayModel`, `closingModel`.
+
+### Elsewhere
+- `src/ui/copy.ts`: the copy deck (see §4). `src/ui/format.ts`: formatters (`fmtAusd`, `fmtUsdScaled`, `fmtAusdWithUsd`, `fmtMon`, `fmtSeconds`, `fmtBlock`, `shortHex`, `fmtBps`, `fmtClock`, `fmtCount`, `fmtRecorded`, `fmtSealTime`, `fmtGas`, `fmtTimeOfDay`; all money maths is `bigint`, never shows base units).
+- `public/og.png` (1200×630), `public/favicon.svg` (violet stamp with "!"), `scripts/og.ts` (`pnpm og`).
+
+## 3. Who uses what (integration contracts to keep stable)
+
+- **F** (`app/routes.tsx`): mounts `PaperBackground`, `ModeBanner`, `ProofPanel`, `ClosingCardHost` in the stage shell; routes `/ops` → `OpsPage`, `/replay` → `ReplayPicker`, `/lab/brand`, `/lab/panels`. `store.ts` imports `sfx`. `hotkeys.ts` calls `sfx.unlock()` on every key press.
+- **D** (`ui/stage/*`): `Button`, `ModeChip`, `HealthChip`, `TxLink`, `Stamp`, `sfx`, `PaperBackground`, and the whole copy deck through `stageCopy.ts` (reads `copy.stage.*` first, then `banks`, `cards`, `buttons`, `phases`, `chips`, `passbook.rows` with keys `bank/amount/span/note`). Stage height uses `--banner-h`.
+- **C**: `preflight.ts` ids drive `opsModel.ts`. `STEP_IDS` maps `key|operatorMon|backupMon` → step 1, `rpc|blocks|rpc:*` → step 2, `bank|status|ausd|ledger|config` → step 3. `ping` and any unknown id show in the Preflight list and count toward "canGo" (`preflight.ok`) but belong to no step. **If C renames or adds ids, update `STEP_IDS` in `panels/opsModel.ts` and its test.**
+- **Types**: `RunView`, `SealRecord`, `Outcome`, `ReplayFile` (PRD §16.1, in `app/src/types.ts`). The proof panel reads `seals` (rumor = `kind 'rumor'`, biggest batch = `kind 'ticks'` with max `requestedCount`, verdict = the ticks seal whose `fromTick..toTick` contains `outcome.tick`), `outcome`, `finalizedBlock`, `mirror`, `decisions`, `onchain.streetHeld`, `deployment`, `replay`.
+- **Do not rename or retype** anything in the PRD §16.5 signatures. Additive only.
+
+## 4. Copy deck map (`copy.ts`)
+
+`brand` (title, description, og*), `scale`, `banks`, `cards`, `buttons`, `phases`, `chips`, `replayChip()`, `chipHints`, `health`, `healthChip()`, `healthDetail`, `errors` (+ `errorActions`), `stamp` (+ `failedSub`/`survivedSub`), `passbook` (verbatim PRD §8.1 figures), `banners`, `proof` (incl. `proof.model`, B's plain-language model text), `ops` (steps, key, preflight, actions, go, footer, stepBody, stepState, deployHint), `replays`, `closing`, `labs`, `generic`, `value`, and `stage` (68 keys for D plus `sealKinds`, `axisTicks`). Rule: components contain no user-facing literals; add a key here instead. Sentence case; only stamps are all-caps. `copy.brand.ogStamp` / `ogStampSub` / `ogKicker` / `ogLine` / `ogFootnote` feed the OG card.
+
+## 5. How to run and check
+
+- Unit tests: `cd app && pnpm exec vitest run src/ui` (E only) or `pnpm exec vitest run` (all). Types: `pnpm exec tsc -b` (errors in other agents' in-progress files are not E's). Lint: `pnpm exec oxlint src/ui/brand src/ui/panels src/ui/theme src/ui/format.ts src/ui/copy.ts scripts/og.ts`.
+- Labs (dev server on 5175): `/lab/brand`, `/lab/panels?tab=…` (see §2).
+- Real-data check of the proof panel without any transaction: open `/replay/bhaus-w-failed-202610100809`, press `P`. Expected: "8 / 8 ticks: screen and chain agree", Decision check 8 of 8, biggest batch 153 depositors / 754,187 gas / 0.89 s, verdict `BankFailed` tick 8, 335 trapped with 3,558 AUSD.
+- OG card: `cd app && pnpm og` (about a minute, needs Chrome; `CHROME_PATH` overrides). It writes `public/og.png` and checks that it is 1200×630. Why Chrome and not `resvg`: @fontsource ships woff2 only and `resvg` reads ttf/otf only; Chrome reads the same woff2 files so the card uses the real faces and the same ink filter as the in-app stamp.
+- Contrast numbers (WCAG, on `--paper` or `--slip`): ink 13.5, ink-2 7.4, ink-3 5.2–5.8, seal 5.6–6.2, ok 5.2–5.4, rumor-text 4.66–5.3, run-text 4.73–5.4, white on seal 6.7. `--run`, `--rumor`, `--trapped` are for graphics and large text only. Never set small text in them.
+
+## 6. Gotchas that cost time (so you do not repeat them)
+
+- Tooling: the in-IDE browser throttles `requestAnimationFrame` to ~2 fps, so JS-driven animations (the Stamp via `motion`) look stuck there. Check the Stamp in headless Chrome with `--virtual-time-budget` (it completed: impacts fired, final transform `rotate(-7deg)`, `#root` transform cleared) or in a real browser. Headless Chrome will not lay out narrower than about 500 px, so use 500 px or an iframe harness for "375 px" checks. The automated tool review has at times blocked helper scripts that launch headless Chrome; the in-IDE browser plus measurements is the fallback.
+- `Stamp` shakes `#root` with a transform and clears it afterwards; any leftover inline transform would make `#root` the containing block of fixed layers.
+- Vite's dependency optimiser sometimes reloads the page when another agent adds an import; a blank page with "Invalid hook call" right after is transient.
+- `oxlint` rule `only-export-components`: keep helpers out of component files (that is why `clipboard.ts`, `replayModel.ts` exist).
+- Under `verbatimModuleSyntax` / `erasableSyntaxOnly`: no enums; `import type` for types.
+
+## 7. Open items (with owner and exact next step)
+
+None of these blocks E's own work. Statuses as of 14:25.
+
+1. **One Live run with the proof panel open (owner: F, or the human).** Why: the Live-only fields (`RunView.onchain.streetHeld` → "AUSD that left the bank", `finalized` ticks from `finalizedBlock`, `mirror` from real seals) have only been seen on fixtures and on a recorded replay. F said it will do this with the backup key after taking C's lock (`LIVE BANK: F until HH:MM` at the top of `docs/status/F.md`). Steps: start a Live run from the stage, press `P` while it runs and after the verdict. Expect: rumor tx with block, sealed time and "✓ finalized" once `blockNumber ≤ finalizedBlock`; "N / N ticks: screen and chain agree" with a green check; biggest batch; verdict row with trapped and uninsured amounts; "AUSD that left the bank" matching Street's balance; Contracts rows with `Verified source` links. Report mismatches in this file; E fixes `proofModel.ts` / `ProofPanel.tsx`.
+2. **Preflight rows "Fonts loaded, audio unlocked, window ≥ 1280×720" (owner: C in `chain/preflight.ts`, or F).** PRD §12.5 lists them as non-critical; nobody calls E's helpers yet. Use `fontsLoaded()` from `@/ui/theme/fonts` (import by path; `theme` has no barrel), `sfx.isUnlocked()` from `@/ui/brand`, and `window.innerWidth >= 1280 && window.innerHeight >= 720`. Use ids `fonts`, `audio`, `window`, `critical: false`. They will show in the Preflight list automatically; E needs no change (they belong to no step, by design).
+3. **Replay "Sealed" time for the rumor (owner: C recorder + F, optional).** `ReplayFile.rumor.sealedAtMs` now exists (ms after the rumor receipt, C writes `0`), but it is relative, so it still cannot give a wall-clock time. E hides the row in Replay mode on purpose. To show a real time, the recorder would need an absolute `rumor.sealedAt` (epoch ms) and F would set the rumor record from it. If that lands, remove `&& !recorded` in `ProofPanel.tsx` (the `model.rumor.sealedAtMs !== null && !recorded` line) and the row will show it.
+4. **If recorded data or the model changes (owner: B / F).** The OG card says "BANK FAILED in 4.2 s · 14 Monad blocks" (the committed `bhaus-w-failed-202610100809` replay: tick 8, 4.2 s, 14 blocks). If B changes `model.json`/`cards.json`/`configs.json`/`ledger.json` and F re-records, edit `copy.brand.ogStampSub` in `copy.ts`, run `pnpm og`, commit `public/og.png`, and ask F to redeploy.
+5. **Redeploy after any E change (owner: F).** Vercel uploads the working tree, so E changes (copy, panels, `og.png`) go live only after F's `vercel deploy` and `pnpm verify:deploy`.
+6. **Visual QA that needs a real display (owner: human, with D).** 4 m projector legibility of the chips, banner, proof panel and closing card; keyboard-only pass of `/ops` (Tab order: stepper is not focusable; step 1 inputs → buttons → details; `Esc` closes the proof panel and the closing card); reduced-motion pass (OS setting on: stamp should fade in, no shake, spinner becomes a dotted ring). E already measured contrast and checked layouts at 1280×720, 1920×1080 and a phone width in headless Chrome and the in-IDE browser.
+
+## 8. Known limitations and deliberate choices
+
+- Brand components are prop-driven only (no store). That is why `ModeChip` takes `recordedAt` as a prop and `HealthChip` takes `sealedTick`/`blockNumber`.
+- The ops page never keeps keys in React state after "Load keys": fields clear on success and the controller stores keys in `sessionStorage`. The page shows only derived addresses and the operator MON balance (backup balance is not in `RunView`, only its address).
+- "Reconnect with this RPC" (network step) re-reads the keys from `loadOperatorKeys()` and calls `connectOperator` with the new override. It does nothing if no key is stored.
+- `ProofPanel` shows the Street figure only when `RunView.onchain` is set (Live and Spectate). In Replay it is hidden, because the recorded run has no live snapshot.
+- Banner dismiss state is per mode and per page load, not persisted.
+- `ModeBanner` text on the stage is kept at 18 px or larger; chip text is 18 px (PRD §14.4: nothing smaller than 18 px on the stage).
+- Passbook rows in `copy.passbook.rows` use `bank/amount/span/note`. D already reads that shape.
+- The OG script is slow (a fresh Chrome profile each run) and needs Chrome installed.
+
+## 9. Resolved requests (index, so nobody redoes them)
+
+F: font import fix; `ClosingCardHost` mounted + `L` in `HOTKEYS` (F, `6b56a7a`); selector warning fixed. D: `copy.stage` group; `sfx` prewarm; `recordedAt` passed to `ModeChip` (D did it); `--banner-h` used by the stage (D did it). B: plain-language model text in the proof panel; measured values, not the PRD script's 5.4 s / 13 blocks. C: nothing pending for E except item 2 above.
+
+## 10. If you change E code
+
+- Keep PRD §16.5 signatures; add, never rename. Run `pnpm exec vitest run src/ui && pnpm exec tsc -b` before committing. Commit only E paths: `git add <paths> && git commit -m "E: …" -- <paths>`. Never `git add -A`, `stash`, `reset`, `checkout --`, `restore`, `clean` (PRD §17.3).
+- New user-facing text goes in `copy.ts`. New colours or sizes go in `tokens.css` (additive). New hex or address display goes through `Address` / `TxLink`.
