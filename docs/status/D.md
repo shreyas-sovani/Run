@@ -1,83 +1,210 @@
-# Agent D status (Stage UI)
+# Agent D status: Stage UI (the projector screen)
 
-## 13:40 — all P0, P1 and the P2s that don't need other agents are in (D, resumed by a fresh agent after a limit stop)
+Last updated 14:25. **This file is written to be read cold, with no other context.** Section 1 says what state D is in; section 2 lists every open item with the owner and the exact action; the rest is the reference you need to maintain, extend or debug the stage.
 
-**Done** (everything under `app/src/ui/stage/**`; `pnpm typecheck` and `oxlint` are clean for these paths; `pnpm vitest run src/ui/stage` = 19 tests)
+---
 
-| Task | Where | Notes |
-|---|---|---|
-| D-00 skeleton | `StageScreen.tsx`, `StageLab.tsx` | Grid per §5.2: top bar, 62/38 main, ticker. The stage height is `100dvh` minus whatever the shell stacks above it (`--stage-top`, measured; falls back to E's `--banner-h`), so the ModeBanner never pushes the ticker off screen. `/lab/stage` has scenario buttons (fail, survive, idle, verdict, error, passbook, help), phase and mode forcing, and window / 1280×720 / 1920×1080 / 375×812 frames (iframes; `?embed=1&scenario=…`). |
-| D-01 canvas | `NetworkCanvas.tsx`, `networkRenderer.ts`, `canvasMath.ts` | Canvas 2D, DPR-aware (capped at 2), letterboxed square. rAF loop reads `getRunView()`; React state is only the aria-label. Static edges cached offscreen. It repaints only when something is changing. Node encoding per §14.3 (dot / ring / filled+pulse / ring+tail / hollow / slate ×, violet halo for insured on Monad Mutual), radius ∝ √balance, 250 ms colour lerp. Effects come from diffing `nodeState`/`heardAt` (not `newly*`): amber ripple ring + edge flash for 600 ms, withdrawal particles to the vault column's near edge (a DOM rect read when particles spawn). Reduced motion (UI flag or OS): no ripples, no pulse, no particles, instant state change. Colours are read from E's CSS tokens at mount. |
-| D-02 vault | `VaultPanel.tsx` | Bar (cash solid, bonds hatched), loss slice that slides out into a "Street" column, `fmtAusd` + `fmtUsdScaled`, scale label, haircut, out the door, status lamp (dot + text), real-balance line from `onchain.ausdHeld` in non-Practice modes, vermilion frame flash + `sfx.alarm(true)` the first time cash hits zero, off at the outcome / reset / unmount. |
-| D-03 top bar | `TopBar.tsx` | Wordmark, bank selector with `1`/`2` badges and defence tags ("Reset and switch" after an outcome), `Q W E R` chits (selected one lifts), one primary `Button` per §13.2 (own pending label per phase; paused offers Retry / backup key / recorded run / Reset), clock written to the DOM from rAF, block number, `ModeChip` (with `recordedAt`). Selectors lock in Replay/Spectate and during a run. Inline `ErrorStrip` handles every `UiError.action.run` (retry, reset, replay → `setMode('replay')`, ops → `/ops`, backup). |
-| D-04 ticker | `SealTicker.tsx` | Latest 6 seals newest first, `TxLink` on real ones, "simulated · not onchain" on simulated ones, "sealing tick N…" while ahead, amber when health is `delayed`/`paused`, MICR-style inline-SVG separators (P2). `HealthChip` lives at its right end (see "Deviations"). |
-| D-05 queue | `QueueStrip.tsx` | Monad Mutual only; inline-SVG people, max 40 then "+N", people leave from the head (motion `AnimatePresence`), memoised items. |
-| D-06 outcome | `OutcomeLayer.tsx` | "Sealing the verdict…" freeze, E's `Stamp` only when `outcome.sealed` (or Practice), `sfx.thud()` + a 180 ms ±6 px stage shake on `onImpact` (WAAPI, skipped under reduced motion), passbook 400 ms later. A 1.2 s fallback opens the passbook if the stamp never reports an impact. The stamp docks (steps up and shrinks) while the passbook is open so neither hides the other. |
-| D-07 passbook | `Passbook.tsx` | WaMu / Wachovia / SVB rows from `copy.passbook.rows` (shape `bank/amount/span/note`) + "this bank" row (display-scale amount, its time, blocks or "simulated"). Doto entries, bars on a log time scale with a labelled axis (`C` toggles; closed state is `inert`). |
-| D-08 help | `HelpOverlay.tsx` | From `HOTKEYS`; focus moves in and returns; click outside or `Esc` closes. `kbd` badges also on bank segments, chits, primary buttons. |
-| D-09 responsive + focus | all `.module.css` | 1280×720: nothing clipped, nothing under 18 px (top bar, vault and queue compact under `max-height: 800px`). 375 px: network square on top, key and vault below, ticker shows the latest seal, chits in two rows, overlays go `position: fixed`. Focus rings come from E's global `:focus-visible`; the bank segments use an inset ring because the group clips. `aria-keyshortcuts` on the hotkey buttons. |
-| D-10 performance | | Headless Chrome 1920×1080, fake run, busiest second: **60 fps, p95 16.7 ms, max 16.8 ms, no long tasks** (steady state). Per-component renders during a run (React commit walk): VaultPanel ~4/s, BlockLine ~4/s, SealTicker ~2/s, QueueStrip ~2/s, nothing over 5/s. Canvas paint total ≈ 40 ms over a 2.5 s run. |
-| D-11 P2 | | Done: MICR-style ticker marks (inline SVG). Done on the D side only: click a depositor to choose who starts the rumor (see REQUEST → F). Not done: closing card (E-10 owns the component; needs F's hotkey, see REQUEST). |
+## 1. State in one paragraph
 
-**Screens checked** (headless Chrome via CDP, screenshots critiqued): idle, mid-run, verdict freeze, BANK FAILED + passbook, survived with queue, paused with error, help, reduced motion — at 1920×1080, 1280×720 and 375×812.
-- 1920×1080: reads in five seconds from the back of a room; the vault figures and the stamp are the loudest things on screen. Calm nodes are dark and heavy at idle, which is the intent ("500 depositors"). Weak spot: with the real engine Bhau's Bank fails in ~2.3 s, so the amber ripple phase is short.
-- 1280×720: tightest spot is the top bar (two rows, ~24% of height). It holds, but the paused state wraps its four remedies onto their own row.
-- 375 px: no horizontal scroll (`scrollWidth` = 375).
+D's backlog (BACKLOG.md "Workstream D": D-00 … D-11, P0 + P1 + the P2s that don't need other agents) is **complete and committed** (last D commit `6603b7a`, all files under `app/src/ui/stage/**`). `pnpm typecheck` and `oxlint` are clean for these paths, `pnpm vitest run src/ui/stage` passes (19 tests: `canvasMath.test.ts` 12, `stageCopy.test.ts` 7), the whole UI suite passes (72 tests at 14:19). The stage has been exercised end to end against the fake run (`/lab/stage`), the real tuned engine in Practice, and recorded real-testnet replays (`/replay/:id`), at 1920×1080, 1280×720 and 375×812. **Nothing blocks D.** What remains is optional polish owned by other agents (section 2) plus one visual re-check that only makes sense after C changes sealing speed.
 
-**Interface notes**
-- Everything the stage prints goes through `stageCopy.ts`. It reads `@/ui/copy` first (`copy.stage.*` overrides, then `banks`, `cards`, `buttons`, `phases`, `chips`, `stamp`, `passbook`, `scale`, `errorActions`) and only then a local default. Components contain no string literals and no colour literals.
-- `StageLab.tsx` imports `patchRun` / `runStore` from `@/app/state` (F's leaf module) because the public store can't force a phase. It is the only stage file that does.
-- The canvas reads `model` from the store; before the controller sets it (it does at init) it draws nothing.
-- The stage passes `shake={false}` to E's `Stamp` and does its own shake, so the screen doesn't shake twice.
+---
 
-**Deviations from the backlog (deliberate)**
-- `HealthChip` sits at the right end of the ticker, not in the top bar. At 1280 the top bar had no room for two chips plus the clock, and the chip is about sealing, which is what the ticker is. It still gets `health` and `sealedTick`; the block number is shown once, next to the clock.
-- The legend is a left column beside the canvas on desktop (below it on phones). The graph is a letterboxed square, so that space was empty.
+## 2. Open items (who does what)
 
-**Blocked by**: nothing hard. D can't finish these without others (lodged in their status files at 13:45): E (copy `stage` group, `sfx.ensure` stall), F (mount `ClosingCardHost` in `routes.tsx`, fill replay `requestedCount`, optional `selectSeed`). B has an FYI about run pace.
+Nothing here blocks D. Every item has an owner; do not edit files you don't own, write the outcome in your own status file.
 
-**REQUEST → E**
-1. Optional: add a `stage` group to `copy.ts` so the defaults in `stageCopy.ts` become dead code. Keys and current defaults (placeholders in `{braces}`):
-   `wordmark` RUN! · `bankGroup` Bank · `rumorGroup` Rumor · `bankSwitchTag` Reset and switch · `blockLabel` block · `blockNone` — · `timerLabel` Run clock · `stageLabel` Bank run stage · `legendTitle` Depositors · `legendCalm` Hasn't heard · `legendHeard` Heard the rumor · `legendPanicking` Panicking · `legendQueued` In the queue · `legendWithdrawn` Withdrew · `legendTrapped` Trapped · `legendInsured` Fully insured · `legendSize` Bigger dot = bigger balance · `canvasAriaIdle` {total} depositors. The bank is open. · `canvasAriaOutcome` {withdrew} of {total} depositors withdrew; {trapped} trapped. · `vaultTitleOnchain` Vault · real AUSD on Monad · `vaultTitleSim` Vault · simulated · `cash` cash · `bonds` bonds · `loss` fire-sale loss · `haircut` haircut · `outTheDoor` out the door · `street` Street · `heldOnchain` {amount} held by the contract · live from Monad · `heldSim` Practice: simulated balance · `heldReplay` Recorded from Monad testnet · `vaultBarLabel` Vault: {cash} cash, {bonds} bonds, {loss} lost in fire sales · `queueTitle` Outside the teller window · `queueEmpty` Nobody waiting · `queueMore` +{n} · `queueCap` Pays at most {pct} of deposits per block · `queueAria` {n} depositors waiting · `tickerLabel` Seals · `tickOne` tick {a} · `tickMany` tick {a}–{b} · `withdrew` {n} withdrew · `sealedIn` sealed {t} · `finalized` ✓ finalized · `finalizing` finalizing… · `simulatedSeal` simulated · not onchain · `sealingTick` sealing tick {n}… · `sealingDelayed` Sealing delayed · `sublineSim` simulated · {ticks} ticks · `verdictWaiting` Waiting for Monad to seal tick {n} · `verdictWaitingSim` Settling the books · `outcomeAnnounceFailed` Bank failed after {s}. · `outcomeAnnounceSurvived` Bank survived after {s}. · `passbookSub` How long the biggest bank runs took · `logScale` log scale · `thisBank` This bank · `failedAfter` failed · `survivedAfter` survived · `blocksNote` {n} Monad blocks · `simulatedNote` simulated · `noRunYet` Run the bank to add its row · `axisTicks` ['1 s','1 min','1 h','1 day','1 week'] · `helpTitle` Keyboard shortcuts · `helpHint` Press Esc to close.
-   Also `stage.sealKinds` (`setLevel`, `rumor`, `ticks`, `reset`, `ping`, `fund`, `loadLedger`) for non-tick seal rows (defaults: bank switched, rumor started, ticks, bank reset, test transaction, bank funded, ledger loaded). The passbook already reads your `passbook.rows` (`bank/amount/span/note`).
-2. `sfx.ensure()` (`brand/sfx.ts`, line ~30) blocked the main thread for ~450 ms the first time `alarm(true)` ran when no key had been pressed first (CPU profile, lab click). With a hotkey press `unlock()` runs first so this is probably fine live, but pre-building the buffers inside `unlock()` (or a lazy idle callback) would remove the risk of a dropped frame at the moment cash hits zero.
+| # | Owner | Item | Exact action | Priority | State |
+|---|---|---|---|---|---|
+| 1 | **C** | Amber "Sealing delayed" during healthy Live runs (C.md #2): batches take 0.9–1.6 s which is about the tick rate, so `health` flips to `delayed` and the ticker row turns amber. | C decides (formula gas mode / cached estimate; C's 14:0x commit `f9777f7` says "formula gas default with OOG retry"). After it lands, **D (or whoever has a browser) re-checks one live Mutual run**: the amber row should now be rare/short. No D code change expected. | Demo polish | Waiting on C's before/after batch time, then a visual re-check (section 8 shows how) |
+| 2 | **E** | `brand/sfx.ts` `ensure()` blocked the main thread ~450 ms the first time `alarm(true)` ran with no prior key press (CPU profile). | E's commit `abfbdb9` says "sfx prewarm". **E: confirm in E.md that `unlock()` (or an idle callback) builds the buffers**, and that a lab click (no key press) no longer stalls. D calls `sfx.alarm(true)` from `VaultPanel` the first time cash reaches 0 and `sfx.thud()` in `OutcomeLayer`. | Low | Believed done; needs E's confirmation |
+| 3 | **E** | Closing card needs nothing from D. E's `<ClosingCardHost />` is mounted by F in `app/src/app/routes.tsx` and owns the `L` key. | None. D mounts nothing. | none | Done (F) |
+| 4 | **F / anyone** | Re-record replays if B ever changes the model (`modelHash 0xebcb6f1f…` is frozen per B.md). The stage reads whatever replay it is given. | None for D. | none | n/a |
+| 5 | **B** (idea, not a request) | `bestSeeds(model, card)` from `@/engine` could ring "best rumor starters" as a hint for the pick-a-seed feature. D did NOT do it: the first call runs ~40 simulations synchronously, which risks a dropped frame. If B makes it incremental/async, D can add hint rings in `networkRenderer.ts` (`paint`, the "Chosen / hovered depositor" block). | Optional. | Nice-to-have | Not started |
 
-**REQUEST → F**
-1. (Done by F, now used: see 14:00 update.) For the P2 "pick who starts the rumor": `runActions.selectSeed(node: number | null)` (stores a seed node used by `start()` instead of the card's `seedNode`; additive). The canvas already hit-tests, shows a hover ring and a violet selected ring, and calls `runActions.selectSeed` only if it exists (feature-detected), so nothing breaks until you add it. Optional `RunView.seedNode: number | null` would let the ring survive a re-mount.
-2. (Done by F: `<ClosingCardHost />` is mounted in `routes.tsx`; D mounts nothing.)
-3. (Superseded: B's tuned model now fails Bhau's × W at tick 8, ~4.2 s; see 14:00 update.)
+Items that were open earlier and are **now closed** (so you don't chase them):
+- E's `copy.stage` group exists (commit `abfbdb9`); a key check at 14:20 found **no key used by `stageCopy.ts` missing** from `copy.stage`. The local defaults in `stageCopy.ts` are therefore dead code now (they stay as a safety net).
+- F's `runActions.selectSeed` + `RunView.seedNode` exist (commit `6b56a7a`); the canvas uses them (section 5.1).
+- F's `requestedCount` for replay seals: the replay ticker now prints real counts (verified at 14:20: "tick 7–8 · #69,773,799 · 153 withdrew · sealed 0.89 s · ✓ finalized 0xf070…3f85").
+- F's request "Replay vault caption says Practice": fixed (`S.heldReplay`).
+- E's requests to D (recordedAt on ModeChip, banner-safe stage height, passbook row shape): all done.
+- B's note "never hard-code seed nodes": the stage never does (it only draws `frame.nodeState`).
 
-**Next**: re-check against E's closing card and F's replays when they land; fix requests.
+---
 
-## REQUESTS → D (from B, 13:45)
-1. Your note "with the real engine Bhau's Bank + W fails at tick 3 (~2.3 s)" is out of date: the tuned model (`modelHash 0xebcb6f1f…`) fails Bhau's × W at tick 8 (3.2 s; ~4.2 s sealed on chain), × E at tick 9, × R at tick 10. The rumor-spreading phase is therefore longer; please re-check the ripple/whales-first timing against `/lab/engine` and the recorded replays rather than the old numbers.
-2. Card seed nodes changed (Q 35, W 39, E 3, R 22). Never hard-code ids; read `defaultParams(model, level, card).seedNode`.
-3. Optional, for "pick who starts the rumor": `bestSeeds(model, card, count = 8)` from `@/engine` returns the depositors whose rumor ruins Bhau's Bank soonest, best first (first call runs ~40 sims, memoised). You could ring them as a hint.
-4. `SimFrame.panic[i]` is `score / threshold` clamped to [0, 2]; `goneAt[i]` is the tick node i asked for its money (-1 if not). `newlyServed` excludes ids trapped by a mid-serve failure.
+## 3. What D owns and the rules it works under
 
-## REQUESTS → D (from F, 14:50)
-Nothing of D's blocks F. F is working your 13:45 asks in F's own queue: `selectSeed` + `RunView.seedNode`, mounting E's `<ClosingCardHost />` in the shell, and `requestedCount` for replay seals. Remaining items only a person looking at the real screen can close, and they are D's to run and record here (F can't judge them from a headless page):
-1. Screenshots at **1280×720, 1920×1080 and 375×812** for idle, mid-run, failed, survived, proof open, passbook open, plus `/ops` and `/replay` (E for the last two). Nothing clipped; nothing on the stage under 18 px.
-2. **Reduced motion** (DevTools emulation): no shake, no particles, stamp fades.
-3. **Keyboard-only** pass: every control reachable with a visible focus ring.
-4. In **Live**, the "Sealing delayed" chip appears during healthy runs (see REQUEST → C #2); once C changes sealing, please confirm the amber state looks calm rather than alarming (it is honest, not an error).
+- **Owns only `app/src/ui/stage/**` and `docs/status/D.md`.** Imports other modules **only through their barrels**: `@/app/store`, `@/ui/brand`, `@/ui/panels` (not used), `@/ui/format`, `@/ui/copy`, `@/types`.
+  - One deliberate exception: `StageLab.tsx` (dev sandbox) imports `patchRun`/`runStore` from `@/app/state` because the public store cannot force a phase. No other stage file does.
+- **CSS Modules only** (`*.module.css`), colours/spacing/type only from E's CSS variables in `app/src/ui/theme/tokens.css`. No global CSS. A scan at 14:00 found no colour literals in stage `.ts/.tsx/.css` (the `rgba(...)` calls in `networkRenderer.ts` are built from tokens read at runtime).
+- **No string literals in components.** Everything printed goes through `stageCopy.ts` (section 6).
+- **Never re-render React at 60 Hz.** The canvas and the run clock read `getRunView()` inside `requestAnimationFrame`. Components subscribe with `useRunView` and select primitives or stable references (F's `useRunView` compares results one level deep; selectors that build new nested objects each call can still loop).
+- Hotkeys are F's (`app/src/app/hotkeys.ts`, installed once in `main.tsx`). D only renders hints and responds to store state.
+- The shell (`app/src/app/routes.tsx`, F) mounts `PaperBackground`, `ModeBanner`, `ProofPanel`, `ClosingCardHost` around `<StageScreen />`. D does not mount those.
+- Testnet only; D never touches keys or the chain. D never calls `runActions` except the user actions listed in section 5.
 
-## 14:00 — update (D): remaining items closed, verification matrix recorded
+---
 
-**Done**
-- **Seed pick (P2) is live**: F added `runActions.selectSeed` and `RunView.seedNode`. The canvas now drives the violet selected ring from `view.seedNode` (before the run only; clears on start/reset) and calls `selectSeed` directly on click (toggle to clear); hover ring + pointer cursor. Verified by a synthetic click in `/lab/stage`.
-- **Mobile outcome**: on 375 px the stamp docks smaller at the top while the passbook (max 66% height, scrolls inside) takes the lower part; before, they overlapped the passbook title.
-- **Replay**: the vault caption now reads "Recorded from Monad testnet" (F's REQUEST); chip shows the recording time; the ticker links real `TxLink`s.
-- **B's notes read**: seeds are never hard-coded (the canvas only draws `frame.nodeState`); the tuned model (Bhau's × W fails at tick 8, ~4.2 s) makes the rumor phase visible: amber rings spread along edges, whales go vermilion first, cash-zero flash. `bestSeeds()` hint rings NOT done: its first call runs ~40 simulations on the main thread, a frame-drop risk next to the demo moment. Left as an idea.
-- **E's notes read**: nothing further for D (already passing `recordedAt`, `shake={false}`, using `copy.passbook.rows`).
+## 4. File map (all in `app/src/ui/stage/`)
 
-**F's verification asks (headless Chrome via CDP, screenshots read and critiqued)**
-| Ask | Result |
+| File | Role |
 |---|---|
-| Screens at 1280×720, 1920×1080, 375×812: idle, mid-run, failed, survived, proof open, passbook open | All captured. 1920: idle, mid (rumor spreading), failed + passbook, survived (round "PAID IN FULL" + passbook), proof open over the vault column (recorded run: "8 / 8 ticks: screen and chain agree", 4.2 s, 14 Monad blocks). 1280: idle, mid, verdict freeze, failed + passbook, proof open. 375: idle, mid, failed + passbook. Nothing clipped; nothing on the stage under 18 px; no horizontal scroll at 375 (`scrollWidth` 375). `/ops` and `/replay` picker are E's; not reviewed by D. |
-| Reduced motion | No ripples, pulses, particles; state changes instant; stage shake skipped; stamp fade is E's. |
-| Keyboard only | Tab order 1, 2, Q, W, E, R, Start, then wraps; every control shows a 3 px ring (selected bank segment uses an inset light ring; the unselected one an ink ring); `Esc`/`H` handled by F's hotkeys; Passbook and Help are `inert`/removed when closed so they can't trap focus. |
-| Live "Sealing delayed" amber | The ticker row goes amber (`--rumor-wash`, amber top rule, label "Sealing delayed") only when `health` is `delayed`/`paused`; it is calm, not red, and clears on its own. The real cause is C's batch time (C.md #2); no D change needed. Once C lands the faster path, D only needs a visual re-check. |
+| `index.ts` | Barrel (PRD §16.5): `StageScreen`, `StageLab` only. |
+| `StageScreen.tsx` / `.module.css` | Layout grid and overlay hosting. Measures what the shell stacks above it and sets `--stage-top`. Owns the stage shake (WAAPI). |
+| `TopBar.tsx` / `.module.css` | Wordmark, bank selector, rumor chits, primary action (per phase), run clock, block number, `ModeChip`; also exports `ErrorStrip`. |
+| `NetworkCanvas.tsx` / `.module.css` | React wrapper for the canvas: sizing (ResizeObserver, DPR ≤ 2), rAF loop, token palette, aria-label, pointer handlers for seed pick. |
+| `networkRenderer.ts` | The Canvas 2D renderer class (state diffing, transitions, ripples, particles, rings). No React. |
+| `canvasMath.ts` (+ `.test.ts`) | Pure maths: square fit, √balance radii, lerp/ease, hex parse, bezier, rumor-source pick, passbook log scale. |
+| `NetworkLegend.tsx` / `.module.css` | Node-encoding key (DOM). |
+| `VaultPanel.tsx` / `.module.css` | Vault bar, figures, lamp, flash, alarm. |
+| `QueueStrip.tsx` / `.module.css` | Monad Mutual queue of little people. |
+| `SealTicker.tsx` / `.module.css` | Latest 6 seals + `HealthChip` + MICR separators. |
+| `OutcomeLayer.tsx` / `.module.css` | "Sealing the verdict…" freeze, E's `Stamp`, thud, shake, passbook trigger, SR announcement. |
+| `Passbook.tsx` / `.module.css` | Comparison passbook (log-scale bars). |
+| `HelpOverlay.tsx` / `.module.css` | Hotkey list dialog. |
+| `stageCopy.ts` (+ `.test.ts`) | The ONE adapter to `@/ui/copy`: all stage strings, `fill()`, `splitEmphasis()`. |
+| `StageLab.tsx` / `.module.css` | `/lab/stage` sandbox (dev tool). |
 
-**Blocked by**: nothing.
-**Still open on other agents** (all optional/polish): E `copy.stage` group + `sfx.ensure()` pre-build (see "REQUEST → E"); F `requestedCount` on replay seals (ticker still prints "0 withdrew" for batches; check after F's change); C batch time (amber "Sealing delayed").
+---
+
+## 5. How each part works (behaviour you can rely on)
+
+### 5.0 Layout (`StageScreen`)
+- Desktop: `display: grid; grid-template-rows: auto minmax(0,1fr) auto` → top bar (`.head` = `TopBar` + `ErrorStrip`), main (62/38 columns: network | vault column), ticker. Height = `calc(100dvh - var(--stage-top, var(--banner-h, 0px)))`. `--stage-top` is measured in a layout effect from everything above the stage in the DOM (ResizeObserver on the preceding siblings + window resize), so the in-flow `ModeBanner` never pushes the ticker off screen. E also writes `--banner-h` on `<html>` as a fallback.
+- ≤ 760 px wide: `height: auto`, grid collapses to one column: network (square, `aspect-ratio: 1/1`) → legend → vault → queue → ticker (latest seal only). Overlays (`OutcomeLayer` freeze/stamp, `Passbook`, `HelpOverlay`) become `position: fixed` on phones because the stage is a scrolling page there.
+- Short desktop screens (`max-height: 800px`): compact rules in `VaultPanel`, `QueueStrip` (title visually hidden, kept as the accessible name), `TopBar`.
+- `data-mode` and `data-phase` attributes sit on `<main>` for debugging/automation.
+
+### 5.1 Network canvas (`NetworkCanvas` + `networkRenderer`)
+- Data read from the store in the rAF loop: `model` (graph + ledger balances + configs), `frame` (`nodeState`, `heardAt`), `level`, `phase`, `seedNode`. If `model` is null (before the controller sets it) it draws nothing.
+- Layout: graph is a unit square (`node.x/y` in 0..1) letterboxed into the box with a 14 px inset (`fitSquare`). Radius ∝ √(balance) (`nodeRadii`), clamped to ≥ 2.4 px; drawn small → large so whales sit on top.
+- Edges are painted once to an offscreen canvas (ink at 8.5%) and blitted; repainted only on resize/model change.
+- **State encoding (PRD §14.3, shape + colour, never colour alone)**: Calm = small filled ink dot · Heard = amber ring · Panicking = filled vermilion + pulse ring · Queued = vermilion ring with a tail toward the vault (right) · Withdrawn = hollow thin ring · Trapped = slate ×. Insured halo (thin violet ring) only on Monad Mutual (`level === 1`) for depositors with `balance <= configs[1].insuredCap` that are not Withdrawn/Trapped.
+- **Transitions**: each node has a from/to style (fill/stroke colour+alpha, line width, scale, cross alpha) lerped over 250 ms (`TRANSITION_MS`).
+- **Effects come from diffing**, not from `frame.newly*`: every frame the renderer compares `nodeState`/`heardAt` with what it last drew. Why: replay/spectate joins land several ticks in one store update; diffing gives the same visuals either way.
+  - newly heard (`heardAt` goes −1 → ≥0): amber ripple ring + the edge it travelled along flashes for 600 ms. The source edge is guessed by `rumorSource` (earliest-heard neighbour that heard strictly before; falls back to a same-tick neighbour).
+  - state becomes `Withdrawn`: a vermilion particle flies on a quadratic curve to the vault column's near edge (`getTarget()` reads the vault column's DOM rect at spawn time; on phones it aims at the top-centre of the vault). Caps: 220 particles, 160 ripples. Deterministic stagger from node id (no `Math.random`).
+  - "Join" (first frame, tick regression i.e. reset, or a jump of more than 3 ticks): snap with no effects.
+- **Reduced motion** (OS setting OR `ui.reducedMotion`): no ripples, no pulse, no particles, instant state changes.
+- **Perf**: repaints only when dirty or animating (transitions, ripples, particles, panicking pulse). Measured headless 1920×1080 on the busiest second of a run: 60 fps, p95 16.7 ms, no long task in steady state; canvas paint total ≈ 40 ms over a 2.5 s run.
+- **Colours** are read once from CSS tokens at mount (`getComputedStyle` + the canvas context to normalise to `#rrggbb`). Token names used: `--ink`, `--seal`, `--rumor`, `--run`, `--trapped`, `--paper`. If a token does not resolve to an opaque colour it logs a dev warning and uses channels `[0,0,0]`. Changing tokens at runtime requires a reload (palette is not re-read).
+- **aria-label** on the `<canvas role="img">`: idle → "{total} depositors. The bank is open."; running → the phase label; outcome → "{withdrew} of {total} depositors withdrew; {trapped} trapped."
+- **Pick who starts the rumor (P2, live)**: only when `phase === 'idle'` and `mode` is `practice` or `live`. Hover → ink ring + pointer cursor; click → `runActions.selectSeed(id)` (clicking the already selected node passes `null`). The violet ring is drawn from `view.seedNode` (cleared by F's controller on start/reset; the renderer shows it only while idle). F's `start()` uses `seedNode` when set. Keyboard users cannot pick a seed (the chits cover the common path); that is a known gap, not a bug.
+
+### 5.2 Vault panel
+- Numbers come from `frame.bank` (the engine's mirror of the contract; F checks it against the chain per tick). With no frame it shows `model.configs[level]` cash0/bonds0 and the base haircut. It does **not** show the live onchain balance in the bar; the real AUSD held by the contract appears only in the footer line.
+- Bar (assets0 = cash0 + bonds0 is 100%): bonds hatched at the bottom, cash solid above it, empty space above = paid out. Each fire sale spawns a vermilion slice at the top of the remaining stack that slides across into a dashed "Street" column and fades; the Street column's vermilion fill height is cumulative loss. (Slice animation ends at opacity 0; with reduced motion it is effectively skipped but the Street fill still shows the loss.)
+- Figures: `cash`, `bonds` (big, `fmtAusd` + inline `fmtUsdScaled`), `fire-sale loss`, `out the door` (= `deposits0 − depositsOwed`). Footer: held-balance line + `haircut X% · 1 AUSD = $1M` (the scale is always labelled).
+- Title: `Vault · simulated` in Practice, `Vault · real AUSD on Monad` otherwise. Footer held line: if `mode !== 'practice'` and `onchain` exists → "{amount} held by the contract · live from Monad"; else Practice → "Practice: simulated balance"; Replay → "Recorded from Monad testnet"; Live/Spectate before the first snapshot → empty.
+- Status lamp = dot + text (`copy.phases[phase]`), never colour alone.
+- **Cash-zero event**: the first time `frame.bank.cash === 0n` with `tick > 0` and no outcome → `sfx.alarm(true)` and a one-shot vermilion frame flash (CSS). Alarm stops on outcome, reset, or unmount (cleanup). Implemented with `subscribeRunView` (not React render).
+
+### 5.3 Top bar
+- Row 1: wordmark · bank selector (`1`/`2` badges, defence tag, becomes "Reset and switch" on the other bank after an outcome) · `ModeChip` (gets `replayName` and `recordedAt`) · run clock + `block #…`. Row 2: four chits (`Q W E R`, selected lifts, `*emphasis*` in card text rendered via `splitEmphasis`) · primary action.
+- **Selectors lock** (disabled, still readable) in Replay/Spectate and whenever phase is not `idle|failed|survived`.
+- **Primary action per phase (PRD §13.2)**: `idle` + card → "Start the run" (primary, badge `Enter`); `idle` without a card → disabled "Pick a rumor to start the run"; `switching`/`starting`/`failing`/`surviving`/`resetting` → pending `Button` with its own label from copy; `running` → empty (slot reserved so the row doesn't jump); `failed`/`survived` → "Reset the bank" (badge `X`); `paused` → own full-width row with Retry sealing (primary) · Switch to backup key (only if a backup key exists and isn't in use) · Play the recorded run · Reset the bank. In Replay/Spectate no primary action is shown.
+- **Run clock**: `<span role="timer">` whose `textContent` is written from rAF (`fmtClock`): `outcome.wallMs` if set; else `Date.now() − startedAtMs` while running/failing/surviving; else `elapsedMs`.
+- **`ErrorStrip`** (rendered under the top bar): shows `view.error` (title + detail), persists until dismissed or resolved. It runs `error.action.run`: `retry → runActions.retry()`, `reset → reset()`, `replay → setMode('replay')`, `ops → navigate('/ops')` (wouter `useLocation`), `backup → switchToBackupKey()`. While `phase === 'paused'` it hides its action button because the top bar already offers every remedy; it always has Dismiss.
+- Buttons use E's `Button` (`kind`, `pending`, `pendingLabel`, `hotkey`). Hotkey badges use `<kbd aria-hidden>` plus `aria-keyshortcuts`.
+
+### 5.4 Seal ticker
+- Newest-first latest 6 `view.seals`. A tick seal prints "tick 7–8 · #block · N withdrew · sealed 0.89 s · ✓ finalized" + a `TxLink`; other kinds print the copy label (rumor started, bank reset …). `simulated` records print "simulated · not onchain" and **never** a link (key off `record.simulated`; mock records have `txHash: null`). `finalized: false` prints "finalizing…". A pending record or "run is ahead of sealed tick" prints "sealing tick N…" (amber text).
+- Row turns amber and the label becomes "Sealing delayed" (or "Sealing paused") when `health` is `delayed`/`paused`. `HealthChip` sits at the right end (see §9 deviations). MICR-style inline-SVG separators (P2). On phones only the latest row shows.
+
+### 5.5 Queue strip (Monad Mutual only)
+- One inline-SVG person per `frame.bank.queue` id (keyed by node id), max 40 drawn then "+N". Enter slides in from the right, leave from the head with an exit animation (`motion/react` `AnimatePresence mode="popLayout"`; items are memoised `forwardRef` components so only arrivals/leavers re-render). Header shows the speed-bump cap from `configs[1].speedBumpBps` ("Pays at most 3% of deposits per block"). Reduced motion → zero-duration transitions.
+
+### 5.6 Outcome sequence
+1. `phase` `failing`/`surviving` and no stamp yet → full-stage scrim with "Sealing the verdict…" (pulse) and "Waiting for Monad to seal tick N" (Practice: "Settling the books").
+2. Stamp shows **only** when `outcome !== null && (mode === 'practice' || outcome.sealed)`. So in Live/Spectate/Replay it waits for the chain-sealed outcome event. Headline/Marathi/subline from copy: sealed → E's `copy.stamp.*Sub(wallMs, blocks)` ("in 4.2 s · 14 Monad blocks"); Practice → "simulated · N ticks".
+3. `Stamp` is E's component. D passes `shake={false}` (D does its own shake so the screen doesn't shake twice) and `reducedMotion` when the UI flag is set. On `onImpact`: `sfx.thud()`, a 180 ms ±6 px stage shake (WAAPI keyframes in `StageScreen`, skipped under reduced motion), then `uiActions.togglePassbook(true)` 400 ms later. Fallback: if `onImpact` never fires within 1.2 s the thud + passbook still happen.
+4. While the passbook is open the stamp layer "docks": desktop `translateY(-13%) scale(.62)`, phones `translateY(-30%) scale(.5)`, so neither hides the other.
+5. A visually hidden `role="status"` announces "Bank failed after 4.2 s." for screen readers.
+
+### 5.7 Passbook
+- Rows from `copy.passbook.rows` (`bank/amount/span/note`: WaMu $19B 16 days, Wachovia ~$10B 8 days, SVB $42B 1 day) with fixed durations in `PASSBOOK_SECONDS` (16 d, 8 d, 1 d: data from PRD §8.1, not copy). "This bank" row: display-scale withdrawn amount (`fmtUsdScaled(outcome.withdrawnAmount)`), time (`fmtSeconds(wallMs)`), blocks ("14 Monad blocks") or "simulated" in Practice; red for failed, violet for survived. Placeholder "—"/"Run the bank to add its row" if opened before an outcome.
+- Bars on a **log** time scale (1 s … 2,000,000 s, `logPosition`, minimum visible sliver), labelled "log scale" with a 5-tick axis (1 s, 1 min, 1 h, 1 day, 1 week from `S.axisTicks()`); on narrow tracks the "1 week" label is hidden by a container query to avoid colliding with "1 day". Doto font (≥ 28 px) for entries. Rises from the bottom; closed state is `inert` + `visibility:hidden`. Toggled by F's `C` hotkey and its own Close button.
+
+### 5.8 Help overlay
+- `HOTKEYS` from `@/app/store`; opens on `uiActions.toggleHelp()` (`H`/`?`), closes with `Esc` (F's hotkey handler) or click outside or its Close button. `role="dialog" aria-modal`, focus moves into the card on open and returns to the previously focused element on close.
+
+### 5.9 Legend
+- DOM list under/left of the canvas explaining the node encoding; the "Fully insured" entry appears only on Monad Mutual.
+
+---
+
+## 6. Copy: how strings work (important for E and anyone editing text)
+
+- `stageCopy.ts` exports `S` (all strings), `fill(template, vars)` for `{placeholders}`, `splitEmphasis()` for `*word*`, and `PASSBOOK_SECONDS`.
+- Lookup order per string: `copy.stage.<key>` → an existing group in E's deck (`banks`, `cards`, `buttons`, `phases`, `chips`, `stamp`, `passbook`, `scale`, `errorActions`) → a local default in `stageCopy.ts`. As of 14:20 every key the stage reads from `st('<key>', …)` **exists in `copy.stage`**, so the defaults are dead code. **To change wording: edit `app/src/ui/copy.ts` (E). Do not edit components.**
+- Adding a new string: add `st('newKey', 'default')` in `stageCopy.ts` and the same key in `copy.stage`.
+- Key names printed on badges (`Enter`, `X`, `P`, `C`, `H`) are keyboard labels in `S.key`, not prose.
+
+---
+
+## 7. Store contract D relies on (fields read from `RunView` / `UiState`)
+
+`mode, phase, level, card, model (graph, ledger.balances, ledger.deposits0, configs), frame (nodeState, heardAt, bank.{cash,bonds,cumulativeLoss,depositsOwed,deposits0,lastHaircutBps,queue,tick,withdrawnCount}), seals[], sealedTick, health, startedAtMs, elapsedMs, blockNumber, outcome {kind, tick, wallMs, blocks, withdrawnAmount, trappedCount, sealed}, onchain.ausdHeld, error, operator.backupAddress/usingBackup, replay {name, recordedAt}, seedNode`; `UiState`: `passbookOpen, helpOpen, reducedMotion`. Actions used: `runActions.selectLevel/selectCard/start/reset/retry/dismissError/setMode/switchToBackupKey/selectSeed`, `uiActions.togglePassbook/toggleHelp`, `HOTKEYS`, `getRunView`, `subscribeRunView`. If F renames or retypes any of these the stage breaks at compile time.
+
+---
+
+## 8. How to run, test and re-verify
+
+- Dev server: `cd app && pnpm dev --port 5174 --strictPort` (D's port). Sandbox: `http://localhost:5174/lab/stage`.
+  - Lab toolbar (bottom-left): size presets (window, 1280×720, 1920×1080, 375×812 as scaled iframes), scenario buttons (`fail`, `survive`, `idle`, `failed`, `survived`, `verdict`, `error`, `passbook`, `help`), force any phase, force any mode, switch bank level. Window mode drives the shared store; framed presets run their own store.
+  - Headless/automation URLs: `/lab/stage?embed=1&scenario=<name>` renders just the stage (no toolbar) and runs the scenario once (`fail`, `survive`, `idle`, `failed`, `survived`, `verdict`, `error`, `passbook`, `help`). The fake run uses the real engine, so timings are real: Bhau's × W fails ≈ 4 s, Mutual survives ≈ 11–25 s.
+  - Real data: `/replay/bhaus-w-failed-202610100809`, `/replay/mutual-w-survived-202610100809` (recorded testnet runs in `app/public/replays/`; ids change when F re-records, check `index.json`). Press `P` for E's proof panel, `C` for the passbook.
+  - `/` resolves to **Live** (not Practice) whenever an operator key is in `app/.env.local` and preflight passes: **do not press `W`+`Enter` on `/` in that case unless you intend a real testnet run.** Use the lab or `/replay/*` for testing.
+- Tests: `cd app && pnpm vitest run src/ui/stage` (pure maths + copy adapter; the renderer and React components are verified visually, there is no DOM test environment: `vite.config.ts` sets `test.environment: 'node'`). Typecheck: `pnpm typecheck` (only errors under `ui/stage` are D's). Lint: `npx oxlint src/ui/stage`.
+- Screenshot method used (not in the repo): headless Chrome driven over CDP (`--headless=new --remote-debugging-port`, `Emulation.setDeviceMetricsOverride` for width/height/dpr/mobile, `Emulation.setEmulatedMedia prefers-reduced-motion`, `Page.captureScreenshot`, `Input.dispatchKeyEvent` for hotkeys/Tab). The IDE browser tool cannot emulate big viewports for capture; use headless Chrome. Any equivalent (Playwright is not installed; do not add it, no new packages) works.
+- Perf recipe: in the page, record `requestAnimationFrame` deltas for ~4.5 s starting just after the run starts (expect ≈ 60 fps, p95 ≈ 16.7 ms), and use a React DevTools-hook commit walk (compare `child !== alternate.child` before counting `PerformedWork`) to count per-component renders; expect ≤ ~4/s for `VaultPanel`, `BlockLine`, `SealTicker`, `QueueStrip`.
+
+### Verification record (14:00–14:20)
+| Check | Result |
+|---|---|
+| 1920×1080: idle, mid-run, verdict freeze, failed + passbook, survived + passbook, proof panel open (replay), error/paused, help | Pass. Reads in ~5 s; vault figures and stamp are the loudest elements. |
+| 1280×720: idle, mid-run, verdict, failed + passbook, survived w/ queue, proof open, paused | Pass. Nothing clipped; nothing under 18 px. Tightest area: top bar (two rows ≈ 24% of height) and vault+queue column; paused wraps four remedies onto their own row. |
+| 375×812 (dpr 2, mobile): idle, mid-run, failed + passbook | Pass. `scrollWidth` = 375, no horizontal scroll. Stamp docks at the top, overlapping the bank buttons while the passbook is open (acceptable: run is over; pointer-events none). |
+| Reduced motion | No ripples, pulse, particles; instant state changes; shake skipped; slice animation effectively skipped. |
+| Keyboard only | Tab order 1, 2, Q, W, E, R, Start, wraps. Every control shows a 3 px focus ring (selected bank segment: inset light ring; unselected: ink ring). Passbook/Help are removed from the tab order when closed (`inert` / not rendered). |
+| Perf | 60 fps steady state; per-component render rates ≤ ~4/s; first lab run showed one ~230 ms long task that was E's `sfx.ensure` (item 2), not the stage. |
+| Replay | Ticker prints real counts and `TxLink`s; stamp subline "in 4.2 s · 14 Monad blocks"; passbook row "failed · 14 Monad blocks", $5.9B. |
+
+---
+
+## 9. Decisions and deliberate deviations from the backlog
+
+- `HealthChip` is at the right end of the **ticker**, not in the top bar: at 1280 the top bar had no room for two chips plus the clock, and the chip describes sealing. It receives `blockNumber={null}` because the block is shown once next to the clock.
+- The node legend is a **left column** beside the canvas on desktop (below the canvas on phones) because the letterboxed square leaves empty space at the sides.
+- The vault shows the **engine mirror** (`frame.bank`), not the onchain snapshot, in the bar. F's controller checks the mirror against chain data every tick (`view.mirror`), and the proof panel shows that check.
+- Stamp shake is done by D (stage only), with E's `Stamp` told `shake={false}`. E's default shakes `#root`, which also moves the banner and proof panel.
+- Chits use the `--fs-card` size and may wrap to two lines at 1280.
+- Bank selector labels use sentence-case taglines from `copy.banks[].tagline` capitalised by `stageCopy`; the PRD's "insured to 50 AUSD" long form is not shown (E's tagline is "speed bump + insured").
+
+---
+
+## 10. Known limitations and gotchas (not bugs, but read before changing things)
+
+- Mid-edit by other agents (e.g. E's `panels/index.ts`) can make the whole app fail to boot in dev with `does not provide an export named …`. That is transient and theirs; reload after their commit.
+- Replay ids in `app/public/replays/index.json` change when F re-records; old URLs then show D's `ErrorStrip` ("Recorded run unavailable"). That is expected behaviour, not a stage bug.
+- The canvas palette is read once at mount; a live theme change would need a reload (the product is light-only by design).
+- A pending lerp or particle caps (220/160) are intentionally conservative; a spectate join of a 300-node jump snaps instead of animating.
+- Canvas click-to-seed is mouse/touch only.
+- The stage assumes ≥ 500 nodes laid out in 0..1; if B changes the graph size nothing in D is hard-coded, but the visual density tuning (radius floor 2.4 px, `side * 0.034` max radius) was tuned for 500.
+- If `view.model` is replaced by a different model object (new modelHash) the renderer rebuilds and snaps; it does not animate between models.
+- `StageLab` forces store state with `patchRun`; never import it elsewhere.
+
+---
+
+## 11. If you need to change the stage
+
+1. Edit only inside `app/src/ui/stage/`; keep CSS in the component's `.module.css`, tokens only; keep copy in `copy.ts`/`stageCopy.ts`.
+2. Run `pnpm vitest run src/ui/stage`, `pnpm typecheck`, `npx oxlint src/ui/stage`.
+3. Check visually with the embed URLs above at 1920×1080, 1280×720 and 375 wide, with and without reduced motion.
+4. Commit only your paths: `git add app/src/ui/stage docs/status/D.md && git commit -m "D: …" -- app/src/ui/stage docs/status/D.md`. Never `git add -A`, stash, reset, restore, checkout --, clean, rebase, pull.
+5. Ask for anything outside `ui/stage` in the owner's status file as `REQUEST → <letter>: <exact change>`.
+
+---
+
+## 12. Commit history for D (newest first)
+`6603b7a` seed pick via store, mobile outcome docking, verification matrix · `7303bc8` replay vault line · `2ed31f9` P1/P2 pass (responsive, focus, perf, seed pick, MICR) · `758d9f1` first full stage (skeleton, canvas, vault, top bar, ticker, queue, outcome, passbook, help, lab). The previous (rate-limited) D agent had only produced `stageCopy.ts` and the kickoff entry of this file.
