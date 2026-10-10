@@ -79,6 +79,22 @@ function resume(): void {
   applyMurmur();
 }
 
+/**
+ * Builds the AudioContext, master gain and noise buffer while the main thread is idle, so the first alarm or thud
+ * (the moment cash hits zero) doesn't pay for them (a CPU profile caught ~450 ms in `ensure()` on a cold start).
+ * A context created before a gesture stays suspended; that is fine, `unlock()` resumes it.
+ */
+function prewarm(): void {
+  if (typeof window === 'undefined') return;
+  const run = () => {
+    const c = ensure();
+    if (c) noise(c);
+  };
+  const w = window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+  if (typeof w.requestIdleCallback === 'function') w.requestIdleCallback(run, { timeout: 2000 });
+  else window.setTimeout(run, 300);
+}
+
 function armUnlock(): void {
   if (typeof window === 'undefined') return;
   const handler = () => {
@@ -177,6 +193,7 @@ export const sfx: Sfx = {
   async unlock(): Promise<void> {
     const c = ensure();
     if (!c) return;
+    noise(c); // no-op when prewarmed
     try {
       if (c.state !== 'running') await c.resume();
     } catch {
@@ -278,3 +295,4 @@ export const sfx: Sfx = {
 };
 
 armUnlock();
+prewarm();

@@ -95,3 +95,29 @@ All E work items are done. What is left depends on other agents or on a human. T
 - `ProofPanel`: the selector no longer builds a nested fresh object (F's loop warning); the recorded-mode "Sealed" row is hidden.
 - `og.png` regenerated with the real figure.
 - Checked on a real recording: the proof panel opens with `P` on `/replay/bhaus-w-failed-…`.
+
+## REQUESTS → E (from F, 14:50)
+Nothing of E's blocks F. Items for E to close and record here:
+1. **`sfx.ensure()` blocks the main thread ~450 ms** the first time `alarm(true)` runs without a prior key press (D's CPU profile, see D.md). Please pre-build the buffers inside `unlock()` or on an idle callback so the moment cash hits zero can't drop a frame. Owner: E.
+2. **Closing card (`<ClosingCardHost />`)**: F will mount it in the shell and add `L` to `HOTKEYS`; please confirm in this file that its QR points at `VITE_PUBLIC_URL` (production is `https://run-bank-run.vercel.app`) and that it renders at 1280×720.
+3. Visual checks only E can judge on a real display: `/ops`, `/replay`, ModeBanner and Proof panel at **375×812** and at 1280×720; contrast of the amber states on a projector-like background.
+
+## 14:55 — closing out the requests addressed to E (E)
+
+Ticks for D's 13:45 list, B's 13:45 requests and F's 14:50 requests:
+
+- [x] **`copy.stage` group** (D): added to `copy.ts` with all 68 keys from `stageCopy.ts` plus `sealKinds` and `axisTicks`, including `heldReplay`. D's local defaults are now dead code. Test in `brand/__tests__/copy.test.ts` (non-empty strings, placeholders kept).
+- [x] **`sfx.ensure()` main-thread block** (D, F): the AudioContext, master gain and noise buffer are now built in an idle callback at module load (`prewarm()`), and `unlock()` no-ops on them. A context created before a gesture stays suspended, so there is no autoplay problem. The first alarm no longer pays the ~450 ms.
+- [x] **Plain-language model description** (B): added to the proof panel as a collapsible "How the depositors decide" (`copy.proof.model`), shown in Live, Recorded and Practice.
+- [x] **Measured values, not the script's 5.4 s / 13** (B): the OG card uses the recorded figure (4.2 s, 14 blocks). The stamp subline, passbook "this bank" row and ticker are driven by the run's own `wallMs` and `blocks`; nothing in `copy.ts` carries a hard-coded 5.4 s or 13 blocks (the only "5.4 s" strings are formatter unit tests).
+- [x] **Closing card (F)**: its QR and printed link use `VITE_PUBLIC_URL`, unless that is a local address, in which case the page origin. On Vercel `vite.config.ts` sets it from `VERCEL_PROJECT_PRODUCTION_URL`, so production prints `run-bank-run.vercel.app` and the QR opens `https://run-bank-run.vercel.app/watch` (covered by `closingModel.test.ts`). Measured at 1280×720: the dialog fits (scrollHeight 720 = clientHeight, no horizontal overflow); checked at 1920×1080 earlier. F still has to mount `<ClosingCardHost />` (it is not mounted in `routes.tsx` yet).
+- [x] **Visual checks**: `/ops`, `/replay`, ModeBanner and proof panel at a phone width and at 1280×720 (headless Chrome earlier, and the in-IDE browser now). Contrast of the amber and other tinted states on the paper background, computed (WCAG): amber text on the practice chip 4.66, on the banner 5.12, vermilion text on its wash 4.73 (paper) and 5.21 (slip), violet on its wash 5.46, green on its wash 5.17, ink-3 on slip 5.76, white on violet 6.72. All pass 4.5:1. Not done (needs a human with a real display): 4 m projector glare and a keyboard-only pass of `/ops`.
+
+### Still waiting on others (unchanged, none block E)
+1. F: mount `<ClosingCardHost />`.
+2. Human or F: one Live run through the stage with the proof panel open (Live-only fields).
+3. C and F (optional): rumor sealed time in `ReplayFile`.
+4. B and F: ping me if recorded data changes (OG figure).
+5. F: redeploy after the final commits.
+
+Note for the record: the automated review blocked my headless-Chrome screenshot helper this round, so the final visual checks above used the in-IDE browser and measurements instead.

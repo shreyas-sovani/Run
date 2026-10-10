@@ -37,3 +37,21 @@ describe('copy deck', () => {
     for (const label of Object.values(copy.buttons)) expect(label).not.toBe(label.toUpperCase());
   });
 });
+
+describe('copy.stage', () => {
+  it('has only non-empty strings (D reads these before its own defaults)', () => {
+    const walk = (v: unknown, path: string): string[] => {
+      if (typeof v === 'string') return v.length > 0 ? [] : [path];
+      if (Array.isArray(v)) return v.flatMap((x, i) => walk(x, `${path}[${i}]`));
+      if (v && typeof v === 'object') return Object.entries(v).flatMap(([k, x]) => walk(x, `${path}.${k}`));
+      return [path];
+    };
+    expect(walk(copy.stage, 'stage')).toEqual([]);
+  });
+  it('keeps the placeholders the stage fills', () => {
+    expect(copy.stage.heldOnchain).toContain('{amount}');
+    expect(copy.stage.tickMany).toContain('{a}');
+    expect(copy.stage.tickMany).toContain('{b}');
+    expect(copy.stage.canvasAriaOutcome).toMatch(/\{withdrew\}.*\{total\}.*\{trapped\}/);
+  });
+});

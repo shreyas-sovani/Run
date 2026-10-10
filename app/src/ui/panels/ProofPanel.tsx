@@ -304,8 +304,18 @@ export function ProofContent(props: { data: ProofData; onWatchRecorded(): void }
         </dl>
       </section>
 
+      <ModelNote />
       <p className={s.foot}>{copy.proof.scaleNote}</p>
     </div>
+  );
+}
+
+function ModelNote() {
+  return (
+    <details className={s.model}>
+      <summary>{copy.proof.model.title}</summary>
+      <p>{copy.proof.model.body}</p>
+    </details>
   );
 }
 
@@ -339,6 +349,7 @@ function PracticeBody({ data, onWatchRecorded }: { data: ProofData; onWatchRecor
           </dl>
         </section>
       ) : null}
+      <ModelNote />
       <p className={s.foot}>{copy.proof.scaleNote}</p>
     </div>
   );
