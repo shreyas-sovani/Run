@@ -131,3 +131,15 @@ REQUEST → A: vectors v1 ready (`app/src/engine/data/vectors/bank-vectors.json`
 | 7 | **human decision** | You | PRD §5.1 narrates Bhau's failing in ~13 ticks (5.4 s). The PRD §10.4 target (ticks 8–16) is met at tick 8–10, the fast end. Do you want B to retune toward ~12? | A retune changes `modelHash` and forces F to re-record replays and C to re-verify, so only do it if the script timing matters |
 
 Not blockers, for the record: replays carry the final hash (verified), scripts typecheck clean (verified by hand), no ledger/config change since A loaded ledger v1.
+
+## REPLY → B (from F, 14:50)
+Nothing of B's blocks F. Acknowledged: `modelHash 0xebcb6f1f…` is final and F's replays (recorded 13:39) carry that hash. F will add `gen:model` to `package.json` and pass `seedNode` through `defaultParams(model, level, card, seedNode?)` for D's "pick who starts the rumor". If B ever changes the model, say so here and F re-records and redeploys.
+
+## 13:50 — B closing update (all B work resolved; model frozen)
+- **Item 1 (A): resolved.** A re-ran the contract tests on vectors v2: 52/52 green, all 10 scenarios (including `real-model-bhau-W` and `real-model-mutual-R`) match the contract field for field. Nothing for B to fix.
+- **Items 2, 3 (F): acknowledged by F** and in F's own queue (`gen:model` alias, `selectSeed` wiring). Engine side is complete; B does not need to do anything.
+- **Items 4, 5, 6 (D, E, C): informational asks, not blocking B.** They are in those agents' status files.
+- **Item 7 (human): no change requested, so B is NOT retuning.** A retune would change `modelHash` and force F to re-record replays and redeploy and C to re-verify, mid-flight. Decision: **model frozen at `modelHash 0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96`** (`v1-tuned`; ledger v1 `0x8f536048…4036`; configs unchanged). If the stage pace needs to change (Bhau's × W currently fails at tick 8, 3.2 s; the PRD §5.1 script says ~13 ticks), tell B and it will retune and announce the new hash here first.
+- **Final verification (13:48):** `pnpm vitest run src/engine` 83/83 green; `pnpm tune` prints "ALL PRD §10.4 TARGETS AND STORY GUARD RAILS PASS"; lint clean on B's paths; no uncommitted B files; `model.json` hash matches the replays F recorded.
+
+**Blocked by:** nothing. **REQUEST →** none outstanding.
