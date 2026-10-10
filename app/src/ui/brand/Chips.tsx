@@ -27,10 +27,15 @@ export function HealthChip(props: { health: SealHealth; sealedTick: number; bloc
       className={`${s.chip} ${s.health} ${s[`h_${props.health}`]}`}
       data-health={props.health}
       title={copy.healthDetail[props.health]}
-      role="status"
     >
       <span className={s.mark} aria-hidden="true" />
-      <span className="tnum">{text}</span>
+      <span className="tnum" aria-hidden="true">
+        {text}
+      </span>
+      {/* Announce state changes only; the tick and block counters change every 400 ms and stay silent. */}
+      <span className="srOnly" role="status">
+        {`${copy.health[props.health]}. ${copy.healthDetail[props.health]}`}
+      </span>
     </span>
   );
 }

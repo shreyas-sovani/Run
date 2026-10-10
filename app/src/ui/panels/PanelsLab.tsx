@@ -1,11 +1,12 @@
 // /lab/panels: proof panel, ops page, replay picker and banners against fixtures (all-pass, mixed, all-fail).
 // The last tab drives the real store with F's fake run so the connected components can be seen too.
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
 import { startFakeRun, uiActions, useUi } from '@/app/store';
 import type { PreflightReport, RunView } from '@/types';
 import { Button, PaperBackground } from '@/ui/brand';
 import { copy } from '@/ui/copy';
+import { ClosingCard } from './ClosingCard';
 import { ModeBanner, ModeBannerView } from './ModeBanner';
 import { OpsView } from './OpsView';
 import { ProofContent, ProofPanel } from './ProofPanel';
@@ -16,12 +17,13 @@ import * as fx from './fixtures';
 import ps from './ProofPanel.module.css';
 import s from './PanelsLab.module.css';
 
-type Tab = 'proof' | 'ops' | 'replays' | 'banners' | 'connected';
+type Tab = 'proof' | 'ops' | 'replays' | 'banners' | 'closing' | 'connected';
 const TABS: { id: Tab; label: string }[] = [
   { id: 'proof', label: 'Proof panel' },
   { id: 'ops', label: 'Ops page' },
   { id: 'replays', label: 'Replay picker' },
   { id: 'banners', label: 'Banners' },
+  { id: 'closing', label: 'Closing card' },
   { id: 'connected', label: 'Connected (store)' },
 ];
 
@@ -66,6 +68,7 @@ export function PanelsLab() {
       {tab === 'ops' ? <OpsTab /> : null}
       {tab === 'replays' ? <ReplayTab /> : null}
       {tab === 'banners' ? <BannerTab /> : null}
+      {tab === 'closing' ? <ClosingTab /> : null}
       {tab === 'connected' ? <ConnectedTab /> : null}
     </div>
   );
@@ -217,8 +220,30 @@ function BannerTab() {
   );
 }
 
+function ClosingTab() {
+  const [open, setOpen] = useState(() => new URLSearchParams(window.location.search).get('open') === '1');
+  return (
+    <section className={s.connected}>
+      <p className={s.log}>The closing card is a full-screen overlay. In the app, press L (via ClosingCardHost) and Esc to close.</p>
+      <div className={s.picks}>
+        <Button onClick={() => setOpen(true)}>Open the closing card</Button>
+      </div>
+      <ClosingCard open={open} onClose={() => setOpen(false)} />
+    </section>
+  );
+}
+
 function ConnectedTab() {
   const proofOpen = useUi((u) => u.proofOpen);
+  // `?fake=failed|survived` and `?proof=1` set the scene from the URL (screenshots, quick checks).
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const fake = q.get('fake');
+    let stop: (() => void) | undefined;
+    if (fake === 'failed' || fake === 'survived') stop = startFakeRun({ outcome: fake });
+    if (q.get('proof') === '1') uiActions.toggleProof(true);
+    return () => stop?.();
+  }, []);
   return (
     <section className={s.connected}>
       <ModeBanner />

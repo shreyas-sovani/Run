@@ -46,3 +46,23 @@
 
 ### Blocked by
 - Nothing.
+
+## 13:45 update (E): all P0 and P1 done
+
+### Done
+- E-10 `ClosingCard` + self-contained `ClosingCardHost` (owns its open state and the `L` key; `Esc` closes). QR to `/watch` via `qrcode`; base URL from `VITE_PUBLIC_URL` unless it is a local address, else the page origin (`closingModel.ts`, tested). Also a "Closing card" tab in `/lab/panels`.
+- E-11 mobile pass: ops, replay picker, banners, proof bottom sheet checked at 375 px (iframe harness). Banners stay put on phones (no dismiss).
+- `HealthChip` now announces state changes only (tick and block counters are `aria-hidden`).
+- Verified: `pnpm build` passes; 63 tests pass (`pnpm exec vitest run src/ui`); `tsc -b` and `oxlint` clean for my paths; `/` stage with D's real `TopBar`, my `ModeBanner` and chips renders at 1280×720; connected `ProofPanel` opens over the fake run.
+
+### REQUEST → F
+- Mount `<ClosingCardHost />` once in the stage shell (`app/routes.tsx`, next to `ProofPanel`). It handles `L` itself, so no hotkey or `UiState` change is needed. Add `L` to the help list if you want it shown.
+- `ModeBanner` already writes `--banner-h`. Nothing needed.
+
+### Notes
+- `pnpm og` takes about a minute (headless Chrome start-up). The committed `public/og.png` is current; rerun only if the copy in `copy.brand.og*` changes.
+- Operator keys are never held in React state after "Load keys": the form clears and the controller stores them in `sessionStorage`.
+- Not verifiable here: Live-mode proof panel with real transactions (no deployment yet: `deployment.runBank` is null). The panel handles that (shows "Not deployed") and renders fixture data for live, mismatch, idle and recorded in `/lab/panels`.
+
+### Blocked by
+- Nothing. Waiting on CP2 to check the proof panel against real transactions.

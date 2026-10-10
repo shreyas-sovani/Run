@@ -4,3 +4,4 @@ export { OpsPage } from './OpsPage';
 export { ReplayPicker } from './ReplayPicker';
 export { ModeBanner } from './ModeBanner';
 export { PanelsLab } from './PanelsLab';
+export { ClosingCard, ClosingCardHost } from './ClosingCard';
