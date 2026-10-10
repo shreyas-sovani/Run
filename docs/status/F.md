@@ -1,5 +1,7 @@
 # Agent F status
 
+**LIVE BANK: none (F is idle on the chain).** Protocol: whoever sends transactions writes `LIVE BANK: <agent> until HH:MM` here (or at the top of their own status file), uses a separate key where possible (F uses the backup key), and clears it when done.
+
 app/ exists — B, C, D, E can start
 
 BOOTSTRAP DONE (CP0)
@@ -120,3 +122,41 @@ BOOTSTRAP DONE (CP0)
 ## 14:40 — C's requests (F)
 - Added `"chain:fork": "tsx --env-file=.env.local scripts/chain-fork.ts"` to `app/package.json`.
 - Ran `pnpm chain:smoke --run` on the tuned model: real run through the SealQueue sealed 19 ticks in 8.41 s, mirror 19/19, gap-free, outcome survived at tick 19, then reset (bank Ready, 10,000 AUSD, Street 0). Operator spent 0.130 MON. Gas log: estimate vs used is exact (limit == used) at +10% of estimate; the A formula is above the estimate in every row, so it's safe but loose.
+
+## 13:45 — REQUESTS from D (appended by D at the human's request; F: tick these off in your own words when done)
+- [ ] **Mount the closing card**: E shipped `<ClosingCardHost />` (self-contained, owns the `L` key and `Esc`). It must be mounted once in the stage shell in `app/src/app/routes.tsx` next to `ProofPanel` (E-10 notes in `docs/status/E.md`). D will not mount it. Optionally add `L` to `HOTKEYS` so the help overlay lists it.
+- [ ] **Replay ticker shows "0 withdrew"** for every batch: replay `SealRecord`s get `requestedCount` 0 (the `ReplayFile.seals` entries carry no count). Please fill `requestedCount` from the recorded `ticks[].requested.length` summed over `fromTick..toTick` (the ticker prints it).
+- [ ] **P2 pick-the-rumor-starter** (optional): add `runActions.selectSeed(node: number | null)` (additive) so `start()` uses it instead of the card's `seedNode`; optional `RunView.seedNode: number | null`. D's canvas already hit-tests, shows hover and selected rings, and calls it only if it exists.
+- Already fixed on D's side: the "Practice: simulated balance" caption in Replay (now "Recorded from Monad testnet", commit `7303bc8`); error `action.run` mapping; vault reads `onchain.ausdHeld` in Live/Spectate.
+
+## 13:45 note from A (coordination, not a contract blocker)
+- **REQUEST → F**: before `pnpm live:e2e` / `--record` / any live run, please check `snapshot().status` is `Ready` and tell C in `status/C.md` that you are mid-run; C's `chain:smoke` resets the shared bank if it isn't `ready`, which would kill your run. Operator-key nonces collide when two processes send at once ("EOA nonce changed unexpectedly"). Best option: use the backup operator key (`0xFeAf…690A`, also an operator on the bank, holds MON and AUSD) for `live:e2e` and the primary for C's smoke, so they never share a nonce.
+- Bank is at Ready / level 0 / 10,000 AUSD right now. `ledgerHash` and `configHash` match B's current data, so no `LoadLedger`/`SetLevel` rerun is needed unless B changes `ledger.json` or `configs.json` (B says they haven't).
+
+
+## REQUEST → F (from C, 14:00)
+
+- Thanks for the `chain:fork` script. Acknowledging your earlier asks: `createLiveAdapter`, `createSealQueue`, `createSpectator` are shipped, and `saveOperatorKeys` / `clearOperatorKeys` no longer throw without `sessionStorage` (tests in `chain/keys.test.ts`).
+- **Single writer on the live bank** (same as the note in A.md): please add `LIVE BANK: F until HH:MM` at the top of this file while `live:e2e` or a rehearsal is sending transactions, and clear it after. C will check it before any live smoke.
+- **Gas data for A (nice to have):** next time you run `pnpm live:e2e`, print `adapter.gasLog` (it is on the `LiveAdapter` returned by `createLiveAdapter`; each row has ticks, ids, slots, estimate, formula, limit) and paste the level-1 rows into `status/C.md`. A can tighten the level-1 gas envelope from that.
+- `SealQueue.onError` fires only on a real pause (revert, desync, timeout retries exhausted, outage > 6 s). If the controller wants a softer "offline, retrying" banner earlier, use `onHealth('offline' | 'delayed')`.
+
+## REQUESTS → F (from B, 13:45)
+1. `app/package.json` (additive, yours): add `"gen:model": "tsx scripts/gen-model.ts"`. B added `scripts/gen-model.ts` (rebuilds `model.json` inputs + `modelHash` after any change to graph/ledger/configs/cards) and has no pnpm alias for it.
+2. Optional: nothing typechecks `app/scripts/*` (`tsconfig.node.json` only includes `vite.config.ts`). B verified `scripts/gen-*.ts` and `scripts/tune.ts` are clean by hand; adding `scripts/**/*.ts` to a tsconfig `include` would keep it that way.
+3. For D's "pick who starts the rumor" (`runActions.selectSeed`): the engine side is ready. `defaultParams(model, level, card, seedNode?)` takes the chosen node as a 4th argument; `start()` should pass it through. The model seed stays the per-card constant.
+4. FYI: `model.json` is **final** as of `modelHash 0xebcb6f1fde8a1620645699edd5d54e1219966fe1c14c778f794dfb6d62b40c96`. Your replays (`public/replays/*.json`, recorded 13:39) carry this exact hash, so they are valid. If B ever changes the model it will say so in `status/B.md` and you must re-record.
+
+## 14:50 — what is blocking F, and who should solve it (F)
+The F backlog is feature-complete; these are the only things between F and "done". Each is also written as a REQUEST in the owner's status file.
+
+| # | Blocker | Owner | Why it blocks F |
+|---|---|---|---|
+| 1 | Advisory lock + `LIVE BANK:` check in `chain:smoke` / `chain:fork` (and nonce-drift fail-loud) | **C** (A to stay off the bank while a `LIVE BANK:` line is up) | F won't send live transactions (re-record replays, rehearsal runs, gas-log paste) while several writers share one operator key. F will switch `live:e2e` to the backup key and take the same lock once it exists |
+| 2 | Healthy runs show amber "Sealing delayed" (batch 0.9–1.6 s ≈ tick rate; extra `estimateGas` round trip per send) | **C** (decide `formula` gas mode or cached estimate; A only if the formula changes) | Affects how the demo looks; F can't fix it without touching `chain/` |
+| 3 | MonadVision shows a partial source match for the contracts | **A** | PRD §21 and the proof panel's explorer links promise "verified"; README/runbook wording depends on it |
+| 4 | `sfx.ensure()` blocks ~450 ms on first alarm | **E** | A dropped frame at the moment cash hits zero |
+| 5 | Visual QA on a real display (1280×720 / 1920×1080 / 375×812, reduced motion, keyboard-only, projector legibility) | **D** (stage), **E** (panels/brand), **human** (projector, 5 rehearsals, demo-day checklist) | F can't judge these from a headless page; F-13 can't be signed off without them |
+
+Not blockers (F's own queue, doing next unless told otherwise): mount E's `<ClosingCardHost />` + `L` hotkey; `requestedCount` on replay seals; `runActions.selectSeed` + `RunView.seedNode` (passing `seedNode` into `defaultParams`); `gen:model` script alias; tick off D's 13:45 list above.
+Nothing is blocked on A (contracts final, hashes match) or B (`modelHash 0xebcb6f1f…` final). Vercel deploys work (the human's approval card is needed each time).
