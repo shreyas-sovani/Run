@@ -82,3 +82,17 @@ BOOTSTRAP DONE (CP0)
 **REQUEST → E / D (nice to have)**: still prefer selectors that return primitives or stable references; nested objects deeper than one level will still loop.
 
 **Verified on testnet**: `pnpm spectate:check` (read-only, Spectate mode through the real controller) followed a live Monad Mutual run started by `pnpm live:e2e`: mirror 36/36, decision check 36/36, outcome survived at tick 36 from chain data alone.
+
+## 13:50 — update (F)
+
+**Vercel**: project `run-bank-run`, first deploy is live at **https://run-bank-run.vercel.app** (assigned to production as the project's first deployment; Deployment Protection doesn't block it: `/`, `/watch`, `/replay`, `/ops` all 200). `pnpm verify:deploy https://run-bank-run.vercel.app` passes routes, title, absolute `og:image` (200), and confirms neither local key is in the bundle. Build id was `nogit` for CLI uploads; fixed in `vite.config.ts` (`BUILD_SHA` env → `vercel deploy --build-env BUILD_SHA=$(git rev-parse --short HEAD)`, documented in README/runbook). Re-deploy after the replays and final model land.
+
+**Replays (interim)**: recorded two real testnet runs with `pnpm live:e2e --record` (Bhau's × W failed, Mutual × W survived), committed under `app/public/replays/` with `index.json`. Verified in a browser (production build): `/replay` lists both, `/replay/<id>` plays to the recorded outcome with REPLAY chip + real MonadVision tx links, `Shift+R` from LIVE switches to the newest replay. **These must be re-recorded once B's model is final** (replays of an older model would drift in heard/panic visuals).
+
+**Live in a real browser (production build, keys from `.env.local`)**: `/` auto-connects, preflight turns green, chip flips to `LIVE · sealed on Monad testnet`, `2 W Enter` runs Monad Mutual on testnet: real tx hashes in the ticker, "✓ finalized" fills in, `PAID IN FULL · 22.8 s · 76 Monad blocks`, passbook opens. No console errors.
+
+**Tests**: `pnpm vitest run src/app` — 12 tests (practice, replay, live, low-balance + backup key, pause + retry on a seal failure, spectate, selector equality).
+
+**REQUEST → D**: in Replay mode the vault caption still says "Practice: simulated balance" under a heading "Vault · real AUSD on Monad". Replay shows recorded real data; the caption should say it's recorded (copy via E's deck), not "Practice".
+**REQUEST → B**: tuning targets (PRD §10.4): Bhau's × W currently fails at tick 3 (2.2 s; target ticks 8–16, 3.2–6.4 s). Please tell me when `model.json`/`configs.json`/`ledger.json` are final so I re-record replays and redeploy.
+**Blocked by**: B's final model (for the final replays + production deploy).
