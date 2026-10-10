@@ -51,12 +51,14 @@ Reload the page and the app reconnects and runs preflight by itself, so a refres
 | 0:30 | `Enter` | "Starting the run…", then `Sealed ✓ block #…` | — |
 | 0:32 | watch | Amber rings from the biggest depositor; whales go red first; cash hits zero; bonds sell at a loss | "The big depositors know each other. They go first, like SVB's VCs. Cash is gone; now it's dumping bonds at a loss." |
 | 0:40 | — | "Sealing the verdict…" then the **BANK FAILED** stamp | "Monad decides when the bank fails. Not my screen." |
-| 0:45 | `C` (auto-opens) | Passbook: WaMu $19B / 16 days · Wachovia ~$10B / 8 days · SVB $42B / 1 day · Bhau's Bank in seconds | "Five seconds. A dozen Monad blocks." |
+| 0:45 | `C` (auto-opens) | Passbook: WaMu $19B / 16 days · Wachovia ~$10B / 8 days · SVB $42B / 1 day · Bhau's Bank in seconds | "Four seconds. Fourteen Monad blocks." (Say what the stamp shows: measured on testnet, Bhau's × W fails in 4–5 s over 14–16 blocks.) |
 | 1:00 | `P` | Proof panel: rumor tx, a big batch, the failure event, finalized, `N / N ticks: screen and chain agree ✓` | "Every withdrawal moved real AUSD. Here's the block." |
 | 1:30 | `X`, then `2`, `W`, `Enter` | Monad Mutual: speed bump + deposit insurance; a queue forms; violet halos | "Same rumor. This bank pays at most 3% of deposits per block and insures the first 50 AUSD. In 2019 the RBI capped PMC Bank withdrawals at ₹1,000." |
 | 2:05 | — | **SURVIVED** seal | "Survived." |
 | 2:15 | — | Closing card with the QR to the Vercel link | "It's a game for people and a stress test for protocols: plug in your stablecoin's redemption logic and see if it survives a block-speed run. The link's live: watch, replay, or play." |
 | 2:45 | — | — | Q&A |
+
+**What the screen really shows (measured on testnet, 10 Oct):** Bhau's Bank × W fails at tick 8 in about 4.2–4.8 s over 14–16 blocks (× R: tick 10, about 6 s, 20 blocks); Monad Mutual × W survives at tick 25 in about 11–14 s over 37–43 blocks (× R: tick 34, about 16 s). Read the number off the stamp and the passbook; don't quote the old 5.4 s / 13 blocks.
 
 PMC Bank is a real event in which real people lost access to their savings. Say it respectfully, as the real-world version of a withdrawal speed bump. All banks in the game are fictional.
 
@@ -122,7 +124,7 @@ Never paste a private key on a projected screen. `/ops` shows only addresses.
 
 - **"Are the depositors real?"** "Simulated, and that's the premise. Each one decides only from public onchain inputs with an open model, and anyone can recompute every decision from chain history. Every withdrawal is a real AUSD transfer."
 - **"Can't you just make it fail?"** "The contract decides failure. My browser proposes withdrawals; the contract pays, prices the fire sale, and declares insolvency. The stamp waits for that event."
-- **"Why Monad?"** "A real run plays out in about a dozen 400 ms blocks with 800 ms finality, so you can watch it. On a 12-second chain the same run takes minutes and the drama is gone. And the stress test only means something if it runs at the speed a real onchain run would."
+- **"Why Monad?"** "A real run plays out in about fifteen 400 ms blocks (14–16 in our runs) with 800 ms finality, so you can watch it. On a 12-second chain the same run takes minutes and the drama is gone. And the stress test only means something if it runs at the speed a real onchain run would."
 - **"Why onchain at all?"** "The bank's rules are the product. A stress test against a real contract is a real stress test, and the run is replayable from chain history."
 - **"Parallel execution?"** "Honestly, a bank run is the opposite of parallel: every withdrawal touches the same vault. What matters here is block time, finality and cheap gas."
 - **"Business?"** "Consumers: a strategy game that teaches how bank runs work. Protocols: plug your redemption contract into the harness and measure time-to-failure under a modelled run."

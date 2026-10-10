@@ -4,7 +4,7 @@
 
 RUN! is "Plague Inc. for bank runs", built for Monad Blitz Pune. You pick a fictional bank and a rumor card and press Enter. The rumor spreads through a network of 500 simulated depositors, who panic and withdraw. The bank is a real smart contract on **Monad testnet** holding real testnet **AUSD**. Every tick of the run (about one 400 ms block) is sealed in a real transaction: withdrawals move AUSD out of the bank, forced asset sales lose AUSD to a "vulture fund", and the contract itself decides when the bank fails. Then you switch to a bank with defences (a withdrawal speed bump and deposit insurance), play the same rumor, and it survives.
 
-- Bhau's Bank (no defences) fails in about 5 seconds, a dozen blocks. Monad Mutual survives the same rumor.
+- Bhau's Bank (no defences) fails in about 4–5 seconds (14–16 blocks). Monad Mutual survives the same rumor.
 - Depositors are simulated by design: each decides only from public inputs (the rumor event, the bank's state, its neighbours' withdrawals), with an open, deterministic model that anyone can recompute from chain history.
 - Testnet only. Display scale: 1 AUSD = $1M, always labelled. All banks are fictional.
 
