@@ -34,7 +34,7 @@
 - `HealthChip` sits at the right end of the ticker, not in the top bar. At 1280 the top bar had no room for two chips plus the clock, and the chip is about sealing, which is what the ticker is. It still gets `health` and `sealedTick`; the block number is shown once, next to the clock.
 - The legend is a left column beside the canvas on desktop (below it on phones). The graph is a letterboxed square, so that space was empty.
 
-**Blocked by**: nothing.
+**Blocked by**: nothing hard. D can't finish these without others (lodged in their status files at 13:45): E (copy `stage` group, `sfx.ensure` stall), F (mount `ClosingCardHost` in `routes.tsx`, fill replay `requestedCount`, optional `selectSeed`). B has an FYI about run pace.
 
 **REQUEST → E**
 1. Optional: add a `stage` group to `copy.ts` so the defaults in `stageCopy.ts` become dead code. Keys and current defaults (placeholders in `{braces}`):
