@@ -1,0 +1,58 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-bg);
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--paper);
+}
+
+/* Wave lines hug the top edge and fade out before the content. */
+.waves {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(64px, 11vmin, 150px);
+  background-image: var(--waves);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.55) 55%, transparent 100%);
+}
+
+.rosette {
+  position: absolute;
+  width: clamp(280px, 56vmin, 760px);
+  aspect-ratio: 1;
+  background-image: var(--rosette);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Cropped by the viewport: only a quarter of each rosette shows, and it fades toward the centre. */
+.topLeft {
+  top: calc(clamp(280px, 56vmin, 760px) * -0.62);
+  left: calc(clamp(280px, 56vmin, 760px) * -0.62);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 72%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 72%);
+}
+
+.bottomRight {
+  right: calc(clamp(280px, 56vmin, 760px) * -0.64);
+  bottom: calc(clamp(280px, 56vmin, 760px) * -0.64);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 72%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 72%);
+}
+
+@media (max-width: 640px) {
+  .rosette {
+    width: 260px;
+  }
+  .topLeft {
+    top: -160px;
+    left: -160px;
+  }
+  .bottomRight {
+    right: -170px;
+    bottom: -170px;
+  }
+}

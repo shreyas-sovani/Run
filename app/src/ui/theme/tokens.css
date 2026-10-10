@@ -1,10 +1,98 @@
-/* Placeholder from F-00. Owner: E. Replace freely. */
+/*
+  RUN! design tokens (PRD §14.3, §14.4). Owner: E. Additive changes only: D and F read these names.
+  Direction: cheque security paper + violet rubber-stamp ink. Light only, by design (projector legibility).
+
+  Contrast on --paper (#E4ECE6), WCAG 2.x ratios:
+    --ink 13.5 · --ink-2 7.4 · --ink-3 5.2 · --seal 5.6 · --ok 5.4 · --run-text 5.4 · --rumor-text 5.3
+    --run 4.4 (large text and graphics only) · --rumor 3.3 (graphics only) · --trapped 3.0 (graphics, disabled)
+  White on --seal 6.7. Never set small text in --run, --rumor or --trapped.
+*/
 :root {
-  --paper: #e4ece6;
-  --guilloche: #c5d5cb;
-  --ink: #172033;
-  --seal: #5b3fd6;
-  --rumor: #b86e00;
-  --run: #c8341c;
-  --trapped: #7d8a90;
+  /* ── Colour (PRD §14.3) ─────────────────────────────────────────── */
+  --paper: #e4ece6;       /* Security Mint: page background */
+  --guilloche: #c5d5cb;   /* security-pattern linework, edges only */
+  --ink: #172033;         /* Ledger Ink: text, calm depositors */
+  --seal: #5b3fd6;        /* Stamp Violet: stamp, sealed ticks, primary buttons, insured halos */
+  --rumor: #b86e00;       /* Rumor Amber: heard depositors (graphics only) */
+  --run: #c8341c;         /* Run Vermilion: panic, withdrawals, loss (large text and graphics) */
+  --trapped: #7d8a90;     /* Slate: trapped depositors, disabled */
+
+  /* Additive: text-safe and surface variants (E) */
+  --ink-2: #3f4a5c;       /* secondary text */
+  --ink-3: #566170;       /* captions, placeholders (5.2:1) */
+  --ok: #1b6b43;          /* preflight pass. Semantic only; never decorative */
+  --run-text: #b02b16;    /* vermilion for small text (5.4:1) */
+  --rumor-text: #8a5200;  /* amber for small text (5.3:1) */
+  --slip: #f2f6f3;        /* paper slip: panels, inputs, cards */
+  --slip-edge: #b7c7bc;   /* slip border */
+  --rule: rgb(23 32 51 / 0.16);          /* hairlines on paper */
+  --seal-wash: rgb(91 63 214 / 0.08);    /* violet tint behind selected/primary-adjacent surfaces */
+  --run-wash: rgb(200 52 28 / 0.1);
+  --rumor-wash: rgb(184 110 0 / 0.12);
+  --ok-wash: rgb(27 107 67 / 0.1);
+  --trapped-wash: rgb(125 138 144 / 0.16);
+  --scrim: rgb(23 32 51 / 0.32);
+
+  /* ── Type families (PRD §14.4) ──────────────────────────────────── */
+  --font-display: 'Big Shoulders Display Variable', 'Arial Narrow', 'Helvetica Neue', Impact, sans-serif;
+  --font-body: 'Atkinson Hyperlegible Next Variable', 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-data: 'Atkinson Hyperlegible Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-dots: 'Doto', 'Atkinson Hyperlegible Mono Variable', ui-monospace, monospace;
+  --font-marathi: 'Tiro Devanagari Marathi', 'Noto Serif Devanagari', serif;
+
+  /* ── Type scale ─────────────────────────────────────────────────────
+     Stage values are 1080p targets expressed against vmin and floored so nothing on the stage
+     drops below 18 px at 1280x720. Panel values (--fs-ui-*) may go smaller on phones. */
+  --fs-stamp: clamp(96px, 18.5vmin, 300px);   /* 200 px @1080 */
+  --fs-timer: clamp(52px, 8.15vmin, 132px);   /*  88 px @1080 */
+  --fs-vault: clamp(34px, 5.2vmin, 84px);     /*  56 px @1080 */
+  --fs-card: clamp(20px, 2.4vmin, 38px);      /*  26 px @1080 */
+  --fs-body: clamp(18px, 2.04vmin, 32px);     /*  22 px @1080 */
+  --fs-ticker: clamp(18px, 1.85vmin, 30px);   /*  20 px @1080 */
+  --fs-dots: clamp(28px, 3vmin, 48px);        /*  Doto: never below 28 px */
+
+  --fs-ui-title: clamp(22px, 1.1rem + 0.9vw, 34px);
+  --fs-ui-lead: clamp(17px, 0.95rem + 0.35vw, 21px);
+  --fs-ui-body: clamp(15px, 0.9rem + 0.2vw, 18px);
+  --fs-ui-small: clamp(13px, 0.8rem + 0.15vw, 15px);
+  --fs-ui-micro: 12px;
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-body: 1.5;
+  --tracking-caps: 0.06em;
+
+  /* ── Spacing (4 px grid), radii, motion ─────────────────────────── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 72px;
+
+  --r-1: 2px;  /* paper slips have 2 px corners */
+  --r-2: 4px;
+  --r-pill: 999px;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in: cubic-bezier(0.5, 0, 0.9, 0.4);
+  --t-fast: 120ms;
+  --t-med: 220ms;
+
+  /* ── Focus, shadows, layers ─────────────────────────────────────── */
+  --focus-ring: 3px solid var(--seal);
+  --focus-offset: 2px;
+  --shadow-lift: 0 1px 0 rgb(23 32 51 / 0.08), 0 6px 18px -8px rgb(23 32 51 / 0.35);
+  --shadow-slip: 0 1px 0 rgb(23 32 51 / 0.06), 0 2px 6px -2px rgb(23 32 51 / 0.2);
+  --shadow-panel: -14px 0 32px -18px rgb(23 32 51 / 0.45);
+
+  --z-bg: -1;
+  --z-stage: 1;
+  --z-banner: 20;
+  --z-panel: 30;
+  --z-overlay: 40;
+  --z-stamp: 50;
+  --z-toast: 60;
 }

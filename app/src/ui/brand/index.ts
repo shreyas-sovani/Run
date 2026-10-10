@@ -1,2 +1,3 @@
-// Placeholder from F-00. Owner: E. Replace freely.
-export { PaperBackground, Stamp, ModeChip, HealthChip, Address, TxLink, Button, sfx, BrandLab } from './stubs';
+// Owner: E. Stable export signatures: PRD §16.5.
+export { PaperBackground } from './PaperBackground';
+export { Stamp, ModeChip, HealthChip, Address, TxLink, Button, sfx, BrandLab } from './stubs';
