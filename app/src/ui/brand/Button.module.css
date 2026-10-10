@@ -1,0 +1,145 @@
+.btn {
+  --btn-pad-y: 10px;
+  --btn-pad-x: 18px;
+  --btn-fs: var(--fs-ui-body);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border-radius: var(--r-1);
+  font-family: var(--font-body);
+  font-size: var(--btn-fs);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: 0.01em;
+  text-align: center;
+  transition:
+    background-color var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out),
+    box-shadow var(--t-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lg {
+  --btn-pad-y: 14px;
+  --btn-pad-x: 30px;
+  --btn-fs: var(--fs-card);
+  min-height: 64px;
+}
+
+/* Stamped label: violet ink on slip paper, double border like a rubber stamp. */
+.primary {
+  color: var(--seal);
+  background: var(--slip);
+  border: 2px solid var(--seal);
+  box-shadow: inset 0 0 0 3px var(--slip), inset 0 0 0 4.5px var(--seal);
+}
+
+.primary:hover:not(:disabled) {
+  color: #fff;
+  background: var(--seal);
+  box-shadow: inset 0 0 0 3px var(--seal), inset 0 0 0 4.5px rgb(255 255 255 / 0.7);
+}
+
+.primary:active:not(:disabled) {
+  background: color-mix(in srgb, var(--seal) 86%, #000);
+}
+
+.secondary {
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--ink-3);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--slip);
+  border-color: var(--ink);
+  box-shadow: var(--shadow-slip);
+}
+
+.secondary:active:not(:disabled) {
+  background: var(--slip-edge);
+}
+
+.btn:disabled {
+  color: var(--ink-3);
+  background: var(--trapped-wash);
+  border-color: var(--trapped);
+  box-shadow: none;
+}
+
+/* Pending reads as "in progress", not as "off": keep the ink, show the spinner. */
+.pending:disabled {
+  color: var(--seal);
+  background: var(--seal-wash);
+  border-color: var(--seal);
+}
+
+.secondary.pending:disabled {
+  color: var(--ink);
+  background: var(--trapped-wash);
+  border-color: var(--ink-3);
+}
+
+.stack {
+  display: inline-grid;
+  place-items: center;
+}
+
+.stack > * {
+  grid-area: 1 / 1;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.label[data-hidden] {
+  visibility: hidden;
+}
+
+.busy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  white-space: nowrap;
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.key {
+  font-family: var(--font-data);
+  font-size: 0.72em;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.28em 0.5em;
+  border: 1.5px solid currentColor;
+  border-radius: var(--r-1);
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border-right-color: currentColor;
+    border-style: dotted;
+  }
+}

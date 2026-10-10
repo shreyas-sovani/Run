@@ -1,0 +1,142 @@
+.page {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--sp-6) var(--sp-5) var(--sp-8);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-6);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--fs-timer);
+  line-height: var(--lh-tight);
+  color: var(--seal);
+  letter-spacing: 0.01em;
+}
+
+.lead {
+  font-size: var(--fs-ui-lead);
+  color: var(--ink-2);
+}
+
+.section {
+  display: grid;
+  min-width: 0;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--slip);
+  border: 1px solid var(--slip-edge);
+  border-radius: var(--r-1);
+  box-shadow: var(--shadow-slip);
+}
+
+.section h2 {
+  font-family: var(--font-body);
+  font-size: var(--fs-ui-lead);
+  font-weight: 700;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--sp-3);
+}
+
+.swatch {
+  display: grid;
+  gap: 2px;
+}
+
+.chipColor {
+  height: 44px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+}
+
+.swName {
+  font-weight: 700;
+}
+
+.swMeta {
+  font-size: var(--fs-ui-small);
+  color: var(--ink-2);
+}
+
+.typeList {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.typeRow {
+  display: grid;
+  gap: 2px;
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.typeTag {
+  color: var(--ink-3);
+  font-size: var(--fs-ui-small);
+}
+
+.typeSample {
+  line-height: var(--lh-snug);
+  overflow-wrap: anywhere;
+}
+
+.mar {
+  font-family: var(--font-marathi);
+  font-size: var(--fs-vault);
+  color: var(--seal);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.col {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-3);
+}
+
+.note {
+  font-size: var(--fs-ui-small);
+  color: var(--ink-3);
+}
+
+.stampStage {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--sp-6);
+  min-height: 70vmin;
+  padding: var(--sp-6);
+  background:
+    linear-gradient(var(--paper), var(--paper)),
+    var(--paper);
+  border: 1px dashed var(--slip-edge);
+  border-radius: var(--r-1);
+}
+
+.slider {
+  display: inline-grid;
+  gap: 4px;
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+}

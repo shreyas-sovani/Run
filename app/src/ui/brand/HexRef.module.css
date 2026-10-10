@@ -1,0 +1,121 @@
+.ref {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.label {
+  margin-right: var(--sp-2);
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.hex {
+  font-family: var(--font-data);
+  font-size: 0.95em;
+  font-variant-numeric: tabular-nums;
+  color: var(--seal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  padding: 2px 2px;
+  border-radius: var(--r-1);
+}
+
+.hex:hover {
+  background: var(--seal-wash);
+  text-decoration-thickness: 2px;
+}
+
+.icon {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 15px;
+  color: var(--ink-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--r-1);
+  transition: background-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out);
+}
+
+.icon:hover {
+  background: var(--seal-wash);
+  color: var(--seal);
+}
+
+.icon[data-state='copied'] {
+  color: var(--ok);
+}
+
+/* Touch targets reach 44 px on phones. */
+@media (pointer: coarse) {
+  .icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+}
+
+.toast {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  padding: 2px 8px;
+  border-radius: var(--r-1);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--fs-ui-small);
+  font-weight: 700;
+  pointer-events: none;
+  animation: rise var(--t-med) var(--ease-out);
+}
+
+.toastBad {
+  background: var(--run-text);
+  color: #fff;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  min-width: max-content;
+  padding: var(--sp-1);
+  background: var(--slip);
+  border: 1.5px solid var(--ink-3);
+  border-radius: var(--r-1);
+  box-shadow: var(--shadow-lift);
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+
+.menu a {
+  padding: 8px 12px;
+  border-radius: var(--r-1);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.menu a:hover {
+  background: var(--seal-wash);
+  color: var(--seal);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

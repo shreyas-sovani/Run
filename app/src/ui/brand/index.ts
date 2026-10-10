@@ -1,3 +1,9 @@
 // Owner: E. Stable export signatures: PRD §16.5.
 export { PaperBackground } from './PaperBackground';
-export { Stamp, ModeChip, HealthChip, Address, TxLink, Button, sfx, BrandLab } from './stubs';
+export { Stamp } from './Stamp';
+export { ModeChip, HealthChip } from './Chips';
+export { Address, TxLink } from './Refs';
+export { Button } from './Button';
+export { copyText } from './HexRef';
+export { sfx } from './sfx';
+export { BrandLab } from './BrandLab';

@@ -1,0 +1,160 @@
+/* Chip text never drops below 18 px: they sit on the stage (PRD §14.4). */
+.chip {
+  --chip-ink: var(--ink);
+  --chip-wash: var(--slip);
+  --chip-edge: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  max-width: 100%;
+  padding: 4px 12px 4px 10px;
+  border: 1.5px solid var(--chip-edge);
+  border-radius: var(--r-1);
+  background: var(--chip-wash);
+  color: var(--chip-ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: 0.01em;
+  transition:
+    background-color var(--t-med) var(--ease-out),
+    color var(--t-med) var(--ease-out),
+    border-color var(--t-med) var(--ease-out);
+}
+
+.mark {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--chip-edge);
+}
+
+/* ── Mode ─────────────────────────────────────────────────────────── */
+.live {
+  --chip-ink: #fff;
+  --chip-wash: var(--seal);
+  --chip-edge: var(--seal);
+}
+
+.live .mark {
+  background: #fff;
+}
+
+.practice {
+  --chip-ink: var(--rumor-text);
+  --chip-wash: var(--rumor-wash);
+  --chip-edge: var(--rumor);
+}
+
+.practice .mark {
+  background: transparent;
+  border: 2px dashed var(--rumor-text);
+}
+
+.replay {
+  --chip-ink: var(--seal);
+  --chip-wash: var(--seal-wash);
+  --chip-edge: var(--seal);
+}
+
+.replay .mark {
+  border-radius: 1px;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.spectate {
+  --chip-ink: var(--seal);
+  --chip-wash: var(--slip);
+  --chip-edge: var(--seal);
+}
+
+.spectate .mark {
+  background: transparent;
+  border: 2px solid var(--seal);
+  box-shadow: 0 0 0 2px var(--slip), inset 0 0 0 2px var(--seal);
+}
+
+/* ── Health ───────────────────────────────────────────────────────── */
+.health {
+  --chip-ink: var(--ink-2);
+}
+
+.h_idle {
+  --chip-edge: var(--trapped);
+}
+
+.h_sealing {
+  --chip-ink: var(--seal);
+  --chip-edge: var(--seal);
+  --chip-wash: var(--seal-wash);
+}
+
+.h_sealing .mark {
+  background: var(--seal);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.h_delayed {
+  --chip-ink: var(--rumor-text);
+  --chip-edge: var(--rumor);
+  --chip-wash: var(--rumor-wash);
+}
+
+.h_delayed .mark {
+  background: var(--rumor);
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+.h_paused {
+  --chip-ink: var(--run-text);
+  --chip-edge: var(--run);
+  --chip-wash: var(--run-wash);
+}
+
+.h_paused .mark {
+  border-radius: 1px;
+  background: var(--run);
+}
+
+.h_offline {
+  --chip-ink: var(--ink-2);
+  --chip-edge: var(--trapped);
+  --chip-wash: var(--trapped-wash);
+}
+
+.h_offline .mark {
+  background: transparent;
+  border: 2px solid var(--trapped);
+  border-radius: 50%;
+  position: relative;
+}
+
+.h_offline .mark::after {
+  content: '';
+  position: absolute;
+  inset: 2px -2px auto -2px;
+  height: 2px;
+  background: var(--ink-2);
+  transform: rotate(-45deg);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.45);
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h_sealing .mark,
+  .h_delayed .mark {
+    animation: none;
+  }
+}

@@ -1,0 +1,107 @@
+.root {
+  position: relative;
+  display: inline-block;
+  color: var(--seal);
+  pointer-events: none;
+  user-select: none;
+}
+
+.defs {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Ink on paper: multiply lets the guilloche show through the stamp. */
+.ink {
+  display: inline-block;
+  mix-blend-mode: multiply;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+/* ── Failed: rectangular double border ────────────────────────────── */
+.rect {
+  padding: 0.035em;
+  border: 0.05em solid currentColor;
+  border-radius: 0.03em;
+}
+
+.rectInner {
+  display: grid;
+  justify-items: center;
+  gap: 0.02em;
+  padding: 0.05em 0.17em 0.07em;
+  border: 0.016em solid currentColor;
+  border-radius: 0.012em;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1em;
+  line-height: 0.86;
+  letter-spacing: 0.012em;
+  white-space: nowrap;
+  padding-top: 0.04em;
+}
+
+.marathi {
+  font-family: var(--font-marathi);
+  font-size: 0.2em;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+}
+
+.subline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.17em;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ── Survived: round seal ─────────────────────────────────────────── */
+.round {
+  display: block;
+  width: 2.1em;
+  height: 2.1em;
+  overflow: visible;
+}
+
+.ringOuter {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 10;
+}
+
+.ringThin {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.ringText {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 34px;
+  letter-spacing: 6px;
+  fill: currentColor;
+}
+
+.sealHead {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 80px;
+  fill: currentColor;
+}
+
+.star {
+  fill: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink {
+    will-change: auto;
+  }
+}
